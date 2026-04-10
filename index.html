@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Big Dinner</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,700&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 
@@ -15,118 +15,119 @@
             --parchment: #F9F7F2; 
             --text: #2C2C2C; 
         }
-        body { background: var(--parchment); color: var(--text); font-family: 'Inter', sans-serif; overflow-x: hidden; margin: 0; }
+        body { background: var(--parchment); color: var(--text); font-family: 'Inter', sans-serif; overflow-x: hidden; scroll-behavior: smooth; }
         .serif { font-family: 'Playfair Display', serif; }
         
-        /* The Airy Scent Aura */
-        #scent-aura {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -2; background: radial-gradient(circle at 50% 50%, #ffffff 0%, var(--parchment) 100%);
+        /* Floating Header Navigation */
+        .master-nav {
+            position: fixed; top: 0; left: 0; width: 100%; 
+            display: flex; justify-content: center; gap: 3rem; 
+            padding: 2.5rem; z-index: 100;
+            background: linear-gradient(to bottom, var(--parchment) 40%, transparent);
+        }
+        .nav-item {
+            font-size: 11px; letter-spacing: 0.4em; text-transform: uppercase;
+            color: #999; cursor: pointer; transition: all 0.6s ease;
+            position: relative;
+        }
+        .nav-item:hover, .nav-item.active { color: var(--text); }
+        .nav-item.active::after {
+            content: ''; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%);
+            width: 15px; height: 1px; background: var(--gold);
         }
 
-        /* Cinematic Backgrounds */
-        .bg-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1; background-size: cover; background-position: center;
-            opacity: 0; transition: opacity 1.5s ease-in-out, transform 2s ease-out;
-            filter: sepia(20%) brightness(1.1);
+        /* Fixed Image Frame (Better visibility) */
+        .image-frame {
+            position: fixed; top: 15vh; right: 8%; width: 40%; height: 70vh;
+            z-index: 10; overflow: hidden; border: 1px solid rgba(181, 164, 139, 0.2);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.05);
         }
-        .bg-overlay.active { opacity: 0.45; transform: scale(1.05); }
-
-        /* Sections */
-        .chronicle-section {
-            min-height: 100vh; display: flex; flex-direction: column;
-            justify-content: center; padding: 0 10%; position: relative;
+        .bg-img {
+            position: absolute; width: 100%; height: 100%; object-fit: cover;
+            opacity: 0; transition: opacity 1.2s ease, transform 2s ease;
         }
+        .bg-img.active { opacity: 1; transform: scale(1.05); }
 
-        .hero-section { height: 100vh; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-
-        .content-card {
-            max-width: 500px;
-            padding: 2rem;
-            border-top: 1px solid var(--gold);
-            margin-top: 2rem;
-        }
-
-        .date-stamp { font-size: 11px; letter-spacing: 0.6em; color: var(--gold); text-transform: uppercase; margin-bottom: 1.5rem; display: block; }
-        .content-body { color: #555; line-height: 2; font-size: 0.95rem; font-weight: 300; }
-
-        /* Floating Navigation */
-        .timeline-indicator {
-            position: fixed; right: 3rem; top: 50%; transform: translateY(-50%);
-            display: flex; flex-direction: column; gap: 2rem; z-index: 100;
-        }
-        .month-mark {
-            font-size: 10px; letter-spacing: 0.3em; color: #ccc; 
-            writing-mode: vertical-rl; transform: rotate(180deg);
-            transition: 0.5s; cursor: pointer;
-        }
-        .month-mark.active { color: var(--gold); font-weight: bold; transform: rotate(180deg) scale(1.2); }
+        /* Story Text */
+        .section-container { min-height: 100vh; padding: 25vh 10% 10vh; display: flex; align-items: flex-start; }
+        .story-text { max-width: 40%; }
+        
+        .hero-title { font-size: clamp(3rem, 10vw, 8rem); margin-bottom: 2rem; }
     </style>
 </head>
 <body>
 
-    <div id="scent-aura"></div>
-    <div id="bg-layers">
-        <div class="bg-overlay active" style="background-image: url('Grazia.jpeg');" data-month="apr"></div>
-        <div class="bg-overlay" style="background-image: url('shangrila.jpeg');" data-month="mar"></div>
-        <div class="bg-overlay" style="background-image: url('elle.jpeg');" data-month="feb"></div>
-        <div class="bg-overlay" style="background-image: url('lodnon.jpeg');" data-month="feb-lon"></div>
-        <div class="bg-overlay" style="background-image: url('janaryan.jpeg');" data-month="jan"></div>
-        <div class="bg-overlay" style="background-image: url('novemebr1.jpeg');" data-month="origin"></div>
-    </div>
+    <nav class="master-nav">
+        <span class="nav-item active" onclick="jump('hero')">Entry</span>
+        <span class="nav-item" onclick="jump('apr')">April</span>
+        <span class="nav-item" onclick="jump('mar')">March</span>
+        <span class="nav-item" onclick="jump('feb')">February</span>
+        <span class="nav-item" onclick="jump('jan')">January</span>
+        <span class="nav-item" onclick="jump('origin')">Origin</span>
+    </nav>
 
-    <div class="timeline-indicator" id="nav">
-        <div class="month-mark active" onclick="scrollToSection('hero')">ENTRY</div>
-        <div class="month-mark" onclick="scrollToSection('apr')">APR 25</div>
-        <div class="month-mark" onclick="scrollToSection('mar')">MAR 25</div>
-        <div class="month-mark" onclick="scrollToSection('feb')">FEB 25</div>
-        <div class="month-mark" onclick="scrollToSection('jan')">JAN 25</div>
+    <div class="image-frame">
+        <img src="Grazia.jpeg" class="bg-img active" id="img-hero">
+        <img src="shangrila.jpeg" class="bg-img" id="img-apr">
+        <img src="itcmaurya.jpeg" class="bg-img" id="img-mar">
+        <img src="elle.jpeg" class="bg-img" id="img-feb">
+        <img src="janaryan.jpeg" class="bg-img" id="img-jan">
+        <img src="dec11.jpeg" class="bg-img" id="img-origin">
     </div>
 
     <main>
-        <section id="hero" class="hero-section">
-            <h1 class="serif text-7xl md:text-9xl italic tracking-tighter mb-4">The Big Dinner</h1>
-            <p class="uppercase tracking-[1em] text-[10px] text-gray-400">A Perspective Shift</p>
+        <section id="hero" class="section-container" style="flex-direction: column; align-items: center; text-align: center;">
+            <h1 class="serif hero-title italic tracking-tighter">The Big Dinner</h1>
+            <p class="uppercase tracking-[1.5em] text-[10px] text-gray-400">A Perspective Shift</p>
         </section>
 
-        <section id="apr" class="chronicle-section" data-target="apr">
-            <span class="date-stamp">April 2025</span>
-            <h2 class="serif text-5xl italic mb-6">The Grazia Room.</h2>
-            <div class="content-card">
-                <p class="content-body">Not a brand, not an event—a specific kind of room. Grazia noticed the intent behind the long table. This is for those who sat across from a stranger and left with something they didn't expect.</p>
+        <section id="apr" class="section-container">
+            <div class="story-text">
+                <span class="serif italic text-gold text-sm block mb-4">April 2025</span>
+                <h2 class="serif text-5xl mb-8">The Grazia Room.</h2>
+                <p class="leading-loose text-gray-500 font-light">
+                    Grazia noticed. Not an event, not a brand, not a networking exercise dressed in good lighting. A room. A specific kind of room where the conversation is the only agenda.
+                </p>
             </div>
         </section>
 
-        <section id="mar" class="chronicle-section" data-target="mar">
-            <span class="date-stamp">March 2025</span>
-            <h2 class="serif text-5xl italic mb-6">Shangri-La.</h2>
-            <div class="content-card">
-                <p class="content-body">Compounding friendships. Conversations traveling between family offices and counsel, between designers and those who build capital.</p>
+        <section id="mar" class="section-container">
+            <div class="story-text">
+                <span class="serif italic text-gold text-sm block mb-4">March 2025</span>
+                <h2 class="serif text-5xl mb-8">Compounding Growth.</h2>
+                <p class="leading-loose text-gray-500 font-light">
+                    Real friendships have formed—the kind that create value. There is compounding that happens when the right people find each other. Ventures being built, partnerships forming because the trust was already there.
+                </p>
             </div>
         </section>
 
-        <section id="feb" class="chronicle-section" data-target="feb">
-            <span class="date-stamp">February 2025</span>
-            <h2 class="serif text-5xl italic mb-6">Character over Titles.</h2>
-            <div class="content-body">
-                <p class="content-body">Sixty-two people in a room, and no one was posturing. There is a quiet glamour in that kind of security. Elle India captured the essence of the vulnerability we bet on.</p>
+        <section id="feb" class="section-container">
+            <div class="story-text">
+                <span class="serif italic text-gold text-sm block mb-4">February 2025</span>
+                <h2 class="serif text-5xl mb-8">ELLE & The London Win.</h2>
+                <p class="leading-loose text-gray-500 font-light">
+                    Growth that surprised even us. Sixty-two people in a room, and no one was posturing. Meanwhile, London happened because the two people running it there are friends I've known for a decade.
+                </p>
             </div>
         </section>
 
-        <section id="jan" class="chronicle-section" data-target="jan">
-            <span class="date-stamp">January 2025</span>
-            <h2 class="serif text-5xl italic mb-6">Environment & Brain.</h2>
-            <div class="content-card">
-                <p class="content-body">Creativity is the brain's ability to connect different parts of life. We are curating the environments that allow those connections to fire.</p>
+        <section id="jan" class="section-container">
+            <div class="story-text">
+                <span class="serif italic text-gold text-sm block mb-4">January 2025</span>
+                <h2 class="serif text-5xl mb-8">Atmosphere Shapes Brain.</h2>
+                <p class="leading-loose text-gray-500 font-light">
+                    Creativity is simply the brain’s ability to connect two completely different parts of life. We are curating environments that ensure those connections fire.
+                </p>
             </div>
         </section>
 
-        <section id="origin" class="chronicle-section" data-target="origin">
-            <span class="date-stamp">The Beginning</span>
-            <h2 class="serif text-5xl italic mb-6">Blue Bar, Taj.</h2>
-            <div class="content-card">
-                <p class="content-body">Twenty-one people. An idea with no proof of concept. The night the decades began. Paras and I realized this belonged to everyone who showed up.</p>
+        <section id="origin" class="section-container" style="margin-bottom: 20vh;">
+            <div class="story-text">
+                <span class="serif italic text-gold text-sm block mb-4">The Origin</span>
+                <h2 class="serif text-5xl mb-8">Chapter One: Blue Bar.</h2>
+                <p class="leading-loose text-gray-500 font-light">
+                    Paras and I brought 37 strangers together at the Taj Palace. It was always about building something larger than ourselves. Today, it belongs to everyone who shows up.
+                </p>
             </div>
         </section>
     </main>
@@ -134,31 +135,30 @@
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
-        // Smooth Background Swap
-        const sections = gsap.utils.toArray(".chronicle-section, .hero-section");
-        const bgs = gsap.utils.toArray(".bg-overlay");
-        const navs = gsap.utils.toArray(".month-mark");
+        function jump(id) {
+            gsap.to(window, {duration: 1.5, scrollTo: "#" + id, ease: "power4.inOut"});
+        }
 
-        sections.forEach((section, i) => {
+        const sections = ['hero', 'apr', 'mar', 'feb', 'jan', 'origin'];
+        
+        sections.forEach((id, i) => {
             ScrollTrigger.create({
-                trigger: section,
+                trigger: "#" + id,
                 start: "top center",
                 end: "bottom center",
                 onToggle: self => {
                     if (self.isActive) {
-                        bgs.forEach(bg => bg.classList.remove('active'));
-                        if(bgs[i]) bgs[i].classList.add('active');
+                        // Update Nav
+                        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+                        document.querySelectorAll('.nav-item')[i].classList.add('active');
                         
-                        navs.forEach(n => n.classList.remove('active'));
-                        if(navs[i]) navs[i].classList.add('active');
+                        // Update Image
+                        document.querySelectorAll('.bg-img').forEach(img => img.classList.remove('active'));
+                        document.querySelectorAll('.bg-img')[i].classList.add('active');
                     }
                 }
             });
         });
-
-        function scrollToSection(id) {
-            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
-        }
     </script>
 </body>
 </html>
