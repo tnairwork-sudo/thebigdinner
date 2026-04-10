@@ -5,141 +5,127 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Big Dinner</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,700&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
     <style>
         :root { 
             --gold: #B5A48B; 
-            --parchment: #F9F7F2; 
-            --text: #2C2C2C; 
+            --parchment: #FDFCFB; 
+            --text: #1A1A1A; 
         }
-        body { background: var(--parchment); color: var(--text); font-family: 'Inter', sans-serif; overflow-x: hidden; scroll-behavior: smooth; }
+        body { background: var(--parchment); color: var(--text); font-family: 'Inter', sans-serif; }
         .serif { font-family: 'Playfair Display', serif; }
         
-        /* Floating Header Navigation */
-        .master-nav {
-            position: fixed; top: 0; left: 0; width: 100%; 
-            display: flex; justify-content: center; gap: 3rem; 
-            padding: 2.5rem; z-index: 100;
-            background: linear-gradient(to bottom, var(--parchment) 40%, transparent);
-        }
-        .nav-item {
-            font-size: 11px; letter-spacing: 0.4em; text-transform: uppercase;
-            color: #999; cursor: pointer; transition: all 0.6s ease;
-            position: relative;
-        }
-        .nav-item:hover, .nav-item.active { color: var(--text); }
-        .nav-item.active::after {
-            content: ''; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%);
-            width: 15px; height: 1px; background: var(--gold);
+        /* Subtle Paper Texture */
+        body::before {
+            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0.03; pointer-events: none; z-index: 1000;
+            background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
         }
 
-        /* Fixed Image Frame (Better visibility) */
-        .image-frame {
-            position: fixed; top: 15vh; right: 8%; width: 40%; height: 70vh;
-            z-index: 10; overflow: hidden; border: 1px solid rgba(181, 164, 139, 0.2);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.05);
+        .nav-header {
+            position: fixed; top: 0; width: 100%; display: flex; justify-content: center;
+            gap: 2.5rem; padding: 2rem; z-index: 50; background: rgba(253, 252, 251, 0.9);
+            backdrop-filter: blur(5px); border-bottom: 1px solid rgba(0,0,0,0.03);
         }
-        .bg-img {
+        .nav-link { font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; cursor: pointer; color: #888; transition: 0.4s; }
+        .nav-link:hover { color: var(--text); }
+
+        /* The Image Display */
+        .image-container {
+            position: sticky; top: 15vh; height: 70vh; width: 100%;
+            overflow: hidden; border-radius: 2px;
+        }
+        .story-image {
             position: absolute; width: 100%; height: 100%; object-fit: cover;
-            opacity: 0; transition: opacity 1.2s ease, transform 2s ease;
+            opacity: 0; transition: opacity 1s ease-in-out, transform 1.5s ease-out;
+            filter: sepia(10%) brightness(1.05);
         }
-        .bg-img.active { opacity: 1; transform: scale(1.05); }
+        .story-image.active { opacity: 1; transform: scale(1.05); }
 
-        /* Story Text */
-        .section-container { min-height: 100vh; padding: 25vh 10% 10vh; display: flex; align-items: flex-start; }
-        .story-text { max-width: 40%; }
+        .section-wrap { min-height: 120vh; padding: 0 8%; display: grid; grid-template-cols: 1.2fr 1fr; gap: 5%; align-items: center; }
+        .text-content { padding-right: 10%; }
         
-        .hero-title { font-size: clamp(3rem, 10vw, 8rem); margin-bottom: 2rem; }
+        /* Vertical Line */
+        .divider { width: 1px; height: 100px; background: var(--gold); margin: 2rem 0; opacity: 0.5; }
+
+        .insta-placeholder {
+            border: 1px solid #eee; padding: 2rem; text-align: center;
+            font-size: 11px; letter-spacing: 0.2em; color: #999; text-transform: uppercase;
+        }
     </style>
 </head>
 <body>
 
-    <nav class="master-nav">
-        <span class="nav-item active" onclick="jump('hero')">Entry</span>
-        <span class="nav-item" onclick="jump('apr')">April</span>
-        <span class="nav-item" onclick="jump('mar')">March</span>
-        <span class="nav-item" onclick="jump('feb')">February</span>
-        <span class="nav-item" onclick="jump('jan')">January</span>
-        <span class="nav-item" onclick="jump('origin')">Origin</span>
+    <nav class="nav-header">
+        <div class="nav-link" onclick="gsap.to(window, {scrollTo: '#hero', duration: 1})">Entry</div>
+        <div class="nav-link" onclick="gsap.to(window, {scrollTo: '#apr', duration: 1})">April</div>
+        <div class="nav-link" onclick="gsap.to(window, {scrollTo: '#mar', duration: 1})">March</div>
+        <div class="nav-link" onclick="gsap.to(window, {scrollTo: '#feb', duration: 1})">February</div>
     </nav>
 
-    <div class="image-frame">
-        <img src="Grazia.jpeg" class="bg-img active" id="img-hero">
-        <img src="shangrila.jpeg" class="bg-img" id="img-apr">
-        <img src="itcmaurya.jpeg" class="bg-img" id="img-mar">
-        <img src="elle.jpeg" class="bg-img" id="img-feb">
-        <img src="janaryan.jpeg" class="bg-img" id="img-jan">
-        <img src="dec11.jpeg" class="bg-img" id="img-origin">
-    </div>
-
     <main>
-        <section id="hero" class="section-container" style="flex-direction: column; align-items: center; text-align: center;">
-            <h1 class="serif hero-title italic tracking-tighter">The Big Dinner</h1>
-            <p class="uppercase tracking-[1.5em] text-[10px] text-gray-400">A Perspective Shift</p>
+        <section id="hero" class="h-screen flex flex-col justify-center items-center text-center">
+            <h1 class="serif text-8xl md:text-[10rem] italic tracking-tighter leading-none mb-6">The Big Dinner</h1>
+            <p class="uppercase tracking-[1.2em] text-[11px] text-gray-400">A Perspective Shift • 2026</p>
         </section>
 
-        <section id="apr" class="section-container">
-            <div class="story-text">
-                <span class="serif italic text-gold text-sm block mb-4">April 2025</span>
-                <h2 class="serif text-5xl mb-8">The Grazia Room.</h2>
-                <p class="leading-loose text-gray-500 font-light">
-                    Grazia noticed. Not an event, not a brand, not a networking exercise dressed in good lighting. A room. A specific kind of room where the conversation is the only agenda.
-                </p>
+        <section id="apr" class="section-wrap">
+            <div class="text-content">
+                <span class="serif italic text-gold text-lg mb-2 block">April 2025</span>
+                <h2 class="serif text-6xl mb-8 leading-tight">The Grazia Room.</h2>
+                <div class="divider"></div>
+                <p class="leading-relaxed text-gray-600 mb-6">Since October, we have been quietly building something I genuinely believe in—not an event, not a brand, not a networking exercise dressed in good lighting. A room. A specific kind of room.</p>
+                <p class="leading-relaxed text-gray-600">One where the conversation is the only agenda and the right person sitting next to you might change something about how you see the next ten years. Grazia noticed. This one’s for the room.</p>
+            </div>
+            <div class="image-container">
+                <img src="Grazia.jpeg" class="story-image active" id="img-apr">
             </div>
         </section>
 
-        <section id="mar" class="section-container">
-            <div class="story-text">
-                <span class="serif italic text-gold text-sm block mb-4">March 2025</span>
-                <h2 class="serif text-5xl mb-8">Compounding Growth.</h2>
-                <p class="leading-loose text-gray-500 font-light">
-                    Real friendships have formed—the kind that create value. There is compounding that happens when the right people find each other. Ventures being built, partnerships forming because the trust was already there.
-                </p>
+        <section id="mar" class="section-wrap">
+            <div class="text-content">
+                <span class="serif italic text-gold text-lg mb-2 block">March 2025</span>
+                <h2 class="serif text-6xl mb-8 leading-tight">Real Friendships.</h2>
+                <div class="divider"></div>
+                <p class="leading-relaxed text-gray-600 mb-6">Real friendships have formed—the kind that create value. There is compounding that happens when right people find each other and in that compounding lies growth none of us could have engineered alone.</p>
+                <p class="leading-relaxed text-gray-600">Conversations traveling between family offices and counsel, between designers and those who build capital. Real collaborations born from real trust.</p>
+            </div>
+            <div class="image-container">
+                <img src="shangrila.jpeg" class="story-image" id="img-mar">
             </div>
         </section>
 
-        <section id="feb" class="section-container">
-            <div class="story-text">
-                <span class="serif italic text-gold text-sm block mb-4">February 2025</span>
-                <h2 class="serif text-5xl mb-8">ELLE & The London Win.</h2>
-                <p class="leading-loose text-gray-500 font-light">
-                    Growth that surprised even us. Sixty-two people in a room, and no one was posturing. Meanwhile, London happened because the two people running it there are friends I've known for a decade.
-                </p>
+        <section id="feb" class="section-wrap">
+            <div class="text-content">
+                <span class="serif italic text-gold text-lg mb-2 block">February 2025</span>
+                <h2 class="serif text-6xl mb-8 leading-tight">The London Win.</h2>
+                <div class="divider"></div>
+                <p class="leading-relaxed text-gray-600 mb-6">Expansion to London was never about geography. It was about trust. Devansh. Shaurya. Rock stars, both of them. I had people on the ground I trust completely.</p>
+                <p class="leading-relaxed text-gray-600">Meanwhile, back home, ELLE India captured the "quiet glamour" of the Shangri-La gathering. Sixty-two people. Seven gatherings. One belief.</p>
+            </div>
+            <div class="image-container">
+                <img src="lodnon.jpeg" class="story-image" id="img-feb">
             </div>
         </section>
 
-        <section id="jan" class="section-container">
-            <div class="story-text">
-                <span class="serif italic text-gold text-sm block mb-4">January 2025</span>
-                <h2 class="serif text-5xl mb-8">Atmosphere Shapes Brain.</h2>
-                <p class="leading-loose text-gray-500 font-light">
-                    Creativity is simply the brain’s ability to connect two completely different parts of life. We are curating environments that ensure those connections fire.
-                </p>
+        <section class="h-screen flex flex-col justify-center items-center px-10">
+            <div class="insta-placeholder w-full max-w-2xl mb-12">
+                <p class="mb-4">Digital Archive Access</p>
+                <a href="https://www.instagram.com/nairtushar9/" target="_blank" class="text-black font-bold border-b border-black">@nairtushar9 ↗</a>
             </div>
+            <h3 class="serif italic text-4xl text-center">Because the "Live Feed" is protected, <br>the archive remains private.</h3>
         </section>
 
-        <section id="origin" class="section-container" style="margin-bottom: 20vh;">
-            <div class="story-text">
-                <span class="serif italic text-gold text-sm block mb-4">The Origin</span>
-                <h2 class="serif text-5xl mb-8">Chapter One: Blue Bar.</h2>
-                <p class="leading-loose text-gray-500 font-light">
-                    Paras and I brought 37 strangers together at the Taj Palace. It was always about building something larger than ourselves. Today, it belongs to everyone who shows up.
-                </p>
-            </div>
-        </section>
     </main>
 
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
-        function jump(id) {
-            gsap.to(window, {duration: 1.5, scrollTo: "#" + id, ease: "power4.inOut"});
-        }
-
-        const sections = ['hero', 'apr', 'mar', 'feb', 'jan', 'origin'];
+        // Background swap logic
+        const sections = ['apr', 'mar', 'feb'];
         
         sections.forEach((id, i) => {
             ScrollTrigger.create({
@@ -148,15 +134,21 @@
                 end: "bottom center",
                 onToggle: self => {
                     if (self.isActive) {
-                        // Update Nav
-                        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-                        document.querySelectorAll('.nav-item')[i].classList.add('active');
-                        
-                        // Update Image
-                        document.querySelectorAll('.bg-img').forEach(img => img.classList.remove('active'));
-                        document.querySelectorAll('.bg-img')[i].classList.add('active');
+                        document.querySelectorAll('.story-image').forEach(img => img.classList.remove('active'));
+                        document.querySelector('#img-' + id).classList.add('active');
                     }
                 }
+            });
+        });
+
+        // Entrance animation for text
+        gsap.utils.toArray('.text-content').forEach(content => {
+            gsap.from(content, {
+                scrollTrigger: content,
+                opacity: 0,
+                y: 50,
+                duration: 1.5,
+                ease: "power3.out"
             });
         });
     </script>
