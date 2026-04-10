@@ -4,163 +4,131 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Big Dinner</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;1,400&family=Inter:wght@300&display=swap" rel="stylesheet">
 
     <style>
         :root { 
-            --gold: #B5A48B; 
-            --parchment: #FDFCFB; 
-            --text: #1A1A1A; 
+            --charcoal: #0A0A0A; 
+            --ivory: #E5E5E5; 
+            --brass: #8E795E;
         }
-        body { background: var(--parchment); color: var(--text); font-family: 'Inter', sans-serif; }
-        .serif { font-family: 'Playfair Display', serif; }
+        body { 
+            background-color: var(--charcoal); 
+            color: var(--ivory); 
+            font-family: 'Inter', sans-serif; 
+            margin: 0;
+            line-height: 1.6;
+        }
+        .serif { font-family: 'EB Garamond', serif; font-weight: 400; }
         
-        /* The "Atelier" Paper Texture */
-        body::before {
-            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            opacity: 0.02; pointer-events: none; z-index: 1000;
-            background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
+        /* The Velvet Rope Filtering */
+        section { 
+            min-height: 100vh; 
+            padding: 10vw; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center;
         }
 
-        /* Top Heading Navigation */
-        .nav-header {
-            position: fixed; top: 0; width: 100%; display: flex; justify-content: center;
-            gap: 3rem; padding: 2.5rem; z-index: 50; background: rgba(253, 252, 251, 0.95);
-            backdrop-filter: blur(10px); border-bottom: 1px solid rgba(0,0,0,0.03);
-        }
-        .nav-link { font-size: 11px; letter-spacing: 0.4em; text-transform: uppercase; cursor: pointer; color: #999; transition: 0.4s; }
-        .nav-link:hover { color: var(--text); }
+        /* Aggressive Whitespace Layout */
+        .max-measure { max-width: 450px; }
 
-        .section-wrap { min-height: 100vh; padding: 15vh 10% 5vh; display: grid; grid-template-columns: 1fr 1fr; gap: 8%; align-items: start; }
-        
-        /* Fixed Image Frame */
-        .image-frame {
-            position: sticky; top: 20vh; height: 65vh; width: 100%;
-            overflow: hidden; border: 1px solid rgba(0,0,0,0.05);
-            background: #f0f0f0; /* Soft grey fallback */
+        .btn-apply {
+            border: 1px solid var(--ivory);
+            padding: 1rem 3rem;
+            font-size: 11px;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            transition: all 0.5s ease;
+            margin-top: 3rem;
+            display: inline-block;
         }
-        .story-image {
-            position: absolute; width: 100%; height: 100%; object-fit: cover;
-            opacity: 0; transition: opacity 1s ease-in-out;
+        .btn-apply:hover {
+            background: var(--ivory);
+            color: var(--charcoal);
         }
-        .story-image.active { opacity: 1; }
 
-        .text-content { padding-top: 5vh; }
-        .divider { width: 40px; height: 1px; background: var(--gold); margin: 2.5rem 0; }
-        .content-body { color: #4a4a4a; line-height: 2.1; font-size: 1rem; font-weight: 300; }
+        /* Image styling: Muted, No Staging */
+        .manifesto-img {
+            filter: grayscale(100%) contrast(110%);
+            opacity: 0.7;
+            width: 100%;
+            height: 60vh;
+            object-fit: cover;
+            margin-bottom: 4rem;
+        }
+
+        .city-list span::after { content: " . "; }
+        .city-list span:last-child::after { content: ""; }
+
+        input, textarea {
+            background: transparent;
+            border-bottom: 1px solid rgba(229, 229, 229, 0.3);
+            width: 100%;
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+            outline: none;
+            color: var(--ivory);
+        }
+        ::placeholder { color: rgba(229, 229, 229, 0.2); }
     </style>
 </head>
 <body>
 
-    <nav class="nav-header">
-        <div class="nav-link" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Entry</div>
-        <div class="nav-link" onclick="document.getElementById('apr').scrollIntoView({behavior: 'smooth'})">April</div>
-        <div class="nav-link" onclick="document.getElementById('mar').scrollIntoView({behavior: 'smooth'})">March</div>
-        <div class="nav-link" onclick="document.getElementById('feb').scrollIntoView({behavior: 'smooth'})">February</div>
-        <div class="nav-link" onclick="document.getElementById('jan').scrollIntoView({behavior: 'smooth'})">January</div>
-        <div class="nav-link" onclick="document.getElementById('origin').scrollIntoView({behavior: 'smooth'})">Origin</div>
-    </nav>
+    <section>
+        <div class="max-measure">
+            <img src="Grazia.jpeg" class="manifesto-img" alt="The Room">
+            <h1 class="serif text-4xl italic mb-6">The Big Dinner</h1>
+            <p class="text-sm tracking-wide opacity-60">A curated experience for the culturally discerning. Entry is conditional.</p>
+            <a href="#apply" class="btn-apply">Apply</a>
+        </div>
+    </section>
 
-    <main>
-        <section id="hero" class="h-screen flex flex-col justify-center items-center text-center">
-            <h1 class="serif text-8xl md:text-[9.5rem] italic tracking-tighter leading-none mb-6">The Big Dinner</h1>
-            <p class="uppercase tracking-[1.5em] text-[10px] text-gray-400">A Perspective Shift</p>
-        </section>
+    <section class="bg-[#0F0F0F]">
+        <div class="max-measure">
+            <h2 class="serif text-3xl italic mb-12">Mandate</h2>
+            <p class="mb-8">The Big Dinner is not a brand. It is a room. We host twenty to forty individuals from disparate fields—law, architecture, capital, design—at a single table.</p>
+            <p class="mb-8">There are no agendas. No pitches are permitted. We filter for character and patience. Meaning arrives through effort.</p>
+            <div class="city-list text-[10px] uppercase tracking-[0.4em] text-gray-500 mt-20">
+                <span>Delhi</span> <span>London</span> <span>Dubai</span> <span class="opacity-30">Mumbai</span>
+            </div>
+        </div>
+    </section>
 
-        <section id="apr" class="section-wrap">
-            <div class="text-content">
-                <span class="serif italic text-gold text-lg mb-2 block">April 2025</span>
-                <h2 class="serif text-6xl mb-8 italic">The Grazia Room.</h2>
-                <div class="divider"></div>
-                <p class="content-body">
-                    Grazia noticed. Not an event, not a brand, not a networking exercise dressed in good lighting. A room. A specific kind of room where the conversation is the only agenda. This one’s for that room. It always will be.
-                </p>
+    <section>
+        <div class="max-measure">
+            <h2 class="serif text-3xl italic mb-12">Inquiry</h2>
+            <div class="space-y-12">
+                <div>
+                    <p class="text-xs uppercase tracking-widest text-gray-500 mb-2">Why is it so exclusive?</p>
+                    <p class="text-sm">Because it must be.</p>
+                </div>
+                <div>
+                    <p class="text-xs uppercase tracking-widest text-gray-500 mb-2">Who is the host?</p>
+                    <p class="text-sm">The room is the host.</p>
+                </div>
+                <div>
+                    <p class="text-xs uppercase tracking-widest text-gray-500 mb-2">Is there a cost?</p>
+                    <p class="text-sm">Those selected contribute to their seat at the table.</p>
+                </div>
             </div>
-            <div class="image-frame">
-                <img src="Grazia.jpeg" class="story-image active" id="img-apr">
-            </div>
-        </section>
+        </div>
+    </section>
 
-        <section id="mar" class="section-wrap">
-            <div class="text-content">
-                <span class="serif italic text-gold text-lg mb-2 block">March 2025</span>
-                <h2 class="serif text-6xl mb-8 italic">Compounding.</h2>
-                <div class="divider"></div>
-                <p class="content-body">
-                    Real friendships have formed—the kind that create value. There is compounding that happens when right people find each other and in that compounding lies growth none of us could have engineered alone.
-                </p>
-            </div>
-            <div class="image-frame">
-                <img src="shangrila.jpeg" class="story-image" id="img-mar">
-            </div>
-        </section>
+    <section id="apply">
+        <div class="max-measure">
+            <h2 class="serif text-3xl italic mb-12">Application</h2>
+            <form action="YOUR_GOOGLE_FORM_URL">
+                <input type="text" placeholder="Full Name">
+                <input type="text" placeholder="Sphere of influence">
+                <textarea rows="4" placeholder="Why do you seek entry?"></textarea>
+                <textarea rows="4" placeholder="What do you contribute to a conversation beyond your professional title?"></textarea>
+                <button type="submit" class="btn-apply w-full">Submit for Review</button>
+            </form>
+            <p class="text-[9px] uppercase tracking-widest text-gray-600 mt-12 text-center">Architected by Sahani & Nair</p>
+        </div>
+    </section>
 
-        <section id="feb" class="section-wrap">
-            <div class="text-content">
-                <span class="serif italic text-gold text-lg mb-2 block">February 2025</span>
-                <h2 class="serif text-6xl mb-8 italic">London Expansion.</h2>
-                <div class="divider"></div>
-                <p class="content-body">
-                    Expansion to London was never about geography. It was about trust. Devansh. Shaurya. I had people on the ground I trust completely, and in my world that is the only condition that matters.
-                </p>
-            </div>
-            <div class="image-frame">
-                <img src="lodnon.jpeg" class="story-image" id="img-feb">
-            </div>
-        </section>
-
-        <section id="jan" class="section-wrap">
-            <div class="text-content">
-                <span class="serif italic text-gold text-lg mb-2 block">January 2025</span>
-                <h2 class="serif text-6xl mb-8 italic">Environments.</h2>
-                <div class="divider"></div>
-                <p class="content-body">
-                    Environment shapes the brain. The same human brain builds rockets, the same human brain builds weapons. Nothing mystical changes, only the environment does. We curate the stories you are exposed to.
-                </p>
-            </div>
-            <div class="image-frame">
-                <img src="janaryan.jpeg" class="story-image" id="img-jan">
-            </div>
-        </section>
-
-        <section id="origin" class="section-wrap" style="margin-bottom: 20vh;">
-            <div class="text-content">
-                <span class="serif italic text-gold text-lg mb-2 block">The Origin</span>
-                <h2 class="serif text-6xl mb-8 italic">Chapter One: Blue Bar.</h2>
-                <div class="divider"></div>
-                <p class="content-body">
-                    Twenty-one people. An idea with no proof of concept. The night the decades began. Paras and I brought strangers together and realized this belonged to everyone who showed up.
-                </p>
-            </div>
-            <div class="image-frame">
-                <img src="itcmaurya.jpeg" class="story-image" id="img-origin">
-            </div>
-        </section>
-
-    </main>
-
-    <script>
-        gsap.registerPlugin(ScrollTrigger);
-
-        // This handles the image swapping as you scroll
-        const sectionIds = ['apr', 'mar', 'feb', 'jan', 'origin'];
-        
-        sectionIds.forEach((id) => {
-            ScrollTrigger.create({
-                trigger: "#" + id,
-                start: "top center",
-                end: "bottom center",
-                onToggle: self => {
-                    if (self.isActive) {
-                        document.querySelectorAll('.story-image').forEach(img => img.classList.remove('active'));
-                        document.querySelector('#img-' + id).classList.add('active');
-                    }
-                }
-            });
-        });
-    </script>
 </body>
 </html>
