@@ -24,7 +24,7 @@
             color: var(--silk); 
             font-family: 'Inter', sans-serif; 
             height: 100%;
-            overflow: hidden; /* Prevent body scroll, we scroll the container */
+            overflow: hidden; 
         }
 
         .serif { font-family: 'EB Garamond', serif; }
@@ -58,15 +58,11 @@
 
         /* The Scrolling Container */
         #main-container {
-            height: 100vh;
-            width: 100vw;
-            overflow-y: scroll;
-            overflow-x: hidden;
-            scroll-snap-type: y mandatory;
-            scroll-behavior: smooth;
+            height: 100vh; width: 100vw;
+            overflow-y: scroll; overflow-x: hidden;
+            scroll-snap-type: y mandatory; scroll-behavior: smooth;
         }
 
-        /* Hide scrollbar for a clean look */
         #main-container::-webkit-scrollbar { display: none; }
         #main-container { -ms-overflow-style: none; scrollbar-width: none; }
 
@@ -86,7 +82,7 @@
             width: 100%; height: 100%; object-fit: cover;
             filter: brightness(0.65) saturate(0.9);
             transform: scale(1.1);
-            transition: transform 12s ease-out; /* Slow luxury zoom */
+            transition: transform 12s ease-out; 
         }
 
         .panel.active .panel-bg img { transform: scale(1.25); }
@@ -95,8 +91,7 @@
         
         .display-text { 
             font-size: clamp(3rem, 10vw, 8rem); 
-            line-height: 0.9; 
-            margin-bottom: 2rem; 
+            line-height: 0.9; margin-bottom: 2rem; 
             will-change: transform, opacity;
         }
 
@@ -110,8 +105,11 @@
             position: fixed; bottom: 3rem; right: 5%; z-index: 1500;
             font-size: 9px; letter-spacing: 0.3em; cursor: pointer;
             text-transform: uppercase; border: 1px solid rgba(255,255,255,0.2);
-            padding: 0.8rem 1.5rem;
-            backdrop-filter: blur(5px);
+            padding: 0.8rem 1.5rem; backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+        #sound-toggle:hover {
+            background: rgba(255,255,255,0.1);
         }
 
         .btn-invite {
@@ -138,7 +136,6 @@
 </head>
 <body>
 
-    <!-- Simple, reliable loader -->
     <div id="loader">
         <div class="serif italic text-silk text-3xl animate-pulse">The Big Dinner</div>
     </div>
@@ -154,9 +151,12 @@
         </div>
     </nav>
 
+    <!-- Audio Player linked to ambient-theme.mp3 -->
+    <audio id="bg-music" loop preload="auto">
+        <source src="ambient-theme.mp3" type="audio/mpeg">
+    </audio>
     <div id="sound-toggle" onclick="toggleSound()">Sound: Off</div>
 
-    <!-- The Scroll Container -->
     <main id="main-container">
 
         <!-- PANEL 0: HERO -->
@@ -240,9 +240,16 @@
             <div class="content-block animate-group">
                 <h2 class="serif display-text italic">Seek Entry.</h2>
                 <p class="text-xl font-light opacity-80 mb-10">Entry is by application only. Curation is the only filter.</p>
-                <a href="https://docs.google.com/forms/d/e/1FAIpQLSe_8Tf0R8M5-vjZ_rA0-8-5vjZ_rA0-8-5vjZ_rA0/viewform" target="_blank">
-                    <button class="btn-invite">Open Application</button>
-                </a>
+                
+                <div class="flex flex-col sm:flex-row gap-6 justify-center mt-10">
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSe_8Tf0R8M5-vjZ_rA0-8-5vjZ_rA0-8-5vjZ_rA0/viewform" target="_blank">
+                        <button class="btn-invite" style="margin-top: 0;">Open Application</button>
+                    </a>
+                    <a href="https://www.instagram.com/thebigdinnerr/?hl=en" target="_blank">
+                        <button class="btn-invite" style="margin-top: 0;">Instagram</button>
+                    </a>
+                </div>
+
                 <div class="mt-24 flex flex-col items-center gap-4">
                     <div class="opacity-50 text-[10px] uppercase tracking-[0.8em]">Architected by Nair and Sahani</div>
                     <div class="opacity-30 text-[9px] uppercase tracking-[0.4em]">Reach out on +91 8448445950 WhatsApp for details</div>
@@ -255,7 +262,6 @@
     <script>
         gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-        // 1. Instant Loader Fade Out (No getting stuck)
         window.addEventListener('load', () => {
             gsap.to("#loader", { 
                 opacity: 0, 
@@ -267,22 +273,20 @@
             });
         });
 
-        // 2. Cinematic Scroll Trigger Animations
         const panels = gsap.utils.toArray(".panel");
 
         panels.forEach((panel, i) => {
-            const elementsToAnimate = panel.querySelectorAll(".sub-text, .display-text, p, button, .mt-24, .experiment-text, .philosophy-text");
+            const elementsToAnimate = panel.querySelectorAll(".sub-text, .display-text, p, button, .mt-24, .experiment-text, .philosophy-text, .flex-row");
             
-            // Set initial state for text
             gsap.set(elementsToAnimate, { opacity: 0, y: 50 });
 
             ScrollTrigger.create({
                 trigger: panel,
                 scroller: "#main-container",
-                start: "top 60%", // Triggers when the panel enters the middle of the screen
+                start: "top 60%", 
                 end: "bottom 40%",
                 onEnter: () => {
-                    panel.classList.add("active"); // Triggers the slow image zoom
+                    panel.classList.add("active"); 
                     gsap.to(elementsToAnimate, { opacity: 1, y: 0, stagger: 0.1, duration: 1.2, ease: "power3.out", overwrite: true });
                 },
                 onEnterBack: () => {
@@ -300,7 +304,6 @@
             });
         });
 
-        // 3. Navigation Click Handler
         function goToPanel(index) {
             const targetPanel = document.getElementById('p' + index);
             gsap.to("#main-container", {
@@ -310,31 +313,20 @@
             });
         }
 
-        // 4. Luxury Audio Logic
-        let audioCtx, oscillator, gainNode;
+        // Custom Audio Engine mapped to your uploaded MP3
+        const bgMusic = document.getElementById('bg-music');
         let isPlaying = false;
 
         function toggleSound() {
             if (!isPlaying) {
-                if (!audioCtx) {
-                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                    oscillator = audioCtx.createOscillator();
-                    gainNode = audioCtx.createGain();
-                    oscillator.type = 'sine';
-                    oscillator.frequency.setValueAtTime(42, audioCtx.currentTime); // Precise luxury hum
-                    gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
-                    gainNode.gain.linearRampToValueAtTime(0.04, audioCtx.currentTime + 2);
-                    oscillator.connect(gainNode);
-                    gainNode.connect(audioCtx.destination);
-                    oscillator.start();
-                } else {
-                    audioCtx.resume();
-                    gainNode.gain.linearRampToValueAtTime(0.04, audioCtx.currentTime + 1);
-                }
-                document.getElementById('sound-toggle').innerText = "Sound: On";
-                isPlaying = true;
+                bgMusic.play().then(() => {
+                    document.getElementById('sound-toggle').innerText = "Sound: On";
+                    isPlaying = true;
+                }).catch(error => {
+                    console.log("Audio play failed (browser autoplay block):", error);
+                });
             } else {
-                gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 1);
+                bgMusic.pause();
                 document.getElementById('sound-toggle').innerText = "Sound: Off";
                 isPlaying = false;
             }
