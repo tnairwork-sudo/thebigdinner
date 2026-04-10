@@ -3,132 +3,342 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Big Dinner</title>
+    <title>The Big Dinner | Invite Only</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;1,400&family=Inter:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@200;300;400;600&display=swap" rel="stylesheet">
 
     <style>
         :root { 
-            --charcoal: #0A0A0A; 
-            --ivory: #E5E5E5; 
-            --brass: #8E795E;
+            --forest: #0B1A15; 
+            --copper: #B87333; 
+            --silk: #F7F5F0; 
+            --gold: #C5A059;
         }
-        body { 
-            background-color: var(--charcoal); 
-            color: var(--ivory); 
-            font-family: 'Inter', sans-serif; 
-            margin: 0;
-            line-height: 1.6;
-        }
-        .serif { font-family: 'EB Garamond', serif; font-weight: 400; }
         
-        /* The Velvet Rope Filtering */
-        section { 
-            min-height: 100vh; 
-            padding: 10vw; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center;
+        body, html { 
+            margin: 0; padding: 0;
+            background: var(--forest); 
+            color: var(--silk); 
+            font-family: 'Inter', sans-serif; 
+            height: 100%;
+            overflow: hidden; /* Prevent body scroll, we scroll the container */
         }
 
-        /* Aggressive Whitespace Layout */
-        .max-measure { max-width: 450px; }
-
-        .btn-apply {
-            border: 1px solid var(--ivory);
-            padding: 1rem 3rem;
-            font-size: 11px;
-            letter-spacing: 0.3em;
-            text-transform: uppercase;
-            transition: all 0.5s ease;
-            margin-top: 3rem;
-            display: inline-block;
-        }
-        .btn-apply:hover {
-            background: var(--ivory);
-            color: var(--charcoal);
+        .serif { font-family: 'EB Garamond', serif; }
+        
+        /* Fast Preloader */
+        #loader {
+            position: fixed; inset: 0; background: var(--forest);
+            z-index: 2000; display: flex; align-items: center; justify-content: center;
         }
 
-        /* Image styling: Muted, No Staging */
-        .manifesto-img {
-            filter: grayscale(100%) contrast(110%);
-            opacity: 0.7;
-            width: 100%;
-            height: 60vh;
-            object-fit: cover;
-            margin-bottom: 4rem;
+        /* Silk Grain Overlay */
+        .overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 1000; opacity: 0.12;
+            background-image: url('https://www.transparenttextures.com/patterns/natural-paper.png');
         }
 
-        .city-list span::after { content: " . "; }
-        .city-list span:last-child::after { content: ""; }
+        /* Navigation */
+        .nav-luxury {
+            position: fixed; top: 0; width: 100%; display: flex; 
+            justify-content: space-between; align-items: center;
+            padding: 2.5rem 5%; z-index: 1500;
+            background: linear-gradient(to bottom, rgba(11, 26, 21, 0.9), transparent);
+        }
+        .nav-link { 
+            font-size: 11px; letter-spacing: 0.5em; text-transform: uppercase; 
+            cursor: pointer; color: var(--silk); opacity: 0.6;
+            transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        .nav-link:hover { opacity: 1; color: var(--gold); }
 
-        input, textarea {
-            background: transparent;
-            border-bottom: 1px solid rgba(229, 229, 229, 0.3);
-            width: 100%;
-            padding: 1rem 0;
+        /* The Scrolling Container */
+        #main-container {
+            height: 100vh;
+            width: 100vw;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+
+        /* Hide scrollbar for a clean look */
+        #main-container::-webkit-scrollbar { display: none; }
+        #main-container { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Full Screen Panels */
+        .panel {
+            position: relative; height: 100vh; width: 100vw;
+            scroll-snap-align: start; scroll-snap-stop: always;
+            overflow: hidden; display: flex; align-items: center; justify-content: center;
+        }
+
+        .panel-bg {
+            position: absolute; inset: 0; z-index: -1;
+            width: 100%; height: 100%;
+        }
+        
+        .panel-bg img {
+            width: 100%; height: 100%; object-fit: cover;
+            filter: brightness(0.65) saturate(0.9);
+            transform: scale(1.1);
+            transition: transform 12s ease-out; /* Slow luxury zoom */
+        }
+
+        .panel.active .panel-bg img { transform: scale(1.25); }
+
+        .content-block { text-align: center; max-width: 900px; padding: 0 2rem; z-index: 10; }
+        
+        .display-text { 
+            font-size: clamp(3rem, 10vw, 8rem); 
+            line-height: 0.9; 
+            margin-bottom: 2rem; 
+            will-change: transform, opacity;
+        }
+
+        .sub-text { 
+            font-size: 13px; letter-spacing: 0.5em; text-transform: uppercase; 
             margin-bottom: 2rem;
-            outline: none;
-            color: var(--ivory);
         }
-        ::placeholder { color: rgba(229, 229, 229, 0.2); }
+
+        /* Sound Toggle */
+        #sound-toggle {
+            position: fixed; bottom: 3rem; right: 5%; z-index: 1500;
+            font-size: 9px; letter-spacing: 0.3em; cursor: pointer;
+            text-transform: uppercase; border: 1px solid rgba(255,255,255,0.2);
+            padding: 0.8rem 1.5rem;
+            backdrop-filter: blur(5px);
+        }
+
+        .btn-invite {
+            border: 1px solid var(--gold); padding: 1.4rem 3.5rem;
+            font-size: 11px; letter-spacing: 0.5em; text-transform: uppercase;
+            transition: 0.6s cubic-bezier(0.19, 1, 0.22, 1); background: transparent; color: var(--gold);
+            cursor: pointer; margin-top: 2.5rem;
+        }
+        .btn-invite:hover { background: var(--gold); color: var(--forest); box-shadow: 0 0 40px rgba(197, 160, 89, 0.3); }
+
+        .experiment-text {
+            column-count: 2; column-gap: 4rem; text-align: left;
+            font-size: 0.95rem; line-height: 1.8;
+        }
+
+        .philosophy-text {
+            max-width: 700px; margin: 0 auto; font-size: 1.1rem; line-height: 1.9;
+        }
+
+        @media (max-width: 1024px) {
+            .experiment-text { column-count: 1; text-align: center; max-height: 50vh; overflow-y: auto; }
+        }
     </style>
 </head>
 <body>
 
-    <section>
-        <div class="max-measure">
-            <img src="Grazia.jpeg" class="manifesto-img" alt="The Room">
-            <h1 class="serif text-4xl italic mb-6">The Big Dinner</h1>
-            <p class="text-sm tracking-wide opacity-60">A curated experience for the culturally discerning. Entry is conditional.</p>
-            <a href="#apply" class="btn-apply">Apply</a>
-        </div>
-    </section>
+    <!-- Simple, reliable loader -->
+    <div id="loader">
+        <div class="serif italic text-silk text-3xl animate-pulse">The Big Dinner</div>
+    </div>
 
-    <section class="bg-[#0F0F0F]">
-        <div class="max-measure">
-            <h2 class="serif text-3xl italic mb-12">Mandate</h2>
-            <p class="mb-8">The Big Dinner is not a brand. It is a room. We host twenty to forty individuals from disparate fields—law, architecture, capital, design—at a single table.</p>
-            <p class="mb-8">There are no agendas. No pitches are permitted. We filter for character and patience. Meaning arrives through effort.</p>
-            <div class="city-list text-[10px] uppercase tracking-[0.4em] text-gray-500 mt-20">
-                <span>Delhi</span> <span>London</span> <span>Dubai</span> <span class="opacity-30">Mumbai</span>
+    <div class="overlay"></div>
+
+    <nav class="nav-luxury">
+        <div class="serif italic text-2xl uppercase tracking-tighter cursor-pointer" onclick="goToPanel(0)">The Big Dinner</div>
+        <div class="flex gap-12 lg:gap-16">
+            <span class="nav-link hidden md:inline-block" onclick="goToPanel(1)">Chronicles</span>
+            <span class="nav-link hidden md:inline-block" onclick="goToPanel(4)">Philosophy</span>
+            <span class="nav-link" onclick="goToPanel(6)">Apply</span>
+        </div>
+    </nav>
+
+    <div id="sound-toggle" onclick="toggleSound()">Sound: Off</div>
+
+    <!-- The Scroll Container -->
+    <main id="main-container">
+
+        <!-- PANEL 0: HERO -->
+        <section class="panel" id="p0">
+            <div class="panel-bg"><img src="shangrila.jpeg" alt="Hero"></div>
+            <div class="content-block animate-group">
+                <p class="sub-text">London . Delhi . Dubai</p>
+                <h1 class="serif display-text italic">Invite Only.</h1>
+                <p class="serif text-2xl italic opacity-70">"It is a bet on people."</p>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section>
-        <div class="max-measure">
-            <h2 class="serif text-3xl italic mb-12">Inquiry</h2>
-            <div class="space-y-12">
-                <div>
-                    <p class="text-xs uppercase tracking-widest text-gray-500 mb-2">Why is it so exclusive?</p>
-                    <p class="text-sm">Because it must be.</p>
-                </div>
-                <div>
-                    <p class="text-xs uppercase tracking-widest text-gray-500 mb-2">Who is the host?</p>
-                    <p class="text-sm">The room is the host.</p>
-                </div>
-                <div>
-                    <p class="text-xs uppercase tracking-widest text-gray-500 mb-2">Is there a cost?</p>
-                    <p class="text-sm">Those selected contribute to their seat at the table.</p>
+        <!-- PANEL 1: THE ROOM -->
+        <section class="panel" id="p1">
+            <div class="panel-bg"><img src="Grazia.jpeg" alt="The Room"></div>
+            <div class="content-block animate-group">
+                <p class="sub-text">The Mandate</p>
+                <h2 class="serif display-text italic">The Room.</h2>
+                <p class="text-xl font-light leading-relaxed max-w-xl mx-auto opacity-80">
+                    Not a brand. Not an event. A specific kind of room where the conversation is the only agenda and the right person sitting next to you might change everything.
+                </p>
+            </div>
+        </section>
+
+        <!-- PANEL 2: THE EXPERIMENT -->
+        <section class="panel" id="p2">
+            <div class="panel-bg"><img src="innecircle3.jpeg" alt="The Experiment"></div>
+            <div class="content-block !max-w-[1100px] animate-group">
+                <p class="sub-text">The Social Experiment</p>
+                <h2 class="serif display-text italic">The Experiment.</h2>
+                <div class="experiment-text font-light text-silk/90">
+                    <p class="mb-6"><span class="serif italic text-2xl text-gold">Forty people</span> stood in a five-star hotel ballroom in Delhi with no chairs, no name tags, and no idea who anyone else was. This was deliberate. I started The Big Dinner because I kept noticing something: who you spend time with shapes who you become, often more than talent or effort. But adulthood offers fewer and fewer chances to recalibrate that environment intentionally. So I built a room where the usual shortcuts fail.</p>
+                    <p class="mb-6">The entry price is a form. A long one. It asks questions that are difficult to skim, difficult to fake, and difficult to outsource. Not because I’m filtering for intelligence or achievement, but because I’m looking for patience, self-awareness, and a willingness to think slowly.</p>
+                    <p class="mb-6">Many applicants are rejected. What makes rejection sting is not status, but effort. By the time you’ve finished the form, you’ve already invested something personal. Meaning begins before you even arrive. Once a month, 40 people are selected out of over 850 applications—journalists and pilots, designers and doctors, lawyers and business heirs.</p>
+                    <p>The overlap is deliberate: fields that rarely intersect socially. People can’t optimize their behavior when they don’t know who matters. The mind, deprived of its normal heuristics, shifts gears. Conversations drift toward curiosity rather than outcomes. There’s a mild discomfort to all of it. Anthropologists would call this a controlled social stressor closer to a rite than a party. The discomfort isn’t a bug. It’s the mechanism.</p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="apply">
-        <div class="max-measure">
-            <h2 class="serif text-3xl italic mb-12">Application</h2>
-            <form action="YOUR_GOOGLE_FORM_URL">
-                <input type="text" placeholder="Full Name">
-                <input type="text" placeholder="Sphere of influence">
-                <textarea rows="4" placeholder="Why do you seek entry?"></textarea>
-                <textarea rows="4" placeholder="What do you contribute to a conversation beyond your professional title?"></textarea>
-                <button type="submit" class="btn-apply w-full">Submit for Review</button>
-            </form>
-            <p class="text-[9px] uppercase tracking-widest text-gray-600 mt-12 text-center">Architected by Sahani & Nair</p>
-        </div>
-    </section>
+        <!-- PANEL 3: LONDON -->
+        <section class="panel" id="p3">
+            <div class="panel-bg"><img src="lodnon.jpeg" alt="London"></div>
+            <div class="content-block animate-group">
+                <p class="sub-text">February 2025</p>
+                <h2 class="serif display-text italic">London.</h2>
+                <p class="text-xl font-light leading-relaxed max-w-lg mx-auto opacity-80">
+                    Expansion was never about geography. It was about trust. I had people on the ground I trust completely—Devansh and Shaurya. In our world, that is the only condition that matters.
+                </p>
+            </div>
+        </section>
 
+        <!-- PANEL 4: RELATIONSHIPS -->
+        <section class="panel" id="p4">
+            <div class="panel-bg"><img src="jan1.jpeg" alt="Philosophy"></div>
+            <div class="content-block animate-group">
+                <p class="sub-text">The Philosophy</p>
+                <h2 class="serif display-text italic">Relationships.</h2>
+                <div class="philosophy-text font-light text-silk/90">
+                    <p class="mb-6">Relationships are the quiet architecture of progress. Most of us understand the importance of people in our lives and the way partnerships can change their course. We acknowledge it easily, instinctively, even if we rarely pause to examine it closely.</p>
+                    <p class="mb-6">What limits growth is rarely circumstance. It is belief. Many of us have been taught that for one person to make money, another must lose. I believe the opposite. There is something deeply fulfilling about making money with and for the people around you, where individual ambition quietly becomes shared momentum.</p>
+                    <p class="serif italic text-2xl text-gold mt-10">"I only knew the kind of room I wanted to build."</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PANEL 5: TRUST -->
+        <section class="panel" id="p5">
+            <div class="panel-bg"><img src="itcmaurya.jpeg" alt="Trust"></div>
+            <div class="content-block animate-group">
+                <p class="sub-text">Compounding</p>
+                <h2 class="serif display-text italic">Trust.</h2>
+                <p class="text-xl font-light leading-relaxed max-w-xl mx-auto opacity-80">
+                    Real friendships have formed—the kind that create value. Growth none of us could have engineered alone. Friendships first, work following naturally.
+                </p>
+            </div>
+        </section>
+
+        <!-- PANEL 6: THE CLOSE -->
+        <section class="panel" id="p6">
+            <div class="panel-bg"><img src="dec11.jpeg" alt="Apply"></div>
+            <div class="content-block animate-group">
+                <h2 class="serif display-text italic">Seek Entry.</h2>
+                <p class="text-xl font-light opacity-80 mb-10">Entry is by application only. Curation is the only filter.</p>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSe_8Tf0R8M5-vjZ_rA0-8-5vjZ_rA0-8-5vjZ_rA0/viewform" target="_blank">
+                    <button class="btn-invite">Open Application</button>
+                </a>
+                <div class="mt-24 flex flex-col items-center gap-4">
+                    <div class="opacity-50 text-[10px] uppercase tracking-[0.8em]">Architected by Nair and Sahani</div>
+                    <div class="opacity-30 text-[9px] uppercase tracking-[0.4em]">Reach out on +91 8448445950 WhatsApp for details</div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+        // 1. Instant Loader Fade Out (No getting stuck)
+        window.addEventListener('load', () => {
+            gsap.to("#loader", { 
+                opacity: 0, 
+                duration: 1, 
+                delay: 0.2, 
+                onComplete: () => {
+                    document.getElementById('loader').style.display = 'none';
+                }
+            });
+        });
+
+        // 2. Cinematic Scroll Trigger Animations
+        const panels = gsap.utils.toArray(".panel");
+
+        panels.forEach((panel, i) => {
+            const elementsToAnimate = panel.querySelectorAll(".sub-text, .display-text, p, button, .mt-24, .experiment-text, .philosophy-text");
+            
+            // Set initial state for text
+            gsap.set(elementsToAnimate, { opacity: 0, y: 50 });
+
+            ScrollTrigger.create({
+                trigger: panel,
+                scroller: "#main-container",
+                start: "top 60%", // Triggers when the panel enters the middle of the screen
+                end: "bottom 40%",
+                onEnter: () => {
+                    panel.classList.add("active"); // Triggers the slow image zoom
+                    gsap.to(elementsToAnimate, { opacity: 1, y: 0, stagger: 0.1, duration: 1.2, ease: "power3.out", overwrite: true });
+                },
+                onEnterBack: () => {
+                    panel.classList.add("active");
+                    gsap.to(elementsToAnimate, { opacity: 1, y: 0, stagger: 0.1, duration: 1.2, ease: "power3.out", overwrite: true });
+                },
+                onLeave: () => {
+                    panel.classList.remove("active");
+                    gsap.to(elementsToAnimate, { opacity: 0, y: -50, duration: 0.8, ease: "power2.in", overwrite: true });
+                },
+                onLeaveBack: () => {
+                    panel.classList.remove("active");
+                    gsap.to(elementsToAnimate, { opacity: 0, y: 50, duration: 0.8, ease: "power2.in", overwrite: true });
+                }
+            });
+        });
+
+        // 3. Navigation Click Handler
+        function goToPanel(index) {
+            const targetPanel = document.getElementById('p' + index);
+            gsap.to("#main-container", {
+                scrollTo: targetPanel,
+                duration: 1.5,
+                ease: "power4.inOut"
+            });
+        }
+
+        // 4. Luxury Audio Logic
+        let audioCtx, oscillator, gainNode;
+        let isPlaying = false;
+
+        function toggleSound() {
+            if (!isPlaying) {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                    oscillator = audioCtx.createOscillator();
+                    gainNode = audioCtx.createGain();
+                    oscillator.type = 'sine';
+                    oscillator.frequency.setValueAtTime(42, audioCtx.currentTime); // Precise luxury hum
+                    gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
+                    gainNode.gain.linearRampToValueAtTime(0.04, audioCtx.currentTime + 2);
+                    oscillator.connect(gainNode);
+                    gainNode.connect(audioCtx.destination);
+                    oscillator.start();
+                } else {
+                    audioCtx.resume();
+                    gainNode.gain.linearRampToValueAtTime(0.04, audioCtx.currentTime + 1);
+                }
+                document.getElementById('sound-toggle').innerText = "Sound: On";
+                isPlaying = true;
+            } else {
+                gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 1);
+                document.getElementById('sound-toggle').innerText = "Sound: Off";
+                isPlaying = false;
+            }
+        }
+    </script>
 </body>
 </html>
