@@ -18,105 +18,111 @@
         body { background: var(--parchment); color: var(--text); font-family: 'Inter', sans-serif; }
         .serif { font-family: 'Playfair Display', serif; }
         
-        /* Subtle Paper Texture */
+        /* Fresh Atelier Texture */
         body::before {
             content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            opacity: 0.03; pointer-events: none; z-index: 1000;
+            opacity: 0.02; pointer-events: none; z-index: 1000;
             background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
         }
 
+        /* Top Heading Navigation */
         .nav-header {
             position: fixed; top: 0; width: 100%; display: flex; justify-content: center;
-            gap: 2.5rem; padding: 2rem; z-index: 50; background: rgba(253, 252, 251, 0.9);
-            backdrop-filter: blur(5px); border-bottom: 1px solid rgba(0,0,0,0.03);
+            gap: 3rem; padding: 2.5rem; z-index: 50; background: rgba(253, 252, 251, 0.95);
+            backdrop-filter: blur(10px); border-bottom: 1px solid rgba(0,0,0,0.03);
         }
-        .nav-link { font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; cursor: pointer; color: #888; transition: 0.4s; }
+        .nav-link { font-size: 11px; letter-spacing: 0.4em; text-transform: uppercase; cursor: pointer; color: #999; transition: 0.4s; }
         .nav-link:hover { color: var(--text); }
 
-        /* The Image Display */
-        .image-container {
-            position: sticky; top: 15vh; height: 70vh; width: 100%;
-            overflow: hidden; border-radius: 2px;
+        .section-wrap { min-height: 100vh; padding: 15vh 10% 5vh; display: grid; grid-template-columns: 1fr 1fr; gap: 8%; align-items: start; }
+        
+        /* Sticky Image Frame */
+        .image-frame {
+            position: sticky; top: 20vh; height: 65vh; width: 100%;
+            overflow: hidden; border: 1px solid rgba(0,0,0,0.05);
+            background: #eee;
         }
         .story-image {
             position: absolute; width: 100%; height: 100%; object-fit: cover;
-            opacity: 0; transition: opacity 1s ease-in-out, transform 1.5s ease-out;
-            filter: sepia(10%) brightness(1.05);
+            opacity: 0; transition: opacity 1s ease-in-out;
         }
-        .story-image.active { opacity: 1; transform: scale(1.05); }
+        .story-image.active { opacity: 1; }
 
-        .section-wrap { min-height: 120vh; padding: 0 8%; display: grid; grid-template-cols: 1.2fr 1fr; gap: 5%; align-items: center; }
-        .text-content { padding-right: 10%; }
-        
-        /* Vertical Line */
-        .divider { width: 1px; height: 100px; background: var(--gold); margin: 2rem 0; opacity: 0.5; }
-
-        .insta-placeholder {
-            border: 1px solid #eee; padding: 2rem; text-align: center;
-            font-size: 11px; letter-spacing: 0.2em; color: #999; text-transform: uppercase;
-        }
+        .text-content { padding-top: 5vh; }
+        .divider { width: 40px; height: 1px; background: var(--gold); margin: 2.5rem 0; }
+        .content-body { color: #4a4a4a; line-height: 2; font-size: 1rem; font-weight: 300; }
     </style>
 </head>
 <body>
 
     <nav class="nav-header">
-        <div class="nav-link" onclick="gsap.to(window, {scrollTo: '#hero', duration: 1})">Entry</div>
-        <div class="nav-link" onclick="gsap.to(window, {scrollTo: '#apr', duration: 1})">April</div>
-        <div class="nav-link" onclick="gsap.to(window, {scrollTo: '#mar', duration: 1})">March</div>
-        <div class="nav-link" onclick="gsap.to(window, {scrollTo: '#feb', duration: 1})">February</div>
+        <div class="nav-link" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">Entry</div>
+        <div class="nav-link" onclick="document.getElementById('apr').scrollIntoView({behavior: 'smooth'})">April</div>
+        <div class="nav-link" onclick="document.getElementById('mar').scrollIntoView({behavior: 'smooth'})">March</div>
+        <div class="nav-link" onclick="document.getElementById('feb').scrollIntoView({behavior: 'smooth'})">February</div>
+        <div class="nav-link" onclick="document.getElementById('jan').scrollIntoView({behavior: 'smooth'})">January</div>
     </nav>
 
     <main>
         <section id="hero" class="h-screen flex flex-col justify-center items-center text-center">
-            <h1 class="serif text-8xl md:text-[10rem] italic tracking-tighter leading-none mb-6">The Big Dinner</h1>
-            <p class="uppercase tracking-[1.2em] text-[11px] text-gray-400">A Perspective Shift • 2026</p>
+            <h1 class="serif text-8xl md:text-[9rem] italic tracking-tighter leading-none mb-6">The Big Dinner</h1>
+            <p class="uppercase tracking-[1.5em] text-[10px] text-gray-400">A Perspective Shift</p>
         </section>
 
         <section id="apr" class="section-wrap">
             <div class="text-content">
-                <span class="serif italic text-gold text-lg mb-2 block">April 2025</span>
-                <h2 class="serif text-6xl mb-8 leading-tight">The Grazia Room.</h2>
+                <span class="date-stamp text-gold text-xs tracking-widest uppercase">April 2025</span>
+                <h2 class="serif text-6xl mt-4 mb-8 italic">The Grazia Room.</h2>
                 <div class="divider"></div>
-                <p class="leading-relaxed text-gray-600 mb-6">Since October, we have been quietly building something I genuinely believe in—not an event, not a brand, not a networking exercise dressed in good lighting. A room. A specific kind of room.</p>
-                <p class="leading-relaxed text-gray-600">One where the conversation is the only agenda and the right person sitting next to you might change something about how you see the next ten years. Grazia noticed. This one’s for the room.</p>
+                <p class="content-body">
+                    Since October, we have been quietly building something I genuinely believe in—not an event, not a brand, not a networking exercise dressed in good lighting. A room. A specific kind of room. Grazia noticed. This one’s for that room. It always will be.
+                </p>
             </div>
-            <div class="image-container">
+            <div class="image-frame">
                 <img src="Grazia.jpeg" class="story-image active" id="img-apr">
             </div>
         </section>
 
         <section id="mar" class="section-wrap">
             <div class="text-content">
-                <span class="serif italic text-gold text-lg mb-2 block">March 2025</span>
-                <h2 class="serif text-6xl mb-8 leading-tight">Real Friendships.</h2>
+                <span class="date-stamp text-gold text-xs tracking-widest uppercase">March 2025</span>
+                <h2 class="serif text-6xl mt-4 mb-8 italic">Compounding.</h2>
                 <div class="divider"></div>
-                <p class="leading-relaxed text-gray-600 mb-6">Real friendships have formed—the kind that create value. There is compounding that happens when right people find each other and in that compounding lies growth none of us could have engineered alone.</p>
-                <p class="leading-relaxed text-gray-600">Conversations traveling between family offices and counsel, between designers and those who build capital. Real collaborations born from real trust.</p>
+                <p class="content-body">
+                    Real friendships have formed—the kind that create value. There is compounding that happens when right people find each other. Conversations traveling between family offices and counsel, between designers and those who build capital.
+                </p>
             </div>
-            <div class="image-container">
+            <div class="image-frame">
                 <img src="shangrila.jpeg" class="story-image" id="img-mar">
             </div>
         </section>
 
         <section id="feb" class="section-wrap">
             <div class="text-content">
-                <span class="serif italic text-gold text-lg mb-2 block">February 2025</span>
-                <h2 class="serif text-6xl mb-8 leading-tight">The London Win.</h2>
+                <span class="date-stamp text-gold text-xs tracking-widest uppercase">February 2025</span>
+                <h2 class="serif text-6xl mt-4 mb-8 italic">London & ELLE.</h2>
                 <div class="divider"></div>
-                <p class="leading-relaxed text-gray-600 mb-6">Expansion to London was never about geography. It was about trust. Devansh. Shaurya. Rock stars, both of them. I had people on the ground I trust completely.</p>
-                <p class="leading-relaxed text-gray-600">Meanwhile, back home, ELLE India captured the "quiet glamour" of the Shangri-La gathering. Sixty-two people. Seven gatherings. One belief.</p>
+                <p class="content-body">
+                    Expansion to London was never about geography. It was about Devansh and Shaurya—trust. Meanwhile, at Shangri-La, sixty-two people gathered. No posturing. Just sharp, present, self-assured people.
+                </p>
             </div>
-            <div class="image-container">
-                <img src="lodnon.jpeg" class="story-image" id="img-feb">
+            <div class="image-frame">
+                <img src="elle.jpeg" class="story-image" id="img-feb">
             </div>
         </section>
 
-        <section class="h-screen flex flex-col justify-center items-center px-10">
-            <div class="insta-placeholder w-full max-w-2xl mb-12">
-                <p class="mb-4">Digital Archive Access</p>
-                <a href="https://www.instagram.com/nairtushar9/" target="_blank" class="text-black font-bold border-b border-black">@nairtushar9 ↗</a>
+        <section id="jan" class="section-wrap">
+            <div class="text-content">
+                <span class="date-stamp text-gold text-xs tracking-widest uppercase">January 2025</span>
+                <h2 class="serif text-6xl mt-4 mb-8 italic">Environments.</h2>
+                <div class="divider"></div>
+                <p class="content-body">
+                    Environment shapes the brain. Creativity is the ability to connect two different parts of life. We are curating the stories and things you are exposed to.
+                </p>
             </div>
-            <h3 class="serif italic text-4xl text-center">Because the "Live Feed" is protected, <br>the archive remains private.</h3>
+            <div class="image-frame">
+                <img src="janaryan.jpeg" class="story-image" id="img-jan">
+            </div>
         </section>
 
     </main>
@@ -124,10 +130,8 @@
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
-        // Background swap logic
-        const sections = ['apr', 'mar', 'feb'];
-        
-        sections.forEach((id, i) => {
+        const sections = ['apr', 'mar', 'feb', 'jan'];
+        sections.forEach((id) => {
             ScrollTrigger.create({
                 trigger: "#" + id,
                 start: "top center",
@@ -138,17 +142,6 @@
                         document.querySelector('#img-' + id).classList.add('active');
                     }
                 }
-            });
-        });
-
-        // Entrance animation for text
-        gsap.utils.toArray('.text-content').forEach(content => {
-            gsap.from(content, {
-                scrollTrigger: content,
-                opacity: 0,
-                y: 50,
-                duration: 1.5,
-                ease: "power3.out"
             });
         });
     </script>
