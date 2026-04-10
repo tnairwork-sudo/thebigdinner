@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Big Dinner | Gallery</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@200;300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root { 
+            --forest: #0B1A15; 
+            --copper: #B87333; 
+            --silk: #F7F5F0; 
+            --gold: #C5A059;
+        }
+        
+        body, html { 
+            margin: 0; padding: 0;
+            background: var(--forest); 
+            color: var(--silk); 
+            font-family: 'Inter', sans-serif; 
+            background-color: #08120e; /* Slightly darker forest for the gallery background */
+        }
+
+        .serif { font-family: 'EB Garamond', serif; }
+        
+        /* Silk Grain Overlay */
+        .overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 1000; opacity: 0.12;
+            background-image: url('https://www.transparenttextures.com/patterns/natural-paper.png');
+        }
+
+        /* Navigation */
+        .nav-luxury {
+            position: fixed; top: 0; width: 100%; display: flex; 
+            justify-content: space-between; align-items: center;
+            padding: 2.5rem 5%; z-index: 1500;
+            background: linear-gradient(to bottom, rgba(8, 18, 14, 0.95), transparent);
+        }
+        .nav-link { 
+            font-size: 11px; letter-spacing: 0.5em; text-transform: uppercase; 
+            cursor: pointer; color: var(--silk); opacity: 0.6;
+            transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            text-decoration: none;
+        }
+        .nav-link:hover, .nav-link.active { opacity: 1; color: var(--gold); }
+
+        /* Header */
+        .gallery-header {
+            padding: 25vh 5% 10vh;
+            text-align: center;
+        }
+        
+        /* Editorial Grid Layout */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 2rem;
+            padding: 0 5% 15vh;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(0.2) contrast(1.1) brightness(0.85);
+            transition: transform 1.5s cubic-bezier(0.19, 1, 0.22, 1), filter 1s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+            filter: grayscale(0) contrast(1.1) brightness(1);
+        }
+
+        /* Asymmetric Layout Sizing */
+        .item-1 { grid-column: 2 / span 5; aspect-ratio: 4/5; }
+        .item-2 { grid-column: 8 / span 4; aspect-ratio: 3/4; margin-top: 15vh; }
+        .item-3 { grid-column: 3 / span 8; aspect-ratio: 16/9; margin-top: 10vh; }
+        .item-4 { grid-column: 1 / span 6; aspect-ratio: 1/1; margin-top: 5vh; }
+        .item-5 { grid-column: 8 / span 5; aspect-ratio: 4/5; margin-top: -10vh; }
+        .item-6 { grid-column: 4 / span 6; aspect-ratio: 3/2; margin-top: 10vh; }
+        .item-7 { grid-column: 2 / span 10; aspect-ratio: 21/9; margin-top: 15vh; }
+
+        @media (max-width: 768px) {
+            .gallery-grid { display: flex; flex-direction: column; gap: 4rem; }
+            .gallery-item { grid-column: 1 / -1 !important; margin-top: 0 !important; aspect-ratio: auto; }
+        }
+
+        /* Footer */
+        .footer-minimal {
+            text-align: center;
+            padding: 10vh 5%;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="overlay"></div>
+
+    <nav class="nav-luxury">
+        <a href="index.html" style="text-decoration: none;">
+            <div class="serif italic text-2xl uppercase tracking-tighter cursor-pointer text-silk">The Big Dinner</div>
+        </a>
+        <div class="flex gap-12 lg:gap-16">
+            <a href="index.html" class="nav-link hidden md:inline-block">Home</a>
+            <span class="nav-link active">Gallery</span>
+        </div>
+    </nav>
+
+    <header class="gallery-header">
+        <p class="text-[11px] letter-spacing-[0.5em] uppercase text-copper tracking-[0.5em] mb-6">The Archives</p>
+        <h1 class="serif text-6xl md:text-8xl italic">Visual Evidence.</h1>
+    </header>
+
+    <main class="gallery-grid">
+        <!-- Image 1 -->
+        <div class="gallery-item item-1">
+            <img src="Grazia.jpeg" alt="The Room">
+        </div>
+        
+        <!-- Image 2 -->
+        <div class="gallery-item item-2">
+            <img src="innecircle3.jpeg" alt="The Experiment">
+        </div>
+
+        <!-- Image 3 -->
+        <div class="gallery-item item-3">
+            <img src="shangrila.jpeg" alt="Shangri-La Eros">
+        </div>
+
+        <!-- Image 4 -->
+        <div class="gallery-item item-4">
+            <img src="jan1.jpeg" alt="Philosophy">
+        </div>
+
+        <!-- Image 5 -->
+        <div class="gallery-item item-5">
+            <img src="lodnon.jpeg" alt="London Dinner">
+        </div>
+
+        <!-- Image 6 -->
+        <div class="gallery-item item-6">
+            <img src="itcmaurya.jpeg" alt="ITC Maurya">
+        </div>
+
+        <!-- Image 7 -->
+        <div class="gallery-item item-7">
+            <img src="dec11.jpeg" alt="The Archive">
+        </div>
+    </main>
+
+    <footer class="footer-minimal">
+        <div class="opacity-50 text-[10px] uppercase tracking-[0.8em] mb-4">Architected by Nair and Sahani</div>
+        <div class="opacity-30 text-[9px] uppercase tracking-[0.4em]">The Big Dinner © 2026</div>
+    </footer>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Header Animation
+        gsap.from(".gallery-header p, .gallery-header h1", {
+            y: 30,
+            opacity: 0,
+            duration: 1.2,
+            stagger: 0.2,
+            ease: "power3.out",
+            delay: 0.2
+        });
+
+        // Cinematic Image Reveal on Scroll
+        const items = gsap.utils.toArray('.gallery-item');
+        
+        items.forEach((item) => {
+            gsap.to(item, {
+                y: 0,
+                opacity: 1,
+                duration: 1.5,
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: item,
+                    start: "top 85%", // Triggers when top of image hits 85% down the viewport
+                    toggleActions: "play none none reverse"
+                }
+            });
+        });
+    </script>
+</body>
+</html>
