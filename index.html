@@ -46,6 +46,25 @@
             font-family: 'EB Garamond', serif; font-size: 1.6rem; font-style: italic;
             color: var(--silk); letter-spacing: 0.05em; cursor: pointer;
         }
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+        .nav-link {
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--silk);
+            opacity: 0.7;
+            cursor: pointer;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+        .nav-link:hover {
+            opacity: 1;
+            color: var(--gold);
+        }
 
         /* Chapter Text Layout */
         .chapter-info {
@@ -306,7 +325,8 @@
         const data = chapters[idx];
         const info = document.getElementById('chapterInfo');
         const progInChapter = (scrollProgress * (chapters.length - 1)) % 1;
-        const opacity = progInChapter < 0.1 || progInChapter > 0.9 ? 0 : 1;
+        const isAtStart = scrollProgress < 0.005;
+        const opacity = isAtStart || (progInChapter >= 0.1 && progInChapter <= 0.9) ? 1 : 0;
 
         info.style.opacity = opacity;
         if(opacity > 0.5) {
