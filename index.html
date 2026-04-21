@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Big Dinner</title>
+    <title>The Big Dinner | Invite Only</title>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;1,400&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
@@ -13,102 +14,285 @@
             --dark: #0a0a0a;
             --copper: #B87333;
         }
-        body {
+
+        body, html {
+            width: 100%; height: 100%;
             background-color: var(--dark);
             color: var(--silk);
-            font-family: 'Times New Roman', serif; /* Elegant fallback */
-            height: 500vh; /* Scroll room */
+            font-family: 'Inter', sans-serif;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
-        /* The Cinematic Background */
-        .stage {
-            position: fixed; top: 0; left: 0;
-            width: 100vw; height: 100vh;
-            perspective: 1000px;
-            display: flex; align-items: center; justify-content: center;
-            background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 100%);
-            z-index: 1;
-        }
-        /* The CSS Monolith */
-        .monolith {
-            position: absolute;
-            width: 200px; height: 300px;
-            background: var(--forest);
-            border-left: 2px solid var(--gold);
-            box-shadow: 0 0 50px rgba(0,0,0,0.8);
-            transform-style: preserve-3d;
-            transition: transform 0.1s linear, opacity 0.5s ease;
-            display: flex; align-items: center; justify-content: center;
-            text-align: center; padding: 20px;
-        }
-        /* UI Layer */
-        .overlay {
+
+        #loader {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 10; pointer-events: none;
-            padding: 3rem;
+            background: var(--dark); z-index: 2000;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            transition: opacity 1s ease;
         }
-        .nav-brand { font-size: 1.5rem; font-style: italic; color: var(--silk); }
-        .content {
-            position: absolute; top: 50%; left: 10%;
-            transform: translateY(-50%); max-width: 400px;
-            opacity: 0; transition: opacity 0.5s ease;
+        .loader-brand {
+            font-family: 'EB Garamond', serif; font-size: 2rem; font-style: italic;
+            color: var(--gold); margin-bottom: 1rem;
         }
-        .active-text { opacity: 1; }
-        h1 { font-size: 3rem; color: var(--gold); font-style: italic; margin-bottom: 1rem; }
-        p { font-size: 1.1rem; line-height: 1.6; opacity: 0.8; }
+        .loader-bar { width: 100px; height: 1px; background: rgba(197, 160, 89, 0.2); position: relative; }
+        .loader-progress { position: absolute; left: 0; height: 100%; width: 0%; background: var(--gold); transition: width 0.5s; }
+
+        #canvas-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 1; background: var(--dark);
+        }
+
+        .ui-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 100;
+        }
+
+        .nav-luxury {
+            position: fixed; top: 0; left: 0; right: 0;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 2.5rem 5%; background: linear-gradient(to bottom, rgba(10, 10, 10, 0.8), transparent);
+            z-index: 101; pointer-events: auto;
+        }
+        .nav-brand {
+            font-family: 'EB Garamond', serif; font-size: 1.5rem; font-style: italic;
+            color: var(--silk); cursor: pointer; letter-spacing: 0.05em;
+        }
+        .nav-links { display: flex; gap: 3rem; align-items: center; }
+        .nav-link {
+            font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+            color: var(--silk); opacity: 0.5; transition: 0.6s ease; cursor: pointer; text-decoration: none;
+        }
+        .nav-link:hover { opacity: 1; color: var(--gold); }
+
+        .chapter-info {
+            position: fixed; top: 50%; left: 8%; transform: translateY(-50%);
+            max-width: 500px; z-index: 50; opacity: 0;
+            transition: opacity 0.8s ease, transform 1s ease;
+            pointer-events: none;
+        }
+        .chapter-title {
+            font-family: 'EB Garamond', serif; font-size: clamp(2.5rem, 8vw, 4.5rem);
+            font-style: italic; color: var(--gold); line-height: 1.1; margin-bottom: 1rem;
+        }
+        .chapter-subtitle {
+            font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
+            color: var(--silk); opacity: 0.6; margin-bottom: 1.5rem;
+        }
+        .chapter-description {
+            font-size: 1.05rem; line-height: 1.8; color: var(--silk); opacity: 0.8; font-weight: 300;
+        }
+
+        .scroll-indicator {
+            position: fixed; bottom: 3rem; left: 50%; transform: translateX(-50%);
+            z-index: 50; text-align: center; pointer-events: none; opacity: 1; transition: opacity 0.6s ease;
+        }
+        .scroll-indicator-text {
+            font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+            color: var(--silk); opacity: 0.4;
+        }
+
+        .action-buttons {
+            position: fixed; bottom: 10%; left: 8%; z-index: 150;
+            display: flex; gap: 1.5rem; opacity: 0; pointer-events: none; transition: 1s ease;
+        }
+        .btn-action {
+            border: 1px solid var(--gold); padding: 1.2rem 3rem;
+            font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+            background: transparent; color: var(--gold); cursor: pointer; pointer-events: auto;
+            transition: 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        .btn-action:hover {
+            background: var(--gold); color: var(--forest);
+            transform: translateY(-5px); box-shadow: 0 20px 40px rgba(197, 160, 89, 0.2);
+        }
+
+        .scroll-spacer { height: 1000vh; width: 1px; pointer-events: none; }
+
+        .footer-text {
+            position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%);
+            z-index: 50; text-align: center; opacity: 0; transition: 1s ease;
+            font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase;
+        }
+
+        @media (max-width: 768px) {
+            .chapter-info { left: 5%; right: 5%; max-width: none; text-align: center; }
+            .nav-links { display: none; }
+            .action-buttons { left: 50%; transform: translateX(-50%); width: 80%; flex-direction: column; bottom: 15%; }
+            .btn-action { width: 100%; }
+        }
     </style>
 </head>
 <body>
 
-    <div class="stage" id="stage">
-        <div class="monolith" id="monolith">
-            <div style="color: var(--gold); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;">The Big Dinner</div>
-        </div>
-    </div>
+<div id="loader">
+    <div class="loader-brand">The Big Dinner</div>
+    <div class="loader-bar"><div class="loader-progress" id="loader-progress"></div></div>
+</div>
 
-    <div class="overlay">
+<div id="canvas-container"></div>
+
+<div class="ui-overlay">
+    <nav class="nav-luxury">
         <div class="nav-brand">The Big Dinner</div>
-        <div class="content" id="textContent">
-            <h1 id="title">Invite Only</h1>
-            <p id="desc">Curation is the only filter. We gather the people, not the network.</p>
+        <div class="nav-links">
+            <span class="nav-link" onclick="scrollToChapter(2)">Chronicles</span>
+            <span class="nav-link" onclick="scrollToChapter(4)">Philosophy</span>
+            <a href="gallery.html" class="nav-link" style="pointer-events: auto;">Gallery</a>
+            <span class="nav-link" onclick="scrollToChapter(6)">Apply</span>
         </div>
+    </nav>
+
+    <div class="chapter-info" id="chapterInfo">
+        <h1 class="chapter-title" id="chapterTitle">Invite Only</h1>
+        <p class="chapter-subtitle" id="chapterSubtitle">London · Delhi · Dubai · Mumbai</p>
+        <p class="chapter-description" id="chapterDescription">An invitation-only dining experience built on curation, not networking. Carefully selected gatherings across four cities.</p>
     </div>
 
-    <script>
-        const chapters = [
-            { title: 'Invite Only', desc: 'Curation is the only filter.', color: '#0B1A15' },
-            { title: 'The Experiment', desc: 'October 2025. Blue Bar, Taj Palace.', color: '#B87333' },
-            { title: 'London', desc: 'February 2026. A global extension of trust.', color: '#0B1A15' },
-            { title: 'Mumbai', desc: 'April 2026. The Harbour Bar.', color: '#B87333' },
-            { title: 'Seek Entry', desc: 'The next room is being built.', color: '#0B1A15' }
-        ];
+    <div class="scroll-indicator" id="scrollIndicator">
+        <div class="scroll-indicator-text">Scroll to explore</div>
+    </div>
 
-        const monolith = document.getElementById('monolith');
-        const textContent = document.getElementById('textContent');
-        const title = document.getElementById('title');
-        const desc = document.getElementById('desc');
+    <div class="action-buttons" id="actionButtons">
+        <a href="https://forms.gle/vGGAHKJGr3yNK25b6" target="_blank" style="text-decoration:none">
+            <button class="btn-action">Apply for Entry</button>
+        </a>
+        <a href="https://www.instagram.com/thebigdinnerr/?hl=en" target="_blank" style="text-decoration:none">
+            <button class="btn-action">Instagram</button>
+        </a>
+    </div>
 
-        window.addEventListener('scroll', () => {
-            const scrolled = window.scrollY / (document.body.scrollHeight - window.innerHeight);
-            
-            // 3D Travel Effect
-            const zTranslate = scrolled * 2000 - 500;
-            const yRotate = Math.sin(scrolled * 10) * 10;
-            monolith.style.transform = `translateZ(${zTranslate}px) rotateY(${yRotate}deg)`;
-            
-            // Opacity fade when "passing" the monolith
-            monolith.style.opacity = zTranslate > 400 ? 0 : 1;
+    <div class="footer-text" id="footerText">
+        <div style="color:var(--silk); opacity: 0.5; margin-bottom: 0.5rem;">Architected by Nair and Sahani</div>
+        <div style="color:var(--silk); opacity: 0.3;">Mumbai Chapter · April 17, 2026</div>
+    </div>
+</div>
 
-            // Chapter Logic
-            const index = Math.min(Math.floor(scrolled * chapters.length), chapters.length - 1);
-            title.innerText = chapters[index].title;
-            desc.innerText = chapters[index].desc;
-            monolith.style.backgroundColor = chapters[index].color;
+<div class="scroll-spacer"></div>
 
-            // Show text in middle of travel
-            const localScroll = (scrolled * chapters.length) % 1;
-            textContent.className = (localScroll > 0.2 && localScroll < 0.8) ? 'content active-text' : 'content';
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+    const Colors = {
+        forest: 0x0B1A15,
+        copper: 0xB87333,
+        silk: 0xF7F5F0,
+        gold: 0xC5A059,
+        dark: 0x0a0a0a,
+    };
+
+    const chapters = [
+        { title: 'Invite Only', subtitle: 'A Global Table', description: 'Curation is the only filter. We gather the people, not the network.' },
+        { title: 'The Experiment', subtitle: 'October 2025', description: 'The first gathering at Taj Palace. Building a room where people matter more than credentials.' },
+        { title: 'Chronicles', subtitle: 'Six Chapters', description: 'From Delhi to London, each edition deepens the philosophy. Growth through trust.' },
+        { title: 'London', subtitle: 'February 2026', description: 'Expansion was never about geography. It was about trust. The right people in the right room.' },
+        { title: 'Philosophy', subtitle: 'The Quiet Architecture', description: 'Relationships are the foundation of progress. We rise together, or not at all.' },
+        { title: 'Mumbai', subtitle: 'The Harbour Bar', description: 'A historic evening at the Taj Mahal Palace. April 17, 2026. A memory that continues to grow.' },
+        { title: 'Seek Entry', subtitle: 'The Next Gathering', description: 'Entry is by application only. Tell us why you belong in this room.' }
+    ];
+
+    const container = document.getElementById('canvas-container');
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(Colors.dark);
+    
+    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    container.appendChild(renderer.domElement);
+    
+    const chapterGroups = [];
+    chapters.forEach((ch, i) => {
+        const group = new THREE.Group();
+        group.position.z = -i * 30;
+
+        const geometry = new THREE.BoxGeometry(10, 15, 2);
+        const material = new THREE.MeshStandardMaterial({ 
+            color: i % 2 === 0 ? Colors.forest : Colors.copper,
+            metalness: 0.5,
+            roughness: 0.1,
+            emissive: i % 2 === 0 ? Colors.forest : Colors.copper,
+            emissiveIntensity: 0.1
         });
-    </script>
+        const mesh = new THREE.Mesh(geometry, material);
+        group.add(mesh);
+
+        const accentGeo = new THREE.BoxGeometry(0.1, 15, 0.1);
+        const accentMat = new THREE.MeshBasicMaterial({ color: Colors.gold });
+        const accent = new THREE.Mesh(accentGeo, accentMat);
+        accent.position.set(-5.05, 0, 1.05);
+        group.add(accent);
+
+        scene.add(group);
+        chapterGroups.push(group);
+    });
+
+    scene.add(new THREE.AmbientLight(0xffffff, 0.3));
+    const mainLight = new THREE.PointLight(Colors.gold, 2, 150);
+    mainLight.position.set(20, 20, 20);
+    scene.add(mainLight);
+
+    const pCount = 1000;
+    const pGeo = new THREE.BufferGeometry();
+    const pPos = new Float32Array(pCount * 3);
+    for(let i=0; i<pCount*3; i++) pPos[i] = (Math.random() - 0.5) * 150;
+    pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+    const pMat = new THREE.PointsMaterial({ color: Colors.gold, size: 0.05, transparent: true, opacity: 0.3 });
+    const points = new THREE.Points(pGeo, pMat);
+    scene.add(points);
+
+    let scrollProgress = 0;
+    window.addEventListener('scroll', () => {
+        const h = document.documentElement, b = document.body, st = 'scrollTop', sh = 'scrollHeight';
+        scrollProgress = (h[st]||b[st]) / ((h[sh]||b[sh]) - h.clientHeight);
+    });
+
+    function scrollToChapter(index) {
+        const target = (index / (chapters.length - 1)) * (document.body.scrollHeight - window.innerHeight);
+        window.scrollTo({ top: target, behavior: 'smooth' });
+    }
+
+    window.onload = () => {
+        document.getElementById('loader-progress').style.width = '100%';
+        setTimeout(() => {
+            document.getElementById('loader').style.opacity = '0';
+            setTimeout(() => document.getElementById('loader').style.display = 'none', 1000);
+        }, 500);
+    };
+
+    function animate() {
+        requestAnimationFrame(animate);
+        const targetZ = -scrollProgress * (chapters.length - 1) * 30 + 20;
+        camera.position.z += (targetZ - camera.position.z) * 0.05;
+        camera.position.y = 2 + Math.sin(scrollProgress * Math.PI * 4) * 0.5;
+        camera.lookAt(0, 0, camera.position.z - 25);
+
+        const currentChapter = Math.round(scrollProgress * (chapters.length - 1));
+        const chapterData = chapters[currentChapter];
+        const info = document.getElementById('chapterInfo');
+        const localProgress = (scrollProgress * (chapters.length - 1)) % 1;
+        const opacity = localProgress < 0.1 || localProgress > 0.9 ? 0 : 1;
+
+        info.style.opacity = opacity;
+        if(opacity > 0.5) {
+            document.getElementById('chapterTitle').textContent = chapterData.title;
+            document.getElementById('chapterSubtitle').textContent = chapterData.subtitle;
+            document.getElementById('chapterDescription').textContent = chapterData.description;
+        }
+
+        document.getElementById('scrollIndicator').style.opacity = scrollProgress < 0.05 ? 1 : 0;
+        const endTrigger = scrollProgress > 0.92;
+        document.getElementById('actionButtons').style.opacity = endTrigger ? 1 : 0;
+        document.getElementById('actionButtons').style.pointerEvents = endTrigger ? 'auto' : 'none';
+        document.getElementById('footerText').style.opacity = endTrigger ? 1 : 0;
+        renderer.render(scene, camera);
+    }
+
+    window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    animate();
+</script>
 </body>
 </html>
