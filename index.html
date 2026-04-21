@@ -3,189 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Big Dinner | Invite Only</title>
-    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;1,400&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>The Big Dinner</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --forest: #0B1A15;
-            --copper: #B87333;
             --silk: #F7F5F0;
             --gold: #C5A059;
             --dark: #0a0a0a;
+            --copper: #B87333;
         }
-
-        html, body {
-            width: 100%;
-            height: 100%;
-            background: var(--dark);
+        body {
+            background-color: var(--dark);
             color: var(--silk);
-            font-family: 'Inter', sans-serif;
+            font-family: 'Times New Roman', serif; /* Elegant fallback */
+            height: 500vh; /* Scroll room */
             overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
         }
-
-        canvas {
-            display: block;
-            width: 100vw;
-            height: 100vh;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-
-        .canvas-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
+        /* The Cinematic Background */
+        .stage {
+            position: fixed; top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            perspective: 1000px;
+            display: flex; align-items: center; justify-content: center;
+            background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 100%);
             z-index: 1;
-            pointer-events: none;
         }
-
-        .ui-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 100;
+        /* The CSS Monolith */
+        .monolith {
+            position: absolute;
+            width: 200px; height: 300px;
+            background: var(--forest);
+            border-left: 2px solid var(--gold);
+            box-shadow: 0 0 50px rgba(0,0,0,0.8);
+            transform-style: preserve-3d;
+            transition: transform 0.1s linear, opacity 0.5s ease;
+            display: flex; align-items: center; justify-content: center;
+            text-align: center; padding: 20px;
         }
-
-        /* Top Navigation */
-        .nav-luxury {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 2.5rem 5%;
-            background: linear-gradient(to bottom, rgba(10, 10, 10, 0.8), transparent);
-            z-index: 101;
-            pointer-events: auto;
+        /* UI Layer */
+        .overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 10; pointer-events: none;
+            padding: 3rem;
         }
-
-        .nav-brand {
-            font-family: 'EB Garamond', serif;
-            font-size: 1.5rem;
-            font-style: italic;
-            color: var(--silk);
-            cursor: pointer;
-            letter-spacing: 0.05em;
+        .nav-brand { font-size: 1.5rem; font-style: italic; color: var(--silk); }
+        .content {
+            position: absolute; top: 50%; left: 10%;
+            transform: translateY(-50%); max-width: 400px;
+            opacity: 0; transition: opacity 0.5s ease;
         }
-
-        .nav-links {
-            display: flex;
-            gap: 3rem;
-            align-items: center;
-        }
-
-        .nav-link {
-            font-size: 0.7rem;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--silk);
-            opacity: 0.5;
-            cursor: pointer;
-            transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
-            text-decoration: none;
-        }
-
-        .nav-link:hover {
-            opacity: 1;
-            color: var(--gold);
-            letter-spacing: 0.2em;
-        }
-
-        /* Chapter Text Layout */
-        .chapter-info {
-            position: fixed;
-            top: 50%;
-            left: 8%;
-            transform: translateY(-50%);
-            max-width: 500px;
-            z-index: 150;
-            /* Make it visible */
-            opacity: 1;
-            transition: opacity 0.8s ease;
-            pointer-events: auto;
-        }
-
-        .chapter-title {
-            font-family: 'EB Garamond', serif;
-            font-size: clamp(2.5rem, 8vw, 4.5rem);
-            font-weight: 400;
-            color: var(--gold);
-            margin-bottom: 1rem;
-        }
-
-        .chapter-info p {
-            font-size: 1.25rem;
-            line-height: 1.6;
-            color: var(--silk);
-            opacity: 0.9;
-        }
+        .active-text { opacity: 1; }
+        h1 { font-size: 3rem; color: var(--gold); font-style: italic; margin-bottom: 1rem; }
+        p { font-size: 1.1rem; line-height: 1.6; opacity: 0.8; }
     </style>
 </head>
 <body>
-    <!-- Optional fancy animated background -->
-    <div class="canvas-container">
-        <canvas id="bg-canvas"></canvas>
-    </div>
 
-    <nav class="nav-luxury">
-        <div class="nav-brand">The Big Dinner</div>
-        <div class="nav-links">
-            <a class="nav-link" href="#">Home</a>
-            <a class="nav-link" href="#">About</a>
-            <a class="nav-link" href="#">RSVP</a>
+    <div class="stage" id="stage">
+        <div class="monolith" id="monolith">
+            <div style="color: var(--gold); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;">The Big Dinner</div>
         </div>
-    </nav>
-    <div class="chapter-info">
-        <div class="chapter-title">Welcome to The Big Dinner</div>
-        <p>Invitation only. Please contact the host for details.</p>
     </div>
 
-    <!-- (Optional) add a sample JS for animation; leave blank for static page -->
+    <div class="overlay">
+        <div class="nav-brand">The Big Dinner</div>
+        <div class="content" id="textContent">
+            <h1 id="title">Invite Only</h1>
+            <p id="desc">Curation is the only filter. We gather the people, not the network.</p>
+        </div>
+    </div>
+
     <script>
-        // Minimal background effect for demonstration
-        const canvas = document.getElementById('bg-canvas');
-        if (canvas && canvas.getContext) {
-            const ctx = canvas.getContext('2d');
-            function resize() {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-            }
-            resize();
-            window.addEventListener('resize', resize);
-            // Simple animated gold dots
-            let t = 0;
-            function animate() {
-                ctx.clearRect(0,0,canvas.width,canvas.height);
-                for (let i=0; i<60; ++i) {
-                    ctx.beginPath();
-                    ctx.arc(
-                        canvas.width/2 + Math.sin(t/50+i)*160,
-                        canvas.height/2 + Math.cos(t/40-i)*100,
-                        6+3*Math.sin(t/20+i),
-                        0, 2*Math.PI
-                    );
-                    ctx.fillStyle = 'rgba(197,160,89,0.12)';
-                    ctx.fill();
-                }
-                t++;
-                requestAnimationFrame(animate);
-            }
-            animate();
-        }
+        const chapters = [
+            { title: 'Invite Only', desc: 'Curation is the only filter.', color: '#0B1A15' },
+            { title: 'The Experiment', desc: 'October 2025. Blue Bar, Taj Palace.', color: '#B87333' },
+            { title: 'London', desc: 'February 2026. A global extension of trust.', color: '#0B1A15' },
+            { title: 'Mumbai', desc: 'April 2026. The Harbour Bar.', color: '#B87333' },
+            { title: 'Seek Entry', desc: 'The next room is being built.', color: '#0B1A15' }
+        ];
+
+        const monolith = document.getElementById('monolith');
+        const textContent = document.getElementById('textContent');
+        const title = document.getElementById('title');
+        const desc = document.getElementById('desc');
+
+        window.addEventListener('scroll', () => {
+            const scrolled = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+            
+            // 3D Travel Effect
+            const zTranslate = scrolled * 2000 - 500;
+            const yRotate = Math.sin(scrolled * 10) * 10;
+            monolith.style.transform = `translateZ(${zTranslate}px) rotateY(${yRotate}deg)`;
+            
+            // Opacity fade when "passing" the monolith
+            monolith.style.opacity = zTranslate > 400 ? 0 : 1;
+
+            // Chapter Logic
+            const index = Math.min(Math.floor(scrolled * chapters.length), chapters.length - 1);
+            title.innerText = chapters[index].title;
+            desc.innerText = chapters[index].desc;
+            monolith.style.backgroundColor = chapters[index].color;
+
+            // Show text in middle of travel
+            const localScroll = (scrolled * chapters.length) % 1;
+            textContent.className = (localScroll > 0.2 && localScroll < 0.8) ? 'content active-text' : 'content';
+        });
     </script>
 </body>
 </html>
