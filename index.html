@@ -4,350 +4,371 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Big Dinner | Invite Only</title>
-    <!-- Cinematic Typography -->
-    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;1,400&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@200;300;400;600&display=swap" rel="stylesheet">
+
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root {
-            --forest: #0B1A15;
-            --silk: #F7F5F0;
+        :root { 
+            --forest: #0B1A15; 
+            --copper: #B87333; 
+            --silk: #F7F5F0; 
             --gold: #C5A059;
-            --dark: #0a0a0a;
-            --copper: #B87333;
+        }
+        
+        body, html { 
+            margin: 0; padding: 0;
+            background: var(--forest); 
+            color: var(--silk); 
+            font-family: 'Inter', sans-serif; 
+            height: 100%;
+            overflow: hidden; 
         }
 
-        body, html {
-            width: 100%; height: 100%;
-            background-color: var(--dark);
-            color: var(--silk);
-            font-family: 'Inter', sans-serif;
-            overflow: hidden; /* Scroll is managed by the 3D travel logic via Spacer */
-            -webkit-font-smoothing: antialiased;
+        .serif { font-family: 'EB Garamond', serif; }
+        
+        /* Fast Preloader */
+        #loader {
+            position: fixed; inset: 0; background: var(--forest);
+            z-index: 2000; display: flex; align-items: center; justify-content: center;
         }
 
-        #canvas-container {
+        /* Silk Grain Overlay */
+        .overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 1; background: var(--dark);
+            pointer-events: none; z-index: 1000; opacity: 0.12;
+            background-image: url('https://www.transparenttextures.com/patterns/natural-paper.png');
         }
 
-        /* UI Overlays */
-        .ui-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: 100;
-        }
-
+        /* Navigation */
         .nav-luxury {
-            position: fixed; top: 0; left: 0; right: 0;
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 2.5rem 5%; background: linear-gradient(to bottom, rgba(10, 10, 10, 0.9), transparent);
-            z-index: 101; pointer-events: auto;
+            position: fixed; top: 0; width: 100%; display: flex; 
+            justify-content: space-between; align-items: center;
+            padding: 2.5rem 5%; z-index: 1500;
+            background: linear-gradient(to bottom, rgba(11, 26, 21, 0.9), transparent);
         }
-        .nav-brand {
-            font-family: 'EB Garamond', serif; font-size: 1.6rem; font-style: italic;
-            color: var(--silk); letter-spacing: 0.05em; cursor: pointer;
+        .nav-link { 
+            font-size: 11px; letter-spacing: 0.5em; text-transform: uppercase; 
+            cursor: pointer; color: var(--silk); opacity: 0.6;
+            transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
         }
-        .nav-links {
-            display: flex;
-            gap: 2.5rem;
-            align-items: center;
-        }
-        .nav-link {
-            font-size: 0.75rem;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--silk);
-            opacity: 0.7;
-            cursor: pointer;
-            text-decoration: none;
-            transition: opacity 0.3s ease;
-        }
-        .nav-link:hover {
-            opacity: 1;
-            color: var(--gold);
+        .nav-link:hover { opacity: 1; color: var(--gold); }
+
+        /* The Scrolling Container */
+        #main-container {
+            height: 100vh; width: 100vw;
+            overflow-y: scroll; overflow-x: hidden;
+            scroll-snap-type: y mandatory; scroll-behavior: smooth;
         }
 
-        /* Chapter Text Layout */
-        .chapter-info {
-            position: fixed; top: 50%; left: 8%; transform: translateY(-50%);
-            max-width: 500px; z-index: 50; opacity: 0;
-            transition: opacity 0.8s ease, transform 1.2s cubic-bezier(0.19, 1, 0.22, 1);
-            pointer-events: none;
-        }
-        .chapter-title {
-            font-family: 'EB Garamond', serif; font-size: clamp(2.5rem, 8vw, 4.5rem);
-            font-style: italic; color: var(--gold); line-height: 1.1; margin-bottom: 1rem;
-        }
-        .chapter-subtitle {
-            font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase;
-            color: var(--silk); opacity: 0.6; margin-bottom: 1.5rem;
-        }
-        .chapter-description {
-            font-size: 1.1rem; line-height: 1.8; color: var(--silk); opacity: 0.8; font-weight: 300;
+        #main-container::-webkit-scrollbar { display: none; }
+        #main-container { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Full Screen Panels */
+        .panel {
+            position: relative; height: 100vh; width: 100vw;
+            scroll-snap-align: start; scroll-snap-stop: always;
+            overflow: hidden; display: flex; align-items: center; justify-content: center;
         }
 
-        /* AI Feature Dock */
-        .ai-dock {
-            position: fixed; bottom: 3rem; right: 5%; z-index: 150;
-            display: flex; flex-direction: column; gap: 1rem; pointer-events: auto;
+        .panel-bg {
+            position: absolute; inset: 0; z-index: -1;
+            width: 100%; height: 100%;
         }
-        .btn-ai {
-            border: 1px solid rgba(197, 160, 89, 0.3); padding: 0.8rem 1.5rem;
-            font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase;
-            background: rgba(10, 10, 10, 0.6); color: var(--silk); cursor: pointer;
-            backdrop-filter: blur(12px); transition: 0.5s ease;
-            display: flex; align-items: center; gap: 0.5rem;
-        }
-        .btn-ai:hover { border-color: var(--gold); background: var(--gold); color: var(--forest); }
-
-        /* Modal for AI Responses */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.92); z-index: 1000; display: none; align-items: center; justify-content: center;
-            pointer-events: auto;
-        }
-        .ai-modal {
-            background: var(--forest); border: 1px solid var(--gold);
-            padding: 3rem; width: 90%; max-width: 500px;
-            display: flex; flex-direction: column; gap: 1.5rem;
-            box-shadow: 0 40px 100px rgba(0,0,0,0.8);
-            position: relative;
-        }
-        .modal-overlay.active { display: flex; }
-        .ai-result { font-family: 'EB Garamond', serif; font-size: 1.2rem; font-style: italic; color: var(--silk); min-height: 60px; line-height: 1.6; }
-        .ai-input { background: transparent; border: none; border-bottom: 1px solid rgba(247,245,240,0.2); color: var(--silk); padding: 1rem 0; width: 100%; outline: none; font-family: 'EB Garamond', serif; font-size: 1.3rem; }
-
-        .btn-luxury { border: 1px solid var(--gold); padding: 1rem 2.5rem; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; background: transparent; color: var(--gold); cursor: pointer; transition: 0.4s ease; }
-        .btn-luxury:hover { background: var(--gold); color: var(--forest); }
-
-        /* Interaction Elements */
-        .scroll-spacer { height: 1000vh; pointer-events: none; }
-        .scroll-indicator { position: fixed; bottom: 3rem; left: 50%; transform: translateX(-50%); z-index: 50; opacity: 1; transition: 0.6s ease; }
-        .scroll-indicator-text { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--silk); opacity: 0.4; }
-
-        .action-layer {
-            position: fixed; bottom: 10%; left: 8%; z-index: 150;
-            display: flex; gap: 1.5rem; opacity: 0; pointer-events: none; transition: 1s ease;
+        
+        .panel-bg img {
+            width: 100%; height: 100%; object-fit: cover;
+            filter: brightness(0.65) saturate(0.9);
+            transform: scale(1.1);
+            transition: transform 12s ease-out; 
         }
 
-        @media (max-width: 768px) {
-            .chapter-info { left: 5%; right: 5%; text-align: center; }
-            .ai-dock { bottom: 2rem; right: 50%; transform: translateX(50%); flex-direction: row; width: 90%; }
-            .btn-ai { flex: 1; padding: 0.6rem; font-size: 0.55rem; }
-            .action-layer { flex-direction: column; left: 50%; transform: translateX(-50%); bottom: 15%; width: 80%; }
+        .panel.active .panel-bg img { transform: scale(1.25); }
+
+        .content-block { text-align: center; max-width: 900px; padding: 0 2rem; z-index: 10; }
+        
+        .display-text { 
+            font-size: clamp(3rem, 10vw, 8rem); 
+            line-height: 0.9; margin-bottom: 2rem; 
+            will-change: transform, opacity;
+        }
+
+        .sub-text { 
+            font-size: 13px; letter-spacing: 0.5em; text-transform: uppercase; 
+            margin-bottom: 2rem;
+        }
+
+        /* Sound Toggle */
+        #sound-toggle {
+            position: fixed; bottom: 3rem; right: 5%; z-index: 1500;
+            font-size: 9px; letter-spacing: 0.3em; cursor: pointer;
+            text-transform: uppercase; border: 1px solid rgba(255,255,255,0.2);
+            padding: 0.8rem 1.5rem; backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+        #sound-toggle:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .btn-invite {
+            border: 1px solid var(--gold); padding: 1.4rem 3.5rem;
+            font-size: 11px; letter-spacing: 0.5em; text-transform: uppercase;
+            transition: 0.6s cubic-bezier(0.19, 1, 0.22, 1); background: transparent; color: var(--gold);
+            cursor: pointer; margin-top: 2.5rem;
+        }
+        .btn-invite:hover { background: var(--gold); color: var(--forest); box-shadow: 0 0 40px rgba(197, 160, 89, 0.3); }
+
+        .experiment-text {
+            column-count: 2; column-gap: 4rem; text-align: left;
+            font-size: 0.95rem; line-height: 1.8;
+        }
+
+        .philosophy-text {
+            max-width: 700px; margin: 0 auto; font-size: 1.1rem; line-height: 1.9;
+        }
+
+        @media (max-width: 1024px) {
+            .experiment-text { column-count: 1; text-align: center; max-height: 50vh; overflow-y: auto; }
         }
     </style>
 </head>
 <body>
 
-<div id="canvas-container"></div>
+    <div id="loader">
+        <div class="serif italic text-silk text-3xl animate-pulse">The Big Dinner</div>
+    </div>
 
-<div class="ui-overlay">
+    <div class="overlay"></div>
+
     <nav class="nav-luxury">
-        <div class="nav-brand">The Big Dinner</div>
-        <div class="nav-links" style="pointer-events: auto;">
-            <span class="nav-link" onclick="scrollToChapter(2)">Chronicles</span>
-            <span class="nav-link" onclick="scrollToChapter(4)">Philosophy</span>
-            <a href="gallery.html" class="nav-link">Gallery</a>
-            <span class="nav-link" onclick="scrollToChapter(6)">Apply</span>
+        <div class="serif italic text-2xl uppercase tracking-tighter cursor-pointer" onclick="goToPanel(0)">The Big Dinner</div>
+        <div class="flex gap-4 md:gap-12 lg:gap-16 items-center">
+            <span class="nav-link hidden md:inline-block" onclick="goToPanel(3)">Chronicles</span>
+            <span class="nav-link hidden md:inline-block" onclick="goToPanel(5)">Philosophy</span>
+            <a href="gallery.html" class="nav-link" style="text-decoration: none;">Gallery</a>
+            <span class="nav-link" onclick="goToPanel(7)">Apply</span>
         </div>
     </nav>
 
-    <div class="chapter-info" id="chapterInfo">
-        <h1 class="chapter-title" id="chapterTitle">Invite Only</h1>
-        <p class="chapter-subtitle" id="chapterSubtitle">London · Delhi · Mumbai</p>
-        <p class="chapter-description" id="chapterDescription">Curation is the only filter. We gather the people, not the network.</p>
-    </div>
+    <!-- Audio Player linked to ambient-theme.mp3 -->
+    <audio id="bg-music" loop preload="auto">
+        <source src="ambient-theme.mp3" type="audio/mpeg">
+    </audio>
+    <div id="sound-toggle" onclick="toggleSound()">Sound: Off</div>
 
-    <!-- AI Feature Dock -->
-    <div class="ai-dock">
-        <button class="btn-ai" onclick="openAi('muse')">✨ Philosophical Muse</button>
-        <button class="btn-ai" onclick="openAi('curator')">✨ Curator's Lens</button>
-    </div>
+    <main id="main-container">
 
-    <div class="action-layer" id="actionLayer">
-        <a href="https://forms.gle/vGGAHKJGr3yNK25b6" target="_blank" style="text-decoration:none">
-            <button class="btn-luxury">Apply for Entry</button>
-        </a>
-        <a href="https://www.instagram.com/thebigdinnerr/" target="_blank" style="text-decoration:none">
-            <button class="btn-luxury">Instagram</button>
-        </a>
-    </div>
+        <!-- PANEL 0: HERO -->
+        <section class="panel" id="p0">
+            <div class="panel-bg"><img src="shangrila.jpeg" alt="Hero"></div>
+            <div class="content-block animate-group">
+                <p class="sub-text">London . Delhi . Dubai . Mumbai</p>
+                <h1 class="serif display-text italic">Invite Only.</h1>
+                <p class="serif text-2xl italic opacity-70">"It is a bet on people."</p>
+            </div>
+        </section>
 
-    <div class="scroll-indicator" id="scrollIndicator">
-        <div class="scroll-indicator-text">Scroll to travel</div>
-    </div>
-</div>
+        <!-- PANEL 1: THE ROOM -->
+        <section class="panel" id="p1">
+            <div class="panel-bg"><img src="Grazia.jpeg" alt="The Room"></div>
+            <div class="content-block animate-group">
+                <p class="sub-text">The Mandate</p>
+                <h2 class="serif display-text italic">The Room.</h2>
+                <p class="text-xl font-light leading-relaxed max-w-xl mx-auto opacity-80">
+                    Not a brand. Not an event. A specific kind of room where the conversation is the only agenda and the right person sitting next to you might change everything.
+                </p>
+            </div>
+        </section>
 
-<!-- Modal UI -->
-<div class="modal-overlay" id="modalOverlay" onclick="closeAi()">
-    <div class="ai-modal" id="aiModal" onclick="event.stopPropagation()">
-        <h2 id="modalTitle" style="font-family: 'EB Garamond', serif; color: var(--gold); font-style: italic; font-size: 2rem;">The Oracle</h2>
-        <div id="inputSection">
-            <p style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.15em; opacity: 0.5; margin-bottom: 0.5rem;">Describe the seeker of entry</p>
-            <input type="text" id="aiInput" class="ai-input" placeholder="e.g. A digital architect from Tokyo..." autocomplete="off">
-        </div>
-        <div class="ai-result" id="aiResult">Whisper your query into the digital void.</div>
-        <button class="btn-luxury" onclick="runAi()" style="width: 100%; margin-top: 1rem;">Consult the Oracle</button>
-        <button class="btn-luxury" style="border:none; font-size: 0.6rem; opacity: 0.5; margin-top: 1rem; width: 100%;" onclick="closeAi()">Close</button>
-    </div>
-</div>
+        <!-- PANEL 2: THE EXPERIMENT -->
+        <section class="panel" id="p2">
+            <div class="panel-bg"><img src="innecircle3.jpeg" alt="The Experiment"></div>
+            <div class="content-block !max-w-[1100px] animate-group">
+                <p class="sub-text">The Social Experiment</p>
+                <h2 class="serif display-text italic">The Experiment.</h2>
+                <div class="experiment-text font-light text-silk/90">
+                    <p class="mb-6"><span class="serif italic text-2xl text-gold">Forty people</span> stood in a five-star hotel ballroom in Delhi with no chairs, no name tags, and no idea who anyone else was. No panels. No agenda. No networking rubric. Just a room and a question: what happens when you remove all the social scaffolding?</p>
+                    <p class="mb-6">The entry price is a form. A long one. It asks questions that are difficult to skim, difficult to fake, and difficult to outsource. Not because I'm filtering for answers—but because I'm filtering for people who take the question seriously.</p>
+                    <p class="mb-6">Many applicants are rejected. What makes rejection sting is not status, but effort. By the time you've finished the form, you've already invested something real. That investment changes how you show up.</p>
+                    <p>The overlap is deliberate: fields that rarely intersect socially. People can't optimize their behavior when they don't know who matters. The mind, deprived of its normal social calculus, defaults to something more honest.</p>
+                </div>
+            </div>
+        </section>
 
-<div class="scroll-spacer"></div>
+        <!-- PANEL 3: CHRONICLES (THE LINEAGE) -->
+        <section class="panel" id="p3">
+            <div class="panel-bg"><img src="itcmaurya.jpeg" alt="Chronicles"></div>
+            <div class="content-block animate-group w-full">
+                <p class="sub-text">The Lineage</p>
+                <h2 class="serif display-text italic">Chronicles.</h2>
+                <div class="text-left font-light text-silk/90 text-sm md:text-lg mx-auto max-w-3xl flex flex-col gap-4 mt-8">
+                    <div class="flex flex-col md:flex-row justify-between border-b border-white/10 pb-4">
+                        <span class="serif italic text-xl text-gold tracking-wide">Chapter I &mdash; October 2025</span>
+                        <span class="tracking-widest uppercase text-[10px] md:text-xs opacity-70 self-start md:self-center mt-1 md:mt-0">Blue Bar, Taj Palace, New Delhi</span>
+                    </div>
+                    <div class="flex flex-col md:flex-row justify-between border-b border-white/10 pb-4">
+                        <span class="serif italic text-xl text-gold tracking-wide">Chapter II &mdash; November 2025</span>
+                        <span class="tracking-widest uppercase text-[10px] md:text-xs opacity-70 self-start md:self-center mt-1 md:mt-0">Megu, The Leela Palace, New Delhi</span>
+                    </div>
+                    <div class="flex flex-col md:flex-row justify-between border-b border-white/10 pb-4">
+                        <span class="serif italic text-xl text-gold tracking-wide">Chapter III &mdash; December 2025</span>
+                        <span class="tracking-widest uppercase text-[10px] md:text-xs opacity-70 self-start md:self-center mt-1 md:mt-0">Megu, The Leela Palace, New Delhi</span>
+                    </div>
+                    <div class="flex flex-col md:flex-row justify-between border-b border-white/10 pb-4">
+                        <span class="serif italic text-xl text-gold tracking-wide">Chapter IV &mdash; January 2026</span>
+                        <span class="tracking-widest uppercase text-[10px] md:text-xs opacity-70 self-start md:self-center mt-1 md:mt-0">The Imperial Hotel, New Delhi</span>
+                    </div>
+                    <div class="flex flex-col md:flex-row justify-between border-b border-white/10 pb-4">
+                        <span class="serif italic text-xl text-gold tracking-wide">Chapter V &mdash; February 2026</span>
+                        <span class="tracking-widest uppercase text-[10px] md:text-xs opacity-70 self-start md:self-center mt-1 md:mt-0">Shangri-La Eros, New Delhi</span>
+                    </div>
+                    <div class="flex flex-col md:flex-row justify-between border-b border-white/10 pb-4">
+                        <span class="serif italic text-xl text-gold tracking-wide">Chapter VI &mdash; March 2026</span>
+                        <span class="tracking-widest uppercase text-[10px] md:text-xs opacity-70 self-start md:self-center mt-1 md:mt-0">Ottimo, ITC Maurya, New Delhi</span>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script>
-    const Colors = { forest: 0x0B1A15, copper: 0xB87333, gold: 0xC5A059, dark: 0x0a0a0a, silk: 0xF7F5F0 };
-    const chapters = [
-        { title: 'Invite Only', sub: 'A Global Table', desc: 'Curation is the only filter. We gather the people, not the network. A digital velvet rope.' },
-        { title: 'Taj Palace', sub: 'The Experiment', desc: 'October 2025. A room where character takes precedence over credentials. The start of it all.' },
-        { title: 'London', sub: 'Heritage Chapter', desc: 'Expansion was built on trust, not geography. The table remains the same regardless of the skyline.' },
-        { title: 'Harbour Bar', sub: 'Mumbai 2026', desc: 'A historic evening at the Taj Mahal Palace. April 17, 2026. A cinematic memory.' },
-        { title: 'Trust', sub: 'The Compounding', desc: 'Real friendships form the value that no algorithm could ever engineer alone.' },
-        { title: 'Seek Entry', sub: 'The Next Room', desc: 'Entry is by application only. Curation is our only condition. Tell us why you belong.' }
-    ];
+        <!-- PANEL 4: LONDON -->
+        <section class="panel" id="p4">
+            <div class="panel-bg"><img src="lodnon.jpeg" alt="London"></div>
+            <div class="content-block animate-group">
+                <p class="sub-text">February 2026</p>
+                <h2 class="serif display-text italic">London.</h2>
+                <p class="text-xl font-light leading-relaxed max-w-lg mx-auto opacity-80">
+                    Expansion was never about geography. It was about trust. I had people on the ground I trust completely—Devansh and Shaurya. In our world, that is the only condition that matters.
+                </p>
+            </div>
+        </section>
 
-    // --- ✨ Gemini API Integration ---
-    const apiKey = ""; 
-    let activeMode = null;
+        <!-- PANEL 5: RELATIONSHIPS -->
+        <section class="panel" id="p5">
+            <div class="panel-bg"><img src="jan1.jpeg" alt="Philosophy"></div>
+            <div class="content-block animate-group">
+                <p class="sub-text">The Philosophy</p>
+                <h2 class="serif display-text italic">Relationships.</h2>
+                <div class="philosophy-text font-light text-silk/90">
+                    <p class="mb-6">Relationships are the quiet architecture of progress. Most of us understand the importance of people in our lives and the way partnerships can change their course. And yet we leave the formation of these relationships almost entirely to chance.</p>
+                    <p class="mb-6">What limits growth is rarely circumstance. It is belief. Many of us have been taught that for one person to make money, another must lose. I believe the opposite. The right room proves it.</p>
+                    <p class="serif italic text-2xl text-gold mt-10">"I only knew the kind of room I wanted to build."</p>
+                </div>
+            </div>
+        </section>
 
-    async function callGemini(prompt, sys) {
-        try {
-            const resp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ 
-                    contents: [{ parts: [{ text: prompt }] }], 
-                    systemInstruction: { parts: [{ text: sys }] } 
-                })
+        <!-- PANEL 6: TRUST -->
+        <section class="panel" id="p6">
+            <div class="panel-bg"><img src="dec11.jpeg" alt="Trust"></div>
+            <div class="content-block animate-group">
+                <p class="sub-text">Compounding</p>
+                <h2 class="serif display-text italic">Trust.</h2>
+                <p class="text-xl font-light leading-relaxed max-w-xl mx-auto opacity-80">
+                    Real friendships have formed—the kind that create value. Growth none of us could have engineered alone. Friendships first, work following naturally.
+                </p>
+            </div>
+        </section>
+
+        <!-- PANEL 7: THE CLOSE -->
+        <section class="panel" id="p7">
+            <div class="panel-bg"><img src="shangrila.jpeg" alt="Apply"></div>
+            <div class="content-block animate-group">
+                <h2 class="serif display-text italic">Seek Entry.</h2>
+                <p class="text-xl font-light opacity-80 mb-10">Entry is by application only. Curation is the only filter.</p>
+                
+                <p class="sub-text" style="margin-bottom: 0.5rem; color: var(--gold);">Delhi &mdash; 25th April 2026</p>
+
+                <div class="flex flex-col sm:flex-row gap-6 justify-center mt-10">
+                    <a href="https://forms.gle/vGGAHKJGr3yNK25b6" target="_blank">
+                        <button class="btn-invite" style="margin-top: 0;">Apply for Delhi</button>
+                    </a>
+                    <a href="https://www.instagram.com/thebigdinnerr/?hl=en" target="_blank">
+                        <button class="btn-invite" style="margin-top: 0;">Instagram</button>
+                    </a>
+                </div>
+
+                <div class="mt-24 flex flex-col items-center gap-4">
+                    <div class="opacity-50 text-[10px] uppercase tracking-[0.8em]">Architected by Nair and Sahani</div>
+                    <div class="opacity-30 text-[9px] uppercase tracking-[0.4em]">Reach out on +91 8448445950 WhatsApp for details</div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+        window.addEventListener('load', () => {
+            gsap.to("#loader", { 
+                opacity: 0, 
+                duration: 1, 
+                delay: 0.2, 
+                onComplete: () => {
+                    document.getElementById('loader').style.display = 'none';
+                }
             });
-            const d = await resp.json();
-            return d.candidates?.[0]?.content?.parts?.[0]?.text || "The oracle remains silent.";
-        } catch(e) { return "The stars are obscured. Please try again."; }
-    }
+        });
 
-    function openAi(m) {
-        activeMode = m;
-        document.getElementById('modalOverlay').classList.add('active');
-        document.getElementById('modalTitle').innerText = m === 'muse' ? "Philosophical Muse" : "Curator's Lens";
-        document.getElementById('inputSection').style.display = m === 'muse' ? 'none' : 'block';
-        document.getElementById('aiResult').innerText = "Whisper your query into the digital void.";
-    }
+        const panels = gsap.utils.toArray(".panel");
 
-    function closeAi() { document.getElementById('modalOverlay').classList.remove('active'); }
+        panels.forEach((panel, i) => {
+            const elementsToAnimate = panel.querySelectorAll(".sub-text, .display-text, p, button, .mt-24, .experiment-text, .philosophy-text, .flex-row, .border-b");
+            
+            gsap.set(elementsToAnimate, { opacity: 0, y: 50 });
 
-    async function runAi() {
-        const res = document.getElementById('aiResult');
-        const inp = document.getElementById('aiInput').value;
-        res.innerText = "Processing...";
-        
-        const system = activeMode === 'muse' 
-            ? "You are the Philosophical Muse of 'The Big Dinner'. Generate a one-line profound manifesto about luxury, trust, or the art of gathering. Tone: Quiet Luxury, high-end, cinematic." 
-            : "You are the Chief Curator for 'The Big Dinner'. Analyze this guest profile and explain in 2 short, sophisticated sentences why they fit an exclusive trust-based room.";
-        
-        const prompt = activeMode === 'muse' ? "Give me a manifesto for tonight." : `Profile: ${inp || "A silent observer with a taste for the exquisite."}`;
-        
-        res.innerText = await callGemini(prompt, system);
-    }
+            ScrollTrigger.create({
+                trigger: panel,
+                scroller: "#main-container",
+                start: "top 60%", 
+                end: "bottom 40%",
+                onEnter: () => {
+                    panel.classList.add("active"); 
+                    gsap.to(elementsToAnimate, { opacity: 1, y: 0, stagger: 0.1, duration: 1.2, ease: "power3.out", overwrite: true });
+                },
+                onEnterBack: () => {
+                    panel.classList.add("active");
+                    gsap.to(elementsToAnimate, { opacity: 1, y: 0, stagger: 0.1, duration: 1.2, ease: "power3.out", overwrite: true });
+                },
+                onLeave: () => {
+                    panel.classList.remove("active");
+                    gsap.to(elementsToAnimate, { opacity: 0, y: -50, duration: 0.8, ease: "power2.in", overwrite: true });
+                },
+                onLeaveBack: () => {
+                    panel.classList.remove("active");
+                    gsap.to(elementsToAnimate, { opacity: 0, y: 50, duration: 0.8, ease: "power2.in", overwrite: true });
+                }
+            });
+        });
 
-    // --- 3D Engine Initialization ---
-    const scene = new THREE.Scene();
-    scene.background = new THREE.Color(Colors.dark);
-    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    document.getElementById('canvas-container').appendChild(renderer.domElement);
-
-    const monoliths = [];
-    chapters.forEach((ch, i) => {
-        const group = new THREE.Group();
-        const mesh = new THREE.Mesh(
-            new THREE.BoxGeometry(10, 16, 2), 
-            new THREE.MeshStandardMaterial({ 
-                color: i % 2 ? Colors.copper : Colors.forest, 
-                metalness: 0.6, 
-                roughness: 0.15,
-                emissive: i % 2 ? Colors.copper : Colors.forest,
-                emissiveIntensity: 0.1
-            })
-        );
-        group.add(mesh);
-
-        // Gold Structural Detail
-        const accent = new THREE.Mesh(
-            new THREE.BoxGeometry(0.1, 16, 0.1),
-            new THREE.MeshBasicMaterial({ color: Colors.gold })
-        );
-        accent.position.set(-5.05, 0, 1.05);
-        group.add(accent);
-
-        group.position.z = -i * 35;
-        scene.add(group);
-        monoliths.push(group);
-    });
-
-    // Environmental Lights
-    scene.add(new THREE.AmbientLight(0xffffff, 0.4));
-    const point = new THREE.PointLight(Colors.gold, 2.5, 120);
-    point.position.set(15, 15, 20);
-    scene.add(point);
-
-    // Dynamic Dust Particles
-    const dustCount = 1000;
-    const dustGeo = new THREE.BufferGeometry();
-    const dustPos = new Float32Array(dustCount * 3);
-    for(let i=0; i<dustCount*3; i++) dustPos[i] = (Math.random() - 0.5) * 200;
-    dustGeo.setAttribute('position', new THREE.BufferAttribute(dustPos, 3));
-    const dust = new THREE.Points(dustGeo, new THREE.PointsMaterial({ color: Colors.gold, size: 0.05, transparent: true, opacity: 0.3 }));
-    scene.add(dust);
-
-    let scrollProgress = 0;
-    window.addEventListener('scroll', () => {
-        const h = document.documentElement, b = document.body;
-        scrollProgress = (h.scrollTop || b.scrollTop) / (h.scrollHeight - h.clientHeight);
-    }, { passive: true });
-
-    function scrollToChapter(i) {
-        window.scrollTo({ top: (i / (chapters.length - 1)) * (document.body.scrollHeight - window.innerHeight), behavior: 'smooth' });
-    }
-
-    function animate() {
-        requestAnimationFrame(animate);
-        
-        // Travel through monoliths
-        const targetZ = -scrollProgress * (chapters.length - 1) * 35 + 20;
-        camera.position.z += (targetZ - camera.position.z) * 0.055;
-        camera.position.y = 2.5 + Math.sin(scrollProgress * Math.PI * 4) * 0.8;
-        camera.lookAt(0, 0, camera.position.z - 25);
-
-        // Textual Logic
-        const idx = Math.round(scrollProgress * (chapters.length - 1));
-        const data = chapters[idx];
-        const info = document.getElementById('chapterInfo');
-        const progInChapter = (scrollProgress * (chapters.length - 1)) % 1;
-        const isAtStart = scrollProgress < 0.005;
-        const opacity = isAtStart || (progInChapter >= 0.1 && progInChapter <= 0.9) ? 1 : 0;
-
-        info.style.opacity = opacity;
-        if(opacity > 0.5) {
-            document.getElementById('chapterTitle').innerText = data.title;
-            document.getElementById('chapterSubtitle').innerText = data.sub;
-            document.getElementById('chapterDescription').innerText = data.desc;
+        function goToPanel(index) {
+            const targetPanel = document.getElementById('p' + index);
+            gsap.to("#main-container", {
+                scrollTo: targetPanel,
+                duration: 1.5,
+                ease: "power4.inOut"
+            });
         }
 
-        document.getElementById('scrollIndicator').style.opacity = scrollProgress < 0.05 ? 1 : 0;
-        document.getElementById('actionLayer').style.opacity = scrollProgress > 0.92 ? 1 : 0;
-        document.getElementById('actionLayer').style.pointerEvents = scrollProgress > 0.92 ? 'auto' : 'none';
-        
-        renderer.render(scene, camera);
-    }
-    animate();
+        // Custom Audio Engine mapped to your uploaded MP3
+        const bgMusic = document.getElementById('bg-music');
+        let isPlaying = false;
 
-    window.addEventListener('resize', () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-    });
-</script>
+        function toggleSound() {
+            if (!isPlaying) {
+                bgMusic.play().then(() => {
+                    document.getElementById('sound-toggle').innerText = "Sound: On";
+                    isPlaying = true;
+                }).catch(error => {
+                    console.log("Audio play failed (browser autoplay block):", error);
+                });
+            } else {
+                bgMusic.pause();
+                document.getElementById('sound-toggle').innerText = "Sound: Off";
+                isPlaying = false;
+            }
+        }
+    </script>
 </body>
 </html>
