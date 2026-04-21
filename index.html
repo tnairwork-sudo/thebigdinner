@@ -4,371 +4,659 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Big Dinner | Invite Only</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@200;300;400;600&display=swap" rel="stylesheet">
-
     <style>
-        :root { 
-            --forest: #0B1A15; 
-            --copper: #B87333; 
-            --silk: #F7F5F0; 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --forest: #0B1A15;
+            --copper: #B87333;
+            --silk: #F7F5F0;
             --gold: #C5A059;
+            --dark: #0a0a0a;
         }
-        
-        body, html { 
-            margin: 0; padding: 0;
-            background: var(--forest); 
-            color: var(--silk); 
-            font-family: 'Inter', sans-serif; 
+
+        html, body {
+            width: 100%;
             height: 100%;
-            overflow: hidden; 
+            background: var(--dark);
+            color: var(--silk);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            overflow-x: hidden;
         }
 
-        .serif { font-family: 'EB Garamond', serif; }
-        
-        /* Fast Preloader */
-        #loader {
-            position: fixed; inset: 0; background: var(--forest);
-            z-index: 2000; display: flex; align-items: center; justify-content: center;
+        #canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
         }
 
-        /* Silk Grain Overlay */
-        .overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: 1000; opacity: 0.12;
-            background-image: url('https://www.transparenttextures.com/patterns/natural-paper.png');
+        .canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .ui-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
         }
 
         /* Navigation */
         .nav-luxury {
-            position: fixed; top: 0; width: 100%; display: flex; 
-            justify-content: space-between; align-items: center;
-            padding: 2.5rem 5%; z-index: 1500;
-            background: linear-gradient(to bottom, rgba(11, 26, 21, 0.9), transparent);
-        }
-        .nav-link { 
-            font-size: 11px; letter-spacing: 0.5em; text-transform: uppercase; 
-            cursor: pointer; color: var(--silk); opacity: 0.6;
-            transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-        }
-        .nav-link:hover { opacity: 1; color: var(--gold); }
-
-        /* The Scrolling Container */
-        #main-container {
-            height: 100vh; width: 100vw;
-            overflow-y: scroll; overflow-x: hidden;
-            scroll-snap-type: y mandatory; scroll-behavior: smooth;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2.5rem 5%;
+            background: linear-gradient(to bottom, rgba(11, 26, 21, 0.5), transparent);
+            z-index: 101;
+            pointer-events: auto;
         }
 
-        #main-container::-webkit-scrollbar { display: none; }
-        #main-container { -ms-overflow-style: none; scrollbar-width: none; }
-
-        /* Full Screen Panels */
-        .panel {
-            position: relative; height: 100vh; width: 100vw;
-            scroll-snap-align: start; scroll-snap-stop: always;
-            overflow: hidden; display: flex; align-items: center; justify-content: center;
+        .nav-brand {
+            font-family: 'EB Garamond', serif;
+            font-size: 1.3rem;
+            font-style: italic;
+            color: var(--silk);
+            cursor: pointer;
+            letter-spacing: 0.02em;
         }
 
-        .panel-bg {
-            position: absolute; inset: 0; z-index: -1;
-            width: 100%; height: 100%;
-        }
-        
-        .panel-bg img {
-            width: 100%; height: 100%; object-fit: cover;
-            filter: brightness(0.65) saturate(0.9);
-            transform: scale(1.1);
-            transition: transform 12s ease-out; 
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            align-items: center;
         }
 
-        .panel.active .panel-bg img { transform: scale(1.25); }
-
-        .content-block { text-align: center; max-width: 900px; padding: 0 2rem; z-index: 10; }
-        
-        .display-text { 
-            font-size: clamp(3rem, 10vw, 8rem); 
-            line-height: 0.9; margin-bottom: 2rem; 
-            will-change: transform, opacity;
+        .nav-link {
+            font-size: 0.7rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--silk);
+            opacity: 0.6;
+            cursor: pointer;
+            transition: opacity 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            text-decoration: none;
+            pointer-events: auto;
         }
 
-        .sub-text { 
-            font-size: 13px; letter-spacing: 0.5em; text-transform: uppercase; 
-            margin-bottom: 2rem;
+        .nav-link:hover {
+            opacity: 1;
+            color: var(--gold);
+        }
+
+        /* Chapter Info */
+        .chapter-info {
+            position: fixed;
+            top: 50%;
+            left: 5%;
+            transform: translateY(-50%);
+            max-width: 450px;
+            z-index: 50;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+
+        .chapter-title {
+            font-family: 'EB Garamond', serif;
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            font-style: italic;
+            color: var(--gold);
+            line-height: 0.95;
+            margin-bottom: 1rem;
+            letter-spacing: 0.02em;
+        }
+
+        .chapter-subtitle {
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--silk);
+            opacity: 0.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .chapter-description {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--silk);
+            opacity: 0.8;
+            font-weight: 300;
         }
 
         /* Sound Toggle */
         #sound-toggle {
-            position: fixed; bottom: 3rem; right: 5%; z-index: 1500;
-            font-size: 9px; letter-spacing: 0.3em; cursor: pointer;
-            text-transform: uppercase; border: 1px solid rgba(255,255,255,0.2);
-            padding: 0.8rem 1.5rem; backdrop-filter: blur(5px);
+            position: fixed;
+            bottom: 3rem;
+            right: 5%;
+            z-index: 101;
+            font-size: 0.7rem;
+            letter-spacing: 0.08em;
+            cursor: pointer;
+            text-transform: uppercase;
+            border: 1px solid rgba(247, 245, 240, 0.2);
+            padding: 0.8rem 1.5rem;
+            backdrop-filter: blur(5px);
             transition: all 0.3s ease;
+            background: transparent;
+            color: var(--silk);
+            pointer-events: auto;
         }
+
         #sound-toggle:hover {
-            background: rgba(255,255,255,0.1);
+            background: rgba(247, 245, 240, 0.08);
+            border-color: rgba(247, 245, 240, 0.4);
         }
 
-        .btn-invite {
-            border: 1px solid var(--gold); padding: 1.4rem 3.5rem;
-            font-size: 11px; letter-spacing: 0.5em; text-transform: uppercase;
-            transition: 0.6s cubic-bezier(0.19, 1, 0.22, 1); background: transparent; color: var(--gold);
-            cursor: pointer; margin-top: 2.5rem;
-        }
-        .btn-invite:hover { background: var(--gold); color: var(--forest); box-shadow: 0 0 40px rgba(197, 160, 89, 0.3); }
-
-        .experiment-text {
-            column-count: 2; column-gap: 4rem; text-align: left;
-            font-size: 0.95rem; line-height: 1.8;
-        }
-
-        .philosophy-text {
-            max-width: 700px; margin: 0 auto; font-size: 1.1rem; line-height: 1.9;
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: fixed;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 50;
+            text-align: center;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
         }
 
+        .scroll-indicator-text {
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--silk);
+            opacity: 0.5;
+            margin-bottom: 0.5rem;
+        }
+
+        .scroll-indicator-arrow {
+            font-size: 1.5rem;
+            color: var(--gold);
+            animation: bounce-arrow 2s infinite;
+        }
+
+        @keyframes bounce-arrow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            position: fixed;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 50;
+            display: flex;
+            gap: 1.5rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .btn-action {
+            border: 1px solid var(--gold);
+            padding: 1rem 2.5rem;
+            font-size: 0.7rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            background: transparent;
+            color: var(--gold);
+            cursor: pointer;
+            pointer-events: auto;
+        }
+
+        .btn-action:hover {
+            background: var(--gold);
+            color: var(--forest);
+            box-shadow: 0 0 40px rgba(197, 160, 89, 0.3);
+        }
+
+        /* Scroll spacer */
+        .scroll-spacer {
+            height: 700vh;
+            width: 1px;
+            position: fixed;
+            pointer-events: none;
+        }
+
+        /* Footer text */
+        .footer-text {
+            position: fixed;
+            bottom: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 50;
+            text-align: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+            font-size: 0.65rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .footer-text-primary {
+            color: var(--silk);
+            opacity: 0.4;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-text-secondary {
+            color: var(--silk);
+            opacity: 0.2;
+            font-size: 0.6rem;
+        }
+
+        /* Mobile adjustments */
         @media (max-width: 1024px) {
-            .experiment-text { column-count: 1; text-align: center; max-height: 50vh; overflow-y: auto; }
+            .chapter-info {
+                left: 2rem;
+                max-width: 350px;
+            }
+
+            .nav-links {
+                gap: 1.5rem;
+                font-size: 0.65rem;
+            }
+
+            #sound-toggle {
+                right: 2rem;
+                padding: 0.6rem 1.2rem;
+                font-size: 0.65rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .chapter-info {
+                left: 1rem;
+                right: 1rem;
+                max-width: none;
+                top: auto;
+                bottom: 50%;
+                transform: none;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.6rem;
+            }
+
+            .chapter-title {
+                font-size: 2.5rem;
+            }
         }
     </style>
 </head>
 <body>
 
-    <div id="loader">
-        <div class="serif italic text-silk text-3xl animate-pulse">The Big Dinner</div>
-    </div>
+<div class="canvas-container">
+    <canvas id="canvas"></canvas>
+</div>
 
-    <div class="overlay"></div>
-
+<div class="ui-overlay">
     <nav class="nav-luxury">
-        <div class="serif italic text-2xl uppercase tracking-tighter cursor-pointer" onclick="goToPanel(0)">The Big Dinner</div>
-        <div class="flex gap-4 md:gap-12 lg:gap-16 items-center">
-            <span class="nav-link hidden md:inline-block" onclick="goToPanel(3)">Chronicles</span>
-            <span class="nav-link hidden md:inline-block" onclick="goToPanel(5)">Philosophy</span>
-            <a href="gallery.html" class="nav-link" style="text-decoration: none;">Gallery</a>
-            <span class="nav-link" onclick="goToPanel(7)">Apply</span>
+        <div class="nav-brand">The Big Dinner</div>
+        <div class="nav-links">
+            <span class="nav-link" data-chapter="2">Chronicles</span>
+            <span class="nav-link" data-chapter="4">Philosophy</span>
+            <a href="gallery.html" class="nav-link" style="pointer-events: auto;">Gallery</a>
+            <span class="nav-link" data-chapter="6">Apply</span>
         </div>
     </nav>
 
-    <!-- Audio Player linked to ambient-theme.mp3 -->
-    <audio id="bg-music" loop preload="auto">
-        <source src="ambient-theme.mp3" type="audio/mpeg">
-    </audio>
-    <div id="sound-toggle" onclick="toggleSound()">Sound: Off</div>
+    <div class="chapter-info" id="chapterInfo">
+        <h1 class="chapter-title" id="chapterTitle">Invite Only</h1>
+        <p class="chapter-subtitle" id="chapterSubtitle">London · Delhi · Dubai · Mumbai</p>
+        <p class="chapter-description" id="chapterDescription">An invitation-only dining experience built on curation, not networking. Carefully selected gatherings across four cities.</p>
+    </div>
 
-    <main id="main-container">
+    <div class="scroll-indicator" id="scrollIndicator">
+        <div class="scroll-indicator-text">Scroll to Navigate</div>
+        <div class="scroll-indicator-arrow">↓</div>
+    </div>
 
-        <!-- PANEL 0: HERO -->
-        <section class="panel" id="p0">
-            <div class="panel-bg"><img src="shangrila.jpeg" alt="Hero"></div>
-            <div class="content-block animate-group">
-                <p class="sub-text">London . Delhi . Dubai . Mumbai</p>
-                <h1 class="serif display-text italic">Invite Only.</h1>
-                <p class="serif text-2xl italic opacity-70">"It is a bet on people."</p>
-            </div>
-        </section>
+    <div class="action-buttons" id="actionButtons">
+        <a href="https://forms.gle/vGGAHKJGr3yNK25b6" target="_blank">
+            <button class="btn-action">Apply for Delhi</button>
+        </a>
+        <a href="https://www.instagram.com/thebigdinnerr/?hl=en" target="_blank">
+            <button class="btn-action">Instagram</button>
+        </a>
+    </div>
 
-        <!-- PANEL 1: THE ROOM -->
-        <section class="panel" id="p1">
-            <div class="panel-bg"><img src="Grazia.jpeg" alt="The Room"></div>
-            <div class="content-block animate-group">
-                <p class="sub-text">The Mandate</p>
-                <h2 class="serif display-text italic">The Room.</h2>
-                <p class="text-xl font-light leading-relaxed max-w-xl mx-auto opacity-80">
-                    Not a brand. Not an event. A specific kind of room where the conversation is the only agenda and the right person sitting next to you might change everything.
-                </p>
-            </div>
-        </section>
+    <div class="footer-text" id="footerText">
+        <div class="footer-text-primary">Architected by Nair and Sahani</div>
+        <div class="footer-text-secondary">Reach out on +91 8448445950 WhatsApp for details</div>
+    </div>
 
-        <!-- PANEL 2: THE EXPERIMENT -->
-        <section class="panel" id="p2">
-            <div class="panel-bg"><img src="innecircle3.jpeg" alt="The Experiment"></div>
-            <div class="content-block !max-w-[1100px] animate-group">
-                <p class="sub-text">The Social Experiment</p>
-                <h2 class="serif display-text italic">The Experiment.</h2>
-                <div class="experiment-text font-light text-silk/90">
-                    <p class="mb-6"><span class="serif italic text-2xl text-gold">Forty people</span> stood in a five-star hotel ballroom in Delhi with no chairs, no name tags, and no idea who anyone else was. No panels. No agenda. No networking rubric. Just a room and a question: what happens when you remove all the social scaffolding?</p>
-                    <p class="mb-6">The entry price is a form. A long one. It asks questions that are difficult to skim, difficult to fake, and difficult to outsource. Not because I'm filtering for answers—but because I'm filtering for people who take the question seriously.</p>
-                    <p class="mb-6">Many applicants are rejected. What makes rejection sting is not status, but effort. By the time you've finished the form, you've already invested something real. That investment changes how you show up.</p>
-                    <p>The overlap is deliberate: fields that rarely intersect socially. People can't optimize their behavior when they don't know who matters. The mind, deprived of its normal social calculus, defaults to something more honest.</p>
-                </div>
-            </div>
-        </section>
+    <button id="sound-toggle" onclick="toggleSound()">Sound: Off</button>
+</div>
 
-        <!-- PANEL 3: CHRONICLES (THE LINEAGE) -->
-        <section class="panel" id="p3">
-            <div class="panel-bg"><img src="itcmaurya.jpeg" alt="Chronicles"></div>
-            <div class="content-block animate-group w-full">
-                <p class="sub-text">The Lineage</p>
-                <h2 class="serif display-text italic">Chronicles.</h2>
-                <div class="text-left font-light text-silk/90 text-sm md:text-lg mx-auto max-w-3xl flex flex-col gap-4 mt-8">
-                    <div class="flex flex-col md:flex-row justify-between border-b border-white/10 pb-4">
-                        <span class="serif italic text-xl text-gold tracking-wide">Chapter I &mdash; October 2025</span>
-                        <span class="tracking-widest uppercase text-[10px] md:text-xs opacity-70 self-start md:self-center mt-1 md:mt-0">Blue Bar, Taj Palace, New Delhi</span>
-                    </div>
-                    <div class="flex flex-col md:flex-row justify-between border-b border-white/10 pb-4">
-                        <span class="serif italic text-xl text-gold tracking-wide">Chapter II &mdash; November 2025</span>
-                        <span class="tracking-widest uppercase text-[10px] md:text-xs opacity-70 self-start md:self-center mt-1 md:mt-0">Megu, The Leela Palace, New Delhi</span>
-                    </div>
-                    <div class="flex flex-col md:flex-row justify-between border-b border-white/10 pb-4">
-                        <span class="serif italic text-xl text-gold tracking-wide">Chapter III &mdash; December 2025</span>
-                        <span class="tracking-widest uppercase text-[10px] md:text-xs opacity-70 self-start md:self-center mt-1 md:mt-0">Megu, The Leela Palace, New Delhi</span>
-                    </div>
-                    <div class="flex flex-col md:flex-row justify-between border-b border-white/10 pb-4">
-                        <span class="serif italic text-xl text-gold tracking-wide">Chapter IV &mdash; January 2026</span>
-                        <span class="tracking-widest uppercase text-[10px] md:text-xs opacity-70 self-start md:self-center mt-1 md:mt-0">The Imperial Hotel, New Delhi</span>
-                    </div>
-                    <div class="flex flex-col md:flex-row justify-between border-b border-white/10 pb-4">
-                        <span class="serif italic text-xl text-gold tracking-wide">Chapter V &mdash; February 2026</span>
-                        <span class="tracking-widest uppercase text-[10px] md:text-xs opacity-70 self-start md:self-center mt-1 md:mt-0">Shangri-La Eros, New Delhi</span>
-                    </div>
-                    <div class="flex flex-col md:flex-row justify-between border-b border-white/10 pb-4">
-                        <span class="serif italic text-xl text-gold tracking-wide">Chapter VI &mdash; March 2026</span>
-                        <span class="tracking-widest uppercase text-[10px] md:text-xs opacity-70 self-start md:self-center mt-1 md:mt-0">Ottimo, ITC Maurya, New Delhi</span>
-                    </div>
-                </div>
-            </div>
-        </section>
+<audio id="bg-music" loop preload="auto" crossorigin="anonymous">
+    <source src="ambient-theme.mp3" type="audio/mpeg">
+</audio>
 
-        <!-- PANEL 4: LONDON -->
-        <section class="panel" id="p4">
-            <div class="panel-bg"><img src="lodnon.jpeg" alt="London"></div>
-            <div class="content-block animate-group">
-                <p class="sub-text">February 2026</p>
-                <h2 class="serif display-text italic">London.</h2>
-                <p class="text-xl font-light leading-relaxed max-w-lg mx-auto opacity-80">
-                    Expansion was never about geography. It was about trust. I had people on the ground I trust completely—Devansh and Shaurya. In our world, that is the only condition that matters.
-                </p>
-            </div>
-        </section>
+<div class="scroll-spacer"></div>
 
-        <!-- PANEL 5: RELATIONSHIPS -->
-        <section class="panel" id="p5">
-            <div class="panel-bg"><img src="jan1.jpeg" alt="Philosophy"></div>
-            <div class="content-block animate-group">
-                <p class="sub-text">The Philosophy</p>
-                <h2 class="serif display-text italic">Relationships.</h2>
-                <div class="philosophy-text font-light text-silk/90">
-                    <p class="mb-6">Relationships are the quiet architecture of progress. Most of us understand the importance of people in our lives and the way partnerships can change their course. And yet we leave the formation of these relationships almost entirely to chance.</p>
-                    <p class="mb-6">What limits growth is rarely circumstance. It is belief. Many of us have been taught that for one person to make money, another must lose. I believe the opposite. The right room proves it.</p>
-                    <p class="serif italic text-2xl text-gold mt-10">"I only knew the kind of room I wanted to build."</p>
-                </div>
-            </div>
-        </section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+    const Colors = {
+        forest: 0x0B1A15,
+        copper: 0xB87333,
+        silk: 0xF7F5F0,
+        gold: 0xC5A059,
+        dark: 0x0a0a0a,
+    };
 
-        <!-- PANEL 6: TRUST -->
-        <section class="panel" id="p6">
-            <div class="panel-bg"><img src="dec11.jpeg" alt="Trust"></div>
-            <div class="content-block animate-group">
-                <p class="sub-text">Compounding</p>
-                <h2 class="serif display-text italic">Trust.</h2>
-                <p class="text-xl font-light leading-relaxed max-w-xl mx-auto opacity-80">
-                    Real friendships have formed—the kind that create value. Growth none of us could have engineered alone. Friendships first, work following naturally.
-                </p>
-            </div>
-        </section>
+    const chapters = [
+        {
+            pos: [0, 0, 0],
+            color: Colors.forest,
+            title: 'Invite Only',
+            subtitle: 'London · Delhi · Dubai · Mumbai',
+            description: 'An invitation-only dining experience. Curation is the only filter. We gather the people, not the network.'
+        },
+        {
+            pos: [0, 0, -10],
+            color: Colors.copper,
+            title: 'The Experiment',
+            subtitle: 'October 2025',
+            description: 'The first gathering at Blue Bar, Taj Palace. Building something unprecedented: a room where people matter more than credentials.'
+        },
+        {
+            pos: [0, 0, -20],
+            color: Colors.dark,
+            title: 'Chronicles',
+            subtitle: 'Six Chapters',
+            description: 'October 2025 – April 2026. From Delhi to London, each edition deepens the philosophy. Growth through trust, not transactions.'
+        },
+        {
+            pos: [0, 0, -30],
+            color: Colors.forest,
+            title: 'London',
+            subtitle: 'February 2026',
+            description: 'Expansion was never about geography. It was about trust. Devansh and Shaurya, the people on the ground. That is the only condition.'
+        },
+        {
+            pos: [0, 0, -40],
+            color: Colors.copper,
+            title: 'Relationships',
+            subtitle: 'The Philosophy',
+            description: 'Relationships are the quiet architecture of progress. The right room proves that growth is not zero-sum. We rise together.'
+        },
+        {
+            pos: [0, 0, -50],
+            color: Colors.dark,
+            title: 'Trust',
+            subtitle: 'Compounding',
+            description: 'Real friendships have formed. The kind that create value. Growth none of us could have engineered alone.'
+        },
+        {
+            pos: [0, 0, -60],
+            color: Colors.forest,
+            title: 'Seek Entry',
+            subtitle: '25th April 2026',
+            description: 'Entry is by application only. Curation is the only filter. Tell us why you belong in this room.'
+        },
+    ];
 
-        <!-- PANEL 7: THE CLOSE -->
-        <section class="panel" id="p7">
-            <div class="panel-bg"><img src="shangrila.jpeg" alt="Apply"></div>
-            <div class="content-block animate-group">
-                <h2 class="serif display-text italic">Seek Entry.</h2>
-                <p class="text-xl font-light opacity-80 mb-10">Entry is by application only. Curation is the only filter.</p>
-                
-                <p class="sub-text" style="margin-bottom: 0.5rem; color: var(--gold);">Delhi &mdash; 25th April 2026</p>
+    const canvas = document.getElementById('canvas');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false });
+    
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setClearColor(Colors.dark);
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFShadowShadowMap;
+    
+    camera.position.set(0, 2, 15);
 
-                <div class="flex flex-col sm:flex-row gap-6 justify-center mt-10">
-                    <a href="https://forms.gle/vGGAHKJGr3yNK25b6" target="_blank">
-                        <button class="btn-invite" style="margin-top: 0;">Apply for Delhi</button>
-                    </a>
-                    <a href="https://www.instagram.com/thebigdinnerr/?hl=en" target="_blank">
-                        <button class="btn-invite" style="margin-top: 0;">Instagram</button>
-                    </a>
-                </div>
+    chapters.forEach((ch, i) => {
+        const group = new THREE.Group();
+        group.position.set(...ch.pos);
 
-                <div class="mt-24 flex flex-col items-center gap-4">
-                    <div class="opacity-50 text-[10px] uppercase tracking-[0.8em]">Architected by Nair and Sahani</div>
-                    <div class="opacity-30 text-[9px] uppercase tracking-[0.4em]">Reach out on +91 8448445950 WhatsApp for details</div>
-                </div>
-            </div>
-        </section>
+        const boxGeom = new THREE.BoxGeometry(8, 10, 8);
+        const boxMat = new THREE.MeshStandardMaterial({
+            color: ch.color,
+            metalness: 0.15,
+            roughness: 0.75,
+            emissive: ch.color,
+            emissiveIntensity: 0.08,
+            flatShading: false,
+        });
+        const box = new THREE.Mesh(boxGeom, boxMat);
+        box.castShadow = true;
+        box.receiveShadow = true;
+        group.add(box);
 
-    </main>
+        const planeGeom = new THREE.PlaneGeometry(8, 10);
+        const planeMat = new THREE.MeshStandardMaterial({
+            color: ch.color,
+            metalness: 0.1,
+            roughness: 0.8,
+            transparent: true,
+            opacity: 0.7,
+            emissive: ch.color,
+            emissiveIntensity: 0.12,
+        });
+        const plane = new THREE.Mesh(planeGeom, planeMat);
+        plane.position.z = 4.2;
+        plane.castShadow = true;
+        plane.receiveShadow = true;
+        group.add(plane);
 
-    <script>
-        gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+        const light1 = new THREE.PointLight(ch.color, 1.5, 20);
+        light1.position.set(2, 3, 2);
+        light1.castShadow = true;
+        group.add(light1);
 
-        window.addEventListener('load', () => {
-            gsap.to("#loader", { 
-                opacity: 0, 
-                duration: 1, 
-                delay: 0.2, 
-                onComplete: () => {
-                    document.getElementById('loader').style.display = 'none';
-                }
-            });
+        const light2 = new THREE.PointLight(Colors.gold, 0.8, 15);
+        light2.position.set(-2, 2, -2);
+        light2.castShadow = true;
+        group.add(light2);
+
+        const light3 = new THREE.PointLight(ch.color, 0.5, 15);
+        light3.position.set(0, -3, 0);
+        group.add(light3);
+
+        const accentGeom = new THREE.BoxGeometry(0.15, 10, 0.1);
+        const accentMat = new THREE.MeshStandardMaterial({
+            color: Colors.gold,
+            emissive: Colors.gold,
+            emissiveIntensity: 0.6,
+            metalness: 0.8,
         });
 
-        const panels = gsap.utils.toArray(".panel");
+        const accent1 = new THREE.Mesh(accentGeom, accentMat);
+        accent1.position.x = -3;
+        accent1.position.z = 4.1;
+        accent1.castShadow = true;
+        group.add(accent1);
 
-        panels.forEach((panel, i) => {
-            const elementsToAnimate = panel.querySelectorAll(".sub-text, .display-text, p, button, .mt-24, .experiment-text, .philosophy-text, .flex-row, .border-b");
-            
-            gsap.set(elementsToAnimate, { opacity: 0, y: 50 });
+        const accent2 = new THREE.Mesh(accentGeom, accentMat);
+        accent2.position.x = 3;
+        accent2.position.z = 4.1;
+        accent2.castShadow = true;
+        group.add(accent2);
 
-            ScrollTrigger.create({
-                trigger: panel,
-                scroller: "#main-container",
-                start: "top 60%", 
-                end: "bottom 40%",
-                onEnter: () => {
-                    panel.classList.add("active"); 
-                    gsap.to(elementsToAnimate, { opacity: 1, y: 0, stagger: 0.1, duration: 1.2, ease: "power3.out", overwrite: true });
-                },
-                onEnterBack: () => {
-                    panel.classList.add("active");
-                    gsap.to(elementsToAnimate, { opacity: 1, y: 0, stagger: 0.1, duration: 1.2, ease: "power3.out", overwrite: true });
-                },
-                onLeave: () => {
-                    panel.classList.remove("active");
-                    gsap.to(elementsToAnimate, { opacity: 0, y: -50, duration: 0.8, ease: "power2.in", overwrite: true });
-                },
-                onLeaveBack: () => {
-                    panel.classList.remove("active");
-                    gsap.to(elementsToAnimate, { opacity: 0, y: 50, duration: 0.8, ease: "power2.in", overwrite: true });
-                }
+        scene.add(group);
+    });
+
+    const particleCount = 250;
+    const particlePositions = new Float32Array(particleCount * 3);
+    const particleVelocities = new Float32Array(particleCount * 3);
+
+    for (let i = 0; i < particleCount * 3; i += 3) {
+        particlePositions[i] = (Math.random() - 0.5) * 40;
+        particlePositions[i + 1] = (Math.random() - 0.5) * 30;
+        particlePositions[i + 2] = (Math.random() - 0.5) * 60;
+        particleVelocities[i] = (Math.random() - 0.5) * 0.01;
+        particleVelocities[i + 1] = (Math.random() - 0.5) * 0.01;
+        particleVelocities[i + 2] = (Math.random() - 0.5) * 0.01;
+    }
+
+    const particleGeom = new THREE.BufferGeometry();
+    particleGeom.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
+    const particleMat = new THREE.PointsMaterial({
+        size: 0.08,
+        color: Colors.gold,
+        sizeAttenuation: true,
+        transparent: true,
+        opacity: 0.4
+    });
+    const particles = new THREE.Points(particleGeom, particleMat);
+    scene.add(particles);
+
+    const ambientLight = new THREE.AmbientLight(Colors.silk, 0.35);
+    scene.add(ambientLight);
+
+    const mainLight = new THREE.PointLight(Colors.gold, 0.8);
+    mainLight.position.set(15, 15, 15);
+    mainLight.castShadow = true;
+    mainLight.shadow.mapSize.width = 1024;
+    mainLight.shadow.mapSize.height = 1024;
+    scene.add(mainLight);
+
+    const fillLight = new THREE.PointLight(Colors.copper, 0.6);
+    fillLight.position.set(-15, 8, -15);
+    scene.add(fillLight);
+
+    const dirLight = new THREE.DirectionalLight(Colors.silk, 0.4);
+    dirLight.position.set(0, 20, 0);
+    dirLight.castShadow = true;
+    scene.add(dirLight);
+
+    const bgGeom = new THREE.PlaneGeometry(200, 150);
+    const bgMat = new THREE.MeshBasicMaterial({ color: Colors.dark });
+    const bg = new THREE.Mesh(bgGeom, bgMat);
+    bg.position.z = -100;
+    scene.add(bg);
+
+    let scrollProgress = 0;
+    window.addEventListener('scroll', () => {
+        const scrollTop = window.scrollY;
+        const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+        scrollProgress = scrollHeight > 0 ? Math.min(scrollTop / scrollHeight, 1) : 0;
+    }, { passive: true });
+
+    const bgMusic = document.getElementById('bg-music');
+    let soundOn = false;
+
+    function toggleSound() {
+        const btn = document.getElementById('sound-toggle');
+        if (!soundOn) {
+            bgMusic.play().catch(() => {
+                console.log('Autoplay blocked by browser');
             });
+            btn.textContent = 'Sound: On';
+            soundOn = true;
+        } else {
+            bgMusic.pause();
+            btn.textContent = 'Sound: Off';
+            soundOn = false;
+        }
+    }
+
+    document.querySelectorAll('.nav-link[data-chapter]').forEach(link => {
+        link.addEventListener('click', (e) => {
+            const chapterIndex = parseInt(e.target.dataset.chapter);
+            const targetScroll = (chapterIndex / chapters.length) * (document.documentElement.scrollHeight - window.innerHeight);
+            window.scrollTo({ top: targetScroll, behavior: 'smooth' });
         });
+    });
 
-        function goToPanel(index) {
-            const targetPanel = document.getElementById('p' + index);
-            gsap.to("#main-container", {
-                scrollTo: targetPanel,
-                duration: 1.5,
-                ease: "power4.inOut"
-            });
+    const chapterInfo = document.getElementById('chapterInfo');
+    const chapterTitle = document.getElementById('chapterTitle');
+    const chapterSubtitle = document.getElementById('chapterSubtitle');
+    const chapterDescription = document.getElementById('chapterDescription');
+    const scrollIndicator = document.getElementById('scrollIndicator');
+    const actionButtons = document.getElementById('actionButtons');
+    const footerText = document.getElementById('footerText');
+
+    const clock = new THREE.Clock();
+    function animate() {
+        requestAnimationFrame(animate);
+
+        const depth = 15 - scrollProgress * 55;
+        const height = 2 + Math.sin(scrollProgress * Math.PI * 2) * 1.5;
+        const xPos = Math.sin(scrollProgress * Math.PI) * 2;
+
+        camera.position.z = depth;
+        camera.position.y = height;
+        camera.position.x = xPos;
+        camera.lookAt(0, height, depth - 5);
+
+        const pos = particleGeom.attributes.position.array;
+        for (let i = 0; i < particleCount * 3; i += 3) {
+            pos[i] += particleVelocities[i];
+            pos[i + 1] += particleVelocities[i + 1];
+            pos[i + 2] += particleVelocities[i + 2];
+
+            if (Math.abs(pos[i]) > 30) pos[i] *= -0.95;
+            if (Math.abs(pos[i + 1]) > 20) pos[i + 1] *= -0.95;
+            if (Math.abs(pos[i + 2]) > 40) pos[i + 2] *= -0.95;
         }
+        particleGeom.attributes.position.needsUpdate = true;
 
-        // Custom Audio Engine mapped to your uploaded MP3
-        const bgMusic = document.getElementById('bg-music');
-        let isPlaying = false;
+        const chapterIndex = Math.min(Math.floor(scrollProgress * chapters.length), chapters.length - 1);
+        const chapterStart = chapterIndex / chapters.length;
+        const chapterEnd = (chapterIndex + 1) / chapters.length;
+        const chapterLocalProgress = (scrollProgress - chapterStart) / (chapterEnd - chapterStart);
+        const infoOpacity = Math.max(0, 1 - Math.abs(chapterLocalProgress - 0.5) * 2);
 
-        function toggleSound() {
-            if (!isPlaying) {
-                bgMusic.play().then(() => {
-                    document.getElementById('sound-toggle').innerText = "Sound: On";
-                    isPlaying = true;
-                }).catch(error => {
-                    console.log("Audio play failed (browser autoplay block):", error);
-                });
-            } else {
-                bgMusic.pause();
-                document.getElementById('sound-toggle').innerText = "Sound: Off";
-                isPlaying = false;
-            }
+        chapterInfo.style.opacity = infoOpacity;
+        chapterTitle.textContent = chapters[chapterIndex].title;
+        chapterSubtitle.textContent = chapters[chapterIndex].subtitle;
+        chapterDescription.textContent = chapters[chapterIndex].description;
+
+        const showScroll = scrollProgress < 0.1;
+        const showButtons = scrollProgress > 0.85;
+
+        scrollIndicator.style.opacity = showScroll ? 1 : 0;
+        actionButtons.style.opacity = showButtons ? 1 : 0;
+        actionButtons.style.pointerEvents = showButtons ? 'auto' : 'none';
+        footerText.style.opacity = showButtons ? 1 : 0;
+
+        renderer.render(scene, camera);
+    }
+
+    animate();
+
+    window.addEventListener('resize', () => {
+        const w = window.innerWidth;
+        const h = window.innerHeight;
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+        renderer.setSize(w, h);
+    });
+
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden && soundOn) {
+            bgMusic.pause();
         }
-    </script>
+    });
+</script>
+
 </body>
 </html>
