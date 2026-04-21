@@ -4,74 +4,117 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Big Dinner | Invite Only</title>
-    <link href="https://fonts.googleapis.com/css?family=Inter:400,500,700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=EB+Garamond:400,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;1,400&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        /* All your original CSS goes here (as in your raw index code in the first message; full block, not omitted) */
-        /* ...for brevity, not repeating it here, but will include ALL CSS in the actual update... */
-    </style>
-</head>
-<body>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<div class="canvas-container">
-    <canvas id="canvas"></canvas>
-</div>
+        :root {
+            --forest: #0B1A15;
+            --copper: #B87333;
+            --silk: #F7F5F0;
+            --gold: #C5A059;
+            --dark: #0a0a0a;
+        }
 
-<div class="ui-overlay">
-    <nav class="nav-luxury">
-        <div class="nav-brand">The Big Dinner</div>
-        <div class="nav-links">
-            <span class="nav-link" data-chapter="0">Invite Only</span>
-            <span class="nav-link" data-chapter="2">Chronicles</span>
-            <a href="gallery.html" class="nav-link" style="pointer-events: auto;">Gallery</a>
-            <span class="nav-link" data-chapter="6">Apply</span>
-        </div>
-    </nav>
+        html, body {
+            width: 100%;
+            height: 100%;
+            background: var(--dark);
+            color: var(--silk);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
 
-    <div class="chapter-info" id="chapterInfo">
-        <h1 class="chapter-title" id="chapterTitle">Invite Only</h1>
-        <p class="chapter-subtitle" id="chapterSubtitle">London · Delhi · Dubai · Mumbai</p>
-        <p class="chapter-description" id="chapterDescription">An invitation-only dining experience built on curation, not networking. Carefully selected gatherings across four cities.</p>
-    </div>
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
 
-    <div class="scroll-indicator" id="scrollIndicator">
-        <div class="scroll-indicator-text">Scroll to Navigate</div>
-        <div class="scroll-indicator-arrow">&darr;</div>
-    </div>
+        .canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
 
-    <div class="action-buttons" id="actionButtons">
-        <a href="https://forms.gle/vGGAHKJGr3yNK25b6" target="_blank">
-            <button class="btn-action">Apply for Delhi</button>
-        </a>
-        <a href="https://www.instagram.com/thebigdinnerr/?hl=en" target="_blank">
-            <button class="btn-action">Instagram</button>
-        </a>
-    </div>
+        .ui-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+        }
 
-    <div class="footer-text" id="footerText">
-        <div class="footer-text-primary">Architected by Nair and Sahani</div>
-        <div class="footer-text-secondary">Reach out on +91 8448445950 WhatsApp for details</div>
-    </div>
+        /* Top Navigation */
+        .nav-luxury {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2.5rem 5%;
+            background: linear-gradient(to bottom, rgba(10, 10, 10, 0.8), transparent);
+            z-index: 101;
+            pointer-events: auto;
+        }
 
-    <button id="sound-toggle" onclick="toggleSound()">Sound: Off</button>
-</div>
+        .nav-brand {
+            font-family: 'EB Garamond', serif;
+            font-size: 1.5rem;
+            font-style: italic;
+            color: var(--silk);
+            cursor: pointer;
+            letter-spacing: 0.05em;
+        }
 
-<audio id="bg-music" loop preload="auto" crossorigin="anonymous">
-    <source src="ambient-theme.mp3" type="audio/mpeg">
-</audio>
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            align-items: center;
+        }
 
-<div class="scroll-spacer"></div>
+        .nav-link {
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--silk);
+            opacity: 0.5;
+            cursor: pointer;
+            transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+            text-decoration: none;
+        }
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script>
-    // All your original fixed JavaScript goes here
-    // Including Three.js, navigation, scroll, sound, etc.
-    // WITH these fixes:
-    // - renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-    // - nav links corrected to use valid chapter indexes
-    // - fonts loaded
-    // (No loss of style or layout)
-</script>
+        .nav-link:hover {
+            opacity: 1;
+            color: var(--gold);
+            letter-spacing: 0.2em;
+        }
 
-</body>
-</html>
+        /* Chapter Text Layout */
+        .chapter-info {
+            position: fixed;
+            top: 50%;
+            left: 8%;
+            transform: translateY(-50%);
+            max-width: 500px;
+            z-index: 50;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            pointer-events: none;
+        }
+
+        .chapter-title {
+            font-family: 'EB Garamond', serif;
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
