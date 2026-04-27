@@ -55,48 +55,109 @@
             text-align: center;
         }
         
-        /* Editorial Grid Layout */
+        /* Uniform Grid Layout */
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 2rem;
-            padding: 0 5% 15vh;
-            max-width: 1600px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 0;
+            max-width: 1400px;
             margin: 0 auto;
+        }
+
+        @media (max-width: 900px) {
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 560px) {
+            .gallery-grid { grid-template-columns: 1fr; }
         }
 
         .gallery-item {
             position: relative;
             overflow: hidden;
+            aspect-ratio: 4 / 3;
             opacity: 0;
-            transform: translateY(40px);
+            transform: translateY(30px);
         }
 
         .gallery-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: grayscale(0.2) contrast(1.1) brightness(0.85);
-            transition: transform 1.5s cubic-bezier(0.19, 1, 0.22, 1), filter 1s ease;
+            filter: grayscale(0.15) contrast(1.05) brightness(0.9);
+            transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1), filter 0.8s ease;
+            display: block;
         }
 
         .gallery-item:hover img {
-            transform: scale(1.05);
-            filter: grayscale(0) contrast(1.1) brightness(1);
+            transform: scale(1.06);
+            filter: grayscale(0) contrast(1.05) brightness(1);
         }
 
-        /* Asymmetric Layout Sizing */
-        .item-1 { grid-column: 2 / span 5; aspect-ratio: 4/5; }
-        .item-2 { grid-column: 8 / span 4; aspect-ratio: 3/4; margin-top: 15vh; }
-        .item-3 { grid-column: 3 / span 8; aspect-ratio: 16/9; margin-top: 10vh; }
-        .item-4 { grid-column: 1 / span 6; aspect-ratio: 1/1; margin-top: 5vh; }
-        .item-5 { grid-column: 8 / span 5; aspect-ratio: 4/5; margin-top: -10vh; }
-        .item-6 { grid-column: 4 / span 6; aspect-ratio: 3/2; margin-top: 10vh; }
-        .item-7 { grid-column: 2 / span 10; aspect-ratio: 21/9; margin-top: 15vh; }
+        /* Gallery Sections */
+        .gallery-section {
+            padding: 8vh 0;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-left: 5%;
+            padding-right: 5%;
+        }
 
-        @media (max-width: 768px) {
-            .gallery-grid { display: flex; flex-direction: column; gap: 4rem; }
-            .gallery-item { grid-column: 1 / -1 !important; margin-top: 0 !important; aspect-ratio: auto; }
+        .gallery-section + .gallery-section {
+            border-top: 1px solid rgba(197, 160, 89, 0.1);
+        }
+
+        .section-label {
+            margin-bottom: 3rem;
+        }
+
+        .section-eyebrow {
+            display: block;
+            font-size: 10px;
+            letter-spacing: 0.6em;
+            text-transform: uppercase;
+            color: var(--copper);
+            margin-bottom: 0.75rem;
+            opacity: 0.8;
+        }
+
+        .section-title {
+            font-size: clamp(1.8rem, 4vw, 3rem);
+            color: var(--silk);
+            font-weight: 400;
+            margin: 0;
+        }
+
+        /* Press Section */
+        .press-section {
+            padding: 10vh 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+            border-top: 1px solid rgba(197, 160, 89, 0.15);
+        }
+
+        .press-feature {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3rem;
+        }
+
+        .press-quote {
+            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+            color: var(--gold);
+            text-align: center;
+            max-width: 700px;
+            line-height: 1.7;
+            opacity: 0.85;
+        }
+
+        .press-image {
+            max-width: 600px;
+            width: 100%;
+            display: block;
+            filter: grayscale(0.1) brightness(0.9);
         }
 
         /* Footer */
@@ -127,36 +188,111 @@
         <h1 class="serif text-6xl md:text-8xl italic">Visual Evidence.</h1>
     </header>
 
-    <main class="gallery-grid">
-        <!-- Image 1 -->
-        <div class="gallery-item item-1">
-            <img src="Grazia.jpeg" alt="The Room">
-        </div>
-        
-        <!-- Image 2 -->
-        <div class="gallery-item item-2">
-            <img src="innecircle3.jpeg" alt="The Experiment">
-        </div>
+    <main>
 
-        <!-- Image 3 -->
-        <div class="gallery-item item-3">
-            <img src="shangrila.jpeg" alt="Shangri-La Eros">
-        </div>
+        <!-- Section 1: Bombay Edition -->
+        <section class="gallery-section">
+            <div class="section-label">
+                <span class="section-eyebrow">Bombay Edition — April 2026</span>
+                <h2 class="section-title serif italic">Harbour Bar · Taj Mahal Palace</h2>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="bombay1.jpg" alt="Bombay Edition — Harbour Bar" loading="lazy">
+                </div>
+                <div class="gallery-item">
+                    <img src="bombay2.jpg" alt="Taj Mahal Palace, Bombay" loading="lazy">
+                </div>
+                <div class="gallery-item">
+                    <img src="bombay3.jpg" alt="The Bombay Dinner" loading="lazy">
+                </div>
+                <div class="gallery-item">
+                    <img src="dec11.jpeg" alt="Bombay Edition — Guests" loading="lazy">
+                </div>
+                <div class="gallery-item">
+                    <img src="dec112.jpeg" alt="Bombay Edition — The Room" loading="lazy">
+                </div>
+                <div class="gallery-item">
+                    <img src="december111.jpeg" alt="Bombay Edition — Details" loading="lazy">
+                </div>
+            </div>
+        </section>
 
-        <!-- Image 4 -->
-        <div class="gallery-item item-4">
-            <img src="jan1.jpeg" alt="Philosophy">
-        </div>
+        <!-- Section 2: The Archives -->
+        <section class="gallery-section">
+            <div class="section-label">
+                <span class="section-eyebrow">The Archives</span>
+                <h2 class="section-title serif italic">Earlier Editions</h2>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="innecircle3.jpeg" alt="Inner Circle" loading="lazy">
+                </div>
+                <div class="gallery-item">
+                    <img src="shangrila.jpeg" alt="Shangri-La Eros" loading="lazy">
+                </div>
+                <div class="gallery-item">
+                    <img src="sbhangrila.jpeg" alt="Shangri-La" loading="lazy">
+                </div>
+                <div class="gallery-item">
+                    <img src="jan1.jpeg" alt="January Edition" loading="lazy">
+                </div>
+                <div class="gallery-item">
+                    <img src="jan2.jpeg" alt="January — The Table" loading="lazy">
+                </div>
+                <div class="gallery-item">
+                    <img src="jan334.jpeg" alt="January — Guests" loading="lazy">
+                </div>
+                <div class="gallery-item">
+                    <img src="janaryan.jpeg" alt="January Edition" loading="lazy">
+                </div>
+                <div class="gallery-item">
+                    <img src="lodnon.jpeg" alt="London Dinner" loading="lazy">
+                </div>
+                <div class="gallery-item">
+                    <img src="itcmaurya.jpeg" alt="ITC Maurya" loading="lazy">
+                </div>
+                <div class="gallery-item">
+                    <img src="itc.jpeg" alt="ITC — The Dinner" loading="lazy">
+                </div>
+                <div class="gallery-item">
+                    <img src="itcmar.jpeg" alt="ITC Maurya — Details" loading="lazy">
+                </div>
+                <div class="gallery-item">
+                    <img src="novemebr1.jpeg" alt="November Edition" loading="lazy">
+                </div>
+                <div class="gallery-item">
+                    <img src="november3.jpeg" alt="November — The Room" loading="lazy">
+                </div>
+                <div class="gallery-item">
+                    <img src="dec5.jpeg" alt="December Edition" loading="lazy">
+                </div>
+                <div class="gallery-item">
+                    <img src="dec6.jpeg" alt="December — The Table" loading="lazy">
+                </div>
+                <div class="gallery-item">
+                    <img src="dec9.jpeg" alt="December — Guests" loading="lazy">
+                </div>
+                <div class="gallery-item">
+                    <img src="decembe3.jpeg" alt="December Edition — Details" loading="lazy">
+                </div>
+                <div class="gallery-item">
+                    <img src="devcmebr3.jpeg" alt="December Archive" loading="lazy">
+                </div>
+            </div>
+        </section>
 
-        <!-- Image 5 -->
-        <div class="gallery-item item-5">
-            <img src="lodnon.jpeg" alt="London Dinner">
-        </div>
-
-        <!-- Image 6 -->
-        <div class="gallery-item item-6">
-            <img src="itcmaurya.jpeg" alt="ITC Maurya">
-        </div>
+        <!-- Section 3: Press -->
+        <section class="press-section">
+            <div class="section-label" style="text-align:center; margin-bottom: 3rem;">
+                <span class="section-eyebrow">As Seen In</span>
+                <h2 class="section-title serif italic">Grazia</h2>
+            </div>
+            <div class="press-feature">
+                <p class="press-quote serif italic">"The dinner party reimagined for people who are tired of dinner parties."</p>
+                <img src="Grazia.jpeg" alt="Grazia Feature" class="press-image" loading="lazy">
+            </div>
+        </section>
 
         <!-- Image 7 -->
         <div class="gallery-item item-7">
