@@ -1,1 +1,356 @@
-<a href="relationships.html" target="_blank"><button class="btn-invite" style="padding: 0.8rem 2.5rem; font-size: 10px; margin-top: 1rem;">Read More</button></a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Big Dinner</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@200;300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --forest: #0B1A15;
+            --copper: #B87333;
+            --silk:   #F7F5F0;
+            --gold:   #C5A059;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; }
+
+        body, html {
+            margin: 0; padding: 0;
+            background: var(--forest);
+            color: var(--silk);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .serif { font-family: 'EB Garamond', serif; }
+
+        /* Grain overlay */
+        .overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 1000; opacity: 0.12;
+            background-image: url('https://www.transparenttextures.com/patterns/natural-paper.png');
+        }
+
+        /* Navigation */
+        .nav-luxury {
+            position: fixed; top: 0; width: 100%;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 2.5rem 5%; z-index: 1500; box-sizing: border-box;
+            background: linear-gradient(to bottom, rgba(8, 18, 14, 0.95), transparent);
+        }
+        .nav-link {
+            font-size: 11px; letter-spacing: 0.5em; text-transform: uppercase;
+            cursor: pointer; color: var(--silk); opacity: 0.6;
+            transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            text-decoration: none;
+        }
+        .nav-link:hover, .nav-link.active { opacity: 1; color: var(--gold); }
+
+        /* Hero */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 0 5% 12vh;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background-image: url('shangrila.jpeg');
+            background-size: cover;
+            background-position: center 30%;
+            filter: brightness(0.45) saturate(0.7);
+            transform: scale(1.04);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 780px;
+        }
+
+        .hero-eyebrow {
+            font-size: 11px;
+            letter-spacing: 0.55em;
+            text-transform: uppercase;
+            color: var(--copper);
+            margin-bottom: 1.8rem;
+            opacity: 0;
+        }
+
+        .hero-title {
+            font-size: clamp(4rem, 12vw, 9rem);
+            line-height: 0.9;
+            margin: 0 0 2.5rem;
+            opacity: 0;
+        }
+
+        .hero-body {
+            font-size: 0.875rem;
+            line-height: 1.9;
+            font-weight: 300;
+            color: rgba(247, 245, 240, 0.65);
+            max-width: 480px;
+            margin-bottom: 3rem;
+            opacity: 0;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+            align-items: center;
+            opacity: 0;
+        }
+
+        .btn-invite {
+            font-size: 10px;
+            letter-spacing: 0.5em;
+            text-transform: uppercase;
+            padding: 0.9rem 2.8rem;
+            border: 1px solid var(--gold);
+            background: transparent;
+            color: var(--silk);
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-invite:hover {
+            background: var(--gold);
+            color: var(--forest);
+        }
+
+        .btn-ghost {
+            font-size: 10px;
+            letter-spacing: 0.5em;
+            text-transform: uppercase;
+            padding: 0.9rem 2.8rem;
+            border: 1px solid rgba(247, 245, 240, 0.2);
+            background: transparent;
+            color: rgba(247, 245, 240, 0.6);
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-ghost:hover {
+            border-color: rgba(247, 245, 240, 0.6);
+            color: var(--silk);
+        }
+
+        /* Scroll cue */
+        .scroll-cue {
+            position: absolute;
+            bottom: 4vh;
+            right: 5%;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            opacity: 0;
+        }
+        .scroll-cue span {
+            font-size: 9px;
+            letter-spacing: 0.5em;
+            text-transform: uppercase;
+            opacity: 0.35;
+            writing-mode: vertical-rl;
+        }
+        .scroll-line {
+            width: 1px;
+            height: 60px;
+            background: linear-gradient(to bottom, rgba(247, 245, 240, 0.35), transparent);
+        }
+
+        /* About strip */
+        .about-strip {
+            padding: 14vh 5%;
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .about-strip .label {
+            font-size: 10px;
+            letter-spacing: 0.6em;
+            text-transform: uppercase;
+            color: var(--copper);
+            margin-bottom: 2rem;
+            opacity: 0;
+        }
+
+        .about-strip .pull-quote {
+            font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+            line-height: 1.45;
+            font-weight: 400;
+            font-style: italic;
+            opacity: 0;
+        }
+
+        /* Nav links grid */
+        .nav-pages {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            border-top: 1px solid rgba(255, 255, 255, 0.07);
+        }
+
+        .nav-page-item {
+            padding: 8vh 5%;
+            border-right: 1px solid rgba(255, 255, 255, 0.07);
+            text-decoration: none;
+            color: var(--silk);
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            transition: background 0.5s ease;
+            opacity: 0;
+        }
+        .nav-page-item:last-child { border-right: none; }
+        .nav-page-item:hover { background: rgba(255, 255, 255, 0.02); }
+
+        .nav-page-item .item-label {
+            font-size: 9px;
+            letter-spacing: 0.6em;
+            text-transform: uppercase;
+            color: var(--copper);
+        }
+        .nav-page-item .item-title {
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-style: italic;
+            line-height: 1;
+        }
+        .nav-page-item .item-arrow {
+            font-size: 10px;
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            color: var(--gold);
+            opacity: 0.6;
+        }
+
+        /* Footer */
+        .footer-minimal {
+            text-align: center;
+            padding: 8vh 5%;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="overlay"></div>
+
+    <nav class="nav-luxury">
+        <a href="index.html" style="text-decoration: none;">
+            <div class="serif italic text-2xl uppercase tracking-tighter cursor-pointer" style="color: var(--silk);">The Big Dinner</div>
+        </a>
+        <div class="flex gap-8 md:gap-12 lg:gap-16 items-center">
+            <span class="nav-link active">Home</span>
+            <a href="gallery.html" class="nav-link hidden md:inline-block">Gallery</a>
+            <a href="videos.html"  class="nav-link hidden md:inline-block">Videos</a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+
+        <div class="hero-content">
+            <p class="hero-eyebrow">An Invitation to the Table</p>
+            <h1 class="serif italic hero-title">The Big<br>Dinner.</h1>
+            <p class="hero-body">
+                A private dinner series built on the belief that the right room changes everything.
+                No agenda, no name tags — only conversation and the people who make it matter.
+            </p>
+            <div class="hero-actions">
+                <a href="relationships.html" target="_blank" class="btn-invite">Read More</a>
+                <a href="gallery.html" class="btn-ghost">View Gallery</a>
+            </div>
+        </div>
+
+        <div class="scroll-cue">
+            <span>Scroll</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- Pull-quote strip -->
+    <section class="about-strip">
+        <p class="label">The Idea</p>
+        <blockquote class="serif pull-quote" style="margin:0;">
+            "Relationships are the quiet architecture of progress. There is something deeply
+            fulfilling about making money with and for the people around you."
+        </blockquote>
+    </section>
+
+    <!-- Internal navigation tiles -->
+    <div class="nav-pages">
+        <a href="gallery.html" class="nav-page-item">
+            <span class="item-label">The Archives</span>
+            <span class="serif item-title">Visual<br>Evidence.</span>
+            <span class="item-arrow">Gallery →</span>
+        </a>
+        <a href="videos.html" class="nav-page-item">
+            <span class="item-label">The Moving Image</span>
+            <span class="serif item-title">In<br>Motion.</span>
+            <span class="item-arrow">Videos →</span>
+        </a>
+        <a href="relationships.html" target="_blank" class="nav-page-item">
+            <span class="item-label">The Philosophy</span>
+            <span class="serif item-title">Relation-<br>ships.</span>
+            <span class="item-arrow">Read More →</span>
+        </a>
+    </div>
+
+    <footer class="footer-minimal">
+        <div style="font-size:10px; letter-spacing:0.8em; text-transform:uppercase; opacity:0.5; margin-bottom:0.5rem;">
+            Architected by Nair and Sahani
+        </div>
+        <div style="font-size:9px; letter-spacing:0.4em; text-transform:uppercase; opacity:0.3;">
+            The Big Dinner © 2026
+        </div>
+    </footer>
+
+    <script>
+        // Hero entrance animations
+        gsap.to(".hero-eyebrow", { opacity: 1, y: 0, duration: 1.2, ease: "power3.out", delay: 0.3, from: { y: 20 } });
+        gsap.from(".hero-eyebrow", { y: 20, duration: 1.2, ease: "power3.out", delay: 0.3 });
+        gsap.to(".hero-eyebrow", { opacity: 1, duration: 1.2, delay: 0.3 });
+
+        gsap.from(".hero-title",   { y: 40, opacity: 0, duration: 1.4, ease: "power3.out", delay: 0.5 });
+        gsap.to(".hero-title",     { opacity: 1, duration: 0.01, delay: 0.5 });
+
+        gsap.from(".hero-body",    { y: 20, opacity: 0, duration: 1.2, ease: "power3.out", delay: 0.75 });
+        gsap.to(".hero-body",      { opacity: 1, duration: 0.01, delay: 0.75 });
+
+        gsap.from(".hero-actions", { y: 15, opacity: 0, duration: 1.0, ease: "power3.out", delay: 0.95 });
+        gsap.to(".hero-actions",   { opacity: 1, duration: 0.01, delay: 0.95 });
+
+        gsap.from(".scroll-cue",   { opacity: 0, duration: 1.0, ease: "power2.out", delay: 1.4 });
+        gsap.to(".scroll-cue",     { opacity: 1, duration: 0.01, delay: 1.4 });
+
+        // About strip on scroll
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                const el = entry.target;
+                gsap.to(el, { opacity: 1, y: 0, duration: 1.2, ease: "power3.out" });
+                gsap.from(el, { y: 30, duration: 1.2, ease: "power3.out" });
+                io.unobserve(el);
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.about-strip .label, .about-strip .pull-quote, .nav-page-item')
+            .forEach(el => io.observe(el));
+    </script>
+</body>
+</html>
