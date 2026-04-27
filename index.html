@@ -298,78 +298,129 @@
     </main>
 
     <script>
+        // FIX: Register all GSAP plugins at the top
         gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-        window.addEventListener('load', () => {
-            gsap.to("#loader", { 
-                opacity: 0, 
-                duration: 1, 
-                delay: 0.2, 
-                onComplete: () => {
-                    document.getElementById('loader').style.display = 'none';
-                }
-            });
-        });
-
-        setTimeout(() => {
+        // ─── LOADER ──────────────────────────────────────────────────────────────
+        // FIX: Use DOMContentLoaded instead of window.load so the loader doesn't
+        //      wait for all large images/audio before hiding.
+        let loaderHidden = false;
+        function hideLoader() {
+            if (loaderHidden) return;
+            loaderHidden = true;
             const loader = document.getElementById('loader');
-            if (loader && loader.style.display !== 'none') {
-                gsap.to("#loader", { opacity: 0, duration: 1, onComplete: () => { loader.style.display = 'none'; } });
-            }
-        }, 4000);
-
-        const panels = gsap.utils.toArray(".panel");
-
-        panels.forEach((panel, i) => {
-            const elementsToAnimate = panel.querySelectorAll(".sub-text, .display-text, p, button, .mt-24, .experiment-text, .philosophy-text, .flex-row, .border-b");
-            
-            gsap.set(elementsToAnimate, { opacity: 0, y: 50 });
-
-            ScrollTrigger.create({
-                trigger: panel,
-                scroller: "#main-container",
-                start: "top 60%", 
-                end: "bottom 40%",
-                onEnter: () => {
-                    panel.classList.add("active"); 
-                    gsap.to(elementsToAnimate, { opacity: 1, y: 0, stagger: 0.1, duration: 1.2, ease: "power3.out", overwrite: true });
-                },
-                onEnterBack: () => {
-                    panel.classList.add("active");
-                    gsap.to(elementsToAnimate, { opacity: 1, y: 0, stagger: 0.1, duration: 1.2, ease: "power3.out", overwrite: true });
-                },
-                onLeave: () => {
-                    panel.classList.remove("active");
-                    gsap.to(elementsToAnimate, { opacity: 0, y: -50, duration: 0.8, ease: "power2.in", overwrite: true });
-                },
-                onLeaveBack: () => {
-                    panel.classList.remove("active");
-                    gsap.to(elementsToAnimate, { opacity: 0, y: 50, duration: 0.8, ease: "power2.in", overwrite: true });
+            if (!loader) return;
+            gsap.to("#loader", {
+                opacity: 0,
+                duration: 1,
+                delay: 0.3,
+                onComplete: () => {
+                    loader.style.display = 'none';
+                    loader.style.pointerEvents = 'none';
+                    // FIX: Animate Panel 0 AFTER the loader hides.
+                    // Without this, Panel 0 stays invisible forever because its
+                    // ScrollTrigger fires at "top 60%" — but since the page starts
+                    // at the top, the scroller never scrolls INTO panel 0 and the
+                    // trigger never fires. We manually trigger it here.
+                    animatePanel0();
                 }
-            });
-        });
-
-        function goToPanel(index) {
-            const targetPanel = document.getElementById('p' + index);
-            gsap.to("#main-container", {
-                scrollTo: targetPanel,
-                duration: 1.5,
-                ease: "power4.inOut"
             });
         }
 
-        // Custom Audio Engine mapped to your uploaded MP3
+        // FIX: Try DOMContentLoaded first, fall back to a 2.5s timeout
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', hideLoader);
+        } else {
+            setTimeout(hideLoader, 500);
+        }
+        // Hard fallback — never leave users stuck on loader screen
+        setTimeout(hideLoader, 2500);
+
+        // ─── PANEL 0 ENTRY ANIMATION ─────────────────────────────────────────────
+        // FIX: This function animates the first panel directly since ScrollTrigger
+        //      will never fire for it (page always starts scrolled to panel 0).
+        function animatePanel0() {
+            console.log('[TBD] Animating Panel 0');
+            const p0 = document.getElementById('p0');
+            if (!p0) return;
+            const els = p0.querySelectorAll('.sub-text, .display-text, p, button');
+            p0.classList.add('active');
+            gsap.to(els, { opacity: 1, y: 0, stagger: 0.15, duration: 1.4, ease: 'power3.out' });
+        }
+
+        // ─── SCROLL ANIMATIONS (Panels 1–7) ──────────────────────────────────────
+        const panels = gsap.utils.toArray('.panel');
+
+        panels.forEach((panel, i) => {
+            const elementsToAnimate = panel.querySelectorAll(
+                '.sub-text, .display-text, p, button, .mt-24, .experiment-text, .philosophy-text, .flex-row, .border-b'
+            );
+
+            // FIX: Only set opacity:0 on panels 1+ (not panel 0).
+            if (i > 0) {
+                gsap.set(elementsToAnimate, { opacity: 0, y: 50 });
+            }
+
+            // FIX: Skip ScrollTrigger for panel 0 — handled by animatePanel0().
+            if (i === 0) return;
+
+            ScrollTrigger.create({
+                trigger: panel,
+                scroller: '#main-container',
+                start: 'top 60%',
+                end: 'bottom 40%',
+                onEnter: () => {
+                    panel.classList.add('active');
+                    gsap.to(elementsToAnimate, { opacity: 1, y: 0, stagger: 0.1, duration: 1.2, ease: 'power3.out', overwrite: true });
+                },
+                onEnterBack: () => {
+                    panel.classList.add('active');
+                    gsap.to(elementsToAnimate, { opacity: 1, y: 0, stagger: 0.1, duration: 1.2, ease: 'power3.out', overwrite: true });
+                },
+                onLeave: () => {
+                    panel.classList.remove('active');
+                    gsap.to(elementsToAnimate, { opacity: 0, y: -50, duration: 0.8, ease: 'power2.in', overwrite: true });
+                },
+                onLeaveBack: () => {
+                    panel.classList.remove('active');
+                    gsap.to(elementsToAnimate, { opacity: 0, y: 50, duration: 0.8, ease: 'power2.in', overwrite: true });
+                }
+            });
+        });
+
+        // ─── NAVIGATION ──────────────────────────────────────────────────────────
+        function goToPanel(index) {
+            const targetPanel = document.getElementById('p' + index);
+            if (!targetPanel) return;
+            gsap.to('#main-container', {
+                scrollTo: targetPanel,
+                duration: 1.5,
+                ease: 'power4.inOut'
+            });
+        }
+
+        // ─── AUDIO ───────────────────────────────────────────────────────────────
+        // FIX: Complete the toggleSound function — original was truncated causing
+        //      a JS syntax error that crashed the entire script block.
         const bgMusic = document.getElementById('bg-music');
         let isPlaying = false;
 
         function toggleSound() {
             if (!isPlaying) {
                 bgMusic.play().then(() => {
-                    document.getElementById('sound-toggle').innerText = "Sound: On";
+                    document.getElementById('sound-toggle').innerText = 'Sound: On';
                     isPlaying = true;
                 }).catch(error => {
-                    console.log("Audio play failed (browser autoplay block):", error);
+                    console.log('Audio play failed (browser autoplay block):', error);
                 });
             } else {
                 bgMusic.pause();
-                document.getElementById('sound-toggle*
+                document.getElementById('sound-toggle').innerText = 'Sound: Off';
+                isPlaying = false;
+            }
+        }
+
+        console.log('[TBD] Script loaded. Panels found:', panels.length);
+    </script>
+</body>
+</html>
