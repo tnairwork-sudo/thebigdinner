@@ -1,471 +1,1353 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Big Dinner | Invite Only</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@200;300;400;600&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Big Dinner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Cormorant+SC:wght@300;400;500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #B85C38;
+    --orange-deep: #8B3A20;
+    --navy: #2D5A4E;
+    --navy-deep: #1A3D33;
+    --cream: #F5EFE0;
+    --cream-dark: #E8DEC8;
+    --gold: #C9A84C;
+    --gold-light: #E8C96A;
+    --ivory: #FAF6EE;
+  }
 
-    <style>
-        :root { 
-            --forest: #0B1A15; 
-            --copper: #B87333; 
-            --silk: #F7F5F0; 
-            --gold: #C5A059;
-        }
-        
-        body, html { 
-            margin: 0; padding: 0;
-            background: var(--forest); 
-            color: var(--silk); 
-            font-family: 'Inter', sans-serif; 
-            height: 100%;
-            overflow: hidden; 
-        }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        .serif { font-family: 'EB Garamond', serif; }
-        
-        /* Fast Preloader */
-        #loader {
-            position: fixed; inset: 0; background: var(--forest);
-            z-index: 2000; display: flex; align-items: center; justify-content: center;
-        }
+  html { scroll-behavior: smooth; }
 
-        /* Silk Grain Overlay */
-        .overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: 1000; opacity: 0.12;
-            background-image: url('https://www.transparenttextures.com/patterns/natural-paper.png');
-        }
+  body {
+    background: var(--ivory);
+    color: var(--navy-deep);
+    font-family: 'EB Garamond', serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
 
-        /* Navigation */
-        .nav-luxury {
-            position: fixed; top: 0; width: 100%; display: flex; 
-            justify-content: space-between; align-items: center;
-            padding: 2.5rem 5%; z-index: 1500;
-            background: linear-gradient(to bottom, rgba(11, 26, 21, 0.9), transparent);
-        }
-        .nav-link { 
-            font-size: 11px; letter-spacing: 0.5em; text-transform: uppercase; 
-            cursor: pointer; color: var(--silk); opacity: 0.6;
-            transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-        }
-        .nav-link:hover { opacity: 1; color: var(--gold); }
+  /* Custom cursor */
+  .cursor {
+    width: 8px;
+    height: 8px;
+    background: var(--orange);
+    border-radius: 50%;
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease, width 0.3s, height 0.3s, background 0.3s;
+  }
+  .cursor-ring {
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--orange);
+    border-radius: 50%;
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.15s ease, width 0.3s, height 0.3s;
+    opacity: 0.6;
+  }
 
-        /* The Scrolling Container */
-        #main-container {
-            height: 100vh; width: 100vw;
-            overflow-y: scroll; overflow-x: hidden;
-            scroll-snap-type: y mandatory; scroll-behavior: smooth;
-        }
+  /* Ornate SVG border used throughout */
+  .ornate-border {
+    position: absolute;
+    inset: 12px;
+    border: 1px solid var(--gold);
+    opacity: 0.4;
+    pointer-events: none;
+  }
+  .ornate-border::before,
+  .ornate-border::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-color: var(--gold);
+    border-style: solid;
+    opacity: 0.8;
+  }
+  .ornate-border::before {
+    top: -4px; left: -4px;
+    border-width: 2px 0 0 2px;
+  }
+  .ornate-border::after {
+    bottom: -4px; right: -4px;
+    border-width: 0 2px 2px 0;
+  }
 
-        #main-container::-webkit-scrollbar { display: none; }
-        #main-container { -ms-overflow-style: none; scrollbar-width: none; }
+  .sound-toggle {
+    background: none;
+    border: none;
+    font-family: 'Cormorant SC', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.35em;
+    color: rgba(13, 61, 51, 0.5);
+    text-transform: uppercase;
+    cursor: none;
+    padding: 4px 0;
+    transition: color 0.3s;
+    border-bottom: 1px solid transparent;
+    transition: all 0.3s;
+  }
+  .sound-toggle:hover {
+    color: var(--orange);
+    border-bottom-color: rgba(184, 92, 56, 0.3);
+  }
+  .sound-toggle.playing {
+    color: var(--orange);
+  }
 
-        /* Full Screen Panels */
-        .panel {
-            position: relative; height: 100vh; width: 100vw;
-            scroll-snap-align: start; scroll-snap-stop: always;
-            overflow: hidden; display: flex; align-items: center; justify-content: center;
-        }
 
-        .panel-bg {
-            position: absolute; inset: 0; z-index: -1;
-            width: 100%; height: 100%;
-        }
-        
-        .panel-bg img {
-            width: 100%; height: 100%; object-fit: cover;
-            filter: brightness(0.65) saturate(0.9);
-            transform: scale(1.1);
-            transition: transform 12s ease-out; 
-        }
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 24px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    mix-blend-mode: normal;
+    transition: background 0.4s, padding 0.4s;
+  }
+  nav.scrolled {
+    background: rgba(250, 246, 238, 0.95);
+    backdrop-filter: blur(12px);
+    padding: 16px 48px;
+    border-bottom: 1px solid rgba(201, 168, 76, 0.2);
+  }
+  .nav-logo {
+    font-family: 'Cormorant SC', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.35em;
+    color: var(--navy-deep);
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: 'Cormorant SC', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: var(--navy-deep);
+    text-decoration: none;
+    text-transform: uppercase;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+  }
+  .nav-links a:hover { opacity: 1; }
 
-        .panel.active .panel-bg img { transform: scale(1.25); }
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: var(--navy-deep);
+  }
 
-        .content-block { text-align: center; max-width: 900px; padding: 0 2rem; z-index: 10; }
-        
-        .display-text { 
-            font-size: clamp(3rem, 10vw, 8rem); 
-            line-height: 0.9; margin-bottom: 2rem; 
-            will-change: transform, opacity;
-        }
+  /* Hermès-inspired ornate background pattern */
+  .hero-pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.07;
+    background-image:
+      repeating-linear-gradient(45deg, var(--gold) 0, var(--gold) 1px, transparent 0, transparent 50%),
+      repeating-linear-gradient(-45deg, var(--gold) 0, var(--gold) 1px, transparent 0, transparent 50%);
+    background-size: 30px 30px;
+  }
 
-        .sub-text { 
-            font-size: 13px; letter-spacing: 0.5em; text-transform: uppercase; 
-            margin-bottom: 2rem;
-        }
+  .hero-texture {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(184, 92, 56, 0.15) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(201, 168, 76, 0.1) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 80%, rgba(26, 39, 68, 0.5) 0%, transparent 60%);
+  }
 
-        /* Sound Toggle */
-        #sound-toggle {
-            position: fixed; bottom: 3rem; right: 5%; z-index: 1500;
-            font-size: 9px; letter-spacing: 0.3em; cursor: pointer;
-            text-transform: uppercase; border: 1px solid rgba(255,255,255,0.2);
-            padding: 0.8rem 1.5rem; backdrop-filter: blur(5px);
-            transition: all 0.3s ease;
-        }
-        #sound-toggle:hover {
-            background: rgba(255,255,255,0.1);
-        }
+  /* Ornate frame for hero */
+  .hero-frame {
+    position: absolute;
+    inset: 30px;
+    border: 1px solid rgba(201, 168, 76, 0.3);
+    pointer-events: none;
+  }
+  .hero-frame::before {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    border: 1px solid rgba(201, 168, 76, 0.15);
+  }
 
-        .btn-invite {
-            border: 1px solid var(--gold); padding: 1.4rem 3.5rem;
-            font-size: 11px; letter-spacing: 0.5em; text-transform: uppercase;
-            transition: 0.6s cubic-bezier(0.19, 1, 0.22, 1); background: transparent; color: var(--gold);
-            cursor: pointer; margin-top: 2.5rem;
-        }
-        .btn-invite:hover { background: var(--gold); color: var(--forest); box-shadow: 0 0 40px rgba(197, 160, 89, 0.3); }
+  /* Corner ornaments */
+  .corner {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+  }
+  .corner svg { width: 100%; height: 100%; }
+  .corner-tl { top: 22px; left: 22px; }
+  .corner-tr { top: 22px; right: 22px; transform: scaleX(-1); }
+  .corner-bl { bottom: 22px; left: 22px; transform: scaleY(-1); }
+  .corner-br { bottom: 22px; right: 22px; transform: scale(-1); }
 
-        .experiment-text {
-            column-count: 2; column-gap: 4rem; text-align: left;
-            font-size: 0.95rem; line-height: 1.8;
-        }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 0 40px;
+    max-width: 900px;
+  }
 
-        .philosophy-text {
-            max-width: 700px; margin: 0 auto; font-size: 1.1rem; line-height: 1.9;
-        }
+  .hero-eyebrow {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(5rem, 14vw, 13rem);
+    color: var(--cream);
+    line-height: 0.88;
+    letter-spacing: -0.03em;
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 1.2s ease 0.5s forwards;
+  }
 
-        @media (max-width: 1024px) {
-            .experiment-text { column-count: 1; text-align: center; max-height: 50vh; overflow-y: auto; }
-        }
-    </style>
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(1.4rem, 2.5vw, 2.2rem);
+    color: rgba(245, 239, 224, 0.6);
+    font-style: italic;
+    line-height: 1.4;
+    letter-spacing: 0.02em;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 1.2s ease 0.7s forwards;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  .hero-subtitle {
+    font-family: 'Cormorant SC', serif;
+    font-size: clamp(1rem, 2vw, 1.4rem);
+    letter-spacing: 0.6em;
+    color: var(--cream);
+    opacity: 0;
+    margin-bottom: 60px;
+    animation: fadeUp 1s ease 1s forwards;
+  }
+
+  .hero-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 60px;
+    opacity: 0;
+    animation: fadeUp 1s ease 1.2s forwards;
+  }
+  .hero-divider-line {
+    width: 80px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .hero-divider-ornament {
+    color: var(--gold);
+    font-size: 1rem;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 60px;
+    justify-content: center;
+    opacity: 0;
+    animation: fadeUp 1s ease 1.4s forwards;
+  }
+  .hero-meta-item {
+    text-align: center;
+  }
+  .hero-meta-label {
+    font-family: 'Cormorant SC', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .hero-meta-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: var(--cream);
+    letter-spacing: 0.1em;
+  }
+
+  .hero-cta {
+    margin-top: 60px;
+    opacity: 0;
+    animation: fadeUp 1s ease 1.6s forwards;
+  }
+  .btn-primary {
+    display: inline-block;
+    font-family: 'Cormorant SC', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--navy-deep);
+    background: var(--gold);
+    padding: 16px 48px;
+    text-decoration: none;
+    position: relative;
+    transition: all 0.3s ease;
+  }
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    border: 1px solid rgba(255,255,255,0.3);
+    pointer-events: none;
+  }
+  .btn-primary:hover {
+    background: var(--gold-light);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(201, 168, 76, 0.3);
+  }
+
+  .scroll-indicator {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    animation: fadeUp 1s ease 2s forwards;
+  }
+  .scroll-indicator span {
+    font-family: 'Cormorant SC', serif;
+    font-size: 0.5rem;
+    letter-spacing: 0.4em;
+    color: rgba(201, 168, 76, 0.6);
+    text-transform: uppercase;
+  }
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scrollPulse 2s ease infinite;
+  }
+
+  /* PHILOSOPHY SECTION */
+  .philosophy {
+    padding: 140px 0;
+    background: var(--ivory);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .philosophy-bg {
+    position: absolute;
+    top: 0; right: -200px;
+    width: 600px;
+    height: 100%;
+    background: radial-gradient(ellipse, rgba(184, 92, 56, 0.04) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .section-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 60px;
+  }
+
+  .section-label {
+    font-family: 'Cormorant SC', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.5em;
+    color: var(--orange);
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    max-width: 60px;
+    height: 1px;
+    background: var(--orange);
+    opacity: 0.4;
+  }
+
+  .philosophy-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: center;
+  }
+
+  .philosophy-text h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(2.5rem, 4vw, 4rem);
+    line-height: 1.1;
+    color: var(--navy-deep);
+    margin-bottom: 32px;
+    letter-spacing: -0.01em;
+  }
+  .philosophy-text h2 em {
+    font-style: italic;
+    color: var(--orange);
+  }
+
+  .philosophy-text p {
+    font-size: 1.1rem;
+    line-height: 1.9;
+    color: rgba(13, 22, 40, 0.7);
+    margin-bottom: 20px;
+    font-weight: 400;
+  }
+
+  .philosophy-ornament {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ornament-circle {
+    width: 320px;
+    height: 320px;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.4;
+  }
+  .ornament-circle::before {
+    content: '';
+    position: absolute;
+    inset: 12px;
+    border: 1px solid var(--orange);
+    border-radius: 50%;
+    opacity: 0.5;
+  }
+  .ornament-circle::after {
+    content: '';
+    position: absolute;
+    inset: 28px;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+  }
+  .ornament-inner {
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+  .ornament-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 5rem;
+    font-weight: 300;
+    color: var(--navy-deep);
+    line-height: 1;
+    opacity: 0.15;
+  }
+  .ornament-text {
+    font-family: 'Cormorant SC', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    color: var(--orange);
+    text-transform: uppercase;
+  }
+
+  /* RULES SECTION */
+  .rules {
+    padding: 120px 0;
+    background: var(--navy-deep);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .rules-pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.04;
+    background-image:
+      repeating-linear-gradient(0deg, var(--gold) 0, var(--gold) 1px, transparent 0, transparent 40px),
+      repeating-linear-gradient(90deg, var(--gold) 0, var(--gold) 1px, transparent 0, transparent 40px);
+  }
+
+  .rules h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(2rem, 3.5vw, 3.5rem);
+    color: var(--cream);
+    margin-bottom: 80px;
+    text-align: center;
+    letter-spacing: -0.01em;
+  }
+  .rules h2 em { font-style: italic; color: var(--gold-light); }
+
+  .rules-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .rule-item {
+    padding: 48px 40px;
+    border: 1px solid rgba(201, 168, 76, 0.12);
+    position: relative;
+    transition: background 0.3s;
+  }
+  .rule-item:hover {
+    background: rgba(201, 168, 76, 0.04);
+  }
+
+  .rule-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.5rem;
+    font-weight: 300;
+    color: rgba(201, 168, 76, 0.15);
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+
+  .rule-title {
+    font-family: 'Cormorant SC', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .rule-text {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: rgba(245, 239, 224, 0.6);
+  }
+
+  /* CITIES */
+  .cities {
+    padding: 140px 0;
+    background: var(--cream);
+    position: relative;
+  }
+
+  .cities h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(2rem, 3.5vw, 3.5rem);
+    color: var(--navy-deep);
+    margin-bottom: 80px;
+    letter-spacing: -0.01em;
+  }
+  .cities h2 em { font-style: italic; color: var(--orange); }
+
+  .cities-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+  }
+
+  .city-item {
+    padding: 60px 40px;
+    background: var(--ivory);
+    border: 1px solid rgba(201, 168, 76, 0.2);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    cursor: default;
+  }
+  .city-item::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--orange), var(--gold));
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+    transform-origin: left;
+  }
+  .city-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 60px rgba(13, 22, 40, 0.1);
+  }
+  .city-item:hover::before {
+    transform: scaleX(1);
+  }
+
+  .city-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    font-weight: 300;
+    color: var(--navy-deep);
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+
+  .city-status {
+    font-family: 'Cormorant SC', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.4em;
+    color: var(--orange);
+    text-transform: uppercase;
+  }
+  .city-status.active { color: var(--gold); }
+
+  /* APPLY SECTION */
+  .apply {
+    padding: 160px 0;
+    background: var(--orange);
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .apply-pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.06;
+    background-image:
+      repeating-linear-gradient(45deg, #fff 0, #fff 1px, transparent 0, transparent 30px),
+      repeating-linear-gradient(-45deg, #fff 0, #fff 1px, transparent 0, transparent 30px);
+  }
+
+  .apply-frame {
+    position: absolute;
+    inset: 30px;
+    border: 1px solid rgba(255,255,255,0.2);
+    pointer-events: none;
+  }
+
+  .apply h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(2.5rem, 5vw, 5rem);
+    color: var(--cream);
+    margin-bottom: 24px;
+    letter-spacing: -0.02em;
+    position: relative;
+  }
+  .apply h2 em { font-style: italic; }
+
+  .apply p {
+    font-size: 1.15rem;
+    color: rgba(245, 239, 224, 0.8);
+    max-width: 500px;
+    margin: 0 auto 60px;
+    line-height: 1.8;
+    position: relative;
+  }
+
+  .btn-light {
+    display: inline-block;
+    font-family: 'Cormorant SC', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--orange-deep);
+    background: var(--cream);
+    padding: 18px 56px;
+    text-decoration: none;
+    position: relative;
+    transition: all 0.3s ease;
+    margin: 0 12px;
+  }
+  .btn-light::before {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    border: 1px solid rgba(184, 92, 56, 0.2);
+    pointer-events: none;
+  }
+  .btn-light:hover {
+    background: var(--ivory);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--navy-deep);
+    padding: 80px 60px 40px;
+    position: relative;
+  }
+
+  .footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 60px;
+    padding-bottom: 60px;
+    border-bottom: 1px solid rgba(201, 168, 76, 0.15);
+  }
+
+  .footer-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: var(--cream);
+    letter-spacing: -0.01em;
+  }
+  .footer-brand span {
+    display: block;
+    font-family: 'Cormorant SC', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.5em;
+    color: var(--gold);
+    margin-top: 8px;
+  }
+
+  .footer-cities {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+  .footer-cities li {
+    font-family: 'Cormorant SC', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    color: rgba(201, 168, 76, 0.6);
+    text-transform: uppercase;
+  }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-copy {
+    font-family: 'Cormorant SC', serif;
+    font-size: 0.5rem;
+    letter-spacing: 0.3em;
+    color: rgba(245, 239, 224, 0.25);
+    text-transform: uppercase;
+  }
+  .footer-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.9rem;
+    color: rgba(201, 168, 76, 0.4);
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.3); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .nav-links { display: none; }
+    .hero-meta { gap: 32px; flex-wrap: wrap; }
+    .philosophy-grid { grid-template-columns: 1fr; gap: 60px; }
+    .philosophy-ornament { display: none; }
+    .rules-grid { grid-template-columns: 1fr; }
+    .cities-list { grid-template-columns: 1fr 1fr; }
+    .section-container { padding: 0 24px; }
+    .footer-top { flex-direction: column; gap: 32px; }
+  }
+</style>
 </head>
 <body>
 
-    <div id="loader">
-        <div class="serif italic text-silk text-3xl animate-pulse">The Big Dinner</div>
+<!-- Custom cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<audio id="ambientAudio" loop>
+  <source src="ambient-theme.mp3" type="audio/mpeg">
+</audio>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">The Big Dinner</a>
+  <ul class="nav-links">
+    <li><a href="#philosophy">About</a></li>
+    <li><a href="#chronicles">Chronicles</a></li>
+    <li><a href="#cities">Cities</a></li>
+    <li><a href="experiment.html">The Experiment</a></li>
+  </ul>
+  <button class="sound-toggle muted" id="soundToggle">Sound: Off</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-pattern"></div>
+  <div class="hero-texture"></div>
+  <div class="hero-frame"></div>
+
+  <div class="corner corner-tl">
+    <svg viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M2 48 L2 2 L48 2" stroke="#C9A84C" stroke-width="1" opacity="0.6"/>
+      <circle cx="2" cy="2" r="2" fill="#C9A84C" opacity="0.6"/>
+      <path d="M10 40 L10 10 L40 10" stroke="#C9A84C" stroke-width="0.5" opacity="0.3"/>
+    </svg>
+  </div>
+  <div class="corner corner-tr">
+    <svg viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M2 48 L2 2 L48 2" stroke="#C9A84C" stroke-width="1" opacity="0.6"/>
+      <circle cx="2" cy="2" r="2" fill="#C9A84C" opacity="0.6"/>
+      <path d="M10 40 L10 10 L40 10" stroke="#C9A84C" stroke-width="0.5" opacity="0.3"/>
+    </svg>
+  </div>
+  <div class="corner corner-bl">
+    <svg viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M2 48 L2 2 L48 2" stroke="#C9A84C" stroke-width="1" opacity="0.6"/>
+      <circle cx="2" cy="2" r="2" fill="#C9A84C" opacity="0.6"/>
+      <path d="M10 40 L10 10 L40 10" stroke="#C9A84C" stroke-width="0.5" opacity="0.3"/>
+    </svg>
+  </div>
+  <div class="corner corner-br">
+    <svg viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M2 48 L2 2 L48 2" stroke="#C9A84C" stroke-width="1" opacity="0.6"/>
+      <circle cx="2" cy="2" r="2" fill="#C9A84C" opacity="0.6"/>
+      <path d="M10 40 L10 10 L40 10" stroke="#C9A84C" stroke-width="0.5" opacity="0.3"/>
+    </svg>
+  </div>
+
+  <div class="hero-content">
+
+    <p class="hero-eyebrow">The Big<br>Dinner</p>
+
+    <h1 class="hero-title">It is a bet on people.</h1>
+
+    <div class="hero-divider">
+      <div class="hero-divider-line"></div>
+      <span class="hero-divider-ornament">✦</span>
+      <div class="hero-divider-line"></div>
     </div>
 
-    <div class="overlay"></div>
+    <p class="hero-subtitle" style="margin-bottom: 48px;">Delhi &nbsp;·&nbsp; Bombay &nbsp;·&nbsp; London &nbsp;·&nbsp; Dubai</p>
 
-    <nav class="nav-luxury">
-        <div class="serif italic text-2xl uppercase tracking-tighter cursor-pointer" onclick="goToPanel(0)">The Big Dinner</div>
-        <div class="flex gap-4 md:gap-8 lg:gap-12 items-center">
-            <span class="nav-link hidden md:inline-block" onclick="goToPanel(3)">Chronicles</span>
-            <span class="nav-link hidden md:inline-block" onclick="goToPanel(5)">Philosophy</span>
-            <a href="gallery.html" class="nav-link" style="text-decoration: none;">Gallery</a>
-            <span class="nav-link" onclick="goToPanel(7)">Delhi</span>
-            <span class="nav-link" onclick="goToPanel(8)">Bombay</span>
-            <span class="nav-link" onclick="goToPanel(9)">London</span>
+    <div class="hero-cta">
+      <a href="#" class="btn-primary" id="openCitySelect">Request an Invitation</a>
+    </div>
+
+  </div>
+
+
+</section>
+
+<!-- PHILOSOPHY -->
+<section class="philosophy" id="philosophy">
+  <div class="philosophy-bg"></div>
+  <div class="section-container">
+    <div class="section-label reveal">The Philosophy</div>
+    <div class="philosophy-grid">
+      <div class="philosophy-text">
+        <h2 class="reveal">This is not a<br><em>networking event.</em></h2>
+        <p class="reveal reveal-delay-1">The Big Dinner is a closed table. Convened privately, once each month. Every guest is chosen with intention — for the texture of their thinking, the weight of their experience, and the quality of their presence.</p>
+        <p class="reveal reveal-delay-2">No pitches. No elevator lines. No business cards. What happens instead is rarer: conversation that moves, ideas that collide, and friendships that do not require a transaction to begin.</p>
+        <p class="reveal reveal-delay-3">This is how we used to do it. Before the world taught us to be useful before we were real.</p>
+      </div>
+      <div class="philosophy-ornament reveal reveal-delay-2">
+        <div class="ornament-circle">
+          <div class="ornament-inner">
+            <div class="ornament-number">TBD</div>
+            <div class="ornament-text">Est. 2023</div>
+          </div>
         </div>
-    </nav>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- Audio Player linked to ambient-theme.mp3 -->
-    <audio id="bg-music" loop preload="none">
-        <source src="ambient-theme.mp3" type="audio/mpeg">
-    </audio>
-    <div id="sound-toggle" onclick="toggleSound()">Sound: Off</div>
+<!-- RULES -->
+<section class="rules" id="rules">
+  <div class="rules-pattern"></div>
+  <div class="section-container">
+    <div class="section-label reveal" style="color: var(--gold);">The Standard</div>
+    <h2 class="reveal">What the room<br><em>requires of you</em></h2>
+    <div class="rules-grid">
+      <div class="rule-item reveal">
+        <div class="rule-number">01</div>
+        <div class="rule-title">Selection</div>
+        <p class="rule-text">Participation is extended by invitation only. Every name at this table is chosen deliberately. Our criteria are not disclosed.</p>
+      </div>
+      <div class="rule-item reveal reveal-delay-1">
+        <div class="rule-number">02</div>
+        <div class="rule-title">Dress</div>
+        <p class="rule-text">Men: a suit. Women: cocktail attire. No exceptions. The room has an aesthetic. You are part of it the moment you walk in.</p>
+      </div>
+      <div class="rule-item reveal reveal-delay-2">
+        <div class="rule-number">03</div>
+        <div class="rule-title">RSVP</div>
+        <p class="rule-text">Confirm or decline. Ghosting is a choice, and it will be treated as one. Silence results in permanent removal from all cities.</p>
+      </div>
+      <div class="rule-item reveal reveal-delay-3">
+        <div class="rule-number">04</div>
+        <div class="rule-title">Participation Fee</div>
+        <p class="rule-text">A participation fee applies. It is the filter that separates those who understand the value of a room from those who do not.</p>
+      </div>
+      <div class="rule-item reveal reveal-delay-4">
+        <div class="rule-number">05</div>
+        <div class="rule-title">The Evening</div>
+        <p class="rule-text">Food and beverages are settled individually with the venue. You are among equals. The conversation is the hospitality.</p>
+      </div>
+      <div class="rule-item reveal reveal-delay-4">
+        <div class="rule-number">06</div>
+        <div class="rule-title">Conduct</div>
+        <p class="rule-text">The quality of the evening is only ever as good as the people in the room. This is how we protect that.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <main id="main-container">
+<!-- CHRONICLES -->
+<section id="chronicles" style="padding: 120px 0; background: var(--ivory); border-top: 1px solid rgba(201,168,76,0.1);">
+  <div class="section-container">
+    <div class="section-label reveal">The Lineage</div>
+    <h2 class="reveal" style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2rem,3.5vw,3.5rem);color:var(--navy-deep);margin-bottom:60px;letter-spacing:-0.01em;">Eight chapters.<br><em style="font-style:italic;color:var(--orange);">So far.</em></h2>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:2px;">
 
-        <!-- PANEL 0: HERO -->
-        <section class="panel" id="p0">
-            <div class="panel-bg"><img src="shangrila.jpeg" alt="Hero"></div>
-            <div class="content-block animate-group">
-                <p class="sub-text">London . Delhi . Dubai . Mumbai</p>
-                <h1 class="serif display-text italic">Invite Only.</h1>
-                <p class="serif text-2xl italic opacity-70">"It is a bet on people."</p>
-            </div>
-        </section>
+      <div class="reveal" style="padding:40px 32px;border:1px solid rgba(201,168,76,0.15);background:var(--ivory);transition:background 0.3s;" onmouseenter="this.style.background='rgba(201,168,76,0.04)'" onmouseleave="this.style.background='var(--ivory)'">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:rgba(201,168,76,0.15);line-height:1;margin-bottom:12px;">I</div>
+        <div style="font-family:'Cormorant SC',serif;font-size:0.5rem;letter-spacing:0.3em;color:var(--gold);text-transform:uppercase;margin-bottom:8px;">October 2025</div>
+        <div style="font-size:0.9rem;color:rgba(13,22,40,0.6);">Blue Bar, Taj Palace, New Delhi</div>
+      </div>
 
-        <!-- PANEL 1: THE ROOM -->
-        <section class="panel" id="p1">
-            <div class="panel-bg"><img src="Grazia.jpeg" alt="The Room"></div>
-            <div class="content-block animate-group">
-                <p class="sub-text">The Mandate</p>
-                <h2 class="serif display-text italic">The Room.</h2>
-                <p class="text-xl font-light leading-relaxed max-w-xl mx-auto opacity-80">
-                    Not a brand. Not an event. A specific kind of room where the conversation is the only agenda and the right person sitting next to you might change everything.
-                </p>
-            </div>
-        </section>
+      <div class="reveal reveal-delay-1" style="padding:40px 32px;border:1px solid rgba(201,168,76,0.15);background:var(--ivory);transition:background 0.3s;" onmouseenter="this.style.background='rgba(201,168,76,0.04)'" onmouseleave="this.style.background='var(--ivory)'">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:rgba(201,168,76,0.15);line-height:1;margin-bottom:12px;">II</div>
+        <div style="font-family:'Cormorant SC',serif;font-size:0.5rem;letter-spacing:0.3em;color:var(--gold);text-transform:uppercase;margin-bottom:8px;">November 2025</div>
+        <div style="font-size:0.9rem;color:rgba(13,22,40,0.6);">Megu, The Leela Palace, New Delhi</div>
+      </div>
 
-        <!-- PANEL 2: THE EXPERIMENT -->
-        <section class="panel" id="p2">
-            <div class="panel-bg"><img src="innecircle3.jpeg" alt="The Experiment"></div>
-            <div class="content-block !max-w-[1100px] animate-group">
-                <p class="sub-text">The Social Experiment</p>
-                <h2 class="serif display-text italic">The Experiment.</h2>
-                <div class="experiment-text font-light text-silk/90">
-                    <p class="mb-6"><span class="serif italic text-2xl text-gold">Forty people</span> stood in a five-star hotel ballroom in Delhi with no chairs, no name tags, and no idea who anyone was. That was the first dinner. It worked better than I expected.</p>
-                    <p class="mb-6">The entry price is a form. A long one. It asks questions that are difficult to skim, difficult to fake, and difficult to outsource. Not because I'm filtering for credentials, but because I'm filtering for a kind of seriousness.</p>
-                    <p class="mb-6">Many applicants are rejected. What makes rejection sting is not status, but effort. By the time you've finished the form, you've already invested something real.</p>
-                    <p>The overlap is deliberate: fields that rarely intersect socially. People can't optimize their behavior when they don't know who matters. The mind, deprived of its normal social shortcuts, becomes genuinely curious.</p>
-                </div>
-            </div>
-        </section>
+      <div class="reveal reveal-delay-2" style="padding:40px 32px;border:1px solid rgba(201,168,76,0.15);background:var(--ivory);transition:background 0.3s;" onmouseenter="this.style.background='rgba(201,168,76,0.04)'" onmouseleave="this.style.background='var(--ivory)'">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:rgba(201,168,76,0.15);line-height:1;margin-bottom:12px;">III</div>
+        <div style="font-family:'Cormorant SC',serif;font-size:0.5rem;letter-spacing:0.3em;color:var(--gold);text-transform:uppercase;margin-bottom:8px;">December 2025</div>
+        <div style="font-size:0.9rem;color:rgba(13,22,40,0.6);">Megu, The Leela Palace, New Delhi</div>
+      </div>
 
-        <!-- PANEL 3: CHRONICLES (THE LINEAGE) -->
-        <section class="panel" id="p3">
-            <div class="panel-bg"><img src="itcmaurya.jpeg" alt="Chronicles"></div>
-            <div class="content-block animate-group w-full">
-                <p class="sub-text">The Lineage</p>
-                <h2 class="serif display-text italic">Chronicles.</h2>
-                <div class="text-left font-light text-silk/90 text-sm md:text-lg mx-auto max-w-3xl flex flex-col gap-4 mt-8">
-                    <div class="flex flex-col md:flex-row justify-between border-b border-white/10 pb-4">
-                        <span class="serif italic text-xl text-gold tracking-wide">Chapter I &mdash; October 2025</span>
-                        <span class="tracking-widest uppercase text-[10px] md:text-xs opacity-70 self-start md:self-center mt-1 md:mt-0">Blue Bar, Taj Palace, New Delhi</span>
-                    </div>
-                    <div class="flex flex-col md:flex-row justify-between border-b border-white/10 pb-4">
-                        <span class="serif italic text-xl text-gold tracking-wide">Chapter II &mdash; November 2025</span>
-                        <span class="tracking-widest uppercase text-[10px] md:text-xs opacity-70 self-start md:self-center mt-1 md:mt-0">Megu, The Leela Palace, New Delhi</span>
-                    </div>
-                    <div class="flex flex-col md:flex-row justify-between border-b border-white/10 pb-4">
-                        <span class="serif italic text-xl text-gold tracking-wide">Chapter III &mdash; December 2025</span>
-                        <span class="tracking-widest uppercase text-[10px] md:text-xs opacity-70 self-start md:self-center mt-1 md:mt-0">Megu, The Leela Palace, New Delhi</span>
-                    </div>
-                    <div class="flex flex-col md:flex-row justify-between border-b border-white/10 pb-4">
-                        <span class="serif italic text-xl text-gold tracking-wide">Chapter IV &mdash; January 2026</span>
-                        <span class="tracking-widest uppercase text-[10px] md:text-xs opacity-70 self-start md:self-center mt-1 md:mt-0">The Imperial Hotel, New Delhi</span>
-                    </div>
-                    <div class="flex flex-col md:flex-row justify-between border-b border-white/10 pb-4">
-                        <span class="serif italic text-xl text-gold tracking-wide">Chapter V &mdash; February 2026</span>
-                        <span class="tracking-widest uppercase text-[10px] md:text-xs opacity-70 self-start md:self-center mt-1 md:mt-0">Shangri-La Eros, New Delhi</span>
-                    </div>
-                    <div class="flex flex-col md:flex-row justify-between border-b border-white/10 pb-4">
-                        <span class="serif italic text-xl text-gold tracking-wide">Chapter VI &mdash; March 2026</span>
-                        <span class="tracking-widest uppercase text-[10px] md:text-xs opacity-70 self-start md:self-center mt-1 md:mt-0">Ottimo, ITC Maurya, New Delhi</span>
-                    </div>
-                    <div class="flex flex-col md:flex-row justify-between border-b border-white/10 pb-4">
-                        <span class="serif italic text-xl text-gold tracking-wide">Chapter VII &mdash; 17th April 2026</span>
-                        <span class="tracking-widest uppercase text-[10px] md:text-xs opacity-70 self-start md:self-center mt-1 md:mt-0">Harbour Bar, Taj Mahal Palace, Bombay</span>
-                    </div>
-                    <div class="flex flex-col md:flex-row justify-between border-b border-white/10 pb-4">
-                        <span class="serif italic text-xl text-gold tracking-wide">Chapter VIII &mdash; 25th April 2026</span>
-                        <span class="tracking-widest uppercase text-[10px] md:text-xs opacity-70 self-start md:self-center mt-1 md:mt-0">Shangri-La Hotel, Delhi</span>
-                    </div>
-                </div>
-            </div>
-        </section>
+      <div class="reveal reveal-delay-3" style="padding:40px 32px;border:1px solid rgba(201,168,76,0.15);background:var(--ivory);transition:background 0.3s;" onmouseenter="this.style.background='rgba(201,168,76,0.04)'" onmouseleave="this.style.background='var(--ivory)'">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:rgba(201,168,76,0.15);line-height:1;margin-bottom:12px;">IV</div>
+        <div style="font-family:'Cormorant SC',serif;font-size:0.5rem;letter-spacing:0.3em;color:var(--gold);text-transform:uppercase;margin-bottom:8px;">January 2026</div>
+        <div style="font-size:0.9rem;color:rgba(13,22,40,0.6);">The Imperial Hotel, New Delhi</div>
+      </div>
 
-        <!-- PANEL 4: LONDON INTRO -->
-        <section class="panel" id="p4">
-            <div class="panel-bg"><img src="lodnon.jpeg" alt="London"></div>
-            <div class="content-block animate-group">
-                <p class="sub-text">February 2026</p>
-                <h2 class="serif display-text italic">London.</h2>
-                <p class="text-xl font-light leading-relaxed max-w-lg mx-auto opacity-80">
-                    Expansion was never about geography. It was about trust. I had people on the ground I trust completely—Devansh and Shaurya. In our world, that is the only condition that matters.
-                </p>
-            </div>
-        </section>
+      <div class="reveal" style="padding:40px 32px;border:1px solid rgba(201,168,76,0.15);background:var(--ivory);transition:background 0.3s;" onmouseenter="this.style.background='rgba(201,168,76,0.04)'" onmouseleave="this.style.background='var(--ivory)'">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:rgba(201,168,76,0.15);line-height:1;margin-bottom:12px;">V</div>
+        <div style="font-family:'Cormorant SC',serif;font-size:0.5rem;letter-spacing:0.3em;color:var(--gold);text-transform:uppercase;margin-bottom:8px;">February 2026</div>
+        <div style="font-size:0.9rem;color:rgba(13,22,40,0.6);">Shangri-La Eros, New Delhi</div>
+      </div>
 
-        <!-- PANEL 5: RELATIONSHIPS -->
-        <section class="panel" id="p5">
-            <div class="panel-bg"><img src="jan1.jpeg" alt="Philosophy"></div>
-            <div class="content-block animate-group">
-                <p class="sub-text">The Philosophy</p>
-                <h2 class="serif display-text italic">Relationships.</h2>
-                <div class="philosophy-text font-light text-silk/90">
-                    <p class="mb-6">Relationships are the quiet architecture of progress. Most of us understand the importance of people in our lives and the way partnerships can change their course. But very few of us have ever been in a room designed specifically to accelerate that process.</p>
-                    <p class="mb-6">What limits growth is rarely circumstance. It is belief. Many of us have been taught that for one person to make money, another must lose. I believe the opposite: that value compounds when the right people find each other.</p>
-                    <p class="serif italic text-2xl text-gold mt-10">"I only knew the kind of room I wanted to build."</p>
-                </div>
-            </div>
-        </section>
+      <div class="reveal reveal-delay-1" style="padding:40px 32px;border:1px solid rgba(201,168,76,0.15);background:var(--ivory);transition:background 0.3s;" onmouseenter="this.style.background='rgba(201,168,76,0.04)'" onmouseleave="this.style.background='var(--ivory)'">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:rgba(201,168,76,0.15);line-height:1;margin-bottom:12px;">VI</div>
+        <div style="font-family:'Cormorant SC',serif;font-size:0.5rem;letter-spacing:0.3em;color:var(--gold);text-transform:uppercase;margin-bottom:8px;">March 2026</div>
+        <div style="font-size:0.9rem;color:rgba(13,22,40,0.6);">Ottimo, ITC Maurya, New Delhi</div>
+      </div>
 
-        <!-- PANEL 6: TRUST -->
-        <section class="panel" id="p6">
-            <div class="panel-bg"><img src="dec11.jpeg" alt="Trust"></div>
-            <div class="content-block animate-group">
-                <p class="sub-text">Compounding</p>
-                <h2 class="serif display-text italic">Trust.</h2>
-                <p class="text-xl font-light leading-relaxed max-w-xl mx-auto opacity-80">
-                    Real friendships have formed—the kind that create value. Growth none of us could have engineered alone. Friendships first, work following naturally.
-                </p>
-            </div>
-        </section>
+      <div class="reveal reveal-delay-2" style="padding:40px 32px;border:1px solid rgba(201,168,76,0.15);background:var(--ivory);transition:background 0.3s;" onmouseenter="this.style.background='rgba(201,168,76,0.04)'" onmouseleave="this.style.background='var(--ivory)'">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:rgba(201,168,76,0.15);line-height:1;margin-bottom:12px;">VII</div>
+        <div style="font-family:'Cormorant SC',serif;font-size:0.5rem;letter-spacing:0.3em;color:var(--gold);text-transform:uppercase;margin-bottom:8px;">April 2026</div>
+        <div style="font-size:0.9rem;color:rgba(13,22,40,0.6);">Harbour Bar, Taj Mahal Palace, Bombay</div>
+      </div>
 
-        <!-- PANEL 7: DELHI — APPLY -->
-        <section class="panel" id="p7">
-            <div class="panel-bg"><img src="shangrila.jpeg" alt="Apply Delhi"></div>
-            <div class="content-block animate-group">
-                <h2 class="serif display-text italic">Seek Entry.</h2>
-                <p class="text-xl font-light opacity-80 mb-10">Entry is by application only. Curation is the only filter.</p>
-                
-                <p class="sub-text" style="margin-bottom: 0.5rem; color: var(--gold);">Delhi &mdash; May 2026</p>
+      <div class="reveal reveal-delay-3" style="padding:40px 32px;border:1px solid rgba(201,168,76,0.15);background:var(--ivory);transition:background 0.3s;" onmouseenter="this.style.background='rgba(201,168,76,0.04)'" onmouseleave="this.style.background='var(--ivory)'">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:rgba(201,168,76,0.15);line-height:1;margin-bottom:12px;">VIII</div>
+        <div style="font-family:'Cormorant SC',serif;font-size:0.5rem;letter-spacing:0.3em;color:var(--gold);text-transform:uppercase;margin-bottom:8px;">April 2026</div>
+        <div style="font-size:0.9rem;color:rgba(13,22,40,0.6);">Shangri-La Hotel, Delhi</div>
+      </div>
 
-                <div class="flex flex-col sm:flex-row gap-6 justify-center mt-10">
-                    <a href="https://forms.gle/vGGAHKJGr3yNK25b6" target="_blank">
-                        <button class="btn-invite" style="margin-top: 0;">Apply for Delhi</button>
-                    </a>
-                    <a href="https://www.instagram.com/thebigdinnerr/?hl=en" target="_blank">
-                        <button class="btn-invite" style="margin-top: 0;">Instagram</button>
-                    </a>
-                </div>
+    </div>
+  </div>
+</section>
 
-                <div class="mt-24 flex flex-col items-center gap-4">
-                    <div class="opacity-50 text-[10px] uppercase tracking-[0.8em]">Architected by Nair and Sahani</div>
-                    <div class="opacity-30 text-[9px] uppercase tracking-[0.4em]">Reach out on +91 8448445950 WhatsApp for details</div>
-                </div>
-            </div>
-        </section>
+<!-- GALLERY -->
+<section style="padding: 0; background: var(--navy-deep); overflow: hidden;">
 
-        <!-- PANEL 8: BOMBAY — APPLY -->
-        <section class="panel" id="p8">
-            <div class="panel-bg"><img src="bombay1.jpg" alt="Apply Bombay"></div>
-            <div class="content-block animate-group">
-                <h2 class="serif display-text italic">Seek Entry.</h2>
-                <p class="text-xl font-light opacity-80 mb-10">Entry is by application only. Curation is the only filter.</p>
+  <div style="padding: 80px 60px 48px; display: flex; align-items: flex-end; justify-content: space-between; border-bottom: 1px solid rgba(201,168,76,0.1);">
+    <div>
+      <div class="section-label reveal" style="margin-bottom: 16px;">The Rooms</div>
+      <h2 class="reveal" style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2rem,3.5vw,3.5rem);color:var(--cream);letter-spacing:-0.01em;">Eight evenings.<br><em style="font-style:italic;color:var(--gold-light);">Captured.</em></h2>
+    </div>
+    <a href="gallery.html" class="reveal" style="font-family:'Cormorant SC',serif;font-size:0.55rem;letter-spacing:0.4em;color:rgba(201,168,76,0.6);text-decoration:none;text-transform:uppercase;border-bottom:1px solid rgba(201,168,76,0.2);padding-bottom:4px;transition:color 0.3s;" onmouseenter="this.style.color='var(--gold)'" onmouseleave="this.style.color='rgba(201,168,76,0.6)'">View All →</a>
+  </div>
 
-                <p class="sub-text" style="margin-bottom: 0.5rem; color: var(--gold);">Bombay &mdash; May 2026</p>
+  <!-- Row 1: 3 images -->
+  <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:2px;">
 
-                <div class="flex flex-col sm:flex-row gap-6 justify-center mt-10">
-                    <a href="https://forms.gle/3KrK1hSkscWVrSL69" target="_blank">
-                        <button class="btn-invite" style="margin-top: 0;">Apply for Bombay</button>
-                    </a>
-                    <a href="https://www.instagram.com/thebigdinnerr/?hl=en" target="_blank">
-                        <button class="btn-invite" style="margin-top: 0;">Instagram</button>
-                    </a>
-                </div>
+    <div class="gallery-item reveal" style="position:relative;overflow:hidden;height:420px;">
+      <img src="shangrila.jpeg" alt="The Big Dinner" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.8s ease;" onmouseenter="this.style.transform='scale(1.04)'" onmouseleave="this.style.transform='scale(1)'">
+      <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,61,51,0.7) 0%,transparent 50%);pointer-events:none;"></div>
+      <div style="position:absolute;bottom:24px;left:24px;">
+        <div style="font-family:'Cormorant SC',serif;font-size:0.5rem;letter-spacing:0.35em;color:var(--gold);text-transform:uppercase;margin-bottom:4px;">Chapter V · Feb 2026</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--cream);">Shangri-La Eros, New Delhi</div>
+      </div>
+    </div>
 
-                <div class="mt-24 flex flex-col items-center gap-4">
-                    <div class="opacity-50 text-[10px] uppercase tracking-[0.8em]">Architected by Nair and Sahani</div>
-                    <div class="opacity-30 text-[9px] uppercase tracking-[0.4em]">Reach out on +91 8448445950 WhatsApp for details</div>
-                </div>
-            </div>
-        </section>
+    <div class="gallery-item reveal reveal-delay-1" style="position:relative;overflow:hidden;height:420px;">
+      <img src="Grazia.jpeg" alt="The Big Dinner" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.8s ease;" onmouseenter="this.style.transform='scale(1.04)'" onmouseleave="this.style.transform='scale(1)'">
+      <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,61,51,0.7) 0%,transparent 50%);pointer-events:none;"></div>
+      <div style="position:absolute;bottom:24px;left:24px;">
+        <div style="font-family:'Cormorant SC',serif;font-size:0.5rem;letter-spacing:0.35em;color:var(--gold);text-transform:uppercase;margin-bottom:4px;">As seen in Grazia</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--cream);">The Room.</div>
+      </div>
+    </div>
 
-        <!-- PANEL 9: LONDON — APPLY -->
-        <section class="panel" id="p9">
-            <div class="panel-bg"><img src="lodnon.jpeg" alt="Apply London"></div>
-            <div class="content-block animate-group">
-                <h2 class="serif display-text italic">Seek Entry.</h2>
-                <p class="text-xl font-light opacity-80 mb-10">Entry is by application only. Curation is the only filter.</p>
+    <div class="gallery-item reveal reveal-delay-2" style="position:relative;overflow:hidden;height:420px;">
+      <img src="innecircle3.jpeg" alt="The Big Dinner" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.8s ease;" onmouseenter="this.style.transform='scale(1.04)'" onmouseleave="this.style.transform='scale(1)'">
+      <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,61,51,0.7) 0%,transparent 50%);pointer-events:none;"></div>
+      <div style="position:absolute;bottom:24px;left:24px;">
+        <div style="font-family:'Cormorant SC',serif;font-size:0.5rem;letter-spacing:0.35em;color:var(--gold);text-transform:uppercase;margin-bottom:4px;">Chapter III · Dec 2025</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--cream);">The Experiment.</div>
+      </div>
+    </div>
 
-                <p class="sub-text" style="margin-bottom: 0.5rem; color: var(--gold);">London &mdash; June 2026</p>
+  </div>
 
-                <div class="flex flex-col sm:flex-row gap-6 justify-center mt-10">
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdZrsP5Gd6toGWuQ10uEYVDx4f6BnMFgIyjZlvAX9X7suuwQA/viewform" target="_blank">
-                        <button class="btn-invite" style="margin-top: 0;">Apply for London</button>
-                    </a>
-                    <a href="https://www.instagram.com/thebigdinnerr/?hl=en" target="_blank">
-                        <button class="btn-invite" style="margin-top: 0;">Instagram</button>
-                    </a>
-                </div>
+  <!-- Row 2: 4 images -->
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1.4fr;gap:2px;margin-top:2px;">
 
-                <div class="mt-24 flex flex-col items-center gap-4">
-                    <div class="opacity-50 text-[10px] uppercase tracking-[0.8em]">Architected by Nair and Sahani</div>
-                    <div class="opacity-30 text-[9px] uppercase tracking-[0.4em]">Reach out on +91 8448445950 WhatsApp for details</div>
-                </div>
-            </div>
-        </section>
+    <div class="gallery-item reveal" style="position:relative;overflow:hidden;height:300px;">
+      <img src="itcmaurya.jpeg" alt="The Big Dinner" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.8s ease;" onmouseenter="this.style.transform='scale(1.04)'" onmouseleave="this.style.transform='scale(1)'">
+      <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,61,51,0.7) 0%,transparent 50%);pointer-events:none;"></div>
+      <div style="position:absolute;bottom:20px;left:20px;">
+        <div style="font-family:'Cormorant SC',serif;font-size:0.45rem;letter-spacing:0.3em;color:var(--gold);text-transform:uppercase;margin-bottom:4px;">Chapter VI · Mar 2026</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:0.9rem;color:var(--cream);">ITC Maurya, Delhi</div>
+      </div>
+    </div>
 
-    </main>
+    <div class="gallery-item reveal reveal-delay-1" style="position:relative;overflow:hidden;height:300px;">
+      <img src="jan1.jpeg" alt="The Big Dinner" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.8s ease;" onmouseenter="this.style.transform='scale(1.04)'" onmouseleave="this.style.transform='scale(1)'">
+      <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,61,51,0.7) 0%,transparent 50%);pointer-events:none;"></div>
+      <div style="position:absolute;bottom:20px;left:20px;">
+        <div style="font-family:'Cormorant SC',serif;font-size:0.45rem;letter-spacing:0.3em;color:var(--gold);text-transform:uppercase;margin-bottom:4px;">Chapter IV · Jan 2026</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:0.9rem;color:var(--cream);">The Imperial, Delhi</div>
+      </div>
+    </div>
 
-    <script>
-        // FIX: Register all GSAP plugins at the top
-        gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+    <div class="gallery-item reveal reveal-delay-2" style="position:relative;overflow:hidden;height:300px;">
+      <img src="dec11.jpeg" alt="The Big Dinner" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.8s ease;" onmouseenter="this.style.transform='scale(1.04)'" onmouseleave="this.style.transform='scale(1)'">
+      <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,61,51,0.7) 0%,transparent 50%);pointer-events:none;"></div>
+      <div style="position:absolute;bottom:20px;left:20px;">
+        <div style="font-family:'Cormorant SC',serif;font-size:0.45rem;letter-spacing:0.3em;color:var(--gold);text-transform:uppercase;margin-bottom:4px;">Chapter III · Dec 2025</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:0.9rem;color:var(--cream);">The Leela Palace, Delhi</div>
+      </div>
+    </div>
 
-        // ─── LOADER ───────────────────────────────────────────────────────────
-        let loaderHidden = false;
-        function hideLoader() {
-            if (loaderHidden) return;
-            loaderHidden = true;
-            const loader = document.getElementById('loader');
-            if (!loader) return;
-            gsap.to("#loader", {
-                opacity: 0,
-                duration: 1,
-                delay: 0.3,
-                onComplete: () => {
-                    loader.style.display = 'none';
-                    loader.style.pointerEvents = 'none';
-                    animatePanel0();
-                }
-            });
-        }
+    <div class="gallery-item reveal reveal-delay-3" style="position:relative;overflow:hidden;height:300px;">
+      <img src="bombay1.jpg" alt="The Big Dinner" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.8s ease;" onmouseenter="this.style.transform='scale(1.04)'" onmouseleave="this.style.transform='scale(1)'">
+      <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(26,61,51,0.7) 0%,transparent 50%);pointer-events:none;"></div>
+      <div style="position:absolute;bottom:20px;left:20px;">
+        <div style="font-family:'Cormorant SC',serif;font-size:0.45rem;letter-spacing:0.3em;color:var(--gold);text-transform:uppercase;margin-bottom:4px;">Chapter VII · Apr 2026</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:0.9rem;color:var(--cream);">Harbour Bar, Taj Mahal Palace, Bombay</div>
+      </div>
+    </div>
 
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', hideLoader);
-        } else {
-            setTimeout(hideLoader, 500);
-        }
-        setTimeout(hideLoader, 2500);
+  </div>
 
-        // ─── PANEL 0 ENTRY ANIMATION ──────────────────────────────────────────
-        function animatePanel0() {
-            console.log('[TBD] Animating Panel 0');
-            const p0 = document.getElementById('p0');
-            if (!p0) return;
-            const els = p0.querySelectorAll('.sub-text, .display-text, p, button');
-            p0.classList.add('active');
-            gsap.to(els, { opacity: 1, y: 0, stagger: 0.15, duration: 1.4, ease: 'power3.out' });
-        }
+</section>
 
-        // ─── SCROLL ANIMATIONS (Panels 1–9) ──────────────────────────────────
-        const panels = gsap.utils.toArray('.panel');
+<!-- CITIES -->
+<section class="cities" id="cities">
+  <div class="section-container">
+    <div class="section-label reveal">Where We Gather</div>
+    <h2 class="reveal">Four cities.<br><em>One table.</em></h2>
+    <div class="cities-list">
+      <div class="city-item reveal">
+        <div class="city-name">Delhi</div>
+        <div class="city-status active">Active</div>
+      </div>
+      <div class="city-item reveal reveal-delay-1">
+        <div class="city-name">Bombay</div>
+        <div class="city-status active">Active</div>
+      </div>
+      <div class="city-item reveal reveal-delay-2">
+        <div class="city-name">London</div>
+        <div class="city-status">Active</div>
+      </div>
+      <div class="city-item reveal reveal-delay-3">
+        <div class="city-name">Dubai</div>
+        <div class="city-status">Coming Soon</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-        panels.forEach((panel, i) => {
-            const elementsToAnimate = panel.querySelectorAll(
-                '.sub-text, .display-text, p, button, .mt-24, .experiment-text, .philosophy-text, .flex-row, .border-b'
-            );
+<!-- APPLY -->
+<section class="apply" id="apply">
+  <div class="apply-pattern"></div>
+  <div class="apply-frame"></div>
+  <div class="section-container">
+    <h2 class="reveal">Request an<br><em>Invitation</em></h2>
+    <p class="reveal reveal-delay-1">Submitting signals interest only. It does not constitute an invitation. Those selected will be contacted directly.</p>
+    <div class="reveal reveal-delay-2">
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSc9avJi9-QomrbxzDd7Rtoph0yOD44T_s66LS_Um78G_zEGaQ/viewform" class="btn-light city-trigger" target="_blank">Apply for Bombay</a>
+    </div>
+  </div>
+</section>
 
-            if (i > 0) {
-                gsap.set(elementsToAnimate, { opacity: 0, y: 50 });
-            }
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      The Big Dinner
+      <span>Delhi · Bombay · London · Dubai</span>
+    </div>
+    <ul class="footer-cities">
+      <li>Delhi</li>
+      <li>Bombay</li>
+      <li>London</li>
+      <li>Dubai</li>
+    </ul>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">Architected by Nair and Sahani &nbsp;·&nbsp; +91 8448445950</p>
+    <p class="footer-tagline">The room fills itself with the people who show up.</p>
+  </div>
+</footer>
 
-            if (i === 0) return;
+<!-- 3-PAGE INVITATION OVERLAY -->
+<div id="cityOverlay" style="display:none;position:fixed;inset:0;z-index:1000;background:rgba(26,61,51,0.98);align-items:center;justify-content:center;flex-direction:column;">
 
-            ScrollTrigger.create({
-                trigger: panel,
-                scroller: '#main-container',
-                start: 'top 60%',
-                end: 'bottom 40%',
-                onEnter: () => {
-                    panel.classList.add('active');
-                    gsap.to(elementsToAnimate, { opacity: 1, y: 0, stagger: 0.1, duration: 1.2, ease: 'power3.out', overwrite: true });
-                },
-                onEnterBack: () => {
-                    panel.classList.add('active');
-                    gsap.to(elementsToAnimate, { opacity: 1, y: 0, stagger: 0.1, duration: 1.2, ease: 'power3.out', overwrite: true });
-                },
-                onLeave: () => {
-                    panel.classList.remove('active');
-                    gsap.to(elementsToAnimate, { opacity: 0, y: -50, duration: 0.8, ease: 'power2.in', overwrite: true });
-                },
-                onLeaveBack: () => {
-                    panel.classList.remove('active');
-                    gsap.to(elementsToAnimate, { opacity: 0, y: 50, duration: 0.8, ease: 'power2.in', overwrite: true });
-                }
-            });
-        });
+  <div style="position:absolute;inset:30px;border:1px solid rgba(201,168,76,0.2);pointer-events:none;"></div>
 
-        // ─── NAVIGATION ───────────────────────────────────────────────────────
-        function goToPanel(index) {
-            const targetPanel = document.getElementById('p' + index);
-            if (!targetPanel) return;
-            gsap.to('#main-container', {
-                scrollTo: targetPanel,
-                duration: 1.5,
-                ease: 'power4.inOut'
-            });
-        }
+  <button id="closeOverlay" style="position:absolute;top:48px;right:48px;background:none;border:none;color:rgba(201,168,76,0.5);font-family:'Cormorant SC',serif;font-size:0.55rem;letter-spacing:0.4em;text-transform:uppercase;cursor:none;transition:color 0.2s;">Close ✕</button>
 
-        // ─── AUDIO ────────────────────────────────────────────────────────────
-        const bgMusic = document.getElementById('bg-music');
-        let isPlaying = false;
+  <!-- Progress dots -->
+  <div style="position:absolute;top:48px;left:50%;transform:translateX(-50%);display:flex;gap:8px;align-items:center;">
+    <div id="dot1" style="width:6px;height:6px;border-radius:50%;background:var(--gold);opacity:1;transition:opacity 0.3s;"></div>
+    <div style="width:40px;height:1px;background:rgba(201,168,76,0.2);"></div>
+    <div id="dot2" style="width:6px;height:6px;border-radius:50%;background:var(--gold);opacity:0.25;transition:opacity 0.3s;"></div>
+    <div style="width:40px;height:1px;background:rgba(201,168,76,0.2);"></div>
+    <div id="dot3" style="width:6px;height:6px;border-radius:50%;background:var(--gold);opacity:0.25;transition:opacity 0.3s;"></div>
+  </div>
 
-        function toggleSound() {
-            if (!isPlaying) {
-                bgMusic.play().then(() => {
-                    document.getElementById('sound-toggle').innerText = 'Sound: On';
-                    isPlaying = true;
-                }).catch(error => {
-                    console.log('Audio play failed (browser autoplay block):', error);
-                });
-            } else {
-                bgMusic.pause();
-                document.getElementById('sound-toggle').innerText = 'Sound: Off';
-                isPlaying = false;
-            }
-        }
+  <!-- PAGE 1: SELECT CITY -->
+  <div id="page1" style="text-align:center;max-width:560px;width:100%;padding:0 40px;">
+    <p style="font-family:'Cormorant SC',serif;font-size:0.55rem;letter-spacing:0.5em;color:var(--gold);text-transform:uppercase;margin-bottom:40px;">Step 1 of 3</p>
+    <h2 style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2rem,4vw,3.5rem);color:var(--cream);margin-bottom:16px;letter-spacing:-0.01em;">Where would you like<br><em style="font-style:italic;color:var(--gold-light);">to join the table?</em></h2>
+    <p style="font-family:'EB Garamond',serif;font-style:italic;font-size:1rem;color:rgba(245,239,224,0.4);margin-bottom:48px;">Select your city to continue.</p>
+    <div style="position:relative;max-width:320px;margin:0 auto 40px;">
+      <select id="citySelect" style="width:100%;appearance:none;-webkit-appearance:none;background:transparent;border:1px solid rgba(201,168,76,0.3);border-radius:0;padding:18px 48px 18px 24px;font-family:'Cormorant SC',serif;font-size:0.75rem;letter-spacing:0.3em;color:var(--cream);text-transform:uppercase;cursor:none;outline:none;transition:border-color 0.3s;">
+        <option value="" style="background:#1A3D33;color:#F5EFE0;">Select a city</option>
+        <option value="delhi" style="background:#1A3D33;color:#F5EFE0;">Delhi</option>
+        <option value="bombay" style="background:#1A3D33;color:#F5EFE0;">Bombay</option>
+        <option value="london" style="background:#1A3D33;color:#F5EFE0;">London</option>
+      </select>
+      <div style="position:absolute;right:20px;top:50%;transform:translateY(-50%);color:rgba(201,168,76,0.6);pointer-events:none;font-size:0.7rem;">▾</div>
+    </div>
+    <button onclick="goToPage2()" style="font-family:'Cormorant SC',serif;font-size:0.6rem;letter-spacing:0.4em;text-transform:uppercase;color:#1A3D33;background:var(--gold);padding:16px 48px;border:none;cursor:none;transition:all 0.3s;">Continue</button>
+  </div>
 
-        console.log('[TBD] Script loaded. Panels found:', panels.length);
-    </script>
+  <!-- PAGE 2: THE RULES -->
+  <div id="page2" style="display:none;max-width:640px;width:100%;padding:0 40px;">
+    <p style="font-family:'Cormorant SC',serif;font-size:0.55rem;letter-spacing:0.5em;color:var(--gold);text-transform:uppercase;margin-bottom:32px;text-align:center;">Step 2 of 3</p>
+    <h2 style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.8rem,3vw,2.8rem);color:var(--cream);margin-bottom:32px;letter-spacing:-0.01em;text-align:center;">Before you apply,<br><em style="font-style:italic;color:var(--gold-light);">read this carefully.</em></h2>
+    <div style="display:flex;flex-direction:column;gap:16px;margin-bottom:40px;">
+      <div style="display:flex;gap:20px;align-items:flex-start;">
+        <span style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:rgba(201,168,76,0.25);flex-shrink:0;line-height:1;margin-top:2px;">01</span>
+        <div><div style="font-family:'Cormorant SC',serif;font-size:0.5rem;letter-spacing:0.3em;color:var(--gold);text-transform:uppercase;margin-bottom:4px;">Selection</div><p style="font-size:0.9rem;line-height:1.7;color:rgba(245,239,224,0.6);">Invite only. Submitting signals interest only — it does not constitute an invitation.</p></div>
+      </div>
+      <div style="display:flex;gap:20px;align-items:flex-start;">
+        <span style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:rgba(201,168,76,0.25);flex-shrink:0;line-height:1;margin-top:2px;">02</span>
+        <div><div style="font-family:'Cormorant SC',serif;font-size:0.5rem;letter-spacing:0.3em;color:var(--gold);text-transform:uppercase;margin-bottom:4px;">Dress</div><p style="font-size:0.9rem;line-height:1.7;color:rgba(245,239,224,0.6);">Men: a suit. Women: cocktail attire. No exceptions.</p></div>
+      </div>
+      <div style="display:flex;gap:20px;align-items:flex-start;">
+        <span style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:rgba(201,168,76,0.25);flex-shrink:0;line-height:1;margin-top:2px;">03</span>
+        <div><div style="font-family:'Cormorant SC',serif;font-size:0.5rem;letter-spacing:0.3em;color:var(--gold);text-transform:uppercase;margin-bottom:4px;">RSVP</div><p style="font-size:0.9rem;line-height:1.7;color:rgba(245,239,224,0.6);">Confirm or decline. Ghosting results in permanent removal from all cities.</p></div>
+      </div>
+      <div style="display:flex;gap:20px;align-items:flex-start;">
+        <span style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:rgba(201,168,76,0.25);flex-shrink:0;line-height:1;margin-top:2px;">04</span>
+        <div><div style="font-family:'Cormorant SC',serif;font-size:0.5rem;letter-spacing:0.3em;color:var(--gold);text-transform:uppercase;margin-bottom:4px;">Participation Fee</div><p style="font-size:0.9rem;line-height:1.7;color:rgba(245,239,224,0.6);">A participation fee applies. It separates those who understand the value of a room from those who do not.</p></div>
+      </div>
+    </div>
+    <div style="display:flex;gap:16px;justify-content:center;">
+      <button onclick="goToPage1()" style="font-family:'Cormorant SC',serif;font-size:0.55rem;letter-spacing:0.35em;text-transform:uppercase;color:rgba(201,168,76,0.5);background:none;border:1px solid rgba(201,168,76,0.2);padding:14px 32px;cursor:none;transition:all 0.3s;">Back</button>
+      <button onclick="goToPage3()" style="font-family:'Cormorant SC',serif;font-size:0.6rem;letter-spacing:0.4em;text-transform:uppercase;color:#1A3D33;background:var(--gold);padding:14px 40px;border:none;cursor:none;transition:all 0.3s;">I Understand. Apply.</button>
+    </div>
+  </div>
+
+  <!-- PAGE 3: THE FORM -->
+  <div id="page3" style="display:none;text-align:center;max-width:560px;width:100%;padding:0 40px;">
+    <p style="font-family:'Cormorant SC',serif;font-size:0.55rem;letter-spacing:0.5em;color:var(--gold);text-transform:uppercase;margin-bottom:40px;">Step 3 of 3</p>
+    <h2 style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2rem,4vw,3.5rem);color:var(--cream);margin-bottom:16px;letter-spacing:-0.01em;">You are applying for<br><em id="selectedCityDisplay" style="font-style:italic;color:var(--gold-light);">—</em></h2>
+    <p style="font-family:'EB Garamond',serif;font-style:italic;font-size:1rem;color:rgba(245,239,224,0.4);margin-bottom:48px;">Answer honestly. That is the only criteria that matters.</p>
+    <div style="display:flex;gap:16px;justify-content:center;">
+      <button onclick="goToPage2()" style="font-family:'Cormorant SC',serif;font-size:0.55rem;letter-spacing:0.35em;text-transform:uppercase;color:rgba(201,168,76,0.5);background:none;border:1px solid rgba(201,168,76,0.2);padding:14px 32px;cursor:none;transition:all 0.3s;">Back</button>
+      <a id="formLink" href="#" target="_blank" onclick="closeOverlay()" style="font-family:'Cormorant SC',serif;font-size:0.6rem;letter-spacing:0.4em;text-transform:uppercase;color:#1A3D33;background:var(--gold);padding:14px 40px;text-decoration:none;transition:all 0.3s;display:inline-block;">Open the Form</a>
+    </div>
+  </div>
+
+</div>
+
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const cursorRing = document.getElementById('cursorRing');
+  let mouseX = 0, mouseY = 0;
+  let ringX = 0, ringY = 0;
+
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    cursor.style.left = mouseX + 'px';
+    cursor.style.top = mouseY + 'px';
+  });
+
+  function animateCursor() {
+    ringX += (mouseX - ringX) * 0.12;
+    ringY += (mouseY - ringY) * 0.12;
+    cursorRing.style.left = ringX + 'px';
+    cursorRing.style.top = ringY + 'px';
+    requestAnimationFrame(animateCursor);
+  }
+  animateCursor();
+
+  // Nav scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+  reveals.forEach(el => observer.observe(el));
+
+  // Sound toggle
+  const audio = document.getElementById('ambientAudio');
+  const soundToggle = document.getElementById('soundToggle');
+  let playing = false;
+
+  soundToggle.addEventListener('click', () => {
+    if (playing) {
+      audio.pause();
+      soundToggle.classList.remove('playing');
+      soundToggle.textContent = 'Sound: Off';
+      playing = false;
+    } else {
+      audio.volume = 0.35;
+      audio.play().then(() => {
+        soundToggle.classList.add('playing');
+        soundToggle.textContent = 'Sound: On';
+        playing = true;
+      }).catch(() => {});
+    }
+  });
+
+  // City overlay 3-page flow
+  const overlay = document.getElementById('cityOverlay');
+
+  const cityForms = {
+    delhi: 'https://forms.gle/vGGAHKJGr3yNK25b6',
+    bombay: 'https://forms.gle/3KrK1hSkscWVrSL69',
+    london: 'https://docs.google.com/forms/d/e/1FAIpQLSdZrsP5Gd6toGWuQ10uEYVDx4f6BnMFgIyjZlvAX9X7suuwQA/viewform'
+  };
+
+  function setDots(active) {
+    [1,2,3].forEach(i => {
+      document.getElementById('dot'+i).style.opacity = i === active ? '1' : '0.25';
+    });
+  }
+
+  function goToPage1() {
+    document.getElementById('page1').style.display = 'block';
+    document.getElementById('page2').style.display = 'none';
+    document.getElementById('page3').style.display = 'none';
+    setDots(1);
+  }
+
+  function goToPage2() {
+    const city = document.getElementById('citySelect').value;
+    if (!city) { document.getElementById('citySelect').style.borderColor = 'rgba(184,92,56,0.6)'; return; }
+    document.getElementById('page1').style.display = 'none';
+    document.getElementById('page2').style.display = 'block';
+    document.getElementById('page3').style.display = 'none';
+    setDots(2);
+  }
+
+  function goToPage3() {
+    const city = document.getElementById('citySelect').value;
+    const labels = { delhi: 'Delhi', bombay: 'Bombay', london: 'London' };
+    document.getElementById('selectedCityDisplay').textContent = labels[city];
+    document.getElementById('formLink').href = cityForms[city];
+    document.getElementById('page2').style.display = 'none';
+    document.getElementById('page3').style.display = 'block';
+    setDots(3);
+  }
+
+  function openOverlay(e) {
+    e.preventDefault();
+    overlay.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    goToPage1();
+  }
+
+  function closeOverlay() {
+    overlay.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('openCitySelect').addEventListener('click', openOverlay);
+  document.getElementById('closeOverlay').addEventListener('click', closeOverlay);
+  overlay.addEventListener('click', (e) => { if (e.target === overlay) closeOverlay(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeOverlay(); });
+
+  // Hover effects on links
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.width = '12px';
+      cursor.style.height = '12px';
+      cursorRing.style.width = '48px';
+      cursorRing.style.height = '48px';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.width = '8px';
+      cursor.style.height = '8px';
+      cursorRing.style.width = '32px';
+      cursorRing.style.height = '32px';
+    });
+  });
+</script>
 </body>
 </html>
