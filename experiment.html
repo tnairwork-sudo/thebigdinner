@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Experiment — The Big Dinner</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Cormorant+SC:wght@300;400;500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #B85C38;
+    --navy: #1A2744;
+    --navy-deep: #0D1628;
+    --cream: #F5EFE0;
+    --gold: #C9A84C;
+    --gold-light: #E8C96A;
+    --ivory: #FAF6EE;
+    --ink: #1C1610;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ivory);
+    color: var(--ink);
+    font-family: 'EB Garamond', serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  .cursor {
+    width: 8px; height: 8px;
+    background: var(--orange);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s, height 0.3s;
+  }
+  .cursor-ring {
+    width: 32px; height: 32px;
+    border: 1px solid var(--orange);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9998;
+    transform: translate(-50%, -50%);
+    opacity: 0.5;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 24px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(250, 246, 238, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201, 168, 76, 0.15);
+  }
+  .nav-logo {
+    font-family: 'Cormorant SC', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.35em;
+    color: var(--navy-deep);
+    text-decoration: none;
+  }
+  .nav-back {
+    font-family: 'Cormorant SC', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.35em;
+    color: var(--orange);
+    text-decoration: none;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: opacity 0.2s;
+  }
+  .nav-back:hover { opacity: 0.7; }
+
+  /* HEADER */
+  .page-header {
+    padding: 160px 0 80px;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid rgba(201, 168, 76, 0.2);
+  }
+
+  .page-header-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 90% 50%, rgba(184, 92, 56, 0.05) 0%, transparent 60%),
+      radial-gradient(ellipse at 10% 80%, rgba(201, 168, 76, 0.04) 0%, transparent 50%);
+  }
+
+  /* Vertical rule */
+  .vertical-rule {
+    position: absolute;
+    left: 60px;
+    top: 120px;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+    opacity: 0.3;
+  }
+
+  .header-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 60px;
+    position: relative;
+  }
+
+  .header-label {
+    font-family: 'Cormorant SC', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.5em;
+    color: var(--orange);
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.3s forwards;
+  }
+  .header-label::before {
+    content: '';
+    width: 40px; height: 1px;
+    background: var(--orange);
+    opacity: 0.4;
+  }
+
+  .page-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(3rem, 7vw, 7rem);
+    line-height: 0.95;
+    color: var(--navy-deep);
+    letter-spacing: -0.02em;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.5s forwards;
+  }
+  .page-title em {
+    font-style: italic;
+    color: var(--orange);
+    display: block;
+  }
+
+  .page-intro {
+    font-size: 1.25rem;
+    line-height: 1.8;
+    color: rgba(28, 22, 16, 0.6);
+    max-width: 600px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.7s forwards;
+    font-style: italic;
+  }
+
+  /* ENTRIES */
+  .entries-section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 80px 60px 160px;
+    position: relative;
+  }
+
+  /* Timeline line */
+  .timeline-line {
+    position: absolute;
+    left: 60px;
+    top: 80px;
+    bottom: 160px;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    opacity: 0.2;
+  }
+
+  /* Single entry */
+  .entry {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 0 48px;
+    margin-bottom: 100px;
+    position: relative;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .entry.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Timeline dot */
+  .entry::before {
+    content: '';
+    position: absolute;
+    left: -9px;
+    top: 8px;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--gold);
+    opacity: 0.5;
+  }
+
+  .entry-date-col {
+    padding-top: 6px;
+  }
+
+  .entry-date {
+    font-family: 'Cormorant SC', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .entry-chapter {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.8rem;
+    color: rgba(28, 22, 16, 0.35);
+  }
+
+  .entry-body {}
+
+  .entry-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: 1.6rem;
+    color: var(--navy-deep);
+    margin-bottom: 20px;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+
+  .entry-text {
+    font-size: 1.1rem;
+    line-height: 1.9;
+    color: rgba(28, 22, 16, 0.72);
+    margin-bottom: 20px;
+  }
+
+  .entry-text p { margin-bottom: 16px; }
+  .entry-text p:last-child { margin-bottom: 0; }
+
+  .entry-quote {
+    border-left: 2px solid var(--orange);
+    padding: 8px 0 8px 24px;
+    margin: 24px 0;
+    font-style: italic;
+    font-size: 1.2rem;
+    color: var(--navy-deep);
+    opacity: 0.7;
+  }
+
+  .entry-tag {
+    display: inline-block;
+    font-family: 'Cormorant SC', serif;
+    font-size: 0.5rem;
+    letter-spacing: 0.3em;
+    color: var(--orange);
+    border: 1px solid rgba(184, 92, 56, 0.3);
+    padding: 4px 12px;
+    margin-top: 16px;
+    text-transform: uppercase;
+  }
+
+  /* Divider between entries */
+  .entry-divider {
+    grid-column: 1 / -1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201, 168, 76, 0.2), transparent);
+    margin-top: -60px;
+    margin-bottom: 60px;
+  }
+
+  /* ADD NEW ENTRY BUTTON — for you to use when editing */
+  .new-entry-hint {
+    text-align: center;
+    padding: 60px 0;
+    border: 1px dashed rgba(201, 168, 76, 0.2);
+    margin-top: 40px;
+  }
+  .new-entry-hint p {
+    font-family: 'Cormorant SC', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.4em;
+    color: rgba(201, 168, 76, 0.4);
+    text-transform: uppercase;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--navy-deep);
+    padding: 48px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(201, 168, 76, 0.1);
+  }
+  .footer-brand {
+    font-family: 'Cormorant SC', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
+    color: rgba(201, 168, 76, 0.5);
+    text-transform: uppercase;
+  }
+  .footer-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.9rem;
+    color: rgba(245, 239, 224, 0.2);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .page-header, .header-inner, .entries-section { padding-left: 24px; padding-right: 24px; }
+    .entry { grid-template-columns: 1fr; gap: 12px; }
+    .entry::before { display: none; }
+    .timeline-line { display: none; }
+    .vertical-rule { display: none; }
+    footer { flex-direction: column; gap: 16px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav>
+  <a href="index.html" class="nav-logo">The Big Dinner</a>
+  <a href="index.html" class="nav-back">← Back</a>
+</nav>
+
+<header class="page-header">
+  <div class="page-header-bg"></div>
+  <div class="vertical-rule"></div>
+  <div class="header-inner">
+    <div class="header-label">The Social Experiment</div>
+    <h1 class="page-title">The<br><em>Experiment.</em></h1>
+    <p class="page-intro">Observations, thoughts, and notes from building a room. Written as it happened.</p>
+  </div>
+</header>
+
+<section class="entries-section">
+  <div class="timeline-line"></div>
+
+  <!-- ============================================================
+       ENTRY TEMPLATE — duplicate this block to add a new entry
+
+  <div class="entry">
+    <div class="entry-date-col">
+      <span class="entry-date">DD MMM YYYY</span>
+      <span class="entry-chapter">Note —</span>
+    </div>
+    <div class="entry-body">
+      <h2 class="entry-title">Your heading here.</h2>
+      <div class="entry-text">
+        <p>Your writing here.</p>
+      </div>
+      <blockquote class="entry-quote">A line worth isolating.</blockquote>
+      <span class="entry-tag">Theme</span>
+    </div>
+  </div>
+  <div class="entry-divider"></div>
+
+  ============================================================ -->
+
+  <!-- ENTRY — Piano Man -->
+  <div class="entry">
+    <div class="entry-date-col">
+      <span class="entry-date">Nov 2025</span>
+      <span class="entry-chapter">Chapter II</span>
+    </div>
+    <div class="entry-body">
+      <h2 class="entry-title">It started at Piano Man. As most good things do.</h2>
+      <div class="entry-text">
+        <p>Paras and I brought 37 strangers together at The Leela Palace, New Delhi last night, and every single one of them had a story worth telling.</p>
+        <p>The whole idea behind creating The Big Dinner was beautifully simple: I wanted to create something grand, something slightly bigger than ourselves. A room where everyone is in the process of doing something meaningful, or has already done it. Everyone carries a story, and each story is uniquely different because each person comes from a different walk of life.</p>
+        <p>I have always believed in the magic of people and the beautiful effect they have on me. I acknowledge it, I feel it, and I wanted to create a space where that magic could unfold.</p>
+        <p>Here is how it all began.</p>
+        <p>The first time I met Paras was at Piano Man, a club I visit almost every weekend. He was covering an event that evening — this confident young man with the most charming energy — and he came up to me asking if I would record a video testimonial. Something about that moment stayed with me.</p>
+        <p>A few weeks later, I ran into Paras again. We talked, and that is when the whole idea was born.</p>
+        <p>We are proud to have created something grand, something slightly bigger than our lives, and something truly beautiful. And now, we are evolving.</p>
+      </div>
+      <blockquote class="entry-quote">I wanted to create something grand. Something slightly bigger than ourselves.</blockquote>
+      <span class="entry-tag">On Origin</span>
+    </div>
+  </div>
+  <div class="entry-divider"></div>
+
+  <!-- ENTRY — 90 Friends -->
+  <div class="entry">
+    <div class="entry-date-col">
+      <span class="entry-date">Nov 2025</span>
+      <span class="entry-chapter">Note —</span>
+    </div>
+    <div class="entry-body">
+      <h2 class="entry-title">What it has become has left me speechless.</h2>
+      <div class="entry-text">
+        <p>I have made ninety genuine new friends. Real connections. People I would have never crossed paths with if not for these evenings we have shared.</p>
+        <p>In the last ninety days alone, I have learned more about life, about people, about the beautiful complexity of human stories than I have in years. I hope — I truly hope — that you have felt the same. That somewhere in those conversations over dinner, you found a connection that surprised you. A story that moved you. A stranger who became a friend.</p>
+        <p>It is always about you. The ones who honour what we are building together, who arrive with open hearts and make the evening become what it becomes.</p>
+        <p>The photographs we take are not just pictures. They are portals back to those moments. And I smile every single time when I look back at the magic we have captured from every dinner we have hosted so far.</p>
+        <p>If I am being completely honest: I had a vision for what this could be. But what it has become as of today has left me speechless. This has grown into something so much bigger than I ever imagined — people from every corner of the country reaching out, wanting to be part of this magic we are creating together.</p>
+        <p>This is about the people. It always has been.</p>
+      </div>
+      <blockquote class="entry-quote">I had a vision for what this could be. But what it has become has left me speechless.</blockquote>
+      <span class="entry-tag">On What It Is</span>
+    </div>
+  </div>
+  <div class="entry-divider"></div>
+
+  <!-- ENTRY — Trust -->
+  <div class="entry">
+    <div class="entry-date-col">
+      <span class="entry-date">Dec 2025</span>
+      <span class="entry-chapter">Note —</span>
+    </div>
+    <div class="entry-body">
+      <h2 class="entry-title">Friendship comes first. Everything else follows naturally.</h2>
+      <div class="entry-text">
+        <p>I find it genuinely funny that I still have to explain this, because in my head it has always been simple.</p>
+        <p>This is not networking. It is friendship, built the traditional way. No agendas to manage, no services to sell, no expectations to carry. Just people becoming friends with people they would have never met otherwise if it were not for The Big Dinner.</p>
+        <p>Collaboration, at least for me, only works when there is comfort and trust. I only want to work with people I know, people I feel good around. And I genuinely want the people around me to do well — to grow, to make money, to build meaningful lives. If I can help a friend in my personal capacity, I will. And I trust that the same goodwill exists when I am the one who needs it.</p>
+        <p>After three dinners, something interesting has happened. Most of the people I need to improve my own efficiency as a lawyer are now just a call away. One call and I can help a friend find a job, build something new, or step into a sphere they had no access to before. No cold introductions. No favours negotiated. Just trust doing what trust does.</p>
+        <p>That is the entire idea.</p>
+        <p>After the last dinner, about eight or ten of us left The Leela Palace and ended up at a table at ITC, just to wind down, talk about the evening, decompress. And it hit me when I looked around that table. An accountant, a family office head, a consultant, someone in import export, two lawyers, a fashion designer amongst others. Ninety days ago, I knew none of them. Today, we know each other well. We text. We call. We meet outside the dinners.</p>
+        <p>That is what happens when you remove the transaction and let people be people. You talk. You laugh. You discover the person across from you is brilliant, or funny, or going through something you went through years ago.</p>
+      </div>
+      <blockquote class="entry-quote">Ninety days ago, I knew none of them. Today, we know each other well. That's what happens when you remove the transaction and let people be people.</blockquote>
+      <span class="entry-tag">On Trust</span>
+    </div>
+  </div>
+  <div class="entry-divider"></div>
+
+  <!-- ENTRY — People -->
+  <div class="entry">
+    <div class="entry-date-col">
+      <span class="entry-date">Dec 2025</span>
+      <span class="entry-chapter">Note —</span>
+    </div>
+    <div class="entry-body">
+      <h2 class="entry-title">It almost always comes back to people.</h2>
+      <div class="entry-text">
+        <p>If you look closely at most of what I have written over the years, it almost always comes back to people. Specifically, the people who played a meaningful role in shaping who I am today. I have never taken that lightly. It is not something I speak about for effect — it is something I have lived by.</p>
+        <p>Yes, most people rightly recognise that The Big Dinner requires tremendous daily effort. That is true. But the real effort also lies in sustaining something beautiful over time. Which would not be possible without the many people who help us do exactly that.</p>
+        <p>I have never been content to do anything alone in my life. Not work, not play, not this.</p>
+        <p>Most of the work I have done, and most of the help I have received, has come through friends. Contrary to what many believe, working with friends has only made me better. Sharper, more grounded, more accountable.</p>
+        <p>We deliberately did not promote the form for a day. We wanted to sit quietly and go through every submission we received. It still amazes me how a simple idea has grown into what this is becoming. I can see the potential clearly now.</p>
+        <p>One of the most beautiful parts of this journey is that many of the people helping organise The Big Dinner are friends I became close to because of The Big Dinner. Almost everyone new has come in through word of mouth. Very little social media, mostly personal conviction.</p>
+        <p>That is probably why we do not obsess over social metrics.</p>
+      </div>
+      <blockquote class="entry-quote">Many of the people helping organise The Big Dinner are friends I became close to because of The Big Dinner.</blockquote>
+      <span class="entry-tag">On Gratitude</span>
+    </div>
+  </div>
+  <div class="entry-divider"></div>
+
+  <!-- ENTRY — Self Made -->
+  <div class="entry">
+    <div class="entry-date-col">
+      <span class="entry-date">Nov 2025</span>
+      <span class="entry-chapter">Note —</span>
+    </div>
+    <div class="entry-body">
+      <h2 class="entry-title">The self-made man is a logical fallacy.</h2>
+      <div class="entry-text">
+        <p>Over the last six years, and while travelling a little around the world, I have met a lot of people. But I do not think I have ever genuinely said hello to someone at a networking event and stayed in touch after it ended.</p>
+        <p>I cannot recall a single instance where a formal networking room led to a real friendship.</p>
+        <p>The people I have remained close to were never met through networks. They were the ones I got drunk with when I used to drink. The ones I went on random drives or road trips with, just talking absolute nonsense, with no agenda and no outcome in mind.</p>
+        <p>That is why the idea of the self-made man feels like a logical fallacy to me. It simply does not hold up. No one is truly self-made. Not in monetary terms, and not otherwise. At the very least, you need people around you. You need someone to remind you that you have the bandwidth to handle what life throws at you. You need a friend who gives you a reality check when things are not going well, and perspective when they are.</p>
+        <p>What we are sold today, especially on social media, is the idea that a massive network is what makes you money. That visibility equals value. That scale replaces depth. That is false.</p>
+        <p>As this continues — as this dinner, this idea, this room keeps evolving — I am learning more about myself and what I am actually trying to build. What I want is a perspective shift. Away from the selfish, transactional version of networking, and back to what it used to be. Relationships built on trust, friendship, presence, and good memories.</p>
+        <p>It has been fun so far. I am genuinely enjoying this. And the day I stop enjoying it, that is the day I stop.</p>
+      </div>
+      <blockquote class="entry-quote">The people I've remained close to were never met through networks. They were the ones I went on random drives with, talking absolute nonsense, with no agenda and no outcome in mind.</blockquote>
+      <span class="entry-tag">On Friendship</span>
+    </div>
+  </div>
+  <div class="entry-divider"></div>
+
+  <!-- ENTRY — Forward -->
+  <div class="entry">
+    <div class="entry-date-col">
+      <span class="entry-date">Mar 2026</span>
+      <span class="entry-chapter">Note —</span>
+    </div>
+    <div class="entry-body">
+      <h2 class="entry-title">Let's go. We figure out the rest as we move.</h2>
+      <div class="entry-text">
+        <p>I think the only way I have ever lived is forward. Like a child who says "let's go," and we figure out the rest as we move.</p>
+        <p>I believe in the unfair advantage of the human brain when it is firing on all cylinders. Get the right people in a room and you can build anything. I do not need much. Just momentum and the audacity to start.</p>
+        <p>Some say we are moving too fast. Probably.</p>
+        <p>We are expanding to London. Hosting our first dinner there soon. What makes it matter is not the prestige of the city. It is that I am doing it with friends I have known for years.</p>
+      </div>
+      <blockquote class="entry-quote">I don't need much. Just momentum and the audacity to start.</blockquote>
+      <span class="entry-tag">On Movement</span>
+    </div>
+  </div>
+  <div class="entry-divider"></div>
+
+  <!-- ENTRY — Odds -->
+  <div class="entry">
+    <div class="entry-date-col">
+      <span class="entry-date">May 2026</span>
+      <span class="entry-chapter">Note —</span>
+    </div>
+    <div class="entry-body">
+      <h2 class="entry-title">Stack the odds. One decision at a time.</h2>
+      <div class="entry-text">
+        <p>I think about life in terms of odds and probabilities. Every action either improves the odds of success or works against it. The Big Dinner exists because of that belief. Before every gathering, we stack decisions carefully in our favour. Not blind optimism but mathematics. A deliberate attempt to increase the odds, one choice at a time.</p>
+        <p>At its core, the idea is simple: you become like the people you choose to be around. Quietly, gradually, inevitably. The room shapes you. The conversations shape you. The energy shapes you. Put yourself around optimistic people talking about big things and your world expands. Put yourself around people who complain about small things and your world shrinks.</p>
+        <p>I noticed this as early as school — people will go to great lengths just to belong somewhere, because belonging changes behaviour.</p>
+        <p>The dinner is built on that truth. The effort to enter the room is intentional. The filter is intentional. The people in the room are intentional. And when they gather, the exchange is electric. Before every dinner, I write with full confidence that the night will be great — not because we assume it will be, but because of the actions taken to make it so.</p>
+        <p>What happens in the room is the real reward. Every time, I leave knowing more than I arrived with. Someone explains design to me patiently. Someone breaks down architecture until it makes sense. Worlds I do not belong to open their doors for a few hours, and I get to walk through them.</p>
+        <p>That is a win. A real one.</p>
+      </div>
+      <blockquote class="entry-quote">This is going places.</blockquote>
+      <span class="entry-tag">On Probability</span>
+    </div>
+  </div>
+  <div class="entry-divider"></div>
+
+  <!-- ENTRY — Quality Time -->
+  <div class="entry">
+    <div class="entry-date-col">
+      <span class="entry-date">May 2026</span>
+      <span class="entry-chapter">Note —</span>
+    </div>
+    <div class="entry-body">
+      <h2 class="entry-title">When that intention is shared, something real begins to happen.</h2>
+      <div class="entry-text">
+        <p>People crave quality time with quality people. When that intention is shared, something real begins to happen.</p>
+        <p>That has been the clearest learning of the last few months. More than growth or numbers, it is the change in how people see, listen, and show up. I have loved watching how much we have all learned about human behaviour. Strangers arrive a little unsure. By the end of the evening, something shifts. Conversations deepen. The room relaxes. Connection feels natural.</p>
+        <p>That is why the London dinner on the 19th feels special and quietly intense at the same time. The forms will close in a few days. For those unfamiliar with what we do, these dinners are intentionally intimate and carefully curated. What you write in the form matters. It is how we decide who enters the room. I am disciplined about this and I do not make exceptions, because the experience depends on the quality of the people in it.</p>
+        <p>There are simple rules. Formal dress. Being on time. No solicitation. No business talk. Within that structure, everything else is easy. Talk freely. Have fun. Be present. Let genuine connections happen without force or agenda.</p>
+        <p>When something is created with care, the chances of meaning are always higher.</p>
+        <p>Before I end, I want to thank two generous friends who have supported this consistently while I have been in Delhi. Your help has made this possible. I appreciate you more than you know.</p>
+      </div>
+      <blockquote class="entry-quote">When something is created with care, the chances of meaning are always higher.</blockquote>
+      <span class="entry-tag">On Intention</span>
+    </div>
+  </div>
+  <div class="entry-divider"></div>
+
+  <!-- ENTRY — Environment -->
+  <div class="entry">
+    <div class="entry-date-col">
+      <span class="entry-date">May 2026</span>
+      <span class="entry-chapter">Note —</span>
+    </div>
+    <div class="entry-body">
+      <h2 class="entry-title">Nothing mystical changes. Only the environment does.</h2>
+      <div class="entry-text">
+        <p>Environment shapes the brain. The same human brain builds rockets, the same human brain builds weapons, the same human brain wastes itself. Nothing mystical changes, only the environment does.</p>
+        <p>Last weekend I went down a rabbit hole asking questions about my favourite subject — the brain. Why are some people creative and others not? Why do some people suddenly grow sharper later in life? Why can someone remain average for years and then change completely?</p>
+        <p>The answers kept circling back to one thing: creativity is simply the brain's ability to connect two completely different parts of life, observe patterns between them, and produce a third thing that never existed before. And that depends entirely on things and stories you are exposed to in the environments surrounding you.</p>
+        <p>That is also why these dinners matter to me. After hosting several of them I already have enough people — friends, referrals, friends of friends. I can fill the guest list instantly. But it is no longer the profiles that interest me. It is the forms. What was supposed to be a tedious filtering task has become something I genuinely look forward to every month. Reading how people think and observe is honestly inspiring.</p>
+        <p>So even though I could lock the list today, I do not want to. I want new environments. New people.</p>
+      </div>
+      <blockquote class="entry-quote">Creativity is simply the brain's ability to connect two completely different parts of life, observe patterns between them, and produce a third thing that never existed before.</blockquote>
+      <span class="entry-tag">On Environment</span>
+    </div>
+  </div>
+  <div class="entry-divider"></div>
+
+  <!-- ENTRY — Selective -->
+  <div class="entry">
+    <div class="entry-date-col">
+      <span class="entry-date">Jan 2026</span>
+      <span class="entry-chapter">Note —</span>
+    </div>
+    <div class="entry-body">
+      <h2 class="entry-title">Too selective. Good.</h2>
+      <div class="entry-text">
+        <p>The Big Dinners hosted so far have proven something I have believed for years: when the right people are brought into a room, extraordinary outcomes become inevitable. This was never about networking or pitching services. It has always been about fostering meaningful friendships.</p>
+        <p>Paras and I are often criticised for being too selective. That criticism is expected and does not concern us. We are not interested in broad access or mass participation. This is for those who want to combine their resources to create something they could not build alone.</p>
+        <p>The quality of applications arriving right now is exceptional. I am reading every submission personally, and I am seeing exactly the kind of minds we want at this table. Invitations will be sent in phases, beginning this week, reviewed daily on a rolling basis. Early applications receive the attention they deserve.</p>
+        <p>Based on everything we are seeing, I can say this with confidence: the next Big Dinner will be extraordinary.</p>
+      </div>
+      <blockquote class="entry-quote">We are not interested in broad access or mass participation. This is for those who want to combine their resources to create something they could not build alone.</blockquote>
+      <span class="entry-tag">On Selection</span>
+    </div>
+  </div>
+  <div class="entry-divider"></div>
+
+  <!-- ENTRY — Shangri-La -->
+  <div class="entry">
+    <div class="entry-date-col">
+      <span class="entry-date">Feb 2026</span>
+      <span class="entry-chapter">Chapter V</span>
+    </div>
+    <div class="entry-body">
+      <h2 class="entry-title">It is no longer just our idea.</h2>
+      <div class="entry-text">
+        <p>Paras and I hosted the first Big Dinner in October at the Blue Bar, Taj Palace. Twenty one people. Mostly acquaintances. It felt elegant, hopeful, but uncertain.</p>
+        <p>Five months later, we stood at Shangri-La with sixty two people. Seven gatherings. One in London. Growth that surprised even us.</p>
+        <p>Last night was grand. We sought help to assemble everyone for the group photo. I stepped back and noticed something rare. No one was posturing. No one was insecure. Just sharp, present, self-assured people laughing easily in a room they chose to be in. There is a quiet glamour in that kind of security.</p>
+        <p>It had been a long day. Court, rushing, changing locations to get ready. There are moments I question the scale of this — the time, the money, the effort. Then I walk into the room and I know. Because nobody is there by accident. Every person applies. Waits. Shows up intentionally on a busy Friday night. That intention changes the air.</p>
+        <p>We did not build this through noise. We built it through trust and curation. Partnerships have formed. Collaborations have begun. Friendships have anchored people in new cities. Not through pitching, but through chemistry.</p>
+        <p>The Big Dinner is glamorous, yes. But it is also vulnerable. It is a bet on people. And last night, watching that room glow, I realised something.</p>
+      </div>
+      <blockquote class="entry-quote">It is no longer just our idea. It belongs to everyone who shows up.</blockquote>
+      <span class="entry-tag">On What It Became</span>
+    </div>
+  </div>
+  <div class="entry-divider"></div>
+
+  <!-- ENTRY 0 — Most recent -->
+  <div class="entry">
+    <div class="entry-date-col">
+      <span class="entry-date">May 2026</span>
+      <span class="entry-chapter">Note —</span>
+    </div>
+    <div class="entry-body">
+      <h2 class="entry-title">The patterns stopped pretending to hide.</h2>
+      <div class="entry-text">
+        <p>Over the last six months, The Big Dinner has quietly turned into the largest social experiment I have run. Not by design. By repetition. Read hundreds of applications, sit across from hundreds of people, and watch people turn into friends, collaborators, sometimes co-builders. After a while, patterns stop pretending to hide.</p>
+        <p>When we started, 20 responses in two or three days felt exciting. Today we get 20 in about 15 minutes. In six months we have reviewed hundreds of forms, met hundreds of people, and quietly expanded into three countries. The scale is interesting. The observation is the real value.</p>
+        <p>A certain type of person does extremely well in rooms like this. They ask one or two questions and say, "Let's try this." Comfortable with uncertainty. They talk about what they are building, who they are building with, and where they want to be ten years from now. When enough people like this gather, something predictable happens. Trust compounds. One person knows someone who can help, that person introduces someone else, and a third solves the problem.</p>
+        <p>And then there are the other archetypes. Some deliberate endlessly over the smallest decision. Some want an invite simply because something looks exclusive. Some treat every room like a hunting ground for business. Some introduce themselves through revenue, valuation, last year's income — with nothing about character or values. Some will read everything, understand everything, and still never decide. And occasionally there are those who read every detail with enthusiasm, right up until they realise the room requires paying for their seat at the table.</p>
+      </div>
+      <blockquote class="entry-quote">People who move through life with curiosity, speed of decision, and generosity eventually find each other.</blockquote>
+      <span class="entry-tag">On Patterns</span>
+    </div>
+  </div>
+  <div class="entry-divider"></div>
+
+  <!-- ENTRY 1 — Most recent at top -->
+  <div class="entry">
+    <div class="entry-date-col">
+      <span class="entry-date">May 2026</span>
+      <span class="entry-chapter">Note —</span>
+    </div>
+    <div class="entry-body">
+      <h2 class="entry-title">Character first. Everything else follows.</h2>
+      <div class="entry-text">
+        <p>The Big Dinner exists for one reason: to create real friendships. Not connections. Not leads. Friendships.</p>
+        <p>I am a lawyer who loves interacting with people, building new things, and approaching life collaboratively. A lot of what I have been able to build has come from the people around me. All of my life, growth has happened with friends as a team. I have never really believed in the hyper-individual approach.</p>
+        <p>We are building something that brings together people from different spheres of life to meet, think, and create new things. The rule is simple: character first. Friendships first. Let things grow naturally from there, rather than someone walking into a room trying to sell something or force an outcome.</p>
+        <p>The room tends to attract a certain kind of person. The rest usually filter themselves out.</p>
+        <p>The form for The Big Dinner is being circulated widely, but I am not putting the link up here. If you can find it, you were meant to find it. If you cannot, drop me a DM.</p>
+      </div>
+      <blockquote class="entry-quote">The room tends to attract a certain kind of person. The rest usually filter themselves out.</blockquote>
+      <span class="entry-tag">On Character</span>
+    </div>
+  </div>
+  <div class="entry-divider"></div>
+
+  <!-- ENTRY 2 -->
+  <div class="entry">
+    <div class="entry-date-col">
+      <span class="entry-date">Apr 2026</span>
+      <span class="entry-chapter">Note —</span>
+    </div>
+    <div class="entry-body">
+      <h2 class="entry-title">I do not want to build alone.</h2>
+      <div class="entry-text">
+        <p>I do not want to build alone and I do not want to grow at the cost of someone else. This is not a philosophy I arrived at through books. It came from the direct experience of working with people who did not think this way.</p>
+        <p>There is a particular kind of hyper-individualism spreading quietly. Everyone optimising for themselves. Everyone protecting their own lane. I built The Big Dinner to push back against that. Not through a lecture. Through a room.</p>
+        <p>The last dinner changed something in me. Everyone there was building something bigger than themselves. Not just chasing money. These were people who wanted to steer something. Create jobs. Move the country forward. Founders reshaping how this country works. Writers. Creatives. No common thread except a willingness to be present.</p>
+        <p>There is a reason the room felt different. When people are not performing, not selling, not competing for status, the brain physically relaxes. What comes out is the actual person. That is not a feeling. That is biology.</p>
+        <p>A lawyer surrounded only by lawyers will never find his blind spots. Place him across from someone asking a naive question and suddenly there is a crack in the wall. Expertise, taken too far, stops the brain from searching for better answers.</p>
+      </div>
+      <blockquote class="entry-quote">Any clown can fill a room with the sound of his own story. What is rarer is to give someone else the stage and mean it. That is the kind of human I keep looking for. And the kind I am still trying to become.</blockquote>
+      <span class="entry-tag">On Growth</span>
+    </div>
+  </div>
+  <div class="entry-divider"></div>
+
+  <!-- ENTRY 3 -->
+  <div class="entry">
+    <div class="entry-date-col">
+      <span class="entry-date">Mar 2026</span>
+      <span class="entry-chapter">Note —</span>
+    </div>
+    <div class="entry-body">
+      <h2 class="entry-title">We never chased a valuation.</h2>
+      <div class="entry-text">
+        <p>The biggest advantage we ever had was that we never chased a valuation. We never treated this as a business. I do not care about that number.</p>
+        <p>I am a lawyer. I am sure there are lawyers in this group who understand what the profession can generate. I say this not to sound arrogant or flamboyant. I say it to put things in perspective. Brutal, pure honesty. It is what it is.</p>
+        <p>Separating the idea from purely monetary ambition has allowed me to say no from the beginning. To say no to people who had an inflated self-image with a lack of self-awareness which mostly came from social media. To blacklist anyone who is disrespectful. To say no to everything that would have turned this into a startup chasing valuation. It is not.</p>
+        <p>That being said, I will not pretend I never made money from this or never converted a friendship into business. I did. But that was always secondary. Because I cannot operate with people who from day one are only trying to take without adding value. I do not work like that and I never will.</p>
+        <p>This is not a networking event. There is no agenda. The rules do not change for anyone. You come through the form. Nothing else.</p>
+      </div>
+      <blockquote class="entry-quote">Business flows through friendship. Not before it. That is the only order that has ever worked at this table.</blockquote>
+      <span class="entry-tag">On Ambition</span>
+    </div>
+  </div>
+  <div class="entry-divider"></div>
+
+  <!-- ENTRY 4 -->
+  <div class="entry">
+    <div class="entry-date-col">
+      <span class="entry-date">Jan 2026</span>
+      <span class="entry-chapter">Note —</span>
+    </div>
+    <div class="entry-body">
+      <h2 class="entry-title">People remember how to talk.</h2>
+      <div class="entry-text">
+        <p>The Big Dinner exists for one reason: to create real friendships. Not connections. Not leads. Friendships.</p>
+        <p>This came from somewhere honest. I am a lawyer. I spend my days in court, and I realised at some point that every room I walked into, everyone already knew what I did and I already knew what they did, and we were all very politely performing at each other. I love the law. I also love art, design, menswear, jazz, sports, and conversations that go nowhere useful and last until two in the morning. Those were becoming rare.</p>
+        <p>So the idea was simple: put people in a room who would never otherwise share a table. Remove the agenda. Feed them well. See what happens.</p>
+        <p>What happens, it turns out, is that people remember how to talk.</p>
+        <p>Most networking spaces are built on anticipation of gain. Everyone is quietly calculating. It becomes a room full of people performing generosity while actually waiting their turn. This is the opposite of that.</p>
+        <p>The question people always ask is: if not networking, then what? Which I find genuinely funny. Because what were you doing in school? Were you running a relationship strategy at fourteen? Or did you just sit next to someone, find out you both liked the same band, and that was enough? You already know how this works. Most rooms just make you forget.</p>
+        <p>Every city has its own energy. The rooms feel different. The conversations go to different places. But the thing at the centre stays the same: sit down, be a person, and see who you meet.</p>
+      </div>
+      <blockquote class="entry-quote">The Big Dinner is just a reminder.</blockquote>
+      <span class="entry-tag">On Origin</span>
+    </div>
+  </div>
+  <div class="entry-divider"></div>
+
+  <!-- ENTRY — Architecture -->
+  <div class="entry">
+    <div class="entry-date-col">
+      <span class="entry-date">Oct 2025</span>
+      <span class="entry-chapter">Note —</span>
+    </div>
+    <div class="entry-body">
+      <h2 class="entry-title">Every philosophy eventually asks to be lived.</h2>
+      <div class="entry-text">
+        <p>Relationships are the quiet architecture of progress. Most of us understand the importance of people in our lives and the way partnerships can change their course. We acknowledge it easily, almost instinctively, even if we rarely pause to examine it closely.</p>
+        <p>It is easier to notice how others moved ahead through their connections than it is to invest patiently in our own. We accept that relationships matter, yet often leave them unattended, expecting them to compound on their own.</p>
+        <p>What limits growth is rarely circumstance. It is belief. Many of us have been taught, subtly and repeatedly, that for one person to make money, another must lose. I have come to believe the opposite. There is something deeply fulfilling about making money with and for the people around you, where individual ambition quietly becomes shared momentum.</p>
+        <p>Every philosophy eventually asks to be lived.</p>
+        <p>In practice, that usually starts awkwardly and without certainty. That is the intent with which The Big Dinner was started. I did not know what it would become when we began. I only knew the kind of room I wanted to build.</p>
+        <p>I am proud of the way this idea is taking shape, slowly and with care.</p>
+      </div>
+      <blockquote class="entry-quote">I did not know what it would become when we began. I only knew the kind of room I wanted to build.</blockquote>
+      <span class="entry-tag">On Belief</span>
+    </div>
+  </div>
+  <div class="entry-divider"></div>
+
+  <!-- ENTRY 5 -->
+  <div class="entry">
+    <div class="entry-date-col">
+      <span class="entry-date">Oct 2025</span>
+      <span class="entry-chapter">Chapter I</span>
+    </div>
+    <div class="entry-body">
+      <h2 class="entry-title">Forty people. No chairs. No name tags.</h2>
+      <div class="entry-text">
+        <p>Forty people stood in a five-star hotel ballroom in Delhi with no chairs, no name tags, and no idea who anyone was. That was the first dinner. It worked better than I expected.</p>
+        <p>The entry price is a form. A long one. It asks questions that are difficult to skim, difficult to fake, and difficult to outsource. Not because I am filtering for credentials, but because I am filtering for a kind of seriousness.</p>
+        <p>Many applicants are rejected. What makes rejection sting is not status, but effort. By the time you have finished the form, you have already invested something real.</p>
+        <p>The overlap is deliberate. Fields that rarely intersect socially. People cannot optimise their behaviour when they do not know who matters. The mind, deprived of its normal social shortcuts, becomes genuinely curious.</p>
+      </div>
+      <blockquote class="entry-quote">It is a bet on people.</blockquote>
+      <span class="entry-tag">On The Beginning</span>
+    </div>
+  </div>
+  <div class="entry-divider"></div>
+
+  <!-- ADD NEW ENTRIES ABOVE THIS LINE -->
+  <div class="new-entry-hint">
+    <p>New entries added above · Written as it happens</p>
+  </div>
+
+</section>
+
+<footer>
+  <span class="footer-brand">The Big Dinner · The Experiment</span>
+  <span class="footer-tagline">Written as it happened.</span>
+</footer>
+
+<script>
+  // Cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top = my + 'px';
+  });
+  (function animate() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px';
+    ring.style.top = ry + 'px';
+    requestAnimationFrame(animate);
+  })();
+
+  // Scroll reveal
+  const entries = document.querySelectorAll('.entry');
+  const obs = new IntersectionObserver(els => {
+    els.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  entries.forEach((el, i) => {
+    el.style.transitionDelay = (i * 0.05) + 's';
+    obs.observe(el);
+  });
+
+  // Cursor hover
+  document.querySelectorAll('a').forEach(el => {
+    el.addEventListener('mouseenter', () => { cursor.style.width = '12px'; cursor.style.height = '12px'; });
+    el.addEventListener('mouseleave', () => { cursor.style.width = '8px'; cursor.style.height = '8px'; });
+  });
+</script>
+</body>
+</html>
