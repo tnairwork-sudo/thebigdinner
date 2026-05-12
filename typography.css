@@ -6,6 +6,13 @@
  */
 
 /* ── GLOBAL BASE ── */
+:root {
+  --text-dark: #31433f;
+  --text-muted: rgba(49, 67, 63, 0.82);
+  --gold-strong: #d8bf84;
+  --gold-rich: #bf9441;
+}
+
 body {
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
@@ -18,34 +25,39 @@ body {
 
 /* Sound toggle: was 0.55–0.62rem / 0.48em tracking — too small, too spaced */
 .sound-toggle {
-  font-size: clamp(0.72rem, 1vw, 0.78rem) !important;
-  letter-spacing: 0.2em !important;
+  font-size: clamp(0.82rem, 1vw, 0.92rem) !important;
+  letter-spacing: 0.14em !important;
+  font-weight: 500 !important;
+  color: var(--text-dark) !important;
 }
 
 /* Nav logo: reduce excessive tracking */
 .nav-logo {
-  font-size: clamp(0.72rem, 1.2vw, 0.82rem) !important;
-  letter-spacing: 0.32em !important;
+  font-size: clamp(0.8rem, 1.2vw, 0.9rem) !important;
+  letter-spacing: 0.2em !important;
+  font-weight: 500 !important;
 }
 
 /* Nav links: slightly larger, less tracking */
 .nav-links a {
-  font-size: clamp(0.68rem, 1vw, 0.75rem) !important;
-  letter-spacing: 0.22em !important;
+  font-size: clamp(0.8rem, 1vw, 0.9rem) !important;
+  letter-spacing: 0.16em !important;
+  font-weight: 500 !important;
 }
 
 /* Hero subtitle (city list): was 0.65rem / 0.62em — reduce both */
 .hero-subtitle {
-  font-size: clamp(0.72rem, 1.2vw, 0.8rem) !important;
-  letter-spacing: 0.3em !important;
-  color: rgba(247, 241, 228, 0.82) !important;
+  font-size: clamp(0.82rem, 1.2vw, 0.92rem) !important;
+  letter-spacing: 0.16em !important;
+  color: rgba(247, 241, 228, 0.88) !important;
 }
 
 /* Hero meta labels: was 0.55rem — too small on mobile */
 .hero-meta-label {
-  font-size: clamp(0.62rem, 1vw, 0.7rem) !important;
-  letter-spacing: 0.26em !important;
-  color: #d8bf84 !important;
+  font-size: clamp(0.74rem, 1vw, 0.84rem) !important;
+  letter-spacing: 0.16em !important;
+  font-weight: 500 !important;
+  color: var(--gold-strong) !important;
 }
 
 /* Hero meta values: slightly boost opacity */
@@ -56,66 +68,72 @@ body {
 
 /* Scroll indicator: was 0.5rem — floor it */
 .scroll-indicator span {
-  font-size: clamp(0.6rem, 1vw, 0.65rem) !important;
-  letter-spacing: 0.28em !important;
-  color: rgba(199, 154, 50, 0.88) !important;
+  font-size: clamp(0.72rem, 1vw, 0.8rem) !important;
+  letter-spacing: 0.2em !important;
+  color: rgba(199, 154, 50, 0.94) !important;
 }
 
 /* Section labels across index.html: was 0.55rem */
 .section-label {
-  font-size: clamp(0.65rem, 1vw, 0.72rem) !important;
-  letter-spacing: 0.34em !important;
+  font-size: clamp(0.78rem, 1vw, 0.88rem) !important;
+  letter-spacing: 0.18em !important;
+  font-weight: 500 !important;
 }
 
 /* Rule titles: was 0.65rem */
 .rule-title {
-  font-size: clamp(0.68rem, 1vw, 0.75rem) !important;
-  letter-spacing: 0.26em !important;
+  font-size: clamp(0.8rem, 1vw, 0.9rem) !important;
+  letter-spacing: 0.16em !important;
+  color: var(--gold-strong) !important;
 }
 
 /* Rule body text: boost opacity slightly */
 .rule-text {
-  font-size: 1rem !important;
-  line-height: 1.88 !important;
-  color: rgba(247, 241, 228, 0.9) !important;
+  font-size: 1.02rem !important;
+  line-height: 1.82 !important;
+  color: rgba(247, 241, 228, 0.94) !important;
   font-weight: 400 !important;
 }
 
 /* City names: darken for contrast on cream background */
 .city-name {
-  color: #162f2a !important;
+  color: #123c36 !important;
+  line-height: 1.35 !important;
 }
 
 /* City status labels: was 0.55rem */
 .city-status {
-  font-size: clamp(0.65rem, 1vw, 0.72rem) !important;
-  letter-spacing: 0.28em !important;
+  font-size: clamp(0.78rem, 1vw, 0.86rem) !important;
+  letter-spacing: 0.16em !important;
+  font-weight: 500 !important;
+  color: var(--text-muted) !important;
 }
 
 /* Footer brand tagline: was 0.55rem */
 .footer-brand span {
-  font-size: clamp(0.62rem, 1vw, 0.7rem) !important;
-  letter-spacing: 0.3em !important;
+  font-size: clamp(0.76rem, 1vw, 0.84rem) !important;
+  letter-spacing: 0.2em !important;
+  color: rgba(199, 154, 50, 0.96) !important;
 }
 
 /* Footer cities list: was 0.6rem, boost gold visibility */
 .footer-cities li {
-  font-size: clamp(0.65rem, 1vw, 0.72rem) !important;
-  letter-spacing: 0.22em !important;
-  color: rgba(199, 154, 50, 0.92) !important;
+  font-size: clamp(0.76rem, 1vw, 0.84rem) !important;
+  letter-spacing: 0.18em !important;
+  color: rgba(199, 154, 50, 0.96) !important;
 }
 
 /* Footer copyright: was 0.5rem — too small */
 .footer-copy {
-  font-size: clamp(0.6rem, 1vw, 0.65rem) !important;
-  letter-spacing: 0.22em !important;
-  color: rgba(247, 241, 228, 0.64) !important;
+  font-size: clamp(0.72rem, 1vw, 0.8rem) !important;
+  letter-spacing: 0.16em !important;
+  color: rgba(247, 241, 228, 0.76) !important;
 }
 
 /* Footer tagline italic: boost gold */
 .footer-tagline {
-  font-size: 0.95rem !important;
-  color: rgba(199, 154, 50, 0.82) !important;
+  font-size: 1rem !important;
+  color: rgba(199, 154, 50, 0.9) !important;
 }
 
 /* Philosophy body text: ensure weight 400 minimum */
@@ -130,9 +148,10 @@ body {
 
 /* Nav links in gallery/videos: was 11px */
 .nav-link {
-  font-size: 12px !important;
-  letter-spacing: 0.36em !important;
-  opacity: 0.72 !important;
+  font-size: 13px !important;
+  letter-spacing: 0.2em !important;
+  font-weight: 500 !important;
+  opacity: 0.86 !important;
 }
 .nav-link:hover,
 .nav-link.active {
@@ -141,8 +160,10 @@ body {
 
 /* Section eyebrow labels: was 10px */
 .section-eyebrow {
-  font-size: 11px !important;
-  letter-spacing: 0.42em !important;
+  font-size: 12px !important;
+  letter-spacing: 0.26em !important;
+  font-weight: 500 !important;
+  color: var(--gold-strong) !important;
   opacity: 0.9 !important;
 }
 
@@ -152,9 +173,10 @@ body {
 
 /* Filter tabs: was 10px */
 .filter-tab {
-  font-size: 11px !important;
-  letter-spacing: 0.28em !important;
-  opacity: 0.62 !important;
+  font-size: 12px !important;
+  letter-spacing: 0.18em !important;
+  font-weight: 500 !important;
+  opacity: 0.78 !important;
 }
 .filter-tab.active {
   opacity: 1 !important;
@@ -162,37 +184,47 @@ body {
 
 /* Card city tag: was 10px */
 .card-city-tag {
-  font-size: 11px !important;
-  letter-spacing: 0.34em !important;
+  font-size: 12px !important;
+  letter-spacing: 0.2em !important;
+  font-weight: 500 !important;
+  color: var(--gold-strong) !important;
 }
 
 /* Card venue title: boost line-height */
 .card-venue {
   font-size: 1.55rem !important;
-  line-height: 1.2 !important;
+  line-height: 1.3 !important;
+  color: rgba(247, 245, 240, 0.96) !important;
 }
 
 /* Card chapter label: was 9px */
 .card-chapter {
-  font-size: 10px !important;
-  letter-spacing: 0.28em !important;
-  opacity: 0.6 !important;
+  font-size: 11px !important;
+  letter-spacing: 0.18em !important;
+  font-weight: 500 !important;
+  opacity: 0.78 !important;
 }
 
 /* Card description: was weight 300, 0.82rem — too light */
 .card-description {
-  font-size: 0.9rem !important;
+  font-size: 0.96rem !important;
   font-weight: 400 !important;
-  line-height: 1.85 !important;
-  opacity: 0.78 !important;
+  line-height: 1.78 !important;
+  color: rgba(247, 245, 240, 0.88) !important;
+  opacity: 1 !important;
 }
 
 /* Guest/chapter pills: was 9px */
 .guest-pill,
 .city-pill {
-  font-size: 10px !important;
-  letter-spacing: 0.28em !important;
-  opacity: 0.62 !important;
+  font-size: 11px !important;
+  letter-spacing: 0.18em !important;
+  font-weight: 500 !important;
+  opacity: 0.78 !important;
+}
+
+.city-pill {
+  color: var(--gold-rich) !important;
 }
 
 /* ─────────────────────────────────────────────
@@ -201,59 +233,90 @@ body {
 
 /* Nav back link: was 0.55rem */
 .nav-back {
-  font-size: clamp(0.65rem, 1vw, 0.72rem) !important;
-  letter-spacing: 0.28em !important;
+  font-size: clamp(0.78rem, 1vw, 0.88rem) !important;
+  letter-spacing: 0.16em !important;
+  font-weight: 500 !important;
 }
 
 /* Header label: was 0.55rem */
 .header-label {
-  font-size: clamp(0.65rem, 1vw, 0.72rem) !important;
-  letter-spacing: 0.38em !important;
+  font-size: clamp(0.78rem, 1vw, 0.88rem) !important;
+  letter-spacing: 0.18em !important;
+  font-weight: 500 !important;
 }
 
 /* Entry date: was 0.55rem */
 .entry-date {
-  font-size: clamp(0.65rem, 1vw, 0.72rem) !important;
-  letter-spacing: 0.24em !important;
-  color: #c4993a !important;
+  font-size: clamp(0.78rem, 1vw, 0.88rem) !important;
+  letter-spacing: 0.16em !important;
+  font-weight: 500 !important;
+  color: #b88830 !important;
 }
 
 /* Entry chapter label: boost readability */
 .entry-chapter {
-  font-size: 0.85rem !important;
-  color: rgba(28, 22, 16, 0.48) !important;
+  font-size: 0.9rem !important;
+  color: rgba(28, 22, 16, 0.58) !important;
 }
 
 /* Entry text body: ensure weight 400 */
 .entry-text {
   font-weight: 400 !important;
-  color: rgba(28, 22, 16, 0.76) !important;
+  color: rgba(28, 22, 16, 0.82) !important;
+  line-height: 1.85 !important;
 }
 
 /* Entry tags: was 0.5rem */
 .entry-tag {
-  font-size: clamp(0.6rem, 1vw, 0.65rem) !important;
-  letter-spacing: 0.24em !important;
+  font-size: clamp(0.72rem, 1vw, 0.82rem) !important;
+  letter-spacing: 0.16em !important;
+  color: #b06a47 !important;
+  border-color: rgba(176, 106, 71, 0.42) !important;
 }
 
 /* New entry hint: was 0.55rem */
 .new-entry-hint p {
-  font-size: clamp(0.62rem, 1vw, 0.68rem) !important;
-  letter-spacing: 0.3em !important;
-  color: rgba(201, 168, 76, 0.52) !important;
+  font-size: clamp(0.72rem, 1vw, 0.8rem) !important;
+  letter-spacing: 0.18em !important;
+  color: rgba(201, 168, 76, 0.68) !important;
 }
 
 /* Experiment footer brand: was 0.6rem */
 footer .footer-brand {
-  font-size: clamp(0.65rem, 1vw, 0.72rem) !important;
-  letter-spacing: 0.3em !important;
-  color: rgba(201, 168, 76, 0.65) !important;
+  font-size: clamp(0.76rem, 1vw, 0.84rem) !important;
+  letter-spacing: 0.18em !important;
+  color: rgba(201, 168, 76, 0.78) !important;
 }
 
 /* Experiment footer tagline: boost visibility */
 footer .footer-tagline {
-  font-size: 0.95rem !important;
-  color: rgba(245, 239, 224, 0.32) !important;
+  font-size: 1rem !important;
+  color: rgba(245, 239, 224, 0.5) !important;
+}
+
+/* Index chronicle card metadata */
+.chronicle-card {
+  border-color: rgba(199, 154, 50, 0.35) !important;
+}
+
+.chronicle-date {
+  font-size: clamp(0.78rem, 1vw, 0.9rem) !important;
+  letter-spacing: 0.14em !important;
+  font-weight: 500 !important;
+  color: var(--gold-rich) !important;
+  text-transform: uppercase;
+}
+
+.chronicle-venue {
+  font-size: clamp(1rem, 1.2vw, 1.12rem) !important;
+  color: rgba(13, 22, 40, 0.86) !important;
+  line-height: 1.6 !important;
+}
+
+.footer-meta-line {
+  font-size: 0.84rem !important;
+  letter-spacing: 0.24em !important;
+  font-weight: 500 !important;
 }
 
 /* ─────────────────────────────────────────────
@@ -268,8 +331,8 @@ footer .footer-tagline {
 
   /* Sound toggle repositioned for thumb reach */
   .sound-toggle {
-    font-size: 0.72rem !important;
-    letter-spacing: 0.14em !important;
+    font-size: 0.9rem !important;
+    letter-spacing: 0.12em !important;
     min-width: 126px !important;
     padding: 10px 16px !important;
     bottom: 18px !important;
@@ -277,24 +340,24 @@ footer .footer-tagline {
   }
 
   .hero-subtitle {
-    font-size: 0.78rem !important;
-    letter-spacing: 0.2em !important;
+    font-size: 0.9rem !important;
+    letter-spacing: 0.12em !important;
   }
 
   .hero-meta-label {
-    font-size: 0.65rem !important;
-    letter-spacing: 0.18em !important;
+    font-size: 0.84rem !important;
+    letter-spacing: 0.12em !important;
   }
 
   .section-label {
-    font-size: 0.68rem !important;
-    letter-spacing: 0.26em !important;
+    font-size: 0.88rem !important;
+    letter-spacing: 0.12em !important;
   }
 
   .city-status,
   .rule-title {
-    font-size: 0.7rem !important;
-    letter-spacing: 0.2em !important;
+    font-size: 0.9rem !important;
+    letter-spacing: 0.12em !important;
   }
 
   .city-name {
@@ -308,55 +371,80 @@ footer .footer-tagline {
   }
 
   .footer-copy {
-    font-size: 0.62rem !important;
-    letter-spacing: 0.18em !important;
+    font-size: 0.78rem !important;
+    letter-spacing: 0.12em !important;
   }
 
   .footer-cities li {
-    font-size: 0.68rem !important;
-    letter-spacing: 0.18em !important;
+    font-size: 0.82rem !important;
+    letter-spacing: 0.12em !important;
   }
 
   /* Gallery / Videos */
   .nav-link {
-    font-size: 11px !important;
-    letter-spacing: 0.26em !important;
+    font-size: 0.9rem !important;
+    letter-spacing: 0.12em !important;
   }
 
   .filter-tab {
-    font-size: 10px !important;
-    letter-spacing: 0.2em !important;
+    font-size: 0.84rem !important;
+    letter-spacing: 0.12em !important;
     padding: 0.5rem 1rem !important;
   }
 
   .card-venue {
-    font-size: 1.35rem !important;
+    font-size: 1.15rem !important;
+    line-height: 1.6 !important;
   }
 
   .card-description {
-    font-size: 0.9rem !important;
+    font-size: 0.95rem !important;
     font-weight: 400 !important;
+    line-height: 1.75 !important;
   }
 
   .card-city-tag {
-    font-size: 11px !important;
-    letter-spacing: 0.26em !important;
+    font-size: 0.84rem !important;
+    letter-spacing: 0.12em !important;
   }
 
   /* Experiment */
   .entry-date {
-    font-size: 0.68rem !important;
-    letter-spacing: 0.2em !important;
+    font-size: 0.84rem !important;
+    letter-spacing: 0.12em !important;
   }
 
   .entry-tag {
-    font-size: 0.62rem !important;
-    letter-spacing: 0.2em !important;
+    font-size: 0.8rem !important;
+    letter-spacing: 0.12em !important;
   }
 
   .nav-back {
-    font-size: 0.68rem !important;
-    letter-spacing: 0.22em !important;
+    font-size: 0.86rem !important;
+    letter-spacing: 0.12em !important;
+  }
+
+  .chronicle-card {
+    padding: 2rem 1.5rem !important;
+  }
+
+  .chronicle-date {
+    font-size: 0.9rem !important;
+    letter-spacing: 0.12em !important;
+  }
+
+  .chronicle-venue {
+    font-size: 1.05rem !important;
+    line-height: 1.6 !important;
+  }
+
+  .chronicles-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  .footer-meta-line {
+    font-size: 0.8rem !important;
+    letter-spacing: 0.16em !important;
   }
 
   /* Prevent ultra-thin weights on all descriptive/body copy */
@@ -364,7 +452,9 @@ footer .footer-tagline {
   .rule-text,
   .philosophy-text p,
   .entry-text,
-  .page-intro {
+  .page-intro,
+  .chronicle-venue,
+  .chronicle-date {
     font-weight: 400 !important;
   }
 }
