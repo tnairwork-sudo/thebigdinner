@@ -304,7 +304,9 @@ footer .footer-tagline {
   letter-spacing: 0.14em !important;
   font-weight: 500 !important;
   color: var(--gold-rich) !important;
-  text-transform: uppercase;
+  text-transform: uppercase !important;
+  margin-bottom: 8px !important;
+  display: block !important;
 }
 
 .chronicle-venue {
