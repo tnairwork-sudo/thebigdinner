@@ -874,7 +874,115 @@
   /* Responsive */
   @media (max-width: 768px) {
     body { font-size: 16px; }
+    .hero {
+      min-height: 100vh;
+      min-height: 100svh;
+      max-height: 100svh;
+      align-items: center;
+    }
+    .hero-pattern {
+      opacity: 0.03;
+      background-size: 24px 24px;
+    }
+    .hero-frame {
+      top: 82px;
+      bottom: 18px;
+      left: 14px;
+      right: 14px;
+      border-color: rgba(201, 168, 76, 0.18);
+    }
+    .hero-frame::before {
+      inset: 7px;
+      border-color: rgba(201, 168, 76, 0.08);
+    }
+    .corner {
+      width: 36px;
+      height: 36px;
+    }
+    .corner-tl { top: 76px; left: 8px; }
+    .corner-tr { top: 76px; right: 8px; transform: scaleX(-1); }
+    .corner-bl { bottom: 8px; left: 8px; transform: scaleY(-1); }
+    .corner-br { bottom: 8px; right: 8px; transform: scale(-1); }
+    .hero-content {
+      width: 100%;
+      max-width: min(92vw, 420px);
+      padding-top: calc(clamp(88px, 15svh, 114px) + env(safe-area-inset-top));
+      padding-right: 0;
+      padding-bottom: calc(clamp(24px, 4svh, 34px) + env(safe-area-inset-bottom));
+      padding-left: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: clamp(10px, 1.5svh, 14px);
+    }
+    .hero-eyebrow {
+      font-size: clamp(4rem, 12vw, 7rem);
+      line-height: 0.9;
+      letter-spacing: -0.03em;
+      margin-bottom: 0;
+    }
+    .hero-eyebrow-line {
+      display: inline-block;
+      white-space: nowrap;
+    }
+    .hero-title {
+      font-size: clamp(1.08rem, 4.8vw, 1.36rem);
+      line-height: 1.36;
+      letter-spacing: 0.02em;
+      color: rgba(247, 241, 228, 0.9);
+      margin-bottom: 0;
+    }
+    .hero-divider {
+      gap: 12px;
+      margin-bottom: clamp(8px, 1.4svh, 14px);
+    }
+    .hero-divider-line { width: 42px; }
+    .hero-divider-ornament {
+      font-size: 0.62rem;
+      opacity: 0.84;
+    }
     .hero-subtitle { font-size: 0.8rem; letter-spacing: 0.2em; }
+    .hero-subtitle {
+      margin-top: 0;
+      margin-bottom: 0;
+      font-size: clamp(0.82rem, 3.2vw, 0.96rem);
+      letter-spacing: 0.12em;
+      white-space: nowrap;
+      overflow-wrap: normal;
+    }
+    .hero-cta {
+      width: min(90vw, 420px);
+      margin-top: clamp(10px, 2svh, 18px);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: stretch;
+    }
+    .hero-cta .btn-primary {
+      width: 100%;
+      max-width: 100%;
+      padding: 14px 20px;
+      text-align: center;
+    }
+    .hero-cta .sound-toggle {
+      position: static;
+      right: auto;
+      bottom: auto;
+      transform: none;
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      margin: 0;
+      padding: 11px 20px;
+      font-size: clamp(0.74rem, 3vw, 0.82rem);
+      letter-spacing: 0.12em;
+      color: rgba(15, 37, 31, 0.84);
+      border-color: rgba(199, 154, 50, 0.48);
+      background: rgba(247, 241, 228, 0.9);
+      box-shadow: 0 8px 22px rgba(8, 18, 15, 0.14);
+      text-align: center;
+    }
+    .scroll-indicator { display: none; }
     .hero-meta-label { font-size: 0.68rem; letter-spacing: 0.18em; }
     .section-label { font-size: 0.7rem; letter-spacing: 0.24em; }
     .city-status { font-size: 0.7rem; letter-spacing: 0.2em; }
@@ -953,7 +1061,7 @@
 
   <div class="hero-content">
 
-    <p class="hero-eyebrow">The Big<br>Dinner</p>
+    <p class="hero-eyebrow"><span class="hero-eyebrow-line">THE&nbsp;BIG</span><br><span class="hero-eyebrow-line">DINNER</span></p>
 
     <h1 class="hero-title">It is a bet on people.</h1>
 
@@ -963,10 +1071,11 @@
       <div class="hero-divider-line"></div>
     </div>
 
-    <p class="hero-subtitle" style="margin-bottom: 48px;">Delhi &nbsp;·&nbsp; Bombay &nbsp;·&nbsp; London &nbsp;·&nbsp; Dubai</p>
+    <p class="hero-subtitle">Delhi&nbsp;·&nbsp;Bombay&nbsp;·&nbsp;London&nbsp;·&nbsp;Dubai</p>
 
     <div class="hero-cta">
       <a href="#" class="btn-primary" id="openCitySelect">Request an Invitation</a>
+      <button class="sound-toggle muted" id="soundToggle">Sound: Off</button>
     </div>
 
   </div>
@@ -1209,8 +1318,6 @@
     </div>
   </div>
 </section>
-
-<button class="sound-toggle muted" id="soundToggle">Sound: Off</button>
 
 <!-- APPLY -->
 <section class="apply" id="apply">
