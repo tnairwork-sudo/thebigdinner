@@ -1,0 +1,370 @@
+/*
+ * typography.css
+ * The Big Dinner — Global Typography Refinement System
+ * Mobile-first legibility layer. Overrides only font-size, letter-spacing,
+ * font-weight, color, and opacity. Layout and aesthetic are untouched.
+ */
+
+/* ── GLOBAL BASE ── */
+body {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ─────────────────────────────────────────────
+   INDEX.HTML — nav, hero, sections, footer
+───────────────────────────────────────────── */
+
+/* Sound toggle: was 0.55–0.62rem / 0.48em tracking — too small, too spaced */
+.sound-toggle {
+  font-size: clamp(0.72rem, 1vw, 0.78rem) !important;
+  letter-spacing: 0.2em !important;
+}
+
+/* Nav logo: reduce excessive tracking */
+.nav-logo {
+  font-size: clamp(0.72rem, 1.2vw, 0.82rem) !important;
+  letter-spacing: 0.32em !important;
+}
+
+/* Nav links: slightly larger, less tracking */
+.nav-links a {
+  font-size: clamp(0.68rem, 1vw, 0.75rem) !important;
+  letter-spacing: 0.22em !important;
+}
+
+/* Hero subtitle (city list): was 0.65rem / 0.62em — reduce both */
+.hero-subtitle {
+  font-size: clamp(0.72rem, 1.2vw, 0.8rem) !important;
+  letter-spacing: 0.3em !important;
+  color: rgba(247, 241, 228, 0.82) !important;
+}
+
+/* Hero meta labels: was 0.55rem — too small on mobile */
+.hero-meta-label {
+  font-size: clamp(0.62rem, 1vw, 0.7rem) !important;
+  letter-spacing: 0.26em !important;
+  color: #d8bf84 !important;
+}
+
+/* Hero meta values: slightly boost opacity */
+.hero-meta-value {
+  font-size: 1.08rem !important;
+  color: rgba(247, 241, 228, 0.96) !important;
+}
+
+/* Scroll indicator: was 0.5rem — floor it */
+.scroll-indicator span {
+  font-size: clamp(0.6rem, 1vw, 0.65rem) !important;
+  letter-spacing: 0.28em !important;
+  color: rgba(199, 154, 50, 0.88) !important;
+}
+
+/* Section labels across index.html: was 0.55rem */
+.section-label {
+  font-size: clamp(0.65rem, 1vw, 0.72rem) !important;
+  letter-spacing: 0.34em !important;
+}
+
+/* Rule titles: was 0.65rem */
+.rule-title {
+  font-size: clamp(0.68rem, 1vw, 0.75rem) !important;
+  letter-spacing: 0.26em !important;
+}
+
+/* Rule body text: boost opacity slightly */
+.rule-text {
+  font-size: 1rem !important;
+  line-height: 1.88 !important;
+  color: rgba(247, 241, 228, 0.9) !important;
+  font-weight: 400 !important;
+}
+
+/* City names: darken for contrast on cream background */
+.city-name {
+  color: #162f2a !important;
+}
+
+/* City status labels: was 0.55rem */
+.city-status {
+  font-size: clamp(0.65rem, 1vw, 0.72rem) !important;
+  letter-spacing: 0.28em !important;
+}
+
+/* Footer brand tagline: was 0.55rem */
+.footer-brand span {
+  font-size: clamp(0.62rem, 1vw, 0.7rem) !important;
+  letter-spacing: 0.3em !important;
+}
+
+/* Footer cities list: was 0.6rem, boost gold visibility */
+.footer-cities li {
+  font-size: clamp(0.65rem, 1vw, 0.72rem) !important;
+  letter-spacing: 0.22em !important;
+  color: rgba(199, 154, 50, 0.92) !important;
+}
+
+/* Footer copyright: was 0.5rem — too small */
+.footer-copy {
+  font-size: clamp(0.6rem, 1vw, 0.65rem) !important;
+  letter-spacing: 0.22em !important;
+  color: rgba(247, 241, 228, 0.64) !important;
+}
+
+/* Footer tagline italic: boost gold */
+.footer-tagline {
+  font-size: 0.95rem !important;
+  color: rgba(199, 154, 50, 0.82) !important;
+}
+
+/* Philosophy body text: ensure weight 400 minimum */
+.philosophy-text p {
+  font-weight: 400 !important;
+  color: rgba(13, 22, 40, 0.82) !important;
+}
+
+/* ─────────────────────────────────────────────
+   GALLERY.HTML + VIDEOS.HTML — shared nav
+───────────────────────────────────────────── */
+
+/* Nav links in gallery/videos: was 11px */
+.nav-link {
+  font-size: 12px !important;
+  letter-spacing: 0.36em !important;
+  opacity: 0.72 !important;
+}
+.nav-link:hover,
+.nav-link.active {
+  opacity: 1 !important;
+}
+
+/* Section eyebrow labels: was 10px */
+.section-eyebrow {
+  font-size: 11px !important;
+  letter-spacing: 0.42em !important;
+  opacity: 0.9 !important;
+}
+
+/* ─────────────────────────────────────────────
+   VIDEOS.HTML — cards, feed, filter
+───────────────────────────────────────────── */
+
+/* Filter tabs: was 10px */
+.filter-tab {
+  font-size: 11px !important;
+  letter-spacing: 0.28em !important;
+  opacity: 0.62 !important;
+}
+.filter-tab.active {
+  opacity: 1 !important;
+}
+
+/* Card city tag: was 10px */
+.card-city-tag {
+  font-size: 11px !important;
+  letter-spacing: 0.34em !important;
+}
+
+/* Card venue title: boost line-height */
+.card-venue {
+  font-size: 1.55rem !important;
+  line-height: 1.2 !important;
+}
+
+/* Card chapter label: was 9px */
+.card-chapter {
+  font-size: 10px !important;
+  letter-spacing: 0.28em !important;
+  opacity: 0.6 !important;
+}
+
+/* Card description: was weight 300, 0.82rem — too light */
+.card-description {
+  font-size: 0.9rem !important;
+  font-weight: 400 !important;
+  line-height: 1.85 !important;
+  opacity: 0.78 !important;
+}
+
+/* Guest/chapter pills: was 9px */
+.guest-pill,
+.city-pill {
+  font-size: 10px !important;
+  letter-spacing: 0.28em !important;
+  opacity: 0.62 !important;
+}
+
+/* ─────────────────────────────────────────────
+   EXPERIMENT.HTML — entries, header labels
+───────────────────────────────────────────── */
+
+/* Nav back link: was 0.55rem */
+.nav-back {
+  font-size: clamp(0.65rem, 1vw, 0.72rem) !important;
+  letter-spacing: 0.28em !important;
+}
+
+/* Header label: was 0.55rem */
+.header-label {
+  font-size: clamp(0.65rem, 1vw, 0.72rem) !important;
+  letter-spacing: 0.38em !important;
+}
+
+/* Entry date: was 0.55rem */
+.entry-date {
+  font-size: clamp(0.65rem, 1vw, 0.72rem) !important;
+  letter-spacing: 0.24em !important;
+  color: #c4993a !important;
+}
+
+/* Entry chapter label: boost readability */
+.entry-chapter {
+  font-size: 0.85rem !important;
+  color: rgba(28, 22, 16, 0.48) !important;
+}
+
+/* Entry text body: ensure weight 400 */
+.entry-text {
+  font-weight: 400 !important;
+  color: rgba(28, 22, 16, 0.76) !important;
+}
+
+/* Entry tags: was 0.5rem */
+.entry-tag {
+  font-size: clamp(0.6rem, 1vw, 0.65rem) !important;
+  letter-spacing: 0.24em !important;
+}
+
+/* New entry hint: was 0.55rem */
+.new-entry-hint p {
+  font-size: clamp(0.62rem, 1vw, 0.68rem) !important;
+  letter-spacing: 0.3em !important;
+  color: rgba(201, 168, 76, 0.52) !important;
+}
+
+/* Experiment footer brand: was 0.6rem */
+footer .footer-brand {
+  font-size: clamp(0.65rem, 1vw, 0.72rem) !important;
+  letter-spacing: 0.3em !important;
+  color: rgba(201, 168, 76, 0.65) !important;
+}
+
+/* Experiment footer tagline: boost visibility */
+footer .footer-tagline {
+  font-size: 0.95rem !important;
+  color: rgba(245, 239, 224, 0.32) !important;
+}
+
+/* ─────────────────────────────────────────────
+   MOBILE — @media (max-width: 768px)
+   Floor all small text. No weight below 400.
+───────────────────────────────────────────── */
+@media (max-width: 768px) {
+
+  body {
+    font-size: 16px;
+  }
+
+  /* Sound toggle repositioned for thumb reach */
+  .sound-toggle {
+    font-size: 0.72rem !important;
+    letter-spacing: 0.14em !important;
+    min-width: 126px !important;
+    padding: 10px 16px !important;
+    bottom: 18px !important;
+    right: 14px !important;
+  }
+
+  .hero-subtitle {
+    font-size: 0.78rem !important;
+    letter-spacing: 0.2em !important;
+  }
+
+  .hero-meta-label {
+    font-size: 0.65rem !important;
+    letter-spacing: 0.18em !important;
+  }
+
+  .section-label {
+    font-size: 0.68rem !important;
+    letter-spacing: 0.26em !important;
+  }
+
+  .city-status,
+  .rule-title {
+    font-size: 0.7rem !important;
+    letter-spacing: 0.2em !important;
+  }
+
+  .city-name {
+    font-size: 1.85rem !important;
+    line-height: 1.3 !important;
+  }
+
+  .rule-text {
+    font-size: 0.97rem !important;
+    font-weight: 400 !important;
+  }
+
+  .footer-copy {
+    font-size: 0.62rem !important;
+    letter-spacing: 0.18em !important;
+  }
+
+  .footer-cities li {
+    font-size: 0.68rem !important;
+    letter-spacing: 0.18em !important;
+  }
+
+  /* Gallery / Videos */
+  .nav-link {
+    font-size: 11px !important;
+    letter-spacing: 0.26em !important;
+  }
+
+  .filter-tab {
+    font-size: 10px !important;
+    letter-spacing: 0.2em !important;
+    padding: 0.5rem 1rem !important;
+  }
+
+  .card-venue {
+    font-size: 1.35rem !important;
+  }
+
+  .card-description {
+    font-size: 0.9rem !important;
+    font-weight: 400 !important;
+  }
+
+  .card-city-tag {
+    font-size: 11px !important;
+    letter-spacing: 0.26em !important;
+  }
+
+  /* Experiment */
+  .entry-date {
+    font-size: 0.68rem !important;
+    letter-spacing: 0.2em !important;
+  }
+
+  .entry-tag {
+    font-size: 0.62rem !important;
+    letter-spacing: 0.2em !important;
+  }
+
+  .nav-back {
+    font-size: 0.68rem !important;
+    letter-spacing: 0.22em !important;
+  }
+
+  /* Prevent ultra-thin weights on all descriptive/body copy */
+  .card-description,
+  .rule-text,
+  .philosophy-text p,
+  .entry-text,
+  .page-intro {
+    font-weight: 400 !important;
+  }
+}
