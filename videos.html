@@ -38,8 +38,8 @@
             background: linear-gradient(to bottom, rgba(8, 18, 14, 0.95), transparent);
         }
         .nav-link {
-            font-size: 11px; letter-spacing: 0.5em; text-transform: uppercase;
-            cursor: pointer; color: var(--silk); opacity: 0.6;
+            font-size: 13px; letter-spacing: 0.32em; text-transform: uppercase;
+            cursor: pointer; color: var(--silk); opacity: 0.78;
             transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
             text-decoration: none;
         }
@@ -63,14 +63,14 @@
         }
 
         .filter-tab {
-            font-size: 10px;
-            letter-spacing: 0.4em;
+            font-size: 12px;
+            letter-spacing: 0.26em;
             text-transform: uppercase;
             padding: 0.55rem 1.4rem;
             border: 1px solid rgba(255, 255, 255, 0.15);
             background: transparent;
             color: var(--silk);
-            opacity: 0.45;
+            opacity: 0.65;
             cursor: pointer;
             transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
         }
@@ -133,24 +133,24 @@
             pointer-events: none;
         }
         .card-city-tag {
-            font-size: 10px;
-            letter-spacing: 0.5em;
+            font-size: 12px;
+            letter-spacing: 0.32em;
             text-transform: uppercase;
             color: var(--gold);
             margin-bottom: 0.35rem;
         }
         .card-venue {
             font-family: 'EB Garamond', serif;
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             font-style: italic;
-            line-height: 1.15;
+            line-height: 1.25;
             margin-bottom: 0.35rem;
         }
         .card-chapter {
-            font-size: 9px;
-            letter-spacing: 0.4em;
+            font-size: 11px;
+            letter-spacing: 0.26em;
             text-transform: uppercase;
-            opacity: 0.45;
+            opacity: 0.65;
         }
 
         .play-overlay {
@@ -182,10 +182,10 @@
 
         .card-description {
             padding: 1.1rem 0 0;
-            font-size: 0.82rem;
+            font-size: 0.95rem;
             line-height: 1.8;
-            opacity: 0.6;
-            font-weight: 300;
+            opacity: 0.8;
+            font-weight: 400;
         }
         .card-footer-row {
             display: flex;
@@ -196,17 +196,17 @@
             border-top: 1px solid rgba(255, 255, 255, 0.07);
         }
         .guest-pill {
-            font-size: 9px;
-            letter-spacing: 0.4em;
+            font-size: 11px;
+            letter-spacing: 0.26em;
             text-transform: uppercase;
-            opacity: 0.4;
+            opacity: 0.65;
         }
         .city-pill {
-            font-size: 9px;
-            letter-spacing: 0.35em;
+            font-size: 11px;
+            letter-spacing: 0.26em;
             text-transform: uppercase;
             color: var(--copper);
-            opacity: 0.7;
+            opacity: 0.82;
         }
 
         #load-sentinel {
@@ -229,13 +229,21 @@
         .end-note {
             display: none;
             text-align: center;
-            font-size: 9px;
-            letter-spacing: 0.6em;
+            font-size: 11px;
+            letter-spacing: 0.36em;
             text-transform: uppercase;
-            opacity: 0.28;
+            opacity: 0.5;
             padding: 2rem 0 5rem;
         }
         .end-note.visible { display: block; }
+
+        @media (max-width: 768px) {
+            .nav-link { font-size: 12px; letter-spacing: 0.26em; }
+            .filter-tab { font-size: 11px; letter-spacing: 0.22em; }
+            .card-description { font-size: 0.95rem; font-weight: 400; }
+            .card-venue { font-size: 1.4rem; }
+            .card-city-tag { font-size: 12px; }
+        }
 
         @media (max-width: 480px) {
             .video-card  { max-width: 100%; }
@@ -269,7 +277,7 @@
 
     <header class="page-header" id="page-header">
         <p id="header-eyebrow"
-           style="font-size:11px; letter-spacing:0.5em; text-transform:uppercase; color:var(--copper); margin-bottom:1.5rem;">
+           style="font-size:13px; letter-spacing:0.32em; text-transform:uppercase; color:var(--copper); margin-bottom:1.5rem;">
             The Moving Image
         </p>
         <h1 id="header-title" class="serif italic" style="font-size:clamp(3.5rem,10vw,7rem); line-height:0.95; margin:0;">
@@ -293,10 +301,10 @@
     <p class="end-note" id="end-note">— End of the Archives —</p>
 
     <footer class="footer-minimal">
-        <div style="font-size:10px; letter-spacing:0.8em; text-transform:uppercase; opacity:0.5; margin-bottom:0.5rem;">
+        <div style="font-size:12px; letter-spacing:0.8em; text-transform:uppercase; opacity:0.72; margin-bottom:0.5rem;">
             Architected by Nair and Sahani
         </div>
-        <div style="font-size:9px; letter-spacing:0.4em; text-transform:uppercase; opacity:0.3;">
+        <div style="font-size:11px; letter-spacing:0.4em; text-transform:uppercase; opacity:0.55;">
             The Big Dinner © 2026
         </div>
     </footer>

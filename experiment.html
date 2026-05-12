@@ -61,15 +61,15 @@
   }
   .nav-logo {
     font-family: 'Cormorant SC', serif;
-    font-size: 0.7rem;
-    letter-spacing: 0.35em;
+    font-size: 0.8rem;
+    letter-spacing: 0.24em;
     color: var(--navy-deep);
     text-decoration: none;
   }
   .nav-back {
     font-family: 'Cormorant SC', serif;
-    font-size: 0.55rem;
-    letter-spacing: 0.35em;
+    font-size: 0.72rem;
+    letter-spacing: 0.24em;
     color: var(--orange);
     text-decoration: none;
     text-transform: uppercase;
@@ -116,8 +116,8 @@
 
   .header-label {
     font-family: 'Cormorant SC', serif;
-    font-size: 0.55rem;
-    letter-spacing: 0.5em;
+    font-size: 0.72rem;
+    letter-spacing: 0.3em;
     color: var(--orange);
     text-transform: uppercase;
     display: flex;
@@ -154,7 +154,7 @@
   .page-intro {
     font-size: 1.25rem;
     line-height: 1.8;
-    color: rgba(28, 22, 16, 0.6);
+    color: rgba(28, 22, 16, 0.76);
     max-width: 600px;
     opacity: 0;
     animation: fadeUp 0.8s ease 0.7s forwards;
@@ -214,9 +214,9 @@
 
   .entry-date {
     font-family: 'Cormorant SC', serif;
-    font-size: 0.55rem;
-    letter-spacing: 0.3em;
-    color: var(--gold);
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    color: #c4993a;
     text-transform: uppercase;
     display: block;
     margin-bottom: 6px;
@@ -225,8 +225,8 @@
   .entry-chapter {
     font-family: 'Cormorant Garamond', serif;
     font-style: italic;
-    font-size: 0.8rem;
-    color: rgba(28, 22, 16, 0.35);
+    font-size: 0.88rem;
+    color: rgba(28, 22, 16, 0.52);
   }
 
   .entry-body {}
@@ -244,7 +244,8 @@
   .entry-text {
     font-size: 1.1rem;
     line-height: 1.9;
-    color: rgba(28, 22, 16, 0.72);
+    color: rgba(28, 22, 16, 0.8);
+    font-weight: 400;
     margin-bottom: 20px;
   }
 
@@ -264,8 +265,8 @@
   .entry-tag {
     display: inline-block;
     font-family: 'Cormorant SC', serif;
-    font-size: 0.5rem;
-    letter-spacing: 0.3em;
+    font-size: 0.68rem;
+    letter-spacing: 0.22em;
     color: var(--orange);
     border: 1px solid rgba(184, 92, 56, 0.3);
     padding: 4px 12px;
@@ -291,9 +292,9 @@
   }
   .new-entry-hint p {
     font-family: 'Cormorant SC', serif;
-    font-size: 0.55rem;
-    letter-spacing: 0.4em;
-    color: rgba(201, 168, 76, 0.4);
+    font-size: 0.7rem;
+    letter-spacing: 0.26em;
+    color: rgba(201, 168, 76, 0.58);
     text-transform: uppercase;
   }
 
@@ -308,16 +309,16 @@
   }
   .footer-brand {
     font-family: 'Cormorant SC', serif;
-    font-size: 0.6rem;
-    letter-spacing: 0.4em;
-    color: rgba(201, 168, 76, 0.5);
+    font-size: 0.72rem;
+    letter-spacing: 0.26em;
+    color: rgba(201, 168, 76, 0.72);
     text-transform: uppercase;
   }
   .footer-tagline {
     font-family: 'Cormorant Garamond', serif;
     font-style: italic;
-    font-size: 0.9rem;
-    color: rgba(245, 239, 224, 0.2);
+    font-size: 0.98rem;
+    color: rgba(245, 239, 224, 0.38);
   }
 
   @keyframes fadeUp {
@@ -326,6 +327,12 @@
   }
 
   @media (max-width: 768px) {
+    body { font-size: 16px; }
+    .entry-date { font-size: 0.72rem; letter-spacing: 0.18em; }
+    .entry-tag { font-size: 0.68rem; letter-spacing: 0.18em; }
+    .nav-back { font-size: 0.72rem; letter-spacing: 0.2em; }
+    .entry-text { font-weight: 400; color: rgba(28, 22, 16, 0.8); }
+    .header-label { font-size: 0.72rem; letter-spacing: 0.26em; }
     nav { padding: 20px 24px; }
     .page-header, .header-inner, .entries-section { padding-left: 24px; padding-right: 24px; }
     .entry { grid-template-columns: 1fr; gap: 12px; }
