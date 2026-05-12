@@ -42,8 +42,8 @@
             background: linear-gradient(to bottom, rgba(8, 18, 14, 0.95), transparent);
         }
         .nav-link { 
-            font-size: 11px; letter-spacing: 0.5em; text-transform: uppercase; 
-            cursor: pointer; color: var(--silk); opacity: 0.6;
+            font-size: 13px; letter-spacing: 0.32em; text-transform: uppercase; 
+            cursor: pointer; color: var(--silk); opacity: 0.78;
             transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
             text-decoration: none;
         }
@@ -67,6 +67,11 @@
 
         @media (max-width: 900px) {
             .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .nav-link { font-size: 12px; letter-spacing: 0.26em; }
+            .section-eyebrow { font-size: 11px; letter-spacing: 0.3em; }
         }
 
         @media (max-width: 560px) {
@@ -114,12 +119,12 @@
 
         .section-eyebrow {
             display: block;
-            font-size: 10px;
-            letter-spacing: 0.6em;
+            font-size: 12px;
+            letter-spacing: 0.38em;
             text-transform: uppercase;
             color: var(--copper);
             margin-bottom: 0.75rem;
-            opacity: 0.8;
+            opacity: 0.92;
         }
 
         .section-title {
@@ -315,8 +320,8 @@
     </main>
 
     <footer class="footer-minimal">
-        <div class="opacity-50 text-[10px] uppercase tracking-[0.8em] mb-4">Architected by Nair and Sahani</div>
-        <div class="opacity-30 text-[9px] uppercase tracking-[0.4em]">The Big Dinner © 2026</div>
+        <div style="font-size:12px; letter-spacing:0.8em; text-transform:uppercase; opacity:0.72; margin-bottom:0.5rem;">Architected by Nair and Sahani</div>
+        <div style="font-size:11px; letter-spacing:0.4em; text-transform:uppercase; opacity:0.55;">The Big Dinner © 2026</div>
     </footer>
 
     <script>
