@@ -331,12 +331,13 @@ footer .footer-tagline {
 
   /* Sound toggle repositioned for thumb reach */
   .sound-toggle {
-    font-size: 0.9rem !important;
+    font-size: clamp(0.74rem, 3vw, 0.82rem) !important;
     letter-spacing: 0.12em !important;
-    min-width: 126px !important;
-    padding: 10px 16px !important;
-    bottom: 18px !important;
-    right: 14px !important;
+    min-width: 0 !important;
+    width: 100% !important;
+    padding: 11px 20px !important;
+    bottom: auto !important;
+    right: auto !important;
   }
 
   .hero-subtitle {
