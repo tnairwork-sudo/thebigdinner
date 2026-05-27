@@ -1065,7 +1065,7 @@
       <div class="hero-divider-line"></div>
     </div>
 
-    <p class="hero-subtitle">Delhi&nbsp;·&nbsp;Bombay&nbsp;·&nbsp;London&nbsp;·&nbsp;Dubai</p>
+    <p class="hero-subtitle">Delhi&nbsp;·&nbsp;Bombay&nbsp;·&nbsp;London&nbsp;·&nbsp;Bengaluru&nbsp;·&nbsp;Dubai</p>
 
     <div class="hero-cta">
       <a href="#" class="btn-primary" id="openCitySelect">Request an Invitation</a>
@@ -1375,6 +1375,8 @@
         <option value="delhi" style="background:#1A3D33;color:#F5EFE0;">Delhi</option>
         <option value="bombay" style="background:#1A3D33;color:#F5EFE0;">Bombay</option>
         <option value="london" style="background:#1A3D33;color:#F5EFE0;">London</option>
+        <option value="bengaluru" style="background:#1A3D33;color:#F5EFE0;">Bengaluru</option>
+        <option value="dubai" style="background:#1A3D33;color:#F5EFE0;">Dubai</option>
       </select>
       <div style="position:absolute;right:20px;top:50%;transform:translateY(-50%);color:rgba(199,154,50,0.78);pointer-events:none;font-size:0.7rem;">▾</div>
     </div>
@@ -1518,7 +1520,9 @@
   const cityForms = {
     delhi: 'https://forms.gle/vGGAHKJGr3yNK25b6',
     bombay: 'https://forms.gle/3KrK1hSkscWVrSL69',
-    london: 'https://docs.google.com/forms/d/e/1FAIpQLSdZrsP5Gd6toGWuQ10uEYVDx4f6BnMFgIyjZlvAX9X7suuwQA/viewform'
+    london: 'https://docs.google.com/forms/d/e/1FAIpQLSdZrsP5Gd6toGWuQ10uEYVDx4f6BnMFgIyjZlvAX9X7suuwQA/viewform',
+    bengaluru: 'https://docs.google.com/forms/d/e/1FAIpQLSeOmRzh8oDVehdVauDcbmUsJTYla-mTBYo_91mjRAtQsW8XYw/viewform?usp=send_form',
+    dubai: 'https://forms.gle/59dfvTV3jtLq1ws26'
   };
 
   function setDots(active) {
@@ -1545,7 +1549,7 @@
 
   function goToPage3() {
     const city = document.getElementById('citySelect').value;
-    const labels = { delhi: 'Delhi', bombay: 'Bombay', london: 'London' };
+    const labels = { delhi: 'Delhi', bombay: 'Bombay', london: 'London', bengaluru: 'Bengaluru', dubai: 'Dubai' };
     document.getElementById('selectedCityDisplay').textContent = labels[city];
     document.getElementById('formLink').href = cityForms[city];
     document.getElementById('page2').style.display = 'none';
