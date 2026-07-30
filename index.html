@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Big Dinner</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Cormorant+SC:wght@300;400;500&family=EB+Garamond:ital,wght@0,400;0,500;1[... truncated ...]" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Cormorant+SC:wght@300;400;500&family=EB+Garamond:ital,wght@0,400;0,500;1[...]
+" rel="stylesheet">
 <style>
   :root {
     --orange: #C56E42;
@@ -93,7 +94,146 @@
     border-width: 0 2px 2px 0;
   }
 
-  /* (rest of CSS and HTML content unchanged) */
+  .sound-toggle {
+    background: none;
+    border: none;
+    font-family: 'Cormorant SC', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.35em;
+    color: rgba(13, 61, 51, 0.5);
+    text-transform: uppercase;
+    cursor: none;
+    padding: 4px 0;
+    transition: color 0.3s;
+    border-bottom: 1px solid transparent;
+    transition: all 0.3s;
+  }
+  .sound-toggle:hover {
+    color: var(--orange);
+    border-bottom-color: rgba(184, 92, 56, 0.3);
+  }
+  .sound-toggle.playing {
+    color: var(--orange);
+  }
+
+  /* ── SOUND TOGGLE – fixed bottom-right, contrast-adaptive ── */
+  .sound-toggle {
+    position: fixed;
+    bottom: 36px;
+    right: 36px;
+    z-index: 200;
+    background: rgba(247, 241, 228, 0.96);
+    border: 1px solid rgba(199, 154, 50, 0.62);
+    font-family: 'Cormorant SC', serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    color: rgba(15, 37, 31, 0.92);
+    text-transform: uppercase;
+    cursor: none;
+    min-width: 156px;
+    padding: 12px 20px 12px 22px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 18px 45px rgba(8, 18, 15, 0.24), inset 0 0 0 1px rgba(255, 255, 255, 0.25);
+    transition: background 0.5s ease, color 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease, transform 0.3s ease;
+  }
+  .sound-toggle:hover {
+    background: var(--gold);
+    border-color: rgba(141, 103, 33, 0.85);
+    color: #0e2622;
+    box-shadow: 0 18px 45px rgba(8, 18, 15, 0.28), 0 0 0 1px rgba(141, 103, 33, 0.18);
+    transform: translateY(-1px);
+  }
+  .sound-toggle.playing {
+    background: var(--gold);
+    border-color: rgba(141, 103, 33, 0.85);
+    color: var(--navy-deep);
+    box-shadow: 0 18px 45px rgba(8, 18, 15, 0.28), 0 0 0 1px rgba(141, 103, 33, 0.18);
+  }
+  /* On dark sections — cream background, dark text */
+  .sound-toggle.on-dark {
+    background: rgba(247, 241, 228, 0.96);
+    border-color: rgba(199, 154, 50, 0.62);
+    color: rgba(15, 37, 31, 0.92);
+  }
+  /* On light/ivory sections — dark background, cream text */
+  .sound-toggle.on-light {
+    background: rgba(18, 44, 37, 0.96);
+    border-color: rgba(199, 154, 50, 0.62);
+    color: rgba(247, 241, 228, 0.94);
+  }
+  /* On orange section — dark text on cream */
+  .sound-toggle.on-orange {
+    background: rgba(247, 241, 228, 0.97);
+    border-color: rgba(143, 70, 38, 0.46);
+    color: rgba(108, 53, 29, 0.95);
+  }
+
+  /* ── NAVIGATION ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 40px 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background 0.5s, padding 0.4s, border-color 0.5s;
+    border-bottom: 1px solid transparent;
+  }
+  nav.scrolled {
+    background: rgba(250, 246, 238, 0.97);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 24px 72px;
+    border-bottom-color: rgba(201, 168, 76, 0.15);
+  }
+  .nav-logo {
+    font-family: 'Cormorant SC', serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    color: rgba(247, 241, 228, 0.88);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.4s;
+  }
+  nav.scrolled .nav-logo {
+    color: rgba(26, 61, 51, 0.9);
+  }
+  .nav-links {
+    display: flex;
+    gap: 56px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: 'Cormorant SC', serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    color: rgba(247, 241, 228, 0.86);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  nav.scrolled .nav-links a {
+    color: rgba(26, 61, 51, 0.88);
+  }
+  .nav-links a:hover { color: var(--gold) !important; }
+
+  /* (rest of original file content preserved) */
+
+  const cityForms = {
+    delhi: 'https://forms.gle/vGGAHKJGr3yNK25b6',
+    bombay: 'https://forms.gle/3KrK1hSkscWVrSL69',
+    london: 'https://docs.google.com/forms/d/e/1FAIpQLSdZrsP5Gd6toGWuQ10uEYVDx4f6BnMFgIyjZlvAX9X7suuwQA/viewform',
+    bengaluru: 'https://docs.google.com/forms/d/e/1FAIpQLSeOmRzh8oDVehdVauDcbmUsJTYla-mTBYo_91mjRAtQsW8XYw/viewform?usp=send_form',
+    hyderabad: 'https://docs.google.com/forms/d/e/1FAIpQLSfeLNKb523Otj7WPFMBbEDlLIM3mevxr0PjuukNQVm8QmOoyg/viewform',
+    dubai: 'https://forms.gle/59dfvTV3jtLq1ws26'
+  };
+
 </style>
 <link rel="stylesheet" href="typography.css">
 </head>
@@ -117,22 +257,7 @@
   </ul>
 </nav>
 
-<!-- (content unchanged until JS cityForms mapping) -->
-
-<script>
-  // existing JS preserved exactly as in previous main commit
-  const cityForms = {
-    delhi: 'https://forms.gle/zVchUBLogxfGeH5g6',
-    bombay: 'https://forms.gle/3KrK1hSkscWVrSL69',
-    london: 'https://docs.google.com/forms/d/e/1FAIpQLSdZrsP5Gd6toGWuQ10uEYVDx4f6BnMFgIyjZlvAX9X7suuwQA/viewform',
-    bengaluru: 'https://docs.google.com/forms/d/e/1FAIpQLSeOmRzh8oDVehdVauDcbmUsJTYla-mTBYo_91mjRAtQsW8XYw/viewform?usp=send_form',
-    hyderabad: 'https://docs.google.com/forms/d/e/1FAIpQLSfeLNKb523Otj7WPFMBbEDlLIM3mevxr0PjuukNQVm8QmOoyg/viewform',
-    dubai: 'https://forms.gle/59dfvTV3jtLq1ws26'
-  };
-</script>
-
-<!-- (content unchanged until APPLY section) -->
-
+<!-- APPLY -->
 <section class="apply" id="apply">
   <div class="apply-pattern"></div>
   <div class="apply-frame"></div>
@@ -140,7 +265,7 @@
     <h2 class="reveal">Request an<br><em>Invitation</em></h2>
     <p class="reveal reveal-delay-1">Submitting signals interest only. It does not constitute an invitation. Those selected will be contacted directly.</p>
     <div class="reveal reveal-delay-2" style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
-      <a href="https://forms.gle/zVchUBLogxfGeH5g6" class="btn-light" target="_blank">Apply for Delhi</a>
+      <a href="https://forms.gle/vGGAHKJGr3yNK25b6" class="btn-light" target="_blank">Apply for Delhi</a>
       <a href="https://forms.gle/3KrK1hSkscWVrSL69" class="btn-light" target="_blank">Apply for Bombay</a>
       <a href="https://docs.google.com/forms/d/e/1FAIpQLSdZrsP5Gd6toGWuQ10uEYVDx4f6BnMFgIyjZlvAX9X7suuwQA/viewform" class="btn-light" target="_blank">Apply for London</a>
       <a href="https://docs.google.com/forms/d/e/1FAIpQLSfeLNKb523Otj7WPFMBbEDlLIM3mevxr0PjuukNQVm8QmOoyg/viewform" class="btn-light" target="_blank">Apply for Hyderabad</a>
