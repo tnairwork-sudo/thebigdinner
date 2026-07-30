@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Big Dinner</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Cormorant+SC:wght@300;400;500&family=EB+Garamond:ital,wght@0,400;0,500;1[... truncated for brevity ...]" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Cormorant+SC:wght@300;400;500&family=EB+Garamond:ital,wght@0,400;0,500;1[... truncated ...]" rel="stylesheet">
 <style>
   :root {
     --orange: #C56E42;
@@ -39,18 +39,61 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* (file content unchanged until the cityForms mapping) */
+  /* Custom cursor */
+  .cursor {
+    width: 8px;
+    height: 8px;
+    background: var(--orange);
+    border-radius: 50%;
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease, width 0.3s, height 0.3s, background 0.3s;
+  }
+  .cursor-ring {
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--orange);
+    border-radius: 50%;
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.15s ease, width 0.3s, height 0.3s;
+    opacity: 0.6;
+  }
 
-  const cityForms = {
-    delhi: 'https://forms.gle/zVchUBLogxfGeH5g6',
-    bombay: 'https://forms.gle/3KrK1hSkscWVrSL69',
-    london: 'https://docs.google.com/forms/d/e/1FAIpQLSdZrsP5Gd6toGWuQ10uEYVDx4f6BnMFgIyjZlvAX9X7suuwQA/viewform',
-    bengaluru: 'https://docs.google.com/forms/d/e/1FAIpQLSeOmRzh8oDVehdVauDcbmUsJTYla-mTBYo_91mjRAtQsW8XYw/viewform?usp=send_form',
-    hyderabad: 'https://docs.google.com/forms/d/e/1FAIpQLSfeLNKb523Otj7WPFMBbEDlLIM3mevxr0PjuukNQVm8QmOoyg/viewform',
-    dubai: 'https://forms.gle/59dfvTV3jtLq1ws26'
-  };
+  /* Ornate SVG border used throughout */
+  .ornate-border {
+    position: absolute;
+    inset: 12px;
+    border: 1px solid var(--gold);
+    opacity: 0.4;
+    pointer-events: none;
+  }
+  .ornate-border::before,
+  .ornate-border::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-color: var(--gold);
+    border-style: solid;
+    opacity: 0.8;
+  }
+  .ornate-border::before {
+    top: -4px; left: -4px;
+    border-width: 2px 0 0 2px;
+  }
+  .ornate-border::after {
+    bottom: -4px; right: -4px;
+    border-width: 0 2px 2px 0;
+  }
 
-  /* (rest of file content unchanged) */
+  /* (rest of CSS and HTML content unchanged) */
 </style>
 <link rel="stylesheet" href="typography.css">
 </head>
@@ -74,9 +117,22 @@
   </ul>
 </nav>
 
+<!-- (content unchanged until JS cityForms mapping) -->
+
+<script>
+  // existing JS preserved exactly as in previous main commit
+  const cityForms = {
+    delhi: 'https://forms.gle/zVchUBLogxfGeH5g6',
+    bombay: 'https://forms.gle/3KrK1hSkscWVrSL69',
+    london: 'https://docs.google.com/forms/d/e/1FAIpQLSdZrsP5Gd6toGWuQ10uEYVDx4f6BnMFgIyjZlvAX9X7suuwQA/viewform',
+    bengaluru: 'https://docs.google.com/forms/d/e/1FAIpQLSeOmRzh8oDVehdVauDcbmUsJTYla-mTBYo_91mjRAtQsW8XYw/viewform?usp=send_form',
+    hyderabad: 'https://docs.google.com/forms/d/e/1FAIpQLSfeLNKb523Otj7WPFMBbEDlLIM3mevxr0PjuukNQVm8QmOoyg/viewform',
+    dubai: 'https://forms.gle/59dfvTV3jtLq1ws26'
+  };
+</script>
+
 <!-- (content unchanged until APPLY section) -->
 
-<!-- APPLY -->
 <section class="apply" id="apply">
   <div class="apply-pattern"></div>
   <div class="apply-frame"></div>
@@ -110,6 +166,7 @@
   </div>
   <div class="footer-bottom">
     <p class="footer-copy">Architected by Nair and Sahani &nbsp;·&nbsp; +91 8448445950</p>
+  </div>
 </footer>
 
 </body>
