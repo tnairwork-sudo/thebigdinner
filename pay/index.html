@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>The Big Dinner, Delhi, 31 October</title>
+<style>
+  :root {
+    --ivory: #fbf8f1;
+    --pewter: #6c7178;
+    --gold: #a8875a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html {
+    background: var(--ivory);
+    color: var(--pewter);
+    color-scheme: light;
+    accent-color: var(--gold);
+    scrollbar-color: var(--gold) var(--ivory);
+  }
+
+  body {
+    min-height: 100dvh;
+    display: grid;
+    place-items: center;
+    background: var(--ivory);
+    color: var(--pewter);
+    font-family: Palatino, "Palatino Linotype", "Iowan Old Style", "Book Antiqua", Georgia, serif;
+    line-height: 1.4;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    padding: max(28px, env(safe-area-inset-top)) 20px max(36px, env(safe-area-inset-bottom));
+  }
+
+  a,
+  a:link,
+  a:visited,
+  a:hover,
+  a:active {
+    color: var(--gold);
+  }
+
+  button,
+  a {
+    -webkit-tap-highlight-color: rgba(168, 135, 90, 0.28);
+  }
+
+  ::selection {
+    background: var(--gold);
+    color: var(--ivory);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 3px;
+  }
+
+  main {
+    width: min(100%, 420px);
+    margin: auto;
+    text-align: center;
+  }
+
+  h1 {
+    font-weight: 400;
+    font-size: 1.7rem;
+    letter-spacing: 0.01em;
+    line-height: 1.25;
+    color: var(--pewter);
+  }
+
+  .rule {
+    width: 52px;
+    height: 1px;
+    margin: 18px auto 22px;
+    border: 0;
+    background: var(--gold);
+  }
+
+  .qr {
+    width: min(240px, 68vw);
+    height: auto;
+    display: block;
+    margin: 0 auto 22px;
+    background: #ffffff;
+  }
+
+  .label {
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--pewter);
+  }
+
+  .handle {
+    margin-top: 8px;
+    font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    font-size: 0.98rem;
+    letter-spacing: 0.01em;
+    color: var(--pewter);
+    word-break: break-all;
+  }
+
+  .copy {
+    appearance: none;
+    -webkit-appearance: none;
+    margin-top: 12px;
+    background: transparent;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    font-family: inherit;
+    font-size: 0.78rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 9px 18px;
+    cursor: pointer;
+  }
+
+  .amount-block {
+    margin-top: 26px;
+  }
+
+  .amount {
+    margin-top: 6px;
+    font-size: 1.85rem;
+    letter-spacing: 0.03em;
+    color: var(--pewter);
+  }
+
+  .pay {
+    display: inline-block;
+    margin-top: 26px;
+    background: var(--gold);
+    color: var(--ivory);
+    text-decoration: none;
+    padding: 14px 32px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-size: 0.82rem;
+    font-family: inherit;
+  }
+
+  .pay:link,
+  .pay:visited,
+  .pay:hover,
+  .pay:active {
+    color: var(--ivory);
+    text-decoration: none;
+  }
+</style>
+<script>
+  window.location.href = 'upi://pay?pa=8595203751@jupiteraxis&pn=The%20Big%20Dinner&am=5000&cu=INR&tn=Big%20Dinner%20Delhi%2031%20Oct';
+</script>
+</head>
+<body>
+<main>
+  <h1>The Big Dinner, Delhi, 31 October</h1>
+  <hr class="rule">
+  <img class="qr" src="/assets/delhi-upi-qr.png" width="600" height="600" alt="UPI QR code for The Big Dinner, Delhi, 31 October">
+  <p class="label">UPI</p>
+  <p class="handle" id="upi-handle">8595203751@jupiteraxis</p>
+  <button type="button" class="copy" id="copy-handle">Copy</button>
+  <div class="amount-block">
+    <p class="label">Amount</p>
+    <p class="amount">₹5,000</p>
+  </div>
+  <a class="pay" href="upi://pay?pa=8595203751@jupiteraxis&amp;pn=The%20Big%20Dinner&amp;am=5000&amp;cu=INR&amp;tn=Big%20Dinner%20Delhi%2031%20Oct">Pay with UPI</a>
+</main>
+<script>
+  (function () {
+    var button = document.getElementById('copy-handle');
+    var handle = document.getElementById('upi-handle').textContent;
+
+    button.addEventListener('click', function () {
+      var label = 'Copy';
+
+      function showCopied() {
+        button.textContent = 'Copied';
+        window.setTimeout(function () {
+          button.textContent = label;
+        }, 1600);
+      }
+
+      function copyFallback(text) {
+        var field = document.createElement('textarea');
+        field.value = text;
+        field.setAttribute('readonly', '');
+        field.style.position = 'fixed';
+        field.style.left = '-9999px';
+        document.body.appendChild(field);
+        field.select();
+        document.execCommand('copy');
+        document.body.removeChild(field);
+      }
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(handle).then(showCopied, function () {
+          copyFallback(handle);
+          showCopied();
+        });
+      } else {
+        copyFallback(handle);
+        showCopied();
+      }
+    });
+  })();
+</script>
+</body>
+</html>
