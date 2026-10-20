@@ -4,15 +4,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
+<meta name="theme-color" content="#1f3d2b">
 <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
 <title>The Big Dinner Participation Tariff</title>
 <meta property="og:title" content="The Big Dinner Participation Tariff">
 <meta name="twitter:title" content="The Big Dinner Participation Tariff">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Cormorant+SC:wght@400;500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <style>
   :root {
     --ivory: #fbf8f1;
     --pewter: #6c7178;
     --gold: #a8875a;
+    --green: #1f3d2b;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -31,7 +35,7 @@
     place-items: center;
     background: var(--ivory);
     color: var(--pewter);
-    font-family: Palatino, "Palatino Linotype", "Iowan Old Style", "Book Antiqua", Georgia, serif;
+    font-family: "EB Garamond", Palatino, "Palatino Linotype", "Iowan Old Style", "Book Antiqua", Georgia, serif;
     line-height: 1.4;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -44,6 +48,8 @@
   a:hover,
   a:active {
     color: var(--gold);
+    -webkit-text-fill-color: var(--gold);
+    text-decoration: none;
   }
 
   button,
@@ -68,11 +74,12 @@
   }
 
   h1 {
+    font-family: "Cormorant Garamond", Palatino, Georgia, serif;
     font-weight: 400;
-    font-size: 1.7rem;
+    font-size: clamp(1.85rem, 7vw, 2.15rem);
     letter-spacing: 0.01em;
-    line-height: 1.25;
-    color: var(--pewter);
+    line-height: 1.15;
+    color: var(--green);
   }
 
   .rule {
@@ -92,10 +99,12 @@
   }
 
   .label {
+    font-family: "Cormorant SC", Palatino, Georgia, serif;
     font-size: 0.72rem;
+    font-weight: 500;
     letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: var(--pewter);
+    color: var(--green);
   }
 
   .handle,
@@ -120,10 +129,12 @@
     margin-top: 12px;
     background: transparent;
     color: var(--gold);
+    -webkit-text-fill-color: var(--gold);
     border: 1px solid var(--gold);
-    font-family: inherit;
+    font-family: "Cormorant SC", Palatino, Georgia, serif;
     font-size: 0.78rem;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
     padding: 9px 18px;
     cursor: pointer;
   }
@@ -134,53 +145,99 @@
 
   .amount {
     margin-top: 6px;
-    font-size: 1.85rem;
+    font-family: "Cormorant Garamond", Palatino, Georgia, serif;
+    font-size: 2rem;
     letter-spacing: 0.03em;
     color: var(--pewter);
   }
 
-  .pay {
-    display: inline-block;
-    margin-top: 26px;
-    background: var(--gold);
-    color: var(--ivory);
-    text-decoration: none;
-    padding: 14px 32px;
-    letter-spacing: 0.08em;
-    font-size: 0.95rem;
-    font-family: inherit;
+  .pay-block {
+    margin-top: 28px;
   }
 
-  .pay:link,
-  .pay:visited,
-  .pay:hover,
-  .pay:active {
+  .apps {
+    display: grid;
+    gap: 10px;
+    margin-top: 14px;
+  }
+
+  .app,
+  .app:link,
+  .app:visited,
+  .app:hover,
+  .app:active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 52px;
+    padding: 12px 16px;
+    background: var(--green);
+    border: 1px solid var(--green);
     color: var(--ivory);
+    -webkit-text-fill-color: var(--ivory);
     text-decoration: none;
+    font-family: "Cormorant Garamond", Palatino, Georgia, serif;
+    font-size: 1.25rem;
+    letter-spacing: 0.03em;
+    line-height: 1;
+  }
+
+  .app:active {
+    background: var(--gold);
+    border-color: var(--gold);
+  }
+
+  .app-other,
+  .app-other:link,
+  .app-other:visited,
+  .app-other:hover {
+    background: transparent;
+    border-color: var(--gold);
+    color: var(--green);
+    -webkit-text-fill-color: var(--green);
+  }
+
+  .app-other:active {
+    background: var(--green);
+    border-color: var(--green);
+    color: var(--ivory);
+    -webkit-text-fill-color: var(--ivory);
   }
 </style>
-<script>
-  window.addEventListener('load', function () {
-    window.location.href = 'upi://pay?pa=8595203751@jupiteraxis&pn=The%20Big%20Dinner&am=5000&cu=INR&tn=Big%20Dinner%20Delhi%2031%20Oct';
-  });
-</script>
 </head>
 <body>
 <main>
   <h1>The Big Dinner Participation Tariff</h1>
   <hr class="rule">
   <img class="qr" src="/assets/delhi-upi-qr.png" width="600" height="600" alt="UPI QR code for The Big Dinner, Delhi, 31 October">
-  <p class="label">UPI</p>
-  <p class="handle" id="upi-handle">8595203751@jupiteraxis</p>
+  <p class="label">UPI ID</p>
+  <p class="handle" id="upi-handle" translate="no">8595203751@jupiteraxis</p>
   <button type="button" class="copy" id="copy-handle">Copy</button>
   <div class="amount-block">
     <p class="label">Amount</p>
     <p class="amount">₹5,000</p>
   </div>
-  <a class="pay" href="upi://pay?pa=8595203751@jupiteraxis&amp;pn=The%20Big%20Dinner&amp;am=5000&amp;cu=INR&amp;tn=Big%20Dinner%20Delhi%2031%20Oct">Pay with UPI</a>
+  <div class="pay-block">
+    <p class="label">Pay with</p>
+    <nav class="apps" aria-label="Pay with">
+      <a class="app" id="pay-gpay" href="tez://upi/pay?pa=8595203751@jupiteraxis&amp;pn=The%20Big%20Dinner&amp;am=5000&amp;cu=INR&amp;tn=Big%20Dinner%20Delhi%2031%20Oct" data-android-href="intent://upi/pay?pa=8595203751@jupiteraxis&amp;pn=The%20Big%20Dinner&amp;am=5000&amp;cu=INR&amp;tn=Big%20Dinner%20Delhi%2031%20Oct#Intent;scheme=tez;package=com.google.android.apps.nbu.paisa.user;S.browser_fallback_url=https%3A%2F%2Fwww.thebigdinner.in%2Fpay;end">Google Pay</a>
+      <a class="app" id="pay-phonepe" href="phonepe://pay?pa=8595203751@jupiteraxis&amp;pn=The%20Big%20Dinner&amp;am=5000&amp;cu=INR&amp;tn=Big%20Dinner%20Delhi%2031%20Oct">PhonePe</a>
+      <a class="app" id="pay-paytm" href="paytmmp://pay?pa=8595203751@jupiteraxis&amp;pn=The%20Big%20Dinner&amp;am=5000&amp;cu=INR&amp;tn=Big%20Dinner%20Delhi%2031%20Oct">Paytm</a>
+      <a class="app" id="pay-bhim" href="intent://pay?pa=8595203751@jupiteraxis&amp;pn=The%20Big%20Dinner&amp;am=5000&amp;cu=INR&amp;tn=Big%20Dinner%20Delhi%2031%20Oct#Intent;scheme=upi;package=in.org.npci.upiapp;end">BHIM</a>
+      <a class="app app-other" id="pay-other" href="upi://pay?pa=8595203751@jupiteraxis&amp;pn=The%20Big%20Dinner&amp;am=5000&amp;cu=INR&amp;tn=Big%20Dinner%20Delhi%2031%20Oct" data-android-href="intent://pay?pa=8595203751@jupiteraxis&amp;pn=The%20Big%20Dinner&amp;am=5000&amp;cu=INR&amp;tn=Big%20Dinner%20Delhi%2031%20Oct#Intent;scheme=upi;end">Any other UPI app</a>
+    </nav>
+  </div>
 </main>
 <script>
   (function () {
+    var android = /Android/i.test(navigator.userAgent || '');
+    if (android) {
+      var links = document.querySelectorAll('[data-android-href]');
+      for (var i = 0; i < links.length; i++) {
+        links[i].setAttribute('href', links[i].getAttribute('data-android-href'));
+      }
+    }
+
     var button = document.getElementById('copy-handle');
     var handle = document.getElementById('upi-handle').textContent;
 
