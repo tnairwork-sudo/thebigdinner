@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Terms and conditions of The Big Dinner, a private invitation-only dinner operated by Tushar Nair, New Delhi.">
+<meta name="theme-color" content="#1a3d33">
+<meta name="color-scheme" content="light">
+<meta name="format-detection" content="telephone=no, email=no, address=no">
+<link rel="canonical" href="https://www.thebigdinner.in/terms">
+<title>Terms and Conditions — The Big Dinner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Cormorant+SC:wght@400;500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ivory: #fbf8f1;
+    --gold: #a8875a;
+    --pewter: #6c7178;
+    --green: #1a3d33;
+    --cream: #f7f1e4;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html {
+    background: var(--ivory);
+    color: var(--pewter);
+    color-scheme: light;
+    accent-color: var(--gold);
+    scrollbar-color: var(--gold) var(--ivory);
+  }
+
+  body {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    background: var(--ivory);
+    color: var(--pewter);
+    font-family: "EB Garamond", Palatino, "Palatino Linotype", Georgia, serif;
+    font-size: 1.125rem;
+    line-height: 1.75;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a,
+  a:link,
+  a:visited,
+  a:hover,
+  a:active {
+    color: var(--green);
+    text-decoration-color: var(--gold);
+    text-underline-offset: 0.18em;
+    -webkit-tap-highlight-color: rgba(168, 135, 90, 0.28);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background: var(--gold);
+    color: var(--ivory);
+  }
+
+  .mast {
+    background: var(--green);
+    padding: 28px 32px;
+  }
+
+  .mark,
+  .mark:link,
+  .mark:visited,
+  .mark:hover,
+  .mark:active {
+    font-family: "Cormorant SC", Palatino, Georgia, serif;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--ivory);
+  }
+
+  main {
+    flex: 1;
+    width: min(40rem, calc(100% - 48px));
+    margin: 0 auto;
+    padding: 72px 0 88px;
+  }
+
+  .kicker {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 22px;
+    font-family: "Cormorant SC", Palatino, Georgia, serif;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--green);
+  }
+
+  .kicker::after {
+    content: "";
+    width: 48px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  h1 {
+    margin-bottom: 28px;
+    font-family: "Cormorant Garamond", "EB Garamond", Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(2.6rem, 6vw, 4rem);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: var(--green);
+  }
+
+  .rule {
+    width: 52px;
+    height: 1px;
+    margin: 0 0 36px;
+    border: 0;
+    background: var(--gold);
+  }
+
+  .clauses {
+    list-style: none;
+    display: grid;
+    gap: 22px;
+    counter-reset: clause;
+  }
+
+  .clauses li {
+    counter-increment: clause;
+    display: grid;
+    grid-template-columns: 2.5rem 1fr;
+    gap: 8px 16px;
+    align-items: baseline;
+    color: var(--pewter);
+  }
+
+  .clauses li::before {
+    content: counter(clause, decimal-leading-zero);
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 1.15rem;
+    letter-spacing: 0.04em;
+    color: var(--gold);
+  }
+
+  .clauses a,
+  .clauses a:link,
+  .clauses a:visited,
+  .clauses a:hover,
+  .clauses a:active {
+    color: var(--green);
+    text-decoration: underline;
+    text-decoration-color: var(--gold);
+    text-decoration-thickness: 1px;
+  }
+
+  .colophon {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 18px 32px;
+    align-items: center;
+    background: var(--green);
+    padding: 36px 32px 40px;
+  }
+
+  .colophon nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 28px;
+  }
+
+  .colophon a,
+  .colophon a:link,
+  .colophon a:visited,
+  .colophon a:hover,
+  .colophon a:active {
+    font-family: "Cormorant SC", Palatino, Georgia, serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--ivory);
+  }
+
+  .colophon a[aria-current="page"] {
+    color: var(--cream);
+    box-shadow: inset 0 -1px 0 var(--gold);
+  }
+
+  .colophon a:hover {
+    color: var(--cream);
+  }
+
+  .colophon p {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: rgba(251, 248, 241, 0.76);
+  }
+
+  @media (max-width: 640px) {
+    .mast,
+    .colophon { padding-left: 20px; padding-right: 20px; }
+    main {
+      width: min(40rem, calc(100% - 40px));
+      padding-top: 48px;
+    }
+  }
+</style>
+</head>
+<body>
+<header class="mast">
+  <a class="mark" href="/">The Big Dinner</a>
+</header>
+<main>
+  <p class="kicker">The Table</p>
+  <h1>Terms and Conditions</h1>
+  <hr class="rule">
+  <ol class="clauses">
+    <li>The Big Dinner is a private, invitation-only dinner held at hotels in different cities. It is operated by Tushar Nair, New Delhi.</li>
+    <li>Attendance is only by invitation, after an application has been reviewed. Admission is at the host’s discretion.</li>
+    <li>The tariff, currently ₹5,000 per guest unless stated otherwise on the invitation, secures a place and goes to the venue. Food and drinks are on individual tabs.</li>
+    <li>Guests must answer an invitation by the deadline stated on it. An invitation not answered by then may be withdrawn.</li>
+    <li>The dress code stated on the invitation applies: a suit and tie for men, and cocktail attire for women.</li>
+    <li>It is not a networking event, and it is not an occasion for solicitation.</li>
+    <li>The host may refuse entry, or remove a guest, for conduct.</li>
+    <li>Payments are processed by third-party gateways.</li>
+    <li>Indian law governs these terms. The courts at New Delhi have jurisdiction.</li>
+    <li>Correspondence is with the host, at <a href="mailto:host@thebigdinner.in">host@thebigdinner.in</a>.</li>
+  </ol>
+</main>
+<footer class="colophon">
+  <nav aria-label="House notes">
+    <a href="/contact">Contact</a>
+    <a href="/terms" aria-current="page">Terms</a>
+    <a href="/refunds">Refunds</a>
+  </nav>
+  <p>The Big Dinner · New Delhi</p>
+</footer>
+</body>
+</html>

@@ -834,6 +834,33 @@
     color: rgba(199, 154, 50, 0.84);
   }
 
+  .footer-legal {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 28px;
+    margin-top: 28px;
+    padding-top: 22px;
+    border-top: 1px solid rgba(168, 135, 90, 0.35);
+  }
+  .footer-legal a,
+  .footer-legal a:link,
+  .footer-legal a:visited,
+  .footer-legal a:hover,
+  .footer-legal a:active {
+    font-family: 'Cormorant SC', serif;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: rgba(247, 241, 228, 0.78);
+    -webkit-tap-highlight-color: rgba(168, 135, 90, 0.28);
+  }
+  .footer-legal a:hover,
+  .footer-legal a:focus-visible {
+    color: #e2bf64;
+  }
+
   /* ANIMATIONS */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(30px); }
@@ -974,6 +1001,7 @@
     .cities-list { grid-template-columns: 1fr 1fr; }
     .section-container { padding: 0 24px; }
     .footer-top { flex-direction: column; gap: 32px; }
+    .footer-legal { gap: 14px 22px; }
   }
 </style>
 <link rel="stylesheet" href="typography.css">
@@ -1335,6 +1363,11 @@
     <p class="footer-copy">Architected by Nair and Sahani &nbsp;·&nbsp; +91 8448445950</p>
     <p class="footer-tagline">The room fills itself with the people who show up.</p>
   </div>
+  <nav class="footer-legal" aria-label="House notes">
+    <a href="/contact">Contact</a>
+    <a href="/terms">Terms</a>
+    <a href="/refunds">Refunds</a>
+  </nav>
 </footer>
 
 <!-- 3-PAGE INVITATION OVERLAY -->
