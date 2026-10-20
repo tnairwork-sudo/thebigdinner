@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
+<meta name="theme-color" content="#fbf8f1">
 <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
 <title>The Big Dinner Participation Tariff</title>
 <meta property="og:title" content="The Big Dinner Participation Tariff">
@@ -13,6 +14,7 @@
     --ivory: #fbf8f1;
     --pewter: #6c7178;
     --gold: #a8875a;
+    --green: #1f3d2b;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -49,6 +51,7 @@
   button,
   a {
     -webkit-tap-highlight-color: rgba(168, 135, 90, 0.28);
+    touch-action: manipulation;
   }
 
   ::selection {
@@ -120,6 +123,7 @@
     margin-top: 12px;
     background: transparent;
     color: var(--gold);
+    -webkit-text-fill-color: var(--gold);
     border: 1px solid var(--gold);
     font-family: inherit;
     font-size: 0.78rem;
@@ -139,31 +143,68 @@
     color: var(--pewter);
   }
 
-  .pay {
-    display: inline-block;
-    margin-top: 26px;
-    background: var(--gold);
-    color: var(--ivory);
-    text-decoration: none;
-    padding: 14px 32px;
-    letter-spacing: 0.08em;
-    font-size: 0.95rem;
-    font-family: inherit;
+  .apps {
+    margin-top: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
   }
 
-  .pay:link,
-  .pay:visited,
-  .pay:hover,
-  .pay:active {
-    color: var(--ivory);
+  .apps .label {
+    margin-bottom: 6px;
+  }
+
+  .app {
+    display: block;
+    width: 100%;
+    background: var(--green);
+    border: 1px solid var(--green);
+    padding: 14px 16px;
+    font-family: inherit;
+    font-size: 1rem;
+    letter-spacing: 0.04em;
+    line-height: 1.2;
     text-decoration: none;
+    cursor: pointer;
+  }
+
+  .app,
+  .app:link,
+  .app:visited,
+  .app:hover,
+  .app:active {
+    color: var(--ivory) !important;
+    -webkit-text-fill-color: var(--ivory);
+    text-decoration: none !important;
+  }
+
+  .app:hover,
+  .app:active {
+    background: var(--gold);
+    border-color: var(--gold);
+  }
+
+  .app-other {
+    background: transparent;
+    border-color: var(--gold);
+  }
+
+  .app-other,
+  .app-other:link,
+  .app-other:visited {
+    color: var(--green) !important;
+    -webkit-text-fill-color: var(--green);
+  }
+
+  .app-other:hover,
+  .app-other:active {
+    background: var(--green);
+    border-color: var(--green);
+    color: var(--ivory) !important;
+    -webkit-text-fill-color: var(--ivory);
   }
 </style>
-<script>
-  window.addEventListener('load', function () {
-    window.location.href = 'upi://pay?pa=8595203751@jupiteraxis&pn=The%20Big%20Dinner&am=5000&cu=INR&tn=Big%20Dinner%20Delhi%2031%20Oct';
-  });
-</script>
 </head>
 <body>
 <main>
@@ -177,10 +218,43 @@
     <p class="label">Amount</p>
     <p class="amount">₹5,000</p>
   </div>
-  <a class="pay" href="upi://pay?pa=8595203751@jupiteraxis&amp;pn=The%20Big%20Dinner&amp;am=5000&amp;cu=INR&amp;tn=Big%20Dinner%20Delhi%2031%20Oct">Pay with UPI</a>
+  <div class="apps">
+    <p class="label">Pay with</p>
+    <a class="app" id="pay-gpay" href="tez://upi/pay?pa=8595203751@jupiteraxis&amp;pn=The%20Big%20Dinner&amp;am=5000&amp;cu=INR&amp;tn=Big%20Dinner%20Delhi%2031%20Oct">Google Pay</a>
+    <a class="app" id="pay-phonepe" href="phonepe://pay?pa=8595203751@jupiteraxis&amp;pn=The%20Big%20Dinner&amp;am=5000&amp;cu=INR&amp;tn=Big%20Dinner%20Delhi%2031%20Oct">PhonePe</a>
+    <a class="app" id="pay-paytm" href="paytmmp://pay?pa=8595203751@jupiteraxis&amp;pn=The%20Big%20Dinner&amp;am=5000&amp;cu=INR&amp;tn=Big%20Dinner%20Delhi%2031%20Oct">Paytm</a>
+    <a class="app" id="pay-bhim" href="upi://pay?pa=8595203751@jupiteraxis&amp;pn=The%20Big%20Dinner&amp;am=5000&amp;cu=INR&amp;tn=Big%20Dinner%20Delhi%2031%20Oct">BHIM</a>
+    <a class="app app-other" id="pay-other" href="upi://pay?pa=8595203751@jupiteraxis&amp;pn=The%20Big%20Dinner&amp;am=5000&amp;cu=INR&amp;tn=Big%20Dinner%20Delhi%2031%20Oct">Any other UPI app</a>
+  </div>
 </main>
 <script>
   (function () {
+    var params = 'pa=8595203751@jupiteraxis&pn=The%20Big%20Dinner&am=5000&cu=INR&tn=Big%20Dinner%20Delhi%2031%20Oct';
+    var android = /Android/i.test(navigator.userAgent || '');
+
+    function intent(path, scheme, pkg, fallback) {
+      var url = 'intent://' + path + '#Intent;scheme=' + scheme;
+      if (pkg) url += ';package=' + pkg;
+      if (fallback) url += ';S.browser_fallback_url=' + encodeURIComponent(fallback);
+      return url + ';end';
+    }
+
+    if (android) {
+      document.getElementById('pay-gpay').href = intent(
+        'upi/pay?' + params,
+        'tez',
+        'com.google.android.apps.nbu.paisa.user',
+        'https://play.google.com/store/apps/details?id=com.google.android.apps.nbu.paisa.user'
+      );
+      document.getElementById('pay-bhim').href = intent(
+        'pay?' + params,
+        'upi',
+        'in.org.npci.upiapp',
+        'https://play.google.com/store/apps/details?id=in.org.npci.upiapp'
+      );
+      document.getElementById('pay-other').href = intent('pay?' + params, 'upi');
+    }
+
     var button = document.getElementById('copy-handle');
     var handle = document.getElementById('upi-handle').textContent;
 
