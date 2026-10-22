@@ -1,358 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Big Dinner | Gallery</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@200;300;400;600&display=swap" rel="stylesheet">
-
-    <style>
-        :root { 
-            --forest: #0B1A15; 
-            --copper: #B87333; 
-            --silk: #F7F5F0; 
-            --gold: #C5A059;
-        }
-        
-        body, html { 
-            margin: 0; padding: 0;
-            background: var(--forest); 
-            color: var(--silk); 
-            font-family: 'Inter', sans-serif; 
-            background-color: #08120e; /* Slightly darker forest for the gallery background */
-        }
-
-        .serif { font-family: 'EB Garamond', serif; }
-        
-        /* Silk Grain Overlay */
-        .overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: 1000; opacity: 0.12;
-            background-image: url('https://www.transparenttextures.com/patterns/natural-paper.png');
-        }
-
-        /* Navigation */
-        .nav-luxury {
-            position: fixed; top: 0; width: 100%; display: flex; 
-            justify-content: space-between; align-items: center;
-            padding: 2.5rem 5%; z-index: 1500;
-            background: linear-gradient(to bottom, rgba(8, 18, 14, 0.95), transparent);
-        }
-        .nav-link { 
-            font-size: 13px; letter-spacing: 0.32em; text-transform: uppercase; 
-            cursor: pointer; color: var(--silk); opacity: 0.78;
-            transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-            text-decoration: none;
-        }
-        .nav-link:hover, .nav-link.active { opacity: 1; color: var(--gold); }
-
-        /* Header */
-        .gallery-header {
-            padding: 25vh 5% 10vh;
-            text-align: center;
-        }
-        
-        /* Uniform Grid Layout */
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            padding: 0;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        @media (max-width: 900px) {
-            .gallery-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-
-        @media (max-width: 768px) {
-            .nav-link { font-size: 12px; letter-spacing: 0.26em; }
-            .section-eyebrow { font-size: 11px; letter-spacing: 0.3em; }
-        }
-
-        @media (max-width: 560px) {
-            .gallery-grid { grid-template-columns: 1fr; }
-        }
-
-        .gallery-item {
-            position: relative;
-            overflow: hidden;
-            aspect-ratio: 4 / 3;
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: grayscale(0.15) contrast(1.05) brightness(0.9);
-            transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1), filter 0.8s ease;
-            display: block;
-        }
-
-        .gallery-item:hover img {
-            transform: scale(1.06);
-            filter: grayscale(0) contrast(1.05) brightness(1);
-        }
-
-        /* Gallery Sections */
-        .gallery-section {
-            padding: 8vh 0;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding-left: 5%;
-            padding-right: 5%;
-        }
-
-        .gallery-section + .gallery-section {
-            border-top: 1px solid rgba(197, 160, 89, 0.1);
-        }
-
-        .section-label {
-            margin-bottom: 3rem;
-        }
-
-        .section-eyebrow {
-            display: block;
-            font-size: 12px;
-            letter-spacing: 0.38em;
-            text-transform: uppercase;
-            color: var(--copper);
-            margin-bottom: 0.75rem;
-            opacity: 0.92;
-        }
-
-        .section-title {
-            font-size: clamp(1.8rem, 4vw, 3rem);
-            color: var(--silk);
-            font-weight: 400;
-            margin: 0;
-        }
-
-        /* Press Section */
-        .press-section {
-            padding: 10vh 5%;
-            max-width: 1400px;
-            margin: 0 auto;
-            border-top: 1px solid rgba(197, 160, 89, 0.15);
-        }
-
-        .press-feature {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 3rem;
-        }
-
-        .press-quote {
-            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
-            color: var(--gold);
-            text-align: center;
-            max-width: 700px;
-            line-height: 1.7;
-            opacity: 0.85;
-        }
-
-        .press-image {
-            max-width: 600px;
-            width: 100%;
-            display: block;
-            filter: grayscale(0.1) brightness(0.9);
-        }
-
-        /* Footer */
-        .footer-minimal {
-            text-align: center;
-            padding: 10vh 5%;
-            border-top: 1px solid rgba(255,255,255,0.05);
-        }
-    </style>
-    <link rel="stylesheet" href="typography.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b0b0b">
+<meta name="color-scheme" content="dark">
+<title>The Big Dinner · Gallery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Outfit:wght@400;500&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add("js");</script>
+<link rel="stylesheet" href="/site.css">
 </head>
-<body>
+<body class="theme-dark">
+<a class="skip" href="#content">Skip to content</a>
+<header class="nav" data-nav>
+  <a class="wordmark" href="/">The Big Dinner</a>
+  <div class="nav-end">
+    <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="nav-menu">Menu</button>
+    <ul class="nav-links" id="nav-menu">
+      <li><a href="/">Home</a></li>
+      <li><a href="/#philosophy">About</a></li>
+      <li><a href="/experiment.html">The Experiment</a></li>
+      <li><a href="/gallery.html" aria-current="page">Gallery</a></li>
+      <li><a href="/videos.html">Videos</a></li>
+    </ul>
+  </div>
+</header>
 
-    <div class="overlay"></div>
+<main id="content">
+  <header class="page-hero">
+    <p class="label">The Archives</p>
+    <h1 class="display">Visual Evidence.</h1>
+  </header>
 
-    <nav class="nav-luxury">
-        <a href="index.html" style="text-decoration: none;">
-            <div class="serif italic text-2xl uppercase tracking-tighter cursor-pointer text-silk">The Big Dinner</div>
-        </a>
-        <div class="flex gap-12 lg:gap-16">
-            <a href="index.html" class="nav-link hidden md:inline-block">Home</a>
-            <span class="nav-link active">Gallery</span>
-            <a href="videos.html" class="nav-link hidden md:inline-block">Videos</a>
-        </div>
-    </nav>
+  <div class="feature-row">
+    <figure>
+      <img src="/assets/delhi-anniversary-room.jpg" width="1080" height="1350" alt="Guests gathered in a lamplit room" loading="lazy" decoding="async">
+    </figure>
+    <figure>
+      <img src="/assets/delhi-anniversary-corridor.jpg" width="1080" height="1350" alt="A quiet corridor of dark wood and warm light" loading="lazy" decoding="async">
+    </figure>
+    <figure>
+      <img src="/assets/bombay-staircase.jpg" width="1080" height="1350" alt="A curved staircase in a Bombay hotel" loading="lazy" decoding="async">
+    </figure>
+    <figure>
+      <img src="/assets/delhi-31oct-poster.jpg" width="1080" height="1350" alt="An invitation for the Delhi room, 31 October" loading="lazy" decoding="async">
+    </figure>
+  </div>
 
-    <header class="gallery-header">
-        <p class="section-eyebrow text-[11px] letter-spacing-[0.5em] uppercase text-copper tracking-[0.5em] mb-6">The Archives</p>
-        <h1 class="serif text-6xl md:text-8xl italic">Visual Evidence.</h1>
-    </header>
+  <section class="gallery-block">
+    <span class="label">Bombay Edition, April 2026</span>
+    <h2>Harbour Bar, Bombay</h2>
+    <div class="gallery-grid">
+      <figure class="reveal"><img src="/bombay1.jpg" alt="Bombay edition, Harbour Bar" loading="lazy" decoding="async"></figure>
+      <figure class="reveal"><img src="/bombay2.jpg" alt="Harbour Bar, Bombay" loading="lazy" decoding="async"></figure>
+      <figure class="reveal"><img src="/bombay3.jpg" alt="Bombay, the room" loading="lazy" decoding="async"></figure>
+      <figure class="reveal"><img src="/dec11.jpeg" alt="Bombay edition, guests" loading="lazy" decoding="async"></figure>
+      <figure class="reveal"><img src="/dec112.jpeg" alt="Bombay edition, the room" loading="lazy" decoding="async"></figure>
+      <figure class="reveal"><img src="/december111.jpeg" alt="Bombay edition, details" loading="lazy" decoding="async"></figure>
+    </div>
+  </section>
 
-    <main>
+  <section class="gallery-block">
+    <span class="label">The Archives</span>
+    <h2>Earlier Editions</h2>
+    <div class="gallery-grid">
+      <figure class="reveal"><img src="/innecircle3.jpeg" alt="Inner Circle" loading="lazy" decoding="async"></figure>
+      <figure class="reveal"><img src="/shangrila.jpeg" alt="Shangri-La Eros" loading="lazy" decoding="async"></figure>
+      <figure class="reveal"><img src="/sbhangrila.jpeg" alt="Shangri-La" loading="lazy" decoding="async"></figure>
+      <figure class="reveal"><img src="/jan1.jpeg" alt="January edition" loading="lazy" decoding="async"></figure>
+      <figure class="reveal"><img src="/jan2.jpeg" alt="January, the room" loading="lazy" decoding="async"></figure>
+      <figure class="reveal"><img src="/jan334.jpeg" alt="January, guests" loading="lazy" decoding="async"></figure>
+      <figure class="reveal"><img src="/janaryan.jpeg" alt="January edition" loading="lazy" decoding="async"></figure>
+      <figure class="reveal"><img src="/lodnon.jpeg" alt="London, the room" loading="lazy" decoding="async"></figure>
+      <figure class="reveal"><img src="/itcmaurya.jpeg" alt="ITC Maurya" loading="lazy" decoding="async"></figure>
+      <figure class="reveal"><img src="/itc.jpeg" alt="ITC, the room" loading="lazy" decoding="async"></figure>
+      <figure class="reveal"><img src="/itcmar.jpeg" alt="ITC Maurya, details" loading="lazy" decoding="async"></figure>
+      <figure class="reveal"><img src="/novemebr1.jpeg" alt="November edition" loading="lazy" decoding="async"></figure>
+      <figure class="reveal"><img src="/november3.jpeg" alt="November, the room" loading="lazy" decoding="async"></figure>
+      <figure class="reveal"><img src="/dec5.jpeg" alt="December edition" loading="lazy" decoding="async"></figure>
+      <figure class="reveal"><img src="/dec6.jpeg" alt="December, the room" loading="lazy" decoding="async"></figure>
+      <figure class="reveal"><img src="/dec9.jpeg" alt="December, guests" loading="lazy" decoding="async"></figure>
+      <figure class="reveal"><img src="/decembe3.jpeg" alt="December edition, details" loading="lazy" decoding="async"></figure>
+      <figure class="reveal"><img src="/devcmebr3.jpeg" alt="December archive" loading="lazy" decoding="async"></figure>
+    </div>
+  </section>
 
-        <!-- Section 1: Bombay Edition -->
-        <section class="gallery-section">
-            <div class="section-label">
-                <span class="section-eyebrow">Bombay Edition — April 2026</span>
-                <h2 class="section-title serif italic">Harbour Bar · Taj Mahal Palace</h2>
-            </div>
-            <div class="gallery-grid">
-                <div class="gallery-item">
-                    <img src="bombay1.jpg" alt="Bombay Edition — Harbour Bar" loading="lazy">
-                </div>
-                <div class="gallery-item">
-                    <img src="bombay2.jpg" alt="Taj Mahal Palace, Bombay" loading="lazy">
-                </div>
-                <div class="gallery-item">
-                    <img src="bombay3.jpg" alt="Bombay · The Room" loading="lazy">
-                </div>
-                <div class="gallery-item">
-                    <img src="dec11.jpeg" alt="Bombay Edition — Guests" loading="lazy">
-                </div>
-                <div class="gallery-item">
-                    <img src="dec112.jpeg" alt="Bombay Edition — The Room" loading="lazy">
-                </div>
-                <div class="gallery-item">
-                    <img src="december111.jpeg" alt="Bombay Edition — Details" loading="lazy">
-                </div>
-            </div>
-        </section>
+  <section class="press">
+    <span class="label">As Seen In</span>
+    <h2>Grazia</h2>
+    <p class="press-quote">"The whole bar, held as one room."</p>
+    <img src="/Grazia.jpeg" alt="Grazia feature" loading="lazy" decoding="async">
+  </section>
 
-        <!-- Section 2: The Archives -->
-        <section class="gallery-section">
-            <div class="section-label">
-                <span class="section-eyebrow">The Archives</span>
-                <h2 class="section-title serif italic">Earlier Editions</h2>
-            </div>
-            <div class="gallery-grid">
-                <div class="gallery-item">
-                    <img src="innecircle3.jpeg" alt="Inner Circle" loading="lazy">
-                </div>
-                <div class="gallery-item">
-                    <img src="shangrila.jpeg" alt="Shangri-La Eros" loading="lazy">
-                </div>
-                <div class="gallery-item">
-                    <img src="sbhangrila.jpeg" alt="Shangri-La" loading="lazy">
-                </div>
-                <div class="gallery-item">
-                    <img src="jan1.jpeg" alt="January Edition" loading="lazy">
-                </div>
-                <div class="gallery-item">
-                    <img src="jan2.jpeg" alt="January · The Room" loading="lazy">
-                </div>
-                <div class="gallery-item">
-                    <img src="jan334.jpeg" alt="January — Guests" loading="lazy">
-                </div>
-                <div class="gallery-item">
-                    <img src="janaryan.jpeg" alt="January Edition" loading="lazy">
-                </div>
-                <div class="gallery-item">
-                    <img src="lodnon.jpeg" alt="London · The Room" loading="lazy">
-                </div>
-                <div class="gallery-item">
-                    <img src="itcmaurya.jpeg" alt="ITC Maurya" loading="lazy">
-                </div>
-                <div class="gallery-item">
-                    <img src="itc.jpeg" alt="ITC · The Room" loading="lazy">
-                </div>
-                <div class="gallery-item">
-                    <img src="itcmar.jpeg" alt="ITC Maurya — Details" loading="lazy">
-                </div>
-                <div class="gallery-item">
-                    <img src="novemebr1.jpeg" alt="November Edition" loading="lazy">
-                </div>
-                <div class="gallery-item">
-                    <img src="november3.jpeg" alt="November — The Room" loading="lazy">
-                </div>
-                <div class="gallery-item">
-                    <img src="dec5.jpeg" alt="December Edition" loading="lazy">
-                </div>
-                <div class="gallery-item">
-                    <img src="dec6.jpeg" alt="December · The Room" loading="lazy">
-                </div>
-                <div class="gallery-item">
-                    <img src="dec9.jpeg" alt="December — Guests" loading="lazy">
-                </div>
-                <div class="gallery-item">
-                    <img src="decembe3.jpeg" alt="December Edition — Details" loading="lazy">
-                </div>
-                <div class="gallery-item">
-                    <img src="devcmebr3.jpeg" alt="December Archive" loading="lazy">
-                </div>
-            </div>
-        </section>
+  <section class="gallery-block">
+    <span class="label">The Room</span>
+    <h2>Guests</h2>
+    <div class="gallery-grid">
+      <figure class="reveal"><img src="/dec11.jpeg" alt="The archive" loading="lazy" decoding="async"></figure>
+      <figure class="reveal"><img src="/guests-1..jpg" alt="The room, guests" loading="lazy" decoding="async"></figure>
+      <figure class="reveal"><img src="/guests-2.jpg" alt="The room, guests" loading="lazy" decoding="async"></figure>
+      <figure class="reveal"><img src="/guests-3.jpg" alt="The room, evening" loading="lazy" decoding="async"></figure>
+      <figure class="reveal"><img src="/guests-4.jpg" alt="The room, evening" loading="lazy" decoding="async"></figure>
+    </div>
+  </section>
+</main>
 
-        <!-- Section 3: Press -->
-        <section class="press-section">
-            <div class="section-label" style="text-align:center; margin-bottom: 3rem;">
-                <span class="section-eyebrow">As Seen In</span>
-                <h2 class="section-title serif italic">Grazia</h2>
-            </div>
-            <div class="press-feature">
-                <p class="press-quote serif italic">"The whole bar, held as one room."</p>
-                <img src="Grazia.jpeg" alt="Grazia Feature" class="press-image" loading="lazy">
-            </div>
-        </section>
-
-        <!-- Image 7 -->
-        <div class="gallery-item item-7">
-            <img src="dec11.jpeg" alt="The Archive">
-        </div>
-
-        <div class="gallery-item">
-            <img src="guests-1..jpg" alt="The Room · Guests" loading="lazy">
-        </div>
-        <div class="gallery-item">
-            <img src="guests-2.jpg" alt="The Room · Guests" loading="lazy">
-        </div>
-        <div class="gallery-item">
-            <img src="guests-3.jpg" alt="The Room · Evening" loading="lazy">
-        </div>
-        <div class="gallery-item">
-            <img src="guests-4.jpg" alt="The Room · Evening" loading="lazy">
-        </div>
-    </main>
-
-    <footer class="footer-minimal">
-        <div class="footer-meta-line" style="font-size:12px; letter-spacing:0.8em; text-transform:uppercase; opacity:0.72; margin-bottom:0.5rem;">Architected by Nair and Sahani</div>
-        <div class="footer-meta-line" style="font-size:11px; letter-spacing:0.4em; text-transform:uppercase; opacity:0.55;">The Big Dinner © 2026</div>
-    </footer>
-
-    <script>
-        gsap.registerPlugin(ScrollTrigger);
-
-        // Header Animation
-        gsap.from(".gallery-header p, .gallery-header h1", {
-            y: 30,
-            opacity: 0,
-            duration: 1.2,
-            stagger: 0.2,
-            ease: "power3.out",
-            delay: 0.2
-        });
-
-        // Cinematic Image Reveal on Scroll
-        const items = gsap.utils.toArray('.gallery-item');
-        
-        items.forEach((item) => {
-            gsap.to(item, {
-                y: 0,
-                opacity: 1,
-                duration: 1.5,
-                ease: "power3.out",
-                scrollTrigger: {
-                    trigger: item,
-                    start: "top 85%", // Triggers when top of image hits 85% down the viewport
-                    toggleActions: "play none none reverse"
-                }
-            });
-        });
-    </script>
+<footer class="colophon">
+  <p class="wordmark">The Big Dinner</p>
+  <p class="colophon-line">The Big Dinner © 2026</p>
+  <p class="colophon-mail"><a href="mailto:host@thebigdinner.in">host@thebigdinner.in</a></p>
+  <nav class="colophon-nav" aria-label="House notes">
+    <a href="/contact">Contact</a>
+    <a href="/terms">Terms</a>
+    <a href="/refunds">Refunds</a>
+  </nav>
+</footer>
+<script src="/site.js"></script>
 </body>
 </html>
