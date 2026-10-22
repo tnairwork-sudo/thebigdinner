@@ -4,230 +4,36 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Refund and cancellation policy for The Big Dinner, a private invitation-only room.">
-<meta name="theme-color" content="#1a3d33">
+<meta name="theme-color" content="#f3f1eb">
 <meta name="color-scheme" content="light">
 <meta name="format-detection" content="telephone=no, email=no, address=no">
 <link rel="canonical" href="https://www.thebigdinner.in/refunds">
-<title>Refund and Cancellation Policy — The Big Dinner</title>
+<title>Refund and Cancellation Policy · The Big Dinner</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Cormorant+SC:wght@400;500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --ivory: #fbf8f1;
-    --gold: #a8875a;
-    --pewter: #6c7178;
-    --green: #1a3d33;
-    --cream: #f7f1e4;
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html {
-    background: var(--ivory);
-    color: var(--pewter);
-    color-scheme: light;
-    accent-color: var(--gold);
-    scrollbar-color: var(--gold) var(--ivory);
-  }
-
-  body {
-    min-height: 100dvh;
-    display: flex;
-    flex-direction: column;
-    background: var(--ivory);
-    color: var(--pewter);
-    font-family: "EB Garamond", Palatino, "Palatino Linotype", Georgia, serif;
-    font-size: 1.125rem;
-    line-height: 1.75;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  a,
-  a:link,
-  a:visited,
-  a:hover,
-  a:active {
-    color: var(--green);
-    text-decoration-color: var(--gold);
-    text-underline-offset: 0.18em;
-    -webkit-tap-highlight-color: rgba(168, 135, 90, 0.28);
-  }
-
-  :focus-visible {
-    outline: 2px solid var(--gold);
-    outline-offset: 3px;
-  }
-
-  ::selection {
-    background: var(--gold);
-    color: var(--ivory);
-  }
-
-  .mast {
-    background: var(--green);
-    padding: 28px 32px;
-  }
-
-  .mark,
-  .mark:link,
-  .mark:visited,
-  .mark:hover,
-  .mark:active {
-    font-family: "Cormorant SC", Palatino, Georgia, serif;
-    font-size: 0.78rem;
-    font-weight: 500;
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-    text-decoration: none;
-    color: var(--ivory);
-  }
-
-  main {
-    flex: 1;
-    width: min(40rem, calc(100% - 48px));
-    margin: 0 auto;
-    padding: 72px 0 88px;
-  }
-
-  .kicker {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 22px;
-    font-family: "Cormorant SC", Palatino, Georgia, serif;
-    font-size: 0.78rem;
-    font-weight: 500;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--green);
-  }
-
-  .kicker::after {
-    content: "";
-    width: 48px;
-    height: 1px;
-    background: var(--gold);
-  }
-
-  h1 {
-    margin-bottom: 28px;
-    font-family: "Cormorant Garamond", "EB Garamond", Georgia, serif;
-    font-weight: 400;
-    font-size: clamp(2.6rem, 6vw, 4rem);
-    line-height: 1.05;
-    letter-spacing: -0.01em;
-    color: var(--green);
-  }
-
-  .rule {
-    width: 52px;
-    height: 1px;
-    margin: 0 0 36px;
-    border: 0;
-    background: var(--gold);
-  }
-
-  .clauses {
-    list-style: none;
-    display: grid;
-    gap: 22px;
-    counter-reset: clause;
-  }
-
-  .clauses li {
-    counter-increment: clause;
-    display: grid;
-    grid-template-columns: 2.5rem 1fr;
-    gap: 8px 16px;
-    align-items: baseline;
-    color: var(--pewter);
-  }
-
-  .clauses li::before {
-    content: counter(clause, decimal-leading-zero);
-    font-family: "Cormorant Garamond", Georgia, serif;
-    font-size: 1.15rem;
-    letter-spacing: 0.04em;
-    color: var(--gold);
-  }
-
-  .clauses a,
-  .clauses a:link,
-  .clauses a:visited,
-  .clauses a:hover,
-  .clauses a:active {
-    color: var(--green);
-    text-decoration: underline;
-    text-decoration-color: var(--gold);
-    text-decoration-thickness: 1px;
-  }
-
-  .colophon {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 18px 32px;
-    align-items: center;
-    background: var(--green);
-    padding: 36px 32px 40px;
-  }
-
-  .colophon nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px 28px;
-  }
-
-  .colophon a,
-  .colophon a:link,
-  .colophon a:visited,
-  .colophon a:hover,
-  .colophon a:active {
-    font-family: "Cormorant SC", Palatino, Georgia, serif;
-    font-size: 0.75rem;
-    font-weight: 500;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    text-decoration: none;
-    color: var(--ivory);
-  }
-
-  .colophon a[aria-current="page"] {
-    color: var(--cream);
-    box-shadow: inset 0 -1px 0 var(--gold);
-  }
-
-  .colophon a:hover {
-    color: var(--cream);
-  }
-
-  .colophon p {
-    font-family: "Cormorant Garamond", Georgia, serif;
-    font-style: italic;
-    font-size: 1rem;
-    color: rgba(251, 248, 241, 0.76);
-  }
-
-  @media (max-width: 640px) {
-    .mast,
-    .colophon { padding-left: 20px; padding-right: 20px; }
-    main {
-      width: min(40rem, calc(100% - 40px));
-      padding-top: 48px;
-    }
-    h1 { font-size: 2.4rem; }
-  }
-</style>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Outfit:wght@400;500&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add("js");</script>
+<link rel="stylesheet" href="/site.css">
 </head>
-<body>
-<header class="mast">
-  <a class="mark" href="/">The Big Dinner</a>
+<body class="theme-paper">
+<a class="skip" href="#content">Skip to content</a>
+<header class="nav nav-paper" data-nav>
+  <a class="wordmark" href="/">The Big Dinner</a>
+  <div class="nav-end">
+    <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="nav-menu">Menu</button>
+    <ul class="nav-links" id="nav-menu">
+      <li><a href="/">Home</a></li>
+      <li><a href="/#philosophy">About</a></li>
+      <li><a href="/experiment.html">The Experiment</a></li>
+      <li><a href="/gallery.html">Gallery</a></li>
+      <li><a href="/videos.html">Videos</a></li>
+    </ul>
+  </div>
 </header>
-<main>
-  <p class="kicker">The Tariff</p>
-  <h1>Refund and Cancellation Policy</h1>
-  <hr class="rule">
+<main id="content" class="masthead">
+  <p class="label">The Tariff</p>
+  <h1 class="headline">Refund and Cancellation Policy</h1>
+  <hr class="rule-line">
   <ol class="clauses">
     <li>The tariff is non-refundable once paid, because it is committed to the venue.</li>
     <li>Places are first come, first accepted. If a payment arrives after the room is full, it is refunded in full.</li>
@@ -239,12 +45,13 @@
   </ol>
 </main>
 <footer class="colophon">
-  <nav aria-label="House notes">
+  <nav class="colophon-nav" aria-label="House notes">
     <a href="/contact">Contact</a>
     <a href="/terms">Terms</a>
     <a href="/refunds" aria-current="page">Refunds</a>
   </nav>
-  <p>The Big Dinner · New Delhi</p>
+  <p class="colophon-line">The Big Dinner · New Delhi</p>
 </footer>
+<script src="/site.js"></script>
 </body>
 </html>
