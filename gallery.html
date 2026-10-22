@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#0b0b0b">
-<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#187a5e">
+<meta name="color-scheme" content="light">
 <title>The Big Dinner · Gallery</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,38 +16,29 @@
 <a class="skip" href="#content">Skip to content</a>
 <header class="nav" data-nav>
   <a class="wordmark" href="/">The Big Dinner</a>
-  <div class="nav-end">
-    <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="nav-menu">Menu</button>
-    <ul class="nav-links" id="nav-menu">
-      <li><a href="/">Home</a></li>
-      <li><a href="/#philosophy">About</a></li>
-      <li><a href="/experiment.html">The Experiment</a></li>
-      <li><a href="/gallery.html" aria-current="page">Gallery</a></li>
-      <li><a href="/videos.html">Videos</a></li>
-    </ul>
-  </div>
+  <a class="invite-btn" href="/?invite=1">Request an Invitation</a>
+  <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="nav-menu">Menu</button>
+  <ul class="nav-links" id="nav-menu">
+    <li><a href="/">Home</a></li>
+    <li><a href="/#philosophy">About</a></li>
+    <li><a href="/experiment.html">The Experiment</a></li>
+    <li><a href="/gallery.html" aria-current="page">Gallery</a></li>
+    <li><a href="/videos.html">Videos</a></li>
+  </ul>
 </header>
 
 <main id="content">
-  <header class="page-hero">
-    <p class="label">The Archives</p>
-    <h1 class="display"><span>Visual</span><span>Evidence.</span></h1>
+  <header class="frame page-hero">
+    <picture class="art">
+      <source type="image/webp" srcset="/assets/art/section-brass-rail-16x9.webp">
+      <img src="/assets/art/section-brass-rail-16x9.jpg" width="1920" height="1080" alt="" decoding="async">
+    </picture>
+    <div class="frame-scrim"></div>
+    <div class="frame-copy">
+      <p class="label">The Archives</p>
+      <h1 class="display"><span>Visual</span><span>Evidence.</span></h1>
+    </div>
   </header>
-
-  <div class="feature-row">
-    <figure>
-      <img src="/assets/delhi-anniversary-room.jpg" width="1080" height="1350" alt="Guests gathered in a lamplit room" loading="lazy" decoding="async">
-    </figure>
-    <figure>
-      <img src="/assets/delhi-anniversary-corridor.jpg" width="1080" height="1350" alt="A quiet corridor of dark wood and warm light" loading="lazy" decoding="async">
-    </figure>
-    <figure>
-      <img src="/assets/bombay-staircase.jpg" width="1080" height="1350" alt="A curved staircase in a Bombay hotel" loading="lazy" decoding="async">
-    </figure>
-    <figure>
-      <img src="/assets/delhi-31oct-poster.jpg" width="1080" height="1350" alt="An invitation for the Delhi room, 31 October" loading="lazy" decoding="async">
-    </figure>
-  </div>
 
   <section class="gallery-block">
     <span class="label">Bombay Edition, April 2026</span>
