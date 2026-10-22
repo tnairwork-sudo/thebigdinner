@@ -2,11 +2,15 @@
   var nav = document.querySelector("[data-nav]");
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  function dialogOpen() {
+    return document.querySelector(".welcome.is-open, .overlay.is-open");
+  }
+
   if (nav) {
     var toggle = nav.querySelector("[data-nav-toggle]");
 
     function onScroll() {
-      nav.classList.toggle("is-scrolled", window.scrollY > 24);
+      nav.classList.toggle("is-scrolled", window.scrollY > 12);
     }
 
     onScroll();
@@ -14,7 +18,7 @@
 
     function closeMenu() {
       nav.classList.remove("is-open");
-      document.body.classList.remove("is-locked");
+      if (!dialogOpen()) document.body.classList.remove("is-locked");
       if (toggle) {
         toggle.setAttribute("aria-expanded", "false");
         toggle.textContent = "Menu";
@@ -26,7 +30,7 @@
         var open = nav.classList.toggle("is-open");
         toggle.setAttribute("aria-expanded", open ? "true" : "false");
         toggle.textContent = open ? "Close" : "Menu";
-        document.body.classList.toggle("is-locked", open);
+        document.body.classList.toggle("is-locked", open || !!dialogOpen());
       });
 
       nav.querySelectorAll(".nav-links a").forEach(function (link) {
@@ -34,7 +38,7 @@
       });
 
       document.addEventListener("keydown", function (event) {
-        if (event.key === "Escape") closeMenu();
+        if (event.key === "Escape" && nav.classList.contains("is-open")) closeMenu();
       });
     }
   }
