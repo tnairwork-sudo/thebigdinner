@@ -3,7 +3,7 @@
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   function dialogOpen() {
-    return document.querySelector(".welcome.is-open, .overlay.is-open");
+    return document.querySelector(".welcome.is-open, .overlay.is-open, .form-notice.is-open");
   }
 
   if (nav) {

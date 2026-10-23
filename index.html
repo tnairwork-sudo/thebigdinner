@@ -434,6 +434,28 @@
   </div>
 </div>
 
+<div id="formNotice" class="form-notice" role="dialog" aria-modal="true" aria-labelledby="noticeTitle" hidden tabindex="-1">
+  <button class="form-notice-backdrop" type="button" tabindex="-1" aria-hidden="true"></button>
+  <div class="form-notice-panel">
+    <button class="form-notice-close" type="button">Close</button>
+    <div class="form-notice-body">
+      <h2 class="notice-title" id="noticeTitle">Before you begin</h2>
+      <p>Social media has taken our focus away. This form is an attempt to restore it.</p>
+      <p>Please do not fill it as a formality. We receive over a thousand applications in the first week, and we read for self-awareness, clarity, and a story worth hearing.</p>
+      <p>If accepted, there is a tariff of ₹5,000. It secures the venue and is an intended filter.</p>
+      <p>Every invitation carries an RSVP deadline. Those who do not reply, yes or no, in time are not invited again, in any city.</p>
+    </div>
+    <div class="form-notice-bar">
+      <label class="read-check" for="noticeRead">
+        <input id="noticeRead" type="checkbox">
+        <span class="read-box" aria-hidden="true"></span>
+        I have read this
+      </label>
+      <button id="noticeContinue" class="btn" type="button" disabled>Continue</button>
+    </div>
+  </div>
+</div>
+
 <script src="/site.js"></script>
 <script>
   var audio = document.getElementById("ambientAudio");
@@ -482,6 +504,12 @@
     try { return sessionStorage.getItem(seenKey) === "1"; } catch (err) { return false; }
   }
 
+  var formNotice = document.getElementById("formNotice");
+  var noticeRead = document.getElementById("noticeRead");
+  var noticeContinue = document.getElementById("noticeContinue");
+  var pendingFormUrl = "";
+  var noticeReturn = null;
+
   function lockables() {
     return [
       document.querySelector("[data-nav]"),
@@ -489,7 +517,8 @@
       document.querySelector(".colophon"),
       document.getElementById("soundToggle"),
       welcome,
-      overlay
+      overlay,
+      formNotice
     ].filter(Boolean);
   }
 
@@ -610,12 +639,66 @@
       else closeWelcome(false);
     });
   });
-  document.getElementById("formLink").addEventListener("click", closeOverlay);
+  function openFormNotice(url, from) {
+    pendingFormUrl = url;
+    noticeReturn = from || null;
+    noticeRead.checked = false;
+    noticeContinue.disabled = true;
+    formNotice.hidden = false;
+    formNotice.classList.add("is-open");
+    var body = formNotice.querySelector(".form-notice-body");
+    if (body) body.scrollTop = 0;
+    setLocked(formNotice);
+    formNotice.focus();
+  }
+
+  function closeFormNotice() {
+    formNotice.classList.remove("is-open");
+    formNotice.hidden = true;
+    noticeRead.checked = false;
+    noticeContinue.disabled = true;
+    pendingFormUrl = "";
+    if (overlay.classList.contains("is-open")) {
+      setLocked(overlay);
+      document.getElementById("formLink").focus();
+      return;
+    }
+    setLocked(null);
+    if (noticeReturn && noticeReturn.focus) noticeReturn.focus();
+  }
+
+  noticeRead.addEventListener("change", function () {
+    noticeContinue.disabled = !noticeRead.checked;
+  });
+
+  noticeContinue.addEventListener("click", function () {
+    if (!noticeRead.checked || !pendingFormUrl) return;
+    var url = pendingFormUrl;
+    window.open(url, "_blank", "noopener,noreferrer");
+    closeFormNotice();
+    if (overlay.classList.contains("is-open")) closeOverlay();
+  });
+
+  formNotice.querySelector(".form-notice-close").addEventListener("click", closeFormNotice);
+  formNotice.querySelector(".form-notice-backdrop").addEventListener("click", closeFormNotice);
+
+  document.querySelectorAll(".invite-links a").forEach(function (link) {
+    link.addEventListener("click", function (event) {
+      event.preventDefault();
+      openFormNotice(link.getAttribute("href"), link);
+    });
+  });
+
+  document.getElementById("formLink").addEventListener("click", function (event) {
+    event.preventDefault();
+    openFormNotice(document.getElementById("formLink").getAttribute("href"), document.getElementById("formLink"));
+  });
 
   document.addEventListener("keydown", function (event) {
-    var dialog = overlay.classList.contains("is-open") ? overlay : (welcome.classList.contains("is-open") ? welcome : null);
+    var dialog = formNotice.classList.contains("is-open") ? formNotice : (overlay.classList.contains("is-open") ? overlay : (welcome.classList.contains("is-open") ? welcome : null));
     if (event.key === "Escape") {
-      if (overlay.classList.contains("is-open")) closeOverlay();
+      if (formNotice.classList.contains("is-open")) closeFormNotice();
+      else if (overlay.classList.contains("is-open")) closeOverlay();
       else if (welcome.classList.contains("is-open")) closeWelcome(false);
       return;
     }
