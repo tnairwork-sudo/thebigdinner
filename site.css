@@ -534,7 +534,6 @@ body.is-locked .sound { opacity: 0; pointer-events: none; }
   cursor: pointer;
 }
 .overlay-page,
-.overlay-progress,
 .welcome-copy { position: relative; z-index: 1; }
 .overlay-close,
 .welcome-close { z-index: 2; }
@@ -551,19 +550,20 @@ body.is-locked .sound { opacity: 0; pointer-events: none; }
   text-transform: uppercase;
   cursor: pointer;
 }
-.overlay-progress { display: flex; align-items: center; gap: 8px; margin-bottom: 28px; }
+.overlay-page { max-width: 680px; }
+.overlay-page .headline { margin: 14px 0 16px; }
+.overlay .label { color: var(--ivory); display: block; margin-bottom: 12px; }
+.step-progress { display: flex; align-items: center; gap: 8px; margin: 0 0 22px; }
 .dot {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: var(--ivory);
+  background: currentColor;
   opacity: 0.35;
 }
 .dot.is-on { opacity: 1; }
-.dot-line { width: 36px; height: 1px; background: rgba(246, 241, 230, 0.45); }
-.overlay-page { max-width: 680px; }
-.overlay-page .headline { margin: 14px 0 16px; }
-.overlay-page .label { color: var(--ivory); }
+.dot-line { width: 28px; height: 1px; background: currentColor; opacity: 0.45; }
+.overlay-actions { display: flex; flex-wrap: wrap; gap: 12px; }
 .overlay-note { margin: 0 0 28px; font-size: 1.2rem; }
 .field { max-width: 440px; margin-bottom: 32px; }
 .field select {
@@ -579,18 +579,6 @@ body.is-locked .sound { opacity: 0; pointer-events: none; }
 }
 .field select.is-invalid { border-bottom-color: var(--gold); }
 .field select option { background: var(--emerald-deep); color: var(--ivory); }
-.standards { list-style: none; margin: 0 0 28px; padding: 0; display: grid; gap: 18px; }
-.standards li { display: grid; grid-template-columns: 42px 1fr; gap: 12px; }
-.standards span {
-  font-family: var(--sans);
-  font-size: 0.72rem;
-  letter-spacing: 0.16em;
-  padding-top: 6px;
-}
-.standards strong { display: block; font-family: var(--serif); font-size: 1.45rem; font-weight: 400; }
-.standards p { margin: 4px 0 0; font-size: 1.05rem; }
-.overlay-actions { display: flex; flex-wrap: wrap; gap: 12px; }
-
 /* Pre-form notice. Ivory panel, gold only on the tick and the continue button. */
 .form-notice {
   position: fixed;
@@ -654,7 +642,35 @@ body.is-locked .sound { opacity: 0; pointer-events: none; }
   font-size: 1.15rem;
   line-height: 1.6;
 }
-.form-notice-body p + p { margin-top: 1.05em; }
+.form-notice-body p + p,
+.form-notice-body .notice-dress + .notice-figures + p { margin-top: 1.05em; }
+.form-notice .label { color: var(--ink-soft); }
+.notice-step[hidden] { display: none !important; }
+.notice-dress {
+  margin: 1.25em 0 0.2em;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: 1.55rem;
+  line-height: 1;
+}
+.notice-figures {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 40px;
+  margin: 14px 0 16px;
+}
+.notice-figures svg { display: block; height: 84px; width: auto; }
+#noticeBack {
+  justify-self: start;
+  min-height: 0;
+  padding: 0 0 2px;
+  border: 0;
+  background: transparent;
+  color: var(--ink-soft);
+}
+#noticeBack[hidden] { display: none !important; }
+#noticeBack:hover { background: transparent; color: var(--ink); }
 .form-notice-bar {
   flex: none;
   display: grid;
