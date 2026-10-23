@@ -446,14 +446,18 @@
       <p>Gentlemen arrive in a well-cut suit, tie optional, shoes polished. Ladies arrive in cocktail attire, the kind of dress you'd choose for a grand evening at the bar. Come as you would want to be remembered.</p>
       <p>If accepted, there is a tariff of ₹5,000. It secures the venue and is an intended filter.</p>
       <p>Every invitation carries an RSVP deadline. Those who do not reply, yes or no, in time are not invited again, in any city.</p>
+      <span id="noticeEnd" class="notice-end" aria-hidden="true"></span>
     </div>
     <div class="form-notice-bar">
       <button class="btn-line" id="noticeBack" type="button" hidden>Back</button>
-      <label class="read-check" for="noticeRead">
-        <input id="noticeRead" type="checkbox">
-        <span class="read-box" aria-hidden="true"></span>
-        I have read this
-      </label>
+      <div class="read-slot" id="readSlot">
+        <p class="read-hint" id="readHint">Scroll to read the full note</p>
+        <label class="read-check" for="noticeRead" hidden>
+          <input id="noticeRead" type="checkbox" disabled>
+          <span class="read-box" aria-hidden="true"></span>
+          I have read this
+        </label>
+      </div>
       <button id="noticeContinue" class="btn" type="button" disabled>Continue</button>
     </div>
   </div>
@@ -512,9 +516,15 @@
   var noticeContinue = document.getElementById("noticeContinue");
   var noticeStep = document.getElementById("noticeStep");
   var noticeBack = document.getElementById("noticeBack");
+  var noticeBody = formNotice.querySelector(".form-notice-body");
+  var noticeEnd = document.getElementById("noticeEnd");
+  var readSlot = document.getElementById("readSlot");
+  var readHint = document.getElementById("readHint");
+  var readLabel = formNotice.querySelector(".read-check");
   var pendingFormUrl = "";
   var noticeReturn = null;
   var noticeMode = "direct";
+  var readReached = false;
 
   function lockables() {
     return [
@@ -630,11 +640,62 @@
     noticeBack.hidden = !picker;
   }
 
+  function noticeFits() {
+    if (noticeBody.clientHeight < 80) return false;
+    return noticeBody.scrollHeight - noticeBody.clientHeight <= 4;
+  }
+
+  function noticeAtEnd() {
+    var last = noticeEnd.previousElementSibling;
+    if (!last) return false;
+    var text = last.getBoundingClientRect();
+    var box = noticeBody.getBoundingClientRect();
+    var remainder = noticeBody.scrollHeight - noticeBody.scrollTop - noticeBody.clientHeight;
+    return text.bottom >= box.top && text.bottom <= box.bottom + 4 && remainder <= 4;
+  }
+
+  function concealRead() {
+    readReached = false;
+    readSlot.classList.remove("is-ready");
+    readHint.hidden = false;
+    readHint.removeAttribute("aria-hidden");
+    readLabel.hidden = true;
+    noticeRead.disabled = true;
+    noticeRead.checked = false;
+    noticeContinue.disabled = true;
+  }
+
+  function revealRead() {
+    if (readReached && !readLabel.hidden) return;
+    readReached = true;
+    readLabel.hidden = false;
+    noticeRead.disabled = false;
+    readHint.setAttribute("aria-hidden", "true");
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      readSlot.classList.add("is-ready");
+      return;
+    }
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        readSlot.classList.add("is-ready");
+      });
+    });
+  }
+
+  function refreshReadGate() {
+    if (!formNotice.classList.contains("is-open")) return;
+    if (noticeRead.checked) {
+      revealRead();
+      return;
+    }
+    if (readReached) return;
+    if (noticeFits() || noticeAtEnd()) revealRead();
+  }
+
   function openFormNotice(url, from, mode) {
     pendingFormUrl = url || "";
     noticeReturn = from || null;
-    noticeRead.checked = false;
-    noticeContinue.disabled = true;
+    concealRead();
     setNoticeChrome(mode);
     if (noticeMode === "picker") {
       document.getElementById("pickerCity").hidden = true;
@@ -642,10 +703,11 @@
     }
     formNotice.hidden = false;
     formNotice.classList.add("is-open");
-    var body = formNotice.querySelector(".form-notice-body");
-    if (body) body.scrollTop = 0;
+    noticeBody.scrollTop = 0;
     setLocked(formNotice);
     formNotice.focus();
+    requestAnimationFrame(refreshReadGate);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(refreshReadGate);
   }
 
   function hideFormNotice() {
@@ -654,8 +716,7 @@
   }
 
   function resetNoticeGate() {
-    noticeRead.checked = false;
-    noticeContinue.disabled = true;
+    concealRead();
     pendingFormUrl = "";
     setNoticeChrome("direct");
   }
@@ -681,8 +742,21 @@
     var body = formNotice.querySelector(".form-notice-body");
     if (body) body.scrollTop = 0;
     setLocked(formNotice);
-    if (noticeRead.checked) noticeContinue.focus();
-    else formNotice.focus();
+    if (noticeRead.checked) {
+      revealRead();
+      noticeContinue.focus();
+    } else {
+      formNotice.focus();
+      requestAnimationFrame(refreshReadGate);
+    }
+  }
+
+  noticeBody.addEventListener("scroll", refreshReadGate, { passive: true });
+  noticeBody.addEventListener("scrollend", refreshReadGate);
+  noticeBody.addEventListener("touchend", refreshReadGate, { passive: true });
+  window.addEventListener("resize", refreshReadGate);
+  if ("ResizeObserver" in window) {
+    new ResizeObserver(refreshReadGate).observe(noticeBody);
   }
 
   noticeRead.addEventListener("change", function () {
@@ -690,7 +764,7 @@
   });
 
   noticeContinue.addEventListener("click", function () {
-    if (!noticeRead.checked) return;
+    if (!readReached || !noticeRead.checked) return;
     if (noticeMode === "picker") {
       var select = document.getElementById("citySelect");
       if (!select.value || !cityForms[select.value]) return;

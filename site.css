@@ -629,7 +629,9 @@ body.is-locked .sound { opacity: 0; pointer-events: none; }
   overflow: auto;
   min-height: 0;
   padding: 64px 36px 28px;
+  overscroll-behavior: contain;
 }
+.notice-end { display: block; height: 1px; }
 .notice-title {
   margin: 0 0 18px;
   font-family: var(--serif);
@@ -671,6 +673,31 @@ body.is-locked .sound { opacity: 0; pointer-events: none; }
 }
 #noticeBack[hidden] { display: none !important; }
 #noticeBack:hover { background: transparent; color: var(--ink); }
+.read-slot { display: grid; align-items: center; min-height: 24px; }
+.read-hint,
+.read-slot .read-check { grid-area: 1 / 1; }
+.read-hint {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  line-height: 1.4;
+  color: var(--ink-soft);
+  transition: opacity 0.4s ease;
+}
+.read-hint[hidden] { display: none !important; }
+.read-slot.is-ready .read-hint { opacity: 0; pointer-events: none; }
+.read-check { opacity: 0; pointer-events: none; }
+.read-check[hidden] { display: none !important; }
+.read-slot.is-ready .read-check {
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity 0.4s ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  .read-hint,
+  .read-check { transition: none; }
+}
 .form-notice-bar {
   flex: none;
   display: grid;
