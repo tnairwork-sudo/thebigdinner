@@ -357,15 +357,14 @@
 <div id="cityOverlay" class="overlay" role="dialog" aria-modal="true" aria-labelledby="overlayTitle">
   <button class="scrim-close" type="button" tabindex="-1" aria-hidden="true"></button>
   <button id="closeOverlay" class="overlay-close" type="button">Close</button>
-  <div class="overlay-progress" aria-hidden="true">
-    <span id="dot1" class="dot is-on"></span>
-    <span class="dot-line"></span>
-    <span id="dot2" class="dot"></span>
-    <span class="dot-line"></span>
-    <span id="dot3" class="dot"></span>
-  </div>
-
-  <div id="page1" class="overlay-page">
+  <div class="overlay-page" id="pickerCity">
+    <div class="step-progress" data-step-dots aria-hidden="true">
+      <span class="dot is-on" data-dot="1"></span>
+      <span class="dot-line"></span>
+      <span class="dot" data-dot="2"></span>
+      <span class="dot-line"></span>
+      <span class="dot" data-dot="3"></span>
+    </div>
     <p class="label">Step 1 of 3</p>
     <h2 class="headline" id="overlayTitle">Where would you like<br><em>to join the room?</em></h2>
     <p class="overlay-note">Select your city to continue.</p>
@@ -381,54 +380,21 @@
         <option value="dubai">Dubai</option>
       </select>
     </div>
-    <button class="btn" type="button" onclick="goToPage2()">Continue</button>
+    <button class="btn" id="cityContinue" type="button">Continue</button>
   </div>
-
-  <div id="page2" class="overlay-page" hidden>
-    <p class="label">Step 2 of 3</p>
-    <h2 class="headline">Before you apply,<br><em>read this carefully.</em></h2>
-    <ol class="standards">
-      <li>
-        <span>01</span>
-        <div>
-          <strong>Selection</strong>
-          <p>Invite only. Submitting signals interest only. It does not constitute an invitation.</p>
-        </div>
-      </li>
-      <li>
-        <span>02</span>
-        <div>
-          <strong>Dress</strong>
-          <p>Men: a suit. Women: cocktail attire. No exceptions.</p>
-        </div>
-      </li>
-      <li>
-        <span>03</span>
-        <div>
-          <strong>RSVP</strong>
-          <p>Confirm or decline. Ghosting results in permanent removal from all cities.</p>
-        </div>
-      </li>
-      <li>
-        <span>04</span>
-        <div>
-          <strong>Participation Fee</strong>
-          <p>A participation fee applies. It separates those who understand the value of a room from those who do not.</p>
-        </div>
-      </li>
-    </ol>
-    <div class="overlay-actions">
-      <button class="btn-line" type="button" onclick="goToPage1()">Back</button>
-      <button class="btn" type="button" onclick="goToPage3()">I Understand. Apply.</button>
+  <div class="overlay-page" id="pickerApply" hidden>
+    <div class="step-progress" data-step-dots aria-hidden="true">
+      <span class="dot" data-dot="1"></span>
+      <span class="dot-line"></span>
+      <span class="dot" data-dot="2"></span>
+      <span class="dot-line"></span>
+      <span class="dot is-on" data-dot="3"></span>
     </div>
-  </div>
-
-  <div id="page3" class="overlay-page" hidden>
     <p class="label">Step 3 of 3</p>
-    <h2 class="headline">You are applying for<br><em id="selectedCityDisplay"></em></h2>
-    <p class="overlay-note">Answer honestly. That is the only criteria that matters.</p>
+    <h2 class="headline" id="applyTitle">You are applying for<br><em id="selectedCityDisplay"></em></h2>
+    <p class="overlay-note">Answer honestly. That is the only criterion that matters.</p>
     <div class="overlay-actions">
-      <button class="btn-line" type="button" onclick="goToPage2()">Back</button>
+      <button class="btn-line" id="applyBack" type="button">Back</button>
       <a id="formLink" class="btn" href="#" target="_blank" rel="noopener noreferrer">Open the Form</a>
     </div>
   </div>
@@ -439,13 +405,50 @@
   <div class="form-notice-panel">
     <button class="form-notice-close" type="button">Close</button>
     <div class="form-notice-body">
+      <div class="notice-step" id="noticeStep" hidden>
+        <div class="step-progress" data-step-dots aria-hidden="true">
+          <span class="dot" data-dot="1"></span>
+          <span class="dot-line"></span>
+          <span class="dot is-on" data-dot="2"></span>
+          <span class="dot-line"></span>
+          <span class="dot" data-dot="3"></span>
+        </div>
+        <p class="label">Step 2 of 3</p>
+      </div>
       <h2 class="notice-title" id="noticeTitle">Before you begin</h2>
       <p>Social media has taken our focus away. This form is an attempt to restore it.</p>
       <p>Please do not fill it as a formality. We receive over a thousand applications in the first week, and we read for self-awareness, clarity, and a story worth hearing.</p>
+      <h3 class="notice-dress">Dress</h3>
+      <div class="notice-figures" aria-hidden="true">
+        <svg viewBox="0 0 80 110" height="84" focusable="false">
+          <g fill="none" stroke="#a8875a" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="40" cy="14" r="8"/>
+            <path d="M34 22c1.4 3.6 3.2 5.4 6 5.4s4.6-1.8 6-5.4"/>
+            <path d="M16 50c1.5-16 8-24 24-24s22.5 8 24 24"/>
+            <path d="M40 26l-11 24 11 9 11-9-11-24"/>
+            <path d="M40 34l-2.4 16 2.4 9 2.4-9z"/>
+            <path d="M16 50l-2 50h18"/>
+            <path d="M64 50l2 50H48"/>
+            <path d="M32 100l8-12 8 12"/>
+          </g>
+        </svg>
+        <svg viewBox="0 0 80 110" height="84" focusable="false">
+          <g fill="none" stroke="#a8875a" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="40" cy="13" r="7.5"/>
+            <path d="M33.5 21c1.6 3.2 3.6 4.8 6.5 4.8s4.9-1.6 6.5-4.8"/>
+            <path d="M27 36c1.6-9 6.2-14 13-14s11.4 5 13 14"/>
+            <path d="M29 36c-.6 11 2 17 11 19 9-2 11.6-8 11-19"/>
+            <path d="M31 55c-12 8-18 30-15 48h48c3-18-3-40-15-48"/>
+            <path d="M40 55c-.4 16-.6 32-.2 48"/>
+          </g>
+        </svg>
+      </div>
+      <p>Gentlemen arrive in a well-cut suit, tie optional, shoes polished. Ladies arrive in cocktail attire, the kind of dress you'd choose for a grand evening at the bar. Come as you would want to be remembered.</p>
       <p>If accepted, there is a tariff of ₹5,000. It secures the venue and is an intended filter.</p>
       <p>Every invitation carries an RSVP deadline. Those who do not reply, yes or no, in time are not invited again, in any city.</p>
     </div>
     <div class="form-notice-bar">
+      <button class="btn-line" id="noticeBack" type="button" hidden>Back</button>
       <label class="read-check" for="noticeRead">
         <input id="noticeRead" type="checkbox">
         <span class="read-box" aria-hidden="true"></span>
@@ -507,8 +510,11 @@
   var formNotice = document.getElementById("formNotice");
   var noticeRead = document.getElementById("noticeRead");
   var noticeContinue = document.getElementById("noticeContinue");
+  var noticeStep = document.getElementById("noticeStep");
+  var noticeBack = document.getElementById("noticeBack");
   var pendingFormUrl = "";
   var noticeReturn = null;
+  var noticeMode = "direct";
 
   function lockables() {
     return [
@@ -541,51 +547,6 @@
     );
   }
 
-  function setDots(active) {
-    [1, 2, 3].forEach(function (i) {
-      document.getElementById("dot" + i).classList.toggle("is-on", i === active);
-    });
-  }
-
-  function showPage(id) {
-    ["page1", "page2", "page3"].forEach(function (pid) {
-      document.getElementById(pid).hidden = pid !== id;
-    });
-  }
-
-  function goToPage1() {
-    showPage("page1");
-    setDots(1);
-  }
-
-  function goToPage2() {
-    var select = document.getElementById("citySelect");
-    if (!select.value) {
-      select.classList.add("is-invalid");
-      select.focus();
-      return;
-    }
-    select.classList.remove("is-invalid");
-    showPage("page2");
-    setDots(2);
-  }
-
-  function goToPage3() {
-    var city = document.getElementById("citySelect").value;
-    var labels = {
-      delhi: "Delhi",
-      bombay: "Bombay",
-      london: "London",
-      bengaluru: "Bengaluru",
-      hyderabad: "Hyderabad",
-      dubai: "Dubai"
-    };
-    document.getElementById("selectedCityDisplay").textContent = labels[city];
-    document.getElementById("formLink").href = cityForms[city];
-    showPage("page3");
-    setDots(3);
-  }
-
   function openWelcome() {
     if (overlay.classList.contains("is-open") || welcome.classList.contains("is-open")) return;
     markSeen();
@@ -606,6 +567,22 @@
     }
   }
 
+  function showCityStep() {
+    document.getElementById("pickerCity").hidden = false;
+    document.getElementById("pickerApply").hidden = true;
+    overlay.setAttribute("aria-labelledby", "overlayTitle");
+  }
+
+  function showApplyStep() {
+    var select = document.getElementById("citySelect");
+    var option = select.options[select.selectedIndex];
+    document.getElementById("selectedCityDisplay").textContent = option ? option.text : "";
+    document.getElementById("formLink").setAttribute("href", cityForms[select.value]);
+    document.getElementById("pickerCity").hidden = true;
+    document.getElementById("pickerApply").hidden = false;
+    overlay.setAttribute("aria-labelledby", "applyTitle");
+  }
+
   function openOverlay(event) {
     if (event) event.preventDefault();
     if (welcomeTimer) {
@@ -616,14 +593,21 @@
     var from = event && event.currentTarget ? event.currentTarget : document.querySelector(".invite-btn");
     if (!welcome.classList.contains("is-open")) returnFocus = from;
     closeWelcome(true);
+    hideFormNotice();
+    resetNoticeGate();
+    showCityStep();
     overlay.classList.add("is-open");
     setLocked(overlay);
-    goToPage1();
-    document.getElementById("citySelect").focus();
+    var select = document.getElementById("citySelect");
+    select.classList.remove("is-invalid");
+    select.focus();
   }
 
   function closeOverlay() {
     overlay.classList.remove("is-open");
+    hideFormNotice();
+    resetNoticeGate();
+    showCityStep();
     setLocked(null);
     if (returnFocus && returnFocus.focus) returnFocus.focus();
   }
@@ -639,11 +623,23 @@
       else closeWelcome(false);
     });
   });
-  function openFormNotice(url, from) {
-    pendingFormUrl = url;
+  function setNoticeChrome(mode) {
+    noticeMode = mode === "picker" ? "picker" : "direct";
+    var picker = noticeMode === "picker";
+    noticeStep.hidden = !picker;
+    noticeBack.hidden = !picker;
+  }
+
+  function openFormNotice(url, from, mode) {
+    pendingFormUrl = url || "";
     noticeReturn = from || null;
     noticeRead.checked = false;
     noticeContinue.disabled = true;
+    setNoticeChrome(mode);
+    if (noticeMode === "picker") {
+      document.getElementById("pickerCity").hidden = true;
+      document.getElementById("pickerApply").hidden = true;
+    }
     formNotice.hidden = false;
     formNotice.classList.add("is-open");
     var body = formNotice.querySelector(".form-notice-body");
@@ -652,19 +648,41 @@
     formNotice.focus();
   }
 
-  function closeFormNotice() {
+  function hideFormNotice() {
     formNotice.classList.remove("is-open");
     formNotice.hidden = true;
+  }
+
+  function resetNoticeGate() {
     noticeRead.checked = false;
     noticeContinue.disabled = true;
     pendingFormUrl = "";
-    if (overlay.classList.contains("is-open")) {
+    setNoticeChrome("direct");
+  }
+
+  function closeFormNotice() {
+    var wasPicker = noticeMode === "picker";
+    hideFormNotice();
+    resetNoticeGate();
+    if (wasPicker && overlay.classList.contains("is-open")) {
+      showCityStep();
       setLocked(overlay);
-      document.getElementById("formLink").focus();
+      document.getElementById("citySelect").focus();
       return;
     }
     setLocked(null);
     if (noticeReturn && noticeReturn.focus) noticeReturn.focus();
+  }
+
+  function returnToNotice() {
+    setNoticeChrome("picker");
+    formNotice.hidden = false;
+    formNotice.classList.add("is-open");
+    var body = formNotice.querySelector(".form-notice-body");
+    if (body) body.scrollTop = 0;
+    setLocked(formNotice);
+    if (noticeRead.checked) noticeContinue.focus();
+    else formNotice.focus();
   }
 
   noticeRead.addEventListener("change", function () {
@@ -672,11 +690,47 @@
   });
 
   noticeContinue.addEventListener("click", function () {
-    if (!noticeRead.checked || !pendingFormUrl) return;
+    if (!noticeRead.checked) return;
+    if (noticeMode === "picker") {
+      var select = document.getElementById("citySelect");
+      if (!select.value || !cityForms[select.value]) return;
+      hideFormNotice();
+      showApplyStep();
+      setLocked(overlay);
+      document.getElementById("formLink").focus();
+      return;
+    }
+    if (!pendingFormUrl) return;
     var url = pendingFormUrl;
     window.open(url, "_blank", "noopener,noreferrer");
-    closeFormNotice();
-    if (overlay.classList.contains("is-open")) closeOverlay();
+    hideFormNotice();
+    resetNoticeGate();
+    setLocked(null);
+    if (noticeReturn && noticeReturn.focus) noticeReturn.focus();
+  });
+
+  noticeBack.addEventListener("click", closeFormNotice);
+
+  document.getElementById("cityContinue").addEventListener("click", function () {
+    var select = document.getElementById("citySelect");
+    if (!select.value) {
+      select.classList.add("is-invalid");
+      select.focus();
+      return;
+    }
+    select.classList.remove("is-invalid");
+    openFormNotice(cityForms[select.value], select, "picker");
+  });
+
+  document.getElementById("applyBack").addEventListener("click", returnToNotice);
+
+  document.getElementById("formLink").addEventListener("click", function (event) {
+    var href = this.getAttribute("href");
+    if (!href || href === "#") {
+      event.preventDefault();
+      return;
+    }
+    closeOverlay();
   });
 
   formNotice.querySelector(".form-notice-close").addEventListener("click", closeFormNotice);
@@ -685,13 +739,8 @@
   document.querySelectorAll(".invite-links a").forEach(function (link) {
     link.addEventListener("click", function (event) {
       event.preventDefault();
-      openFormNotice(link.getAttribute("href"), link);
+      openFormNotice(link.getAttribute("href"), link, "direct");
     });
-  });
-
-  document.getElementById("formLink").addEventListener("click", function (event) {
-    event.preventDefault();
-    openFormNotice(document.getElementById("formLink").getAttribute("href"), document.getElementById("formLink"));
   });
 
   document.addEventListener("keydown", function (event) {
