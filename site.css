@@ -4,18 +4,23 @@
    Art lives in /assets/art. */
 
 :root {
-  --pink: #f3ddd6;
-  --pink-deep: #e7cfc6;
-  --mint: #d7ebe3;
-  --powder: #d7e6f1;
-  --teal: #d3ebe6;
-  --cream: #f7f3ea;
-  --cream-2: #fbf8f2;
-  --mustard: #f3e4c2;
+  --pink: #f3b6c6;
+  --pink-deep: #e58aa4;
+  --mint: #8fcb8a;
+  --powder: #8fbfdc;
+  --teal: #6fb3a8;
+  --cornflower: #8aa4e0;
+  --lilac: #c4a6de;
+  --raspberry: #e58aa4;
+  --pistachio: #8fcb8a;
+  --tangerine: #f09a55;
+  --cream: #f6f0e4;
+  --cream-2: #fbf6ec;
+  --mustard: #e3b84a;
   --gold: #a6843e;
-  --gold-2: #c6a45a;
-  --ink: #3a2e28;
-  --ink-soft: #6e5c53;
+  --gold-2: #c6a15a;
+  --ink: #2a221c;
+  --ink-soft: #3f342c;
   --line: rgba(58, 46, 40, 0.34);
   --line-soft: rgba(58, 46, 40, 0.16);
   --nav-h: 140px;
@@ -277,8 +282,12 @@ body.is-locked .sound { opacity: 0; pointer-events: none; }
 }
 .hero {
   background: var(--powder);
-  padding-top: calc(var(--nav-h) + 36px);
+  padding-top: calc(var(--nav-h) + 12px);
+  padding-bottom: 28px;
 }
+.hero .frame-copy { order: -1; padding-top: 0; }
+.hero .art { width: min(680px, 100%); margin-top: 18px; }
+.hero .art img { aspect-ratio: 16 / 9; max-height: 26vh; }
 .art {
   position: relative;
   inset: auto;
@@ -1237,12 +1246,51 @@ html.js .reveal.is-in { opacity: 1; transform: none; }
 .poster-open:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
 .poster-run-item img { width: 100%; height: auto; display: block; aspect-ratio: auto; object-fit: contain; filter: none; }
 
+/* One confident colour for each block, with a gold edge. */
+.nav { border-bottom: 2px solid var(--gold); }
+.hero { background: var(--powder); }
+.paper-frame { background: var(--raspberry); }
+.poster-run { background: var(--cream); }
+.evenings { background: var(--pistachio); }
+.reels { background: var(--cornflower); }
+main > .frame:nth-child(6) { background: var(--teal); }
+#rules { background: var(--mustard); }
+main > .frame:nth-child(8) { background: var(--tangerine); }
+.lineage { background: var(--lilac); }
+.archive { background: var(--pink); }
+#cities { background: var(--cornflower); }
+main > .frame:nth-child(12) { background: var(--pistachio); }
+main > .frame:nth-child(13) { background: var(--tangerine); }
+main > .frame:nth-child(14) { background: var(--lilac); }
+main > .frame:nth-child(15) { background: var(--teal); }
+main > .frame:nth-child(16) { background: var(--raspberry); }
+main > .frame:nth-child(17) { background: var(--mustard); }
+.invite { background: var(--powder); }
+.colophon { background: var(--raspberry); color: var(--ink); }
+.masthead { background: var(--lilac); }
+.masthead.has-art { background: var(--powder); }
+.page-hero { background: var(--cornflower); }
+.journal { background: var(--cream); }
+.gallery-block { background: var(--pistachio); }
+.gallery-block + .gallery-block { background: var(--lilac); }
+.press { background: var(--tangerine); }
+.press + .gallery-block { background: var(--powder); }
+.video-feed { background: var(--teal); }
+.filter-bar { background: var(--cream); border-bottom: 2px solid var(--gold); }
+.nav-links { background: var(--lilac); }
+.frame, .paper-frame, .sheet, .lineage, .archive, .poster-run, .evenings, .reels, .colophon, .masthead, .journal, .gallery-block, .press {
+  box-shadow: inset 0 0 0 2px var(--gold);
+}
+.welcome { background: var(--powder); justify-content: flex-start; }
+.welcome-copy { order: -1; }
+.welcome .art img { max-height: 26vh; }
+
 .evenings, .reels {
   padding: clamp(64px, 10vh, 112px) clamp(18px, 5vw, 64px);
   text-align: center;
 }
-.evenings { background: var(--mint); }
-.reels { background: var(--powder); }
+.evenings { background: var(--pistachio); }
+.reels { background: var(--cornflower); }
 .evenings .label, .reels .label { display: block; margin-bottom: 28px; }
 .evenings-grid, .reel-grid {
   display: grid;
@@ -1275,12 +1323,8 @@ html.js .reveal.is-in { opacity: 1; transform: none; }
   font: inherit;
   cursor: pointer;
 }
-.evening-frame:nth-child(3n+1),
-.evening-frame:nth-child(3n),
-.reel-tile:nth-child(3n+1),
-.reel-tile:nth-child(3n) { background: var(--teal); }
-.evening-frame:nth-child(3n+2),
-.reel-tile:nth-child(3n+2) { background: var(--mustard); }
+.evening-frame,
+.reel-tile { background: var(--cream); border: 2px solid var(--gold); }
 .reel-lightbox {
   position: fixed;
   inset: 0;
@@ -1340,4 +1384,5 @@ html.js .reveal.is-in { opacity: 1; transform: none; }
     grid-template-columns: repeat(3, minmax(0, 1fr));
     width: min(1080px, 100%);
   }
+  .evenings-grid .evening-frame:last-child:nth-child(3n+1) { grid-column: 2; }
 }
