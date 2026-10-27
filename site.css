@@ -1,14 +1,17 @@
 /* The Big Dinner
-   Understated pastel field. Cream, dusty pink, pale mint, muted mustard.
-   Gold is a thin accent. Art lives in /assets/art. */
+   Understated Wes Anderson field: cream, dusty pink, pale mint,
+   powder blue, teal, and pale mustard. Gold is a thin accent.
+   Art lives in /assets/art. */
 
 :root {
-  --pink: #f1dfd9;
-  --pink-deep: #e7d0c8;
-  --mint: #dce8e1;
+  --pink: #f3ddd6;
+  --pink-deep: #e7cfc6;
+  --mint: #d7ebe3;
+  --powder: #d7e6f1;
+  --teal: #d3ebe6;
   --cream: #f7f3ea;
   --cream-2: #fbf8f2;
-  --mustard: #c6a45a;
+  --mustard: #f3e4c2;
   --gold: #a6843e;
   --gold-2: #c6a45a;
   --ink: #3a2e28;
@@ -36,7 +39,7 @@ body.is-locked { overflow: hidden; }
 img { max-width: 100%; height: auto; }
 button, input, select { font: inherit; }
 a { color: inherit; }
-::selection { background: var(--pink-deep); color: var(--ink); }
+::selection { background: var(--powder); color: var(--ink); }
 
 .skip {
   position: absolute;
@@ -215,7 +218,7 @@ a { color: inherit; }
   justify-content: center;
   align-items: center;
   gap: 4px;
-  background: var(--pink);
+  background: var(--powder);
   text-align: center;
   overflow: auto;
   opacity: 0;
@@ -273,7 +276,7 @@ body.is-locked .sound { opacity: 0; pointer-events: none; }
   padding: clamp(40px, 7vw, 80px) clamp(18px, 5vw, 72px);
 }
 .hero {
-  background: var(--pink);
+  background: var(--powder);
   padding-top: calc(var(--nav-h) + 36px);
 }
 .art {
@@ -314,8 +317,9 @@ body.is-locked .sound { opacity: 0; pointer-events: none; }
   padding: clamp(72px, 11vh, 128px) clamp(20px, 6vw, 80px);
   text-align: center;
 }
-.sheet, .archive { background: var(--cream); color: var(--ink); }
-.lineage { background: var(--mint); color: var(--ink); }
+.sheet { background: var(--cream); color: var(--ink); }
+.archive { background: var(--teal); color: var(--ink); }
+.lineage { background: var(--mustard); color: var(--ink); }
 .wrap { max-width: 760px; margin: 0 auto; }
 .wrap-narrow { max-width: 640px; margin: 0 auto; }
 
@@ -328,7 +332,7 @@ body.is-locked .sound { opacity: 0; pointer-events: none; }
   overflow: hidden;
   color: var(--ink);
   text-align: center;
-  background: var(--mint);
+  background: var(--pink);
   padding: clamp(64px, 10vh, 120px) clamp(20px, 6vw, 80px);
 }
 .paper-frame .veil,
@@ -462,7 +466,7 @@ body.is-locked .sound { opacity: 0; pointer-events: none; }
   white-space: normal;
 }
 
-.invite { background: var(--pink); color: var(--ink); }
+.invite { background: var(--teal); color: var(--ink); }
 .invite .prose, .invite .lede { color: var(--ink); max-width: 28em; }
 .invite .headline { margin-bottom: 16px; }
 .invite .invite-btn { margin: 26px 0 20px; }
@@ -504,7 +508,7 @@ body.is-locked .sound { opacity: 0; pointer-events: none; }
   gap: 8px;
   color: var(--ink);
   text-align: center;
-  background: var(--pink);
+  background: var(--powder);
   padding: 72px 20px 32px;
 }
 .welcome[hidden] { display: none; }
@@ -845,7 +849,7 @@ body.is-locked .sound { opacity: 0; pointer-events: none; }
   overflow: hidden;
   color: var(--ink);
   text-align: center;
-  background: var(--mint);
+  background: var(--powder);
 }
 .masthead.has-art .mast-copy {
   padding: 28px 8px 0;
@@ -1032,12 +1036,14 @@ html.js .journal .entry.visible { opacity: 1; transform: none; }
   white-space: nowrap;
 }
 .filter-tab.active, .filter-tab:hover { background: var(--ink); color: var(--cream); border-color: var(--ink); }
+.gallery-block:nth-of-type(even) { background: var(--powder); }
+.press { background: var(--mustard); }
 .video-feed {
   display: grid;
   justify-items: center;
   gap: 32px;
   padding: 28px 18px 12px;
-  background: var(--cream);
+  background: var(--teal);
   color: var(--ink);
 }
 .video-card { width: min(420px, 100%); opacity: 0; transform: translateY(16px); }
@@ -1230,3 +1236,108 @@ html.js .reveal.is-in { opacity: 1; transform: none; }
 }
 .poster-open:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
 .poster-run-item img { width: 100%; height: auto; display: block; aspect-ratio: auto; object-fit: contain; filter: none; }
+
+.evenings, .reels {
+  padding: clamp(64px, 10vh, 112px) clamp(18px, 5vw, 64px);
+  text-align: center;
+}
+.evenings { background: var(--mint); }
+.reels { background: var(--powder); }
+.evenings .label, .reels .label { display: block; margin-bottom: 28px; }
+.evenings-grid, .reel-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  width: min(420px, 100%);
+  margin: 0 auto;
+}
+.evening-frame, .reel-tile {
+  width: 100%;
+  margin: 0;
+  aspect-ratio: 3 / 4;
+  display: grid;
+  place-items: center;
+  padding: 12px;
+  border: 1px solid var(--line);
+  background: var(--cream-2);
+  box-shadow: inset 0 0 0 1px rgba(58, 46, 40, 0.06);
+}
+.evening-frame img, .reel-tile video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+.reel-tile {
+  appearance: none;
+  padding: 12px;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+.evening-frame:nth-child(3n+1),
+.evening-frame:nth-child(3n),
+.reel-tile:nth-child(3n+1),
+.reel-tile:nth-child(3n) { background: var(--teal); }
+.evening-frame:nth-child(3n+2),
+.reel-tile:nth-child(3n+2) { background: var(--mustard); }
+.reel-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 110;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 16px;
+}
+.reel-lightbox[hidden] { display: none !important; }
+.reel-lightbox-scrim {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  padding: 0;
+  background: rgba(58, 46, 40, 0.38);
+  cursor: pointer;
+}
+.reel-lightbox-panel {
+  position: relative;
+  z-index: 1;
+  width: min(920px, 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 52px 16px 16px;
+  background: var(--cream);
+  border: 1px solid var(--line);
+}
+.reel-lightbox-close {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 0.88rem;
+  font-variant: small-caps;
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.22em;
+  text-transform: lowercase;
+  cursor: pointer;
+  padding: 8px;
+}
+.reel-lightbox-video {
+  width: auto;
+  max-width: 100%;
+  max-height: calc(92svh - 120px);
+  height: auto;
+  display: block;
+  background: #2a221e;
+}
+@media (min-width: 760px) {
+  .evenings-grid, .reel-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: min(1080px, 100%);
+  }
+}
