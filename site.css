@@ -1543,33 +1543,78 @@ main > .frame:nth-child(17) { background: var(--mustard); }
   .reel-lightbox { padding: 28px 24px; }
   .reel-lightbox-panel { padding: 28px 20px 20px; }
   .reel-lightbox[hidden] { display: none !important; }
-  .nav {
-    display: grid;
-    grid-template-columns: auto auto;
-    grid-template-areas: "logo logo" "invite menu";
-    justify-content: center;
-    align-items: center;
-    column-gap: 12px;
-    row-gap: 8px;
-    padding: 8px 16px 10px;
+  /* Block flow, not flex or grid. A fixed menu list inside a flex
+     or grid header stays in the line on iPhone and the Menu box
+     paints over the last letter. The wordmark is a full-width block.
+     The two controls follow it, in flow, on the next line. */
+  header.nav,
+  header.nav.is-scrolled,
+  header.nav.is-open {
+    display: block;
+    flex-wrap: nowrap;
+    height: auto;
     min-height: 0;
+    padding: 8px 16px 10px;
+    overflow: visible;
+    text-align: center;
+    font-size: 0;
   }
-  .nav .wordmark {
-    grid-area: logo;
-    width: auto;
-    max-width: 100%;
+  header.nav > .wordmark,
+  header.nav.is-scrolled > .wordmark,
+  header.nav.is-open > .wordmark {
+    display: block;
+    position: static;
+    z-index: auto;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
+    transform: none;
+    float: none;
+    clear: both;
     flex: none;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    margin: 0 0 8px;
+    overflow: visible;
     text-align: center;
   }
-  .nav .invite-btn { grid-area: invite; }
-  .nav .nav-toggle { grid-area: menu; }
-  .nav .invite-btn,
-  .nav .nav-toggle {
-    min-height: 44px;
+  header.nav > .invite-btn,
+  header.nav > .nav-toggle,
+  header.nav.is-scrolled > .invite-btn,
+  header.nav.is-scrolled > .nav-toggle {
+    display: inline-flex;
+    position: static;
+    z-index: auto;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
+    transform: none;
+    float: none;
+    flex: none;
+    width: auto;
+    max-width: 100%;
     height: 44px;
+    min-height: 44px;
+    margin: 0;
     padding: 0 14px;
+    overflow: visible;
+    vertical-align: middle;
     font-size: 15px;
     letter-spacing: 0.02em;
+    line-height: 1;
+    white-space: nowrap;
+  }
+  header.nav > .invite-btn,
+  header.nav.is-scrolled > .invite-btn,
+  header.nav.is-open > .invite-btn { margin-right: 12px; }
+  header.nav.is-open > .wordmark,
+  header.nav.is-open > .invite-btn,
+  header.nav.is-open > .nav-toggle {
+    position: relative;
+    z-index: 60;
   }
   .sound {
     top: auto;
