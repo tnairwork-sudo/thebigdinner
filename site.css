@@ -264,6 +264,7 @@ a { color: inherit; }
   text-transform: lowercase;
   padding: 8px 14px;
   cursor: pointer;
+  transition: background-color 500ms ease, border-color 500ms ease;
 }
 body.is-locked .sound { opacity: 0; pointer-events: none; }
 
@@ -1211,7 +1212,7 @@ html.js .reveal.is-in { opacity: 1; transform: none; }
   .nav-links { opacity: 0; }
   .nav.is-open .nav-links { opacity: 1; }
   .spinner.active { opacity: 1; }
-  .sound { transform: translateX(-50%); }
+  .sound { transform: translateX(-50%); transition: none; }
 }
 
 /* Geography poster. Banner from 760px, 4:5 below. Sits after the philosophy section. */
@@ -1584,3 +1585,25 @@ main > .frame:nth-child(17) { background: var(--mustard); }
     line-height: 1.2;
   }
 }
+
+/* Sound chip takes a complementary colour from the block behind it. Ink stays put so the label keeps its contrast. */
+.sound.is-tone-powder,
+.sound.is-tone-raspberry,
+.sound.is-tone-pink,
+.sound.is-tone-cream,
+.sound.is-tone-pistachio,
+.sound.is-tone-cornflower,
+.sound.is-tone-teal,
+.sound.is-tone-mustard,
+.sound.is-tone-tangerine,
+.sound.is-tone-lilac { color: var(--ink); }
+.sound.is-tone-powder { background-color: var(--mustard); border-color: #7a5614; }
+.sound.is-tone-raspberry,
+.sound.is-tone-pink { background-color: var(--teal); border-color: #2c655c; }
+.sound.is-tone-cream { background-color: var(--lilac); border-color: #6d4e8c; }
+.sound.is-tone-pistachio { background-color: var(--raspberry); border-color: #8e445c; }
+.sound.is-tone-cornflower { background-color: var(--tangerine); border-color: #8f4a18; }
+.sound.is-tone-teal { background-color: var(--pink); border-color: #a85a74; }
+.sound.is-tone-mustard { background-color: var(--cornflower); border-color: #3d508c; }
+.sound.is-tone-tangerine { background-color: var(--powder); border-color: #3a6d90; }
+.sound.is-tone-lilac { background-color: var(--pistachio); border-color: #3a6e38; }

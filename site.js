@@ -141,3 +141,100 @@
     if (event.key === "Escape" && box.classList.contains("is-open")) closeBox();
   });
 })();
+
+(function () {
+  var button = document.getElementById("soundToggle");
+  if (!button) return;
+  var sections = document.querySelectorAll("main > section, footer.colophon");
+  if (!sections.length) return;
+
+  var names = ["powder", "raspberry", "cream", "pistachio", "cornflower", "teal", "mustard", "tangerine", "lilac", "pink"];
+  var rootStyle = getComputedStyle(document.documentElement);
+
+  function parseColor(value) {
+    var text = String(value || "").trim();
+    var hex = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(text);
+    if (hex) {
+      var raw = hex[1];
+      if (raw.length === 3) raw = raw.replace(/./g, function (ch) { return ch + ch; });
+      var num = parseInt(raw, 16);
+      return [(num >> 16) & 255, (num >> 8) & 255, num & 255];
+    }
+    var rgb = /^rgba?\(\s*([\d.]+)[,\s]+([\d.]+)[,\s]+([\d.]+)/i.exec(text);
+    if (!rgb) return null;
+    return [+rgb[1], +rgb[2], +rgb[3]];
+  }
+
+  var palette = [];
+  names.forEach(function (name) {
+    var rgb = parseColor(rootStyle.getPropertyValue("--" + name));
+    if (rgb) palette.push({ name: name, rgb: rgb });
+  });
+
+  function toneFor(section) {
+    var rgb = parseColor(getComputedStyle(section).backgroundColor);
+    if (!rgb || !palette.length) return "cream";
+    var best = palette[0];
+    var bestDist = Infinity;
+    palette.forEach(function (item) {
+      var dist = Math.pow(rgb[0] - item.rgb[0], 2) + Math.pow(rgb[1] - item.rgb[1], 2) + Math.pow(rgb[2] - item.rgb[2], 2);
+      if (dist < bestDist) {
+        bestDist = dist;
+        best = item;
+      }
+    });
+    return best.name;
+  }
+
+  function sectionBehind() {
+    var box = button.getBoundingClientRect();
+    var y = box.top + box.height / 2;
+    var found = null;
+    sections.forEach(function (section) {
+      var rect = section.getBoundingClientRect();
+      if (rect.top <= y && rect.bottom >= y) found = section;
+    });
+    return found || sections[0];
+  }
+
+  var current = "";
+  function paint(section) {
+    if (!section) return;
+    var tone = toneFor(section);
+    var next = "is-tone-" + tone;
+    if (tone === current && button.classList.contains(next)) return;
+    var stale = [];
+    button.classList.forEach(function (name) {
+      if (name.indexOf("is-tone-") === 0) stale.push(name);
+    });
+    stale.forEach(function (name) { button.classList.remove(name); });
+    button.classList.add(next);
+    current = tone;
+  }
+
+  paint(sectionBehind());
+
+  var scheduled = 0;
+  function sync() {
+    if (scheduled) return;
+    scheduled = window.requestAnimationFrame(function () {
+      scheduled = 0;
+      paint(sectionBehind());
+    });
+  }
+
+  if ("IntersectionObserver" in window) {
+    var thresholds = [0, 1];
+    var step;
+    for (step = 1; step < 20; step++) thresholds.push(step / 20);
+    var observer = new IntersectionObserver(sync, {
+      root: null,
+      rootMargin: "-90% 0px -2% 0px",
+      threshold: thresholds
+    });
+    sections.forEach(function (section) { observer.observe(section); });
+  }
+
+  window.addEventListener("scroll", sync, { passive: true });
+  window.addEventListener("resize", sync);
+})();
