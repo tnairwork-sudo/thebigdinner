@@ -1390,7 +1390,7 @@ main > .frame:nth-child(17) { background: var(--mustard); }
 
 /* Phones. Wide margins, tall sections, and controls you can actually read. */
 @media (max-width: 759px) {
-  :root { --nav-h: 132px; }
+  :root { --nav-h: 94px; }
   body { font-size: 1.125rem; line-height: 1.7; }
   .label { font-size: 1rem; letter-spacing: 0.12em; line-height: 1.5; }
   .display { font-size: clamp(2.7rem, 12vw, 3.4rem); }
@@ -1542,4 +1542,45 @@ main > .frame:nth-child(17) { background: var(--mustard); }
   .reel-lightbox { padding: 28px 24px; }
   .reel-lightbox-panel { padding: 28px 20px 20px; }
   .reel-lightbox[hidden] { display: none !important; }
+  .nav {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-areas: "logo logo" "invite menu";
+    justify-content: center;
+    align-items: center;
+    column-gap: 12px;
+    row-gap: 8px;
+    padding: 8px 16px 10px;
+    min-height: 0;
+  }
+  .nav .wordmark {
+    grid-area: logo;
+    width: auto;
+    max-width: 100%;
+    flex: none;
+    text-align: center;
+  }
+  .nav .invite-btn { grid-area: invite; }
+  .nav .nav-toggle { grid-area: menu; }
+  .nav .invite-btn,
+  .nav .nav-toggle {
+    min-height: 44px;
+    height: 44px;
+    padding: 0 14px;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+  }
+  .sound {
+    top: auto;
+    left: auto;
+    right: 12px;
+    bottom: 12px;
+    transform: none;
+    min-height: 0;
+    height: auto;
+    padding: 6px 10px;
+    font-size: 14px;
+    letter-spacing: 0.03em;
+    line-height: 1.2;
+  }
 }
