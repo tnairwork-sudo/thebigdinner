@@ -1080,3 +1080,23 @@ html.js .reveal.is-in { opacity: 1; transform: none; }
   .nav.is-open .nav-links { opacity: 1; }
   .spinner.active { opacity: 1; }
 }
+
+/* Poster sequence. Banner from 760px, 4:5 below. Added after the philosophy section. */
+.poster-run { margin: 0; }
+.poster-run-item { margin: 0; }
+.poster-open {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: inherit;
+  cursor: pointer;
+  appearance: none;
+}
+.poster-open:focus-visible { outline: 2px solid var(--gold); outline-offset: -2px; }
+.poster-run-item img { width: 100%; height: auto; display: block; }
