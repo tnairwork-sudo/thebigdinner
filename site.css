@@ -1313,12 +1313,13 @@ main > .frame:nth-child(17) { background: var(--mustard); }
 .evening-frame img, .reel-tile video {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   display: block;
 }
 .reel-tile {
   appearance: none;
-  padding: 12px;
+  aspect-ratio: 9 / 16;
+  padding: 0;
   color: inherit;
   font: inherit;
   cursor: pointer;
@@ -1385,4 +1386,87 @@ main > .frame:nth-child(17) { background: var(--mustard); }
     width: min(1080px, 100%);
   }
   .evenings-grid .evening-frame:last-child:nth-child(3n+1) { grid-column: 2; }
+}
+
+/* Phones, 375 to 430. One column of full-bleed colour, two-up portraits, 9:16 reels. */
+@media (max-width: 759px) {
+  :root { --nav-h: 112px; }
+  html, body { overflow-x: clip; }
+  body { font-size: 1.05rem; line-height: 1.55; }
+  .label { font-size: 0.84rem; letter-spacing: 0.16em; }
+  .display { font-size: clamp(2.35rem, 11vw, 3.05rem); }
+  .headline { font-size: clamp(1.8rem, 7.6vw, 2.3rem); }
+  .lede, .hero-dek { font-size: 1.18rem; }
+  .prose { font-size: 1.06rem; line-height: 1.55; }
+  .rule p { font-size: 1.02rem; }
+  .nav {
+    padding: 8px 12px 8px;
+    gap: 2px 8px;
+  }
+  .nav .invite-btn,
+  .nav-toggle,
+  .sound,
+  .welcome-close,
+  .reel-lightbox-close {
+    min-height: 44px;
+    min-width: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .nav .invite-btn {
+    padding: 10px 12px;
+    font-size: 0.84rem;
+    letter-spacing: 0.08em;
+  }
+  .nav-toggle { padding: 10px 12px; letter-spacing: 0.14em; }
+  .sound { padding: 10px 14px; }
+  .colophon-nav a, .link-quiet {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .frame, .paper-frame, .sheet, .lineage, .archive, .masthead, .journal, .gallery-block, .press {
+    padding: 32px 16px;
+  }
+  .hero {
+    padding-top: calc(var(--nav-h) + 6px);
+    padding-bottom: 18px;
+  }
+  .hero .art { margin-top: 12px; padding: 6px; }
+  .hero .art img { max-height: 22vh; }
+  .frame-copy { padding-top: 16px; }
+  .poster-run { padding: 12px 12px 16px; }
+  .poster-run-item {
+    width: fit-content;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0;
+  }
+  .poster-run-item img {
+    width: auto;
+    max-width: 100%;
+    max-height: calc(100svh - var(--nav-h) - 28px);
+    margin: 0 auto;
+  }
+  .evenings, .reels { padding: 28px 12px 32px; }
+  .evenings .label, .reels .label { margin-bottom: 14px; }
+  .evenings-grid, .reel-grid {
+    width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .evening-frame, .reel-tile { padding: 0; min-width: 0; }
+  .evening-frame { aspect-ratio: 3 / 4; }
+  .reel-tile { aspect-ratio: 9 / 16; }
+  .evenings-grid .evening-frame:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    width: calc((100% - 10px) / 2);
+    justify-self: center;
+  }
+  .colophon { padding: 32px 16px 24px; }
+  .has-sound .colophon { padding-bottom: 76px; }
+  .page-hero { padding: calc(var(--nav-h) + 20px) 16px 24px; }
+  .masthead.has-art { padding: calc(var(--nav-h) + 16px) 16px 28px; }
 }
