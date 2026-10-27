@@ -3,106 +3,53 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#187a5e">
+<meta name="theme-color" content="#29000a">
 <meta name="color-scheme" content="light">
-<title>The Big Dinner · Gallery</title>
+<title>Evenings · The Big Dinner</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Outfit:wght@400;500&display=swap" rel="stylesheet">
-<script>document.documentElement.classList.add("js");</script>
+<link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/site.css">
 </head>
-<body class="theme-dark">
+<body>
 <a class="skip" href="#content">Skip to content</a>
 <header class="nav" data-nav>
   <a class="wordmark" href="/">The Big Dinner</a>
-  <a class="invite-btn" href="/?invite=1">Request an Invitation</a>
   <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="nav-menu">Menu</button>
-  <ul class="nav-links" id="nav-menu">
-    <li><a href="/">Home</a></li>
-    <li><a href="/#philosophy">About</a></li>
-    <li><a href="/experiment.html">The Experiment</a></li>
-    <li><a href="/gallery.html" aria-current="page">Gallery</a></li>
-    <li><a href="/videos.html">Videos</a></li>
-  </ul>
+  <nav class="nav-links" id="nav-menu">
+    <a href="/">The Room</a>
+    <a href="/gallery.html" aria-current="page">Evenings</a>
+    <a href="/experiment.html">Notes</a>
+    <a href="/videos.html">Films</a>
+  </nav>
+  <a class="invite" href="/#invitation">Request an Invitation for The Big Dinner.</a>
 </header>
-
-<main id="content">
-  <header class="frame page-hero">
-    <picture class="art">
-      <source type="image/webp" srcset="/assets/art/section-brass-rail-16x9.webp">
-      <img src="/assets/art/section-brass-rail-16x9.jpg" width="1920" height="1080" alt="" decoding="async">
-    </picture>
-    <div class="frame-scrim"></div>
-    <div class="frame-copy">
-      <p class="label">The Archives</p>
-      <h1 class="display"><span>Visual</span><span>Evidence.</span></h1>
-    </div>
-  </header>
-
-  <section class="gallery-block">
-    <span class="label">Bombay Edition, April 2026</span>
-    <h2>Harbour Bar, Bombay</h2>
-    <div class="gallery-grid">
-      <figure class="reveal"><img src="/bombay1.jpg" alt="Bombay edition, Harbour Bar" loading="lazy" decoding="async"></figure>
-      <figure class="reveal"><img src="/bombay2.jpg" alt="Harbour Bar, Bombay" loading="lazy" decoding="async"></figure>
-      <figure class="reveal"><img src="/bombay3.jpg" alt="Bombay, the room" loading="lazy" decoding="async"></figure>
-      <figure class="reveal"><img src="/dec11.jpeg" alt="Bombay edition, guests" loading="lazy" decoding="async"></figure>
-      <figure class="reveal"><img src="/dec112.jpeg" alt="Bombay edition, the room" loading="lazy" decoding="async"></figure>
-      <figure class="reveal"><img src="/december111.jpeg" alt="Bombay edition, details" loading="lazy" decoding="async"></figure>
-    </div>
-  </section>
-
-  <section class="gallery-block">
-    <span class="label">The Archives</span>
-    <h2>Earlier Editions</h2>
-    <div class="gallery-grid">
-      <figure class="reveal"><img src="/innecircle3.jpeg" alt="Inner Circle" loading="lazy" decoding="async"></figure>
-      <figure class="reveal"><img src="/shangrila.jpeg" alt="Shangri-La Eros" loading="lazy" decoding="async"></figure>
-      <figure class="reveal"><img src="/sbhangrila.jpeg" alt="Shangri-La" loading="lazy" decoding="async"></figure>
-      <figure class="reveal"><img src="/jan1.jpeg" alt="January edition" loading="lazy" decoding="async"></figure>
-      <figure class="reveal"><img src="/jan2.jpeg" alt="January, the room" loading="lazy" decoding="async"></figure>
-      <figure class="reveal"><img src="/jan334.jpeg" alt="January, guests" loading="lazy" decoding="async"></figure>
-      <figure class="reveal"><img src="/janaryan.jpeg" alt="January edition" loading="lazy" decoding="async"></figure>
-      <figure class="reveal"><img src="/lodnon.jpeg" alt="London, the room" loading="lazy" decoding="async"></figure>
-      <figure class="reveal"><img src="/itcmaurya.jpeg" alt="ITC Maurya" loading="lazy" decoding="async"></figure>
-      <figure class="reveal"><img src="/itc.jpeg" alt="ITC, the room" loading="lazy" decoding="async"></figure>
-      <figure class="reveal"><img src="/itcmar.jpeg" alt="ITC Maurya, details" loading="lazy" decoding="async"></figure>
-      <figure class="reveal"><img src="/novemebr1.jpeg" alt="November edition" loading="lazy" decoding="async"></figure>
-      <figure class="reveal"><img src="/november3.jpeg" alt="November, the room" loading="lazy" decoding="async"></figure>
-      <figure class="reveal"><img src="/dec5.jpeg" alt="December edition" loading="lazy" decoding="async"></figure>
-      <figure class="reveal"><img src="/dec6.jpeg" alt="December, the room" loading="lazy" decoding="async"></figure>
-      <figure class="reveal"><img src="/dec9.jpeg" alt="December, guests" loading="lazy" decoding="async"></figure>
-      <figure class="reveal"><img src="/decembe3.jpeg" alt="December edition, details" loading="lazy" decoding="async"></figure>
-      <figure class="reveal"><img src="/devcmebr3.jpeg" alt="December archive" loading="lazy" decoding="async"></figure>
-    </div>
-  </section>
-
+<main id="content" class="gallery">
+  <h1>Evenings</h1>
+  <div class="grid">
+    <img src="/shangrila.jpeg" alt="The room, an evening" loading="lazy" decoding="async">
+    <img src="/jan1.jpeg" alt="Guests in the room" loading="lazy" decoding="async">
+    <img src="/dec11.jpeg" alt="The room in December" loading="lazy" decoding="async">
+    <img src="/itcmaurya.jpeg" alt="An evening in the room" loading="lazy" decoding="async">
+    <img src="/november3.jpeg" alt="The room in November" loading="lazy" decoding="async">
+    <img src="/lodnon.jpeg" alt="The room, far from home" loading="lazy" decoding="async">
+    <img src="/guests-1..jpg" alt="Guests" loading="lazy" decoding="async">
+    <img src="/guests-2.jpg" alt="Guests in conversation" loading="lazy" decoding="async">
+    <img src="/guests-3.jpg" alt="The evening" loading="lazy" decoding="async">
+    <img src="/innecircle3.jpeg" alt="The room" loading="lazy" decoding="async">
+    <img src="/dec5.jpeg" alt="Details from an evening" loading="lazy" decoding="async">
+    <img src="/jan2.jpeg" alt="The room in January" loading="lazy" decoding="async">
+  </div>
   <section class="press">
-    <span class="label">As Seen In</span>
     <h2>Grazia</h2>
-    <p class="press-quote">"The whole bar, held as one room."</p>
-    <img src="/Grazia.jpeg" alt="Grazia feature" loading="lazy" decoding="async">
-  </section>
-
-  <section class="gallery-block">
-    <span class="label">The Room</span>
-    <h2>Guests</h2>
-    <div class="gallery-grid">
-      <figure class="reveal"><img src="/dec11.jpeg" alt="The archive" loading="lazy" decoding="async"></figure>
-      <figure class="reveal"><img src="/guests-1..jpg" alt="The room, guests" loading="lazy" decoding="async"></figure>
-      <figure class="reveal"><img src="/guests-2.jpg" alt="The room, guests" loading="lazy" decoding="async"></figure>
-      <figure class="reveal"><img src="/guests-3.jpg" alt="The room, evening" loading="lazy" decoding="async"></figure>
-      <figure class="reveal"><img src="/guests-4.jpg" alt="The room, evening" loading="lazy" decoding="async"></figure>
-    </div>
+    <p>The whole bar, held as one room.</p>
+    <img src="/Grazia.jpeg" alt="A page from Grazia" loading="lazy" decoding="async">
   </section>
 </main>
-
 <footer class="colophon">
-  <p class="wordmark">The Big Dinner</p>
-  <p class="colophon-line">The Big Dinner © 2026</p>
-  <p class="colophon-mail"><a href="mailto:host@thebigdinner.in">host@thebigdinner.in</a></p>
-  <nav class="colophon-nav" aria-label="House notes">
+  <a class="wordmark" href="/">The Big Dinner</a>
+  <p><a href="mailto:host@thebigdinner.in">host@thebigdinner.in</a></p>
+  <nav aria-label="House notes">
     <a href="/contact">Contact</a>
     <a href="/terms">Terms</a>
     <a href="/refunds">Refunds</a>

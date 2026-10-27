@@ -3,859 +3,153 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#187a5e">
+<meta name="theme-color" content="#29000a">
 <meta name="color-scheme" content="light">
 <meta name="format-detection" content="telephone=no, email=no, address=no">
+<meta name="description" content="The Big Dinner is a private room, convened once a month. Guests come by invitation.">
 <title>The Big Dinner</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Outfit:wght@400;500&display=swap" rel="stylesheet">
-<link rel="preload" as="image" href="/assets/art/hero-16x9.webp" type="image/webp" media="(min-width: 760px)">
-<link rel="preload" as="image" href="/assets/art/hero-mobile-9x16.webp" type="image/webp" media="(max-width: 759px)">
-<script>document.documentElement.classList.add("js");</script>
+<link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/site.css">
 </head>
-<body class="theme-dark has-sound">
-<a class="skip" href="#content">Skip to content</a>
-
+<body>
+<a class="skip" href="#invitation">Skip to the form</a>
 <header class="nav" data-nav>
   <a class="wordmark" href="/">The Big Dinner</a>
-  <button class="invite-btn js-open-invite" type="button">Request an Invitation</button>
   <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="nav-menu">Menu</button>
-  <ul class="nav-links" id="nav-menu">
-    <li><a href="/#philosophy">About</a></li>
-    <li><a href="/#chronicles">Chronicles</a></li>
-    <li><a href="/experiment.html">The Experiment</a></li>
-    <li><a href="/gallery.html">Gallery</a></li>
-    <li><a href="/videos.html">Videos</a></li>
-  </ul>
+  <nav class="nav-links" id="nav-menu">
+    <a href="/gallery.html">Evenings</a>
+    <a href="/experiment.html">Notes</a>
+    <a href="/videos.html">Films</a>
+    <a href="/contact">Contact</a>
+  </nav>
+  <a class="invite" href="#invitation">Request an Invitation for The Big Dinner.</a>
 </header>
 
-<button class="sound" id="soundToggle" type="button" aria-pressed="false">Sound: Off</button>
-
 <main id="content">
-  <section class="frame hero">
-    <picture class="art">
-      <source media="(min-width: 760px)" type="image/webp" srcset="/assets/art/hero-16x9.webp">
-      <source media="(min-width: 760px)" srcset="/assets/art/hero-16x9.jpg">
-      <source type="image/webp" srcset="/assets/art/hero-mobile-9x16.webp">
-      <img src="/assets/art/hero-mobile-9x16.jpg" width="1080" height="1920" alt="A lamplit room, set for the evening" fetchpriority="high" decoding="async">
-    </picture>
-    <div class="frame-scrim"></div>
-    <div class="frame-copy">
-      <p class="label">A private room</p>
-      <h1 class="display"><span>The Big</span><span>Dinner</span></h1>
-      <p class="hero-dek">It is a bet on people.</p>
-      <button class="invite-btn invite-btn-lg js-open-invite" type="button">Request an Invitation</button>
+  <section class="promise">
+    <h1>A closed room, once a month.</h1>
+    <p>A private bar. Guests by invitation. Not a networking event.</p>
+  </section>
+
+  <section class="cities" aria-label="Cities">
+    <div class="city-tabs" role="tablist">
+      <button type="button" role="tab" id="tab-delhi" data-city-tab aria-selected="true" aria-controls="panel-delhi">Delhi</button>
+      <button type="button" role="tab" id="tab-hyderabad" data-city-tab aria-selected="false" aria-controls="panel-hyderabad">Hyderabad</button>
+      <button type="button" role="tab" id="tab-london" data-city-tab aria-selected="false" aria-controls="panel-london">London</button>
+    </div>
+    <div class="city-panel" role="tabpanel" id="panel-delhi" aria-labelledby="tab-delhi">
+      <h2 data-letter="D">Delhi</h2>
+      <p>The room that set the tone, and still keeps it.</p>
+    </div>
+    <div class="city-panel" role="tabpanel" id="panel-hyderabad" aria-labelledby="tab-hyderabad" hidden>
+      <h2 data-letter="H">Hyderabad</h2>
+      <p>Fewer voices. The same care in who is asked.</p>
+    </div>
+    <div class="city-panel" role="tabpanel" id="panel-london" aria-labelledby="tab-london" hidden>
+      <h2 data-letter="L">London</h2>
+      <p>The same room, held by friends a long way from home.</p>
     </div>
   </section>
 
-  <section class="paper-frame" id="philosophy">
-    <picture class="art">
-      <source type="image/webp" srcset="/assets/art/section-damask-light-16x9.webp">
-      <img src="/assets/art/section-damask-light-16x9.jpg" width="1920" height="1080" alt="" decoding="async">
-    </picture>
-    <div class="veil"></div>
-    <div class="wrap split">
-      <div>
-        <p class="label reveal">The Philosophy</p>
-        <h2 class="headline reveal">This is not a<br><em>networking event.</em></h2>
-        <div class="prose">
-          <p class="reveal">The Big Dinner is a closed room. Convened privately, once each month. Every guest is chosen with intention, for the texture of their thinking, the weight of their experience, and the quality of their presence.</p>
-          <p class="reveal">No pitches. No elevator lines. No business cards. What happens instead is rarer: conversation that moves, ideas that collide, and friendships that do not require a transaction to begin.</p>
-          <p class="reveal">This is how we used to do it. Before the world taught us to be useful before we were real.</p>
+  <section class="request" id="invitation">
+    <h2>Request an Invitation for The Big Dinner.</h2>
+    <p class="lede">Entry is not announced. A few honest lines are enough to begin.</p>
+    <div class="progress" aria-hidden="true">
+      <span class="is-on" id="dot1">1</span>
+      <i></i>
+      <span id="dot2">2</span>
+    </div>
+    <form id="inviteForm" novalidate>
+      <div id="step1">
+        <div class="fields two">
+          <div class="field">
+            <label for="fullName">Name</label>
+            <input id="fullName" name="name" type="text" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" autocomplete="email" required>
+          </div>
+          <div class="field">
+            <label for="phone">Phone</label>
+            <input id="phone" name="phone" type="tel" autocomplete="tel" required>
+          </div>
+          <div class="field">
+            <label for="homeCity">City</label>
+            <input id="homeCity" name="city" type="text" autocomplete="address-level2" required>
+          </div>
+          <div class="field wide">
+            <label for="social">Instagram or LinkedIn</label>
+            <input id="social" name="social" type="text" required>
+          </div>
+          <div class="field wide">
+            <label for="about">In a few words, tell us what makes you, you</label>
+            <textarea id="about" name="about" required></textarea>
+          </div>
+          <div class="field">
+            <label for="knowGuest">Do you know a guest?</label>
+            <select id="knowGuest" name="knowGuest" required>
+              <option value="">Choose</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+          <div class="field" id="guestWrap" hidden>
+            <label for="guestName">Their name</label>
+            <input id="guestName" name="guestName" type="text">
+          </div>
+        </div>
+        <div class="actions">
+          <span></span>
+          <button class="btn" id="toStep2" type="button">Continue</button>
         </div>
       </div>
-      <p class="aside reveal">
-        <span class="aside-mark">TBD</span>
-        <span class="label">Estd. 2025</span>
-      </p>
-    </div>
-  </section>
-
-  <section class="frame">
-    <picture class="art">
-      <source type="image/webp" srcset="/assets/art/section-doorway-glow-16x9.webp">
-      <img src="/assets/art/section-doorway-glow-16x9.jpg" width="1920" height="1080" alt="" loading="lazy" decoding="async">
-    </picture>
-    <div class="frame-scrim"></div>
-    <div class="frame-copy">
-      <p class="label reveal">The room</p>
-      <h2 class="display reveal">The room.</h2>
-    </div>
-  </section>
-
-  <section class="sheet" id="rules">
-    <div class="wrap">
-      <div class="section-intro">
-        <p class="label reveal">The Standard</p>
-        <h2 class="headline reveal">What the room<br><em>requires of you</em></h2>
-      </div>
-      <ol class="rules">
-        <li class="rule reveal">
-          <span class="rule-no">01</span>
-          <h3 class="rule-title">Selection</h3>
-          <p>Participation is extended by invitation only. Every name in this room is chosen deliberately. Our criteria are not disclosed.</p>
-        </li>
-        <li class="rule reveal">
-          <span class="rule-no">02</span>
-          <h3 class="rule-title">Dress</h3>
-          <p>Men: a suit. Women: cocktail attire. No exceptions. The room has an aesthetic. You are part of it the moment you walk in.</p>
-        </li>
-        <li class="rule reveal">
-          <span class="rule-no">03</span>
-          <h3 class="rule-title">RSVP</h3>
-          <p>Confirm or decline. Ghosting is a choice, and it will be treated as one. Silence results in permanent removal from all cities.</p>
-        </li>
-        <li class="rule reveal">
-          <span class="rule-no">04</span>
-          <h3 class="rule-title">Participation Fee</h3>
-          <p>A participation fee applies. It is the filter that separates those who understand the value of a room from those who do not.</p>
-        </li>
-        <li class="rule reveal">
-          <span class="rule-no">05</span>
-          <h3 class="rule-title">The Evening</h3>
-          <p>Food and beverages are settled individually with the venue. You are among equals. The conversation is the hospitality.</p>
-        </li>
-        <li class="rule reveal">
-          <span class="rule-no">06</span>
-          <h3 class="rule-title">Conduct</h3>
-          <p>The quality of the evening is only ever as good as the people in the room. This is how we protect that.</p>
-        </li>
-      </ol>
-    </div>
-  </section>
-
-  <section class="frame">
-    <picture class="art">
-      <source type="image/webp" srcset="/assets/art/section-brass-rail-16x9.webp">
-      <img src="/assets/art/section-brass-rail-16x9.jpg" width="1920" height="1080" alt="" loading="lazy" decoding="async">
-    </picture>
-    <div class="frame-scrim"></div>
-    <div class="frame-copy">
-      <p class="label reveal">The evening</p>
-      <h2 class="headline reveal">The conversation is the hospitality.</h2>
-    </div>
-  </section>
-
-  <section class="lineage" id="chronicles">
-    <div class="wrap">
-      <div class="section-intro">
-        <p class="label reveal">The Lineage</p>
-        <h2 class="headline reveal">Eight chapters.<br><em>So far.</em></h2>
-      </div>
-      <ol class="chapters">
-        <li class="chapter reveal"><span class="chapter-no">I</span><span class="chapter-date">October 2025</span><span class="chapter-place">Blue Bar, New Delhi</span></li>
-        <li class="chapter reveal"><span class="chapter-no">II</span><span class="chapter-date">November 2025</span><span class="chapter-place">Megu, The Leela Palace, New Delhi</span></li>
-        <li class="chapter reveal"><span class="chapter-no">III</span><span class="chapter-date">December 2025</span><span class="chapter-place">Megu, The Leela Palace, New Delhi</span></li>
-        <li class="chapter reveal"><span class="chapter-no">IV</span><span class="chapter-date">January 2026</span><span class="chapter-place">The Imperial Hotel, New Delhi</span></li>
-        <li class="chapter reveal"><span class="chapter-no">V</span><span class="chapter-date">February 2026</span><span class="chapter-place">Shangri-La Eros, New Delhi</span></li>
-        <li class="chapter reveal"><span class="chapter-no">VI</span><span class="chapter-date">March 2026</span><span class="chapter-place">Ottimo, ITC Maurya, New Delhi</span></li>
-        <li class="chapter reveal"><span class="chapter-no">VII</span><span class="chapter-date">April 2026</span><span class="chapter-place">Harbour Bar, Bombay</span></li>
-        <li class="chapter reveal"><span class="chapter-no">VIII</span><span class="chapter-date">April 2026</span><span class="chapter-place">Shangri-La Hotel, Delhi</span></li>
-      </ol>
-    </div>
-  </section>
-
-  <section class="archive">
-    <div class="wrap">
-      <div class="archive-head">
-        <div>
-          <p class="label reveal">Earlier evenings</p>
-          <h2 class="headline reveal">Eight evenings.<br><em>Captured.</em></h2>
+      <div id="step2" hidden>
+        <div class="fields">
+          <div class="field">
+            <label for="editionCity">Which city</label>
+            <select id="editionCity" name="editionCity" required>
+              <option value="">Choose a city</option>
+              <option value="delhi">Delhi</option>
+              <option value="hyderabad">Hyderabad</option>
+              <option value="london">London</option>
+              <option value="bengaluru">Bengaluru</option>
+              <option value="dubai">Dubai</option>
+              <option value="bombay">Bombay</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="edition">Edition</label>
+            <select id="edition" name="edition" required>
+              <option value="">Choose an edition</option>
+              <option value="next">The next evening</option>
+            </select>
+          </div>
         </div>
-        <a class="link-quiet reveal" href="/gallery.html">View all</a>
+        <div class="actions">
+          <button class="btn-quiet" id="toStep1" type="button">Back</button>
+          <a class="btn" id="handoff" href="#" target="_blank" rel="noopener noreferrer" aria-disabled="true">Request an Invitation for The Big Dinner.</a>
+        </div>
+        <p class="note" id="formNote" role="status"></p>
       </div>
-    </div>
-    <div class="mosaic mosaic-a">
-      <figure class="shot">
-        <img src="/shangrila.jpeg" alt="The Big Dinner at Shangri-La Eros, New Delhi" loading="lazy" decoding="async">
-        <figcaption>
-          <span class="label">Chapter V · Feb 2026</span>
-          <span class="shot-title">Shangri-La Eros, New Delhi</span>
-        </figcaption>
-      </figure>
-      <figure class="shot">
-        <img src="/Grazia.jpeg" alt="The Big Dinner, as seen in Grazia" loading="lazy" decoding="async">
-        <figcaption>
-          <span class="label">As seen in Grazia</span>
-          <span class="shot-title">The Room.</span>
-        </figcaption>
-      </figure>
-      <figure class="shot">
-        <img src="/innecircle3.jpeg" alt="The Big Dinner" loading="lazy" decoding="async">
-        <figcaption>
-          <span class="label">Chapter III · Dec 2025</span>
-          <span class="shot-title">The Experiment.</span>
-        </figcaption>
-      </figure>
-    </div>
-    <div class="mosaic mosaic-b">
-      <figure class="shot">
-        <img src="/itcmaurya.jpeg" alt="The Big Dinner at ITC Maurya, Delhi" loading="lazy" decoding="async">
-        <figcaption>
-          <span class="label">Chapter VI · Mar 2026</span>
-          <span class="shot-title">ITC Maurya, Delhi</span>
-        </figcaption>
-      </figure>
-      <figure class="shot">
-        <img src="/jan1.jpeg" alt="The Big Dinner at The Imperial, Delhi" loading="lazy" decoding="async">
-        <figcaption>
-          <span class="label">Chapter IV · Jan 2026</span>
-          <span class="shot-title">The Imperial, Delhi</span>
-        </figcaption>
-      </figure>
-      <figure class="shot">
-        <img src="/dec11.jpeg" alt="The Big Dinner at The Leela Palace, Delhi" loading="lazy" decoding="async">
-        <figcaption>
-          <span class="label">Chapter III · Dec 2025</span>
-          <span class="shot-title">The Leela Palace, Delhi</span>
-        </figcaption>
-      </figure>
-      <figure class="shot">
-        <img src="/bombay1.jpg" alt="The Big Dinner at Harbour Bar, Bombay" loading="lazy" decoding="async">
-        <figcaption>
-          <span class="label">Chapter VII · Apr 2026</span>
-          <span class="shot-title">Harbour Bar, Bombay</span>
-        </figcaption>
-      </figure>
-    </div>
-  </section>
-
-  <section class="frame" id="cities" data-art>
-    <picture class="art">
-      <source type="image/webp" srcset="/assets/art/six-cities-one-room-16x9.webp">
-      <img src="/assets/art/six-cities-one-room-16x9.jpg" width="1920" height="1080" alt="" loading="lazy" decoding="async">
-    </picture>
-    <div class="frame-scrim"></div>
-    <div class="frame-copy">
-      <p class="label">Where we gather</p>
-      <h2 class="display art-title"><span>Six cities.</span> <span>One room.</span></h2>
-    </div>
-  </section>
-
-  <section class="frame" data-art>
-    <picture class="art">
-      <source type="image/webp" srcset="/assets/art/city-delhi-16x9.webp">
-      <img src="/assets/art/city-delhi-16x9.jpg" width="1920" height="1080" alt="" loading="lazy" decoding="async">
-    </picture>
-    <div class="frame-scrim"></div>
-    <div class="frame-copy">
-      <h3 class="display art-title">Delhi</h3>
-      <p class="city-status">Active</p>
-    </div>
-  </section>
-
-  <section class="frame" data-art>
-    <picture class="art">
-      <source type="image/webp" srcset="/assets/art/city-bombay-16x9.webp">
-      <img src="/assets/art/city-bombay-16x9.jpg" width="1920" height="1080" alt="" loading="lazy" decoding="async">
-    </picture>
-    <div class="frame-scrim"></div>
-    <div class="frame-copy">
-      <h3 class="display art-title">Bombay</h3>
-      <p class="city-status">Active</p>
-    </div>
-  </section>
-
-  <section class="frame" data-art>
-    <picture class="art">
-      <source type="image/webp" srcset="/assets/art/city-london-16x9.webp">
-      <img src="/assets/art/city-london-16x9.jpg" width="1920" height="1080" alt="" loading="lazy" decoding="async">
-    </picture>
-    <div class="frame-scrim"></div>
-    <div class="frame-copy">
-      <h3 class="display art-title">London</h3>
-      <p class="city-status">Active</p>
-    </div>
-  </section>
-
-  <section class="frame" data-art>
-    <picture class="art">
-      <source type="image/webp" srcset="/assets/art/city-bengaluru-16x9.webp">
-      <img src="/assets/art/city-bengaluru-16x9.jpg" width="1920" height="1080" alt="" loading="lazy" decoding="async">
-    </picture>
-    <div class="frame-scrim"></div>
-    <div class="frame-copy">
-      <h3 class="display art-title">Bengaluru</h3>
-      <p class="city-status">Active</p>
-    </div>
-  </section>
-
-  <section class="frame" data-art>
-    <picture class="art">
-      <source type="image/webp" srcset="/assets/art/city-hyderabad-16x9.webp">
-      <img src="/assets/art/city-hyderabad-16x9.jpg" width="1920" height="1080" alt="" loading="lazy" decoding="async">
-    </picture>
-    <div class="frame-scrim"></div>
-    <div class="frame-copy">
-      <h3 class="display art-title">Hyderabad</h3>
-      <p class="city-status">Active</p>
-    </div>
-  </section>
-
-  <section class="frame" data-art>
-    <picture class="art">
-      <source type="image/webp" srcset="/assets/art/city-dubai-16x9.webp">
-      <img src="/assets/art/city-dubai-16x9.jpg" width="1920" height="1080" alt="" loading="lazy" decoding="async">
-    </picture>
-    <div class="frame-scrim"></div>
-    <div class="frame-copy">
-      <h3 class="display art-title">Dubai</h3>
-      <p class="city-status">Coming Soon</p>
-    </div>
-  </section>
-
-  <section class="sheet invite" id="apply">
-    <div class="wrap-narrow">
-      <h2 class="headline reveal">Request an<br>Invitation</h2>
-      <p class="prose reveal">Submitting signals interest only. It does not constitute an invitation. Those selected will be contacted directly.</p>
-      <button class="invite-btn invite-btn-lg js-open-invite reveal" type="button">Request an Invitation</button>
-      <div class="invite-links reveal">
-        <a class="btn-line" href="https://forms.gle/zVchUBLogxfGeH5g6" target="_blank" rel="noopener noreferrer">Apply for Delhi</a>
-        <a class="btn-line" href="https://forms.gle/Am7Z96A1Ur1ZHF2X6" target="_blank" rel="noopener noreferrer">Apply for Bombay</a>
-        <a class="btn-line" href="https://docs.google.com/forms/d/e/1FAIpQLSdZrsP5Gd6toGWuQ10uEYVDx4f6BnMFgIyjZlvAX9X7suuwQA/viewform" target="_blank" rel="noopener noreferrer">Apply for London</a>
-        <a class="btn-line" href="https://forms.gle/maV5MoNA5wGTWkjZ9" target="_blank" rel="noopener noreferrer">Apply for Hyderabad</a>
-      </div>
-    </div>
+    </form>
+    <p class="fallback">If the form does not open, the standing links remain: <a href="https://forms.gle/zVchUBLogxfGeH5g6">Delhi</a>, <a href="https://forms.gle/maV5MoNA5wGTWkjZ9">Hyderabad</a>, <a href="https://docs.google.com/forms/d/e/1FAIpQLSdZrsP5Gd6toGWuQ10uEYVDx4f6BnMFgIyjZlvAX9X7suuwQA/viewform">London</a>, <a href="https://docs.google.com/forms/d/e/1FAIpQLSeOmRzh8oDVehdVauDcbmUsJTYla-mTBYo_91mjRAtQsW8XYw/viewform?usp=send_form">Bengaluru</a>, <a href="https://forms.gle/59dfvTV3jtLq1ws26">Dubai</a>.</p>
   </section>
 </main>
 
 <footer class="colophon">
-  <p class="wordmark">The Big Dinner</p>
-  <p class="label">Delhi · Bombay · London · Bengaluru · Hyderabad · Dubai</p>
-  <p class="colophon-line">The room fills itself with the people who show up.</p>
-  <p class="colophon-mail"><a href="mailto:host@thebigdinner.in">host@thebigdinner.in</a></p>
-  <nav class="colophon-nav" aria-label="House notes">
+  <a class="wordmark" href="/">The Big Dinner</a>
+  <p><a href="mailto:host@thebigdinner.in">host@thebigdinner.in</a></p>
+  <nav aria-label="House notes">
     <a href="/contact">Contact</a>
     <a href="/terms">Terms</a>
     <a href="/refunds">Refunds</a>
+    <a href="/relationships.html">Relationships</a>
   </nav>
 </footer>
-
-<audio id="ambientAudio" loop preload="none">
-  <source src="/ambient-theme.mp3" type="audio/mpeg">
-</audio>
-
-<div class="welcome" id="welcome" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle" hidden>
-  <picture class="art">
-    <source media="(min-width: 760px)" type="image/webp" srcset="/assets/art/hero-16x9.webp">
-    <source media="(min-width: 760px)" srcset="/assets/art/hero-16x9.jpg">
-    <source type="image/webp" srcset="/assets/art/hero-mobile-9x16.webp">
-    <img src="/assets/art/hero-mobile-9x16.jpg" width="1080" height="1920" alt="">
-  </picture>
-  <div class="frame-scrim welcome-scrim"></div>
-  <button class="scrim-close" type="button" tabindex="-1" aria-hidden="true"></button>
-  <button class="welcome-close" type="button">Close</button>
-  <div class="welcome-copy">
-    <p class="label" id="welcomeLabel">The room</p>
-    <p class="welcome-line" id="welcomeTitle">It is a bet on people.</p>
-    <button class="invite-btn invite-btn-lg js-open-invite" type="button">Request an Invitation</button>
-  </div>
-</div>
-
-<div id="cityOverlay" class="overlay" role="dialog" aria-modal="true" aria-labelledby="overlayTitle">
-  <button class="scrim-close" type="button" tabindex="-1" aria-hidden="true"></button>
-  <button id="closeOverlay" class="overlay-close" type="button">Close</button>
-  <div class="overlay-page" id="pickerCity">
-    <div class="step-progress" data-step-dots aria-hidden="true">
-      <span class="dot is-on" data-dot="1"></span>
-      <span class="dot-line"></span>
-      <span class="dot" data-dot="2"></span>
-      <span class="dot-line"></span>
-      <span class="dot" data-dot="3"></span>
-    </div>
-    <p class="label">Step 1 of 3</p>
-    <h2 class="headline" id="overlayTitle">Where would you like<br><em>to join the room?</em></h2>
-    <p class="overlay-note">Select your city to continue.</p>
-    <div class="field">
-      <label class="sr" for="citySelect">City</label>
-      <select id="citySelect">
-        <option value="">Select a city</option>
-        <option value="delhi">Delhi</option>
-        <option value="bombay">Bombay</option>
-        <option value="london">London</option>
-        <option value="bengaluru">Bengaluru</option>
-        <option value="hyderabad">Hyderabad</option>
-        <option value="dubai">Dubai</option>
-      </select>
-    </div>
-    <button class="btn" id="cityContinue" type="button">Continue</button>
-  </div>
-  <div class="overlay-page" id="pickerApply" hidden>
-    <div class="step-progress" data-step-dots aria-hidden="true">
-      <span class="dot" data-dot="1"></span>
-      <span class="dot-line"></span>
-      <span class="dot" data-dot="2"></span>
-      <span class="dot-line"></span>
-      <span class="dot is-on" data-dot="3"></span>
-    </div>
-    <p class="label">Step 3 of 3</p>
-    <h2 class="headline" id="applyTitle">You are applying for<br><em id="selectedCityDisplay"></em></h2>
-    <p class="overlay-note">Answer honestly. That is the only criterion that matters.</p>
-    <div class="overlay-actions">
-      <button class="btn-line" id="applyBack" type="button">Back</button>
-      <a id="formLink" class="btn" href="#" target="_blank" rel="noopener noreferrer">Open the Form</a>
-    </div>
-  </div>
-</div>
-
-<div id="formNotice" class="form-notice" role="dialog" aria-modal="true" aria-labelledby="noticeTitle" hidden tabindex="-1">
-  <button class="form-notice-backdrop" type="button" tabindex="-1" aria-hidden="true"></button>
-  <div class="form-notice-panel">
-    <button class="form-notice-close" type="button">Close</button>
-    <div class="form-notice-body">
-      <div class="notice-step" id="noticeStep" hidden>
-        <div class="step-progress" data-step-dots aria-hidden="true">
-          <span class="dot" data-dot="1"></span>
-          <span class="dot-line"></span>
-          <span class="dot is-on" data-dot="2"></span>
-          <span class="dot-line"></span>
-          <span class="dot" data-dot="3"></span>
-        </div>
-        <p class="label">Step 2 of 3</p>
-      </div>
-      <h2 class="notice-title" id="noticeTitle">Before you begin</h2>
-      <p>Social media has taken our focus away. This form is an attempt to restore it.</p>
-      <p>Please do not fill it as a formality. We receive over a thousand applications in the first week, and we read for self-awareness, clarity, and a story worth hearing.</p>
-      <h3 class="notice-dress">Dress</h3>
-      <div class="notice-figures" aria-hidden="true">
-        <svg viewBox="0 0 80 110" height="84" focusable="false">
-          <g fill="none" stroke="#a8875a" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="40" cy="14" r="8"/>
-            <path d="M34 22c1.4 3.6 3.2 5.4 6 5.4s4.6-1.8 6-5.4"/>
-            <path d="M16 50c1.5-16 8-24 24-24s22.5 8 24 24"/>
-            <path d="M40 26l-11 24 11 9 11-9-11-24"/>
-            <path d="M40 34l-2.4 16 2.4 9 2.4-9z"/>
-            <path d="M16 50l-2 50h18"/>
-            <path d="M64 50l2 50H48"/>
-            <path d="M32 100l8-12 8 12"/>
-          </g>
-        </svg>
-        <svg viewBox="0 0 80 110" height="84" focusable="false">
-          <g fill="none" stroke="#a8875a" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="40" cy="13" r="7.5"/>
-            <path d="M33.5 21c1.6 3.2 3.6 4.8 6.5 4.8s4.9-1.6 6.5-4.8"/>
-            <path d="M27 36c1.6-9 6.2-14 13-14s11.4 5 13 14"/>
-            <path d="M29 36c-.6 11 2 17 11 19 9-2 11.6-8 11-19"/>
-            <path d="M31 55c-12 8-18 30-15 48h48c3-18-3-40-15-48"/>
-            <path d="M40 55c-.4 16-.6 32-.2 48"/>
-          </g>
-        </svg>
-      </div>
-      <p>Gentlemen arrive in a well-cut suit, tie optional, shoes polished. Ladies arrive in cocktail attire, the kind of dress you'd choose for a grand evening at the bar. Come as you would want to be remembered.</p>
-      <p>If accepted, there is a tariff of ₹5,000. It secures the venue and is an intended filter.</p>
-      <p>Every invitation carries an RSVP deadline. Those who do not reply, yes or no, in time are not invited again, in any city.</p>
-      <span id="noticeEnd" class="notice-end" aria-hidden="true"></span>
-    </div>
-    <div class="form-notice-bar">
-      <button class="btn-line" id="noticeBack" type="button" hidden>Back</button>
-      <div class="read-slot" id="readSlot">
-        <p class="read-hint" id="readHint">Scroll to read the full note</p>
-        <label class="read-check" for="noticeRead" hidden>
-          <input id="noticeRead" type="checkbox" disabled>
-          <span class="read-box" aria-hidden="true"></span>
-          I have read this
-        </label>
-      </div>
-      <button id="noticeContinue" class="btn" type="button" disabled>Continue</button>
-    </div>
-  </div>
-</div>
-
 <script src="/site.js"></script>
-<script>
-  var audio = document.getElementById("ambientAudio");
-  var soundToggle = document.getElementById("soundToggle");
-  var playing = false;
-
-  soundToggle.addEventListener("click", function () {
-    if (playing) {
-      audio.pause();
-      soundToggle.classList.remove("playing");
-      soundToggle.textContent = "Sound: Off";
-      soundToggle.setAttribute("aria-pressed", "false");
-      playing = false;
-      return;
-    }
-    audio.volume = 0.35;
-    audio.play().then(function () {
-      soundToggle.classList.add("playing");
-      soundToggle.textContent = "Sound: On";
-      soundToggle.setAttribute("aria-pressed", "true");
-      playing = true;
-    }).catch(function () {});
-  });
-
-  var overlay = document.getElementById("cityOverlay");
-  var welcome = document.getElementById("welcome");
-  var welcomeTimer = null;
-  var returnFocus = null;
-  var seenKey = "tbd-invite-seen";
-  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  var cityForms = {
-    delhi: "https://forms.gle/zVchUBLogxfGeH5g6",
-    bombay: "https://forms.gle/Am7Z96A1Ur1ZHF2X6",
-    london: "https://docs.google.com/forms/d/e/1FAIpQLSdZrsP5Gd6toGWuQ10uEYVDx4f6BnMFgIyjZlvAX9X7suuwQA/viewform",
-    bengaluru: "https://docs.google.com/forms/d/e/1FAIpQLSeOmRzh8oDVehdVauDcbmUsJTYla-mTBYo_91mjRAtQsW8XYw/viewform?usp=send_form",
-    hyderabad: "https://forms.gle/maV5MoNA5wGTWkjZ9",
-    dubai: "https://forms.gle/59dfvTV3jtLq1ws26"
-  };
-
-  function markSeen() {
-    try { sessionStorage.setItem(seenKey, "1"); } catch (err) {}
-  }
-
-  function alreadySeen() {
-    try { return sessionStorage.getItem(seenKey) === "1"; } catch (err) { return false; }
-  }
-
-  var formNotice = document.getElementById("formNotice");
-  var noticeRead = document.getElementById("noticeRead");
-  var noticeContinue = document.getElementById("noticeContinue");
-  var noticeStep = document.getElementById("noticeStep");
-  var noticeBack = document.getElementById("noticeBack");
-  var noticeBody = formNotice.querySelector(".form-notice-body");
-  var noticeEnd = document.getElementById("noticeEnd");
-  var readSlot = document.getElementById("readSlot");
-  var readHint = document.getElementById("readHint");
-  var readLabel = formNotice.querySelector(".read-check");
-  var pendingFormUrl = "";
-  var noticeReturn = null;
-  var noticeMode = "direct";
-  var readReached = false;
-
-  function lockables() {
-    return [
-      document.querySelector("[data-nav]"),
-      document.getElementById("content"),
-      document.querySelector(".colophon"),
-      document.getElementById("soundToggle"),
-      welcome,
-      overlay,
-      formNotice
-    ].filter(Boolean);
-  }
-
-  function setLocked(active) {
-    lockables().forEach(function (el) {
-      if (active && el !== active) el.setAttribute("inert", "");
-      else el.removeAttribute("inert");
-    });
-    var menuOpen = document.querySelector("[data-nav].is-open");
-    document.body.classList.toggle("is-locked", !!(active || menuOpen));
-  }
-
-  function focusables(root) {
-    return Array.prototype.filter.call(
-      root.querySelectorAll("a[href], button:not([disabled]):not([tabindex='-1']), select, textarea, input"),
-      function (el) {
-        if (el.closest("[hidden]")) return false;
-        return el.getClientRects().length > 0;
-      }
-    );
-  }
-
-  function openWelcome() {
-    if (overlay.classList.contains("is-open") || welcome.classList.contains("is-open")) return;
-    markSeen();
-    returnFocus = document.querySelector(".js-open-invite");
-    welcome.hidden = false;
-    welcome.classList.add("is-open");
-    setLocked(welcome);
-    var primary = welcome.querySelector(".js-open-invite");
-    if (primary) primary.focus();
-  }
-
-  function closeWelcome(silent) {
-    welcome.classList.remove("is-open");
-    welcome.hidden = true;
-    if (!silent) {
-      setLocked(null);
-      if (returnFocus && returnFocus.focus) returnFocus.focus();
-    }
-  }
-
-  function showCityStep() {
-    document.getElementById("pickerCity").hidden = false;
-    document.getElementById("pickerApply").hidden = true;
-    overlay.setAttribute("aria-labelledby", "overlayTitle");
-  }
-
-  function showApplyStep() {
-    var select = document.getElementById("citySelect");
-    var option = select.options[select.selectedIndex];
-    document.getElementById("selectedCityDisplay").textContent = option ? option.text : "";
-    document.getElementById("formLink").setAttribute("href", cityForms[select.value]);
-    document.getElementById("pickerCity").hidden = true;
-    document.getElementById("pickerApply").hidden = false;
-    overlay.setAttribute("aria-labelledby", "applyTitle");
-  }
-
-  function openOverlay(event) {
-    if (event) event.preventDefault();
-    if (welcomeTimer) {
-      clearTimeout(welcomeTimer);
-      welcomeTimer = null;
-    }
-    markSeen();
-    var from = event && event.currentTarget ? event.currentTarget : document.querySelector(".invite-btn");
-    if (!welcome.classList.contains("is-open")) returnFocus = from;
-    closeWelcome(true);
-    hideFormNotice();
-    resetNoticeGate();
-    showCityStep();
-    overlay.classList.add("is-open");
-    setLocked(overlay);
-    var select = document.getElementById("citySelect");
-    select.classList.remove("is-invalid");
-    select.focus();
-  }
-
-  function closeOverlay() {
-    overlay.classList.remove("is-open");
-    hideFormNotice();
-    resetNoticeGate();
-    showCityStep();
-    setLocked(null);
-    if (returnFocus && returnFocus.focus) returnFocus.focus();
-  }
-
-  document.querySelectorAll(".js-open-invite").forEach(function (el) {
-    el.addEventListener("click", openOverlay);
-  });
-  document.getElementById("closeOverlay").addEventListener("click", closeOverlay);
-  welcome.querySelector(".welcome-close").addEventListener("click", function () { closeWelcome(false); });
-  document.querySelectorAll(".scrim-close").forEach(function (button) {
-    button.addEventListener("click", function () {
-      if (overlay.classList.contains("is-open")) closeOverlay();
-      else closeWelcome(false);
-    });
-  });
-  function setNoticeChrome(mode) {
-    noticeMode = mode === "picker" ? "picker" : "direct";
-    var picker = noticeMode === "picker";
-    noticeStep.hidden = !picker;
-    noticeBack.hidden = !picker;
-  }
-
-  function noticeFits() {
-    if (noticeBody.clientHeight < 80) return false;
-    return noticeBody.scrollHeight - noticeBody.clientHeight <= 4;
-  }
-
-  function noticeAtEnd() {
-    var last = noticeEnd.previousElementSibling;
-    if (!last) return false;
-    var text = last.getBoundingClientRect();
-    var box = noticeBody.getBoundingClientRect();
-    var remainder = noticeBody.scrollHeight - noticeBody.scrollTop - noticeBody.clientHeight;
-    return text.bottom >= box.top && text.bottom <= box.bottom + 4 && remainder <= 4;
-  }
-
-  function concealRead() {
-    readReached = false;
-    readSlot.classList.remove("is-ready");
-    readHint.hidden = false;
-    readHint.removeAttribute("aria-hidden");
-    readLabel.hidden = true;
-    noticeRead.disabled = true;
-    noticeRead.checked = false;
-    noticeContinue.disabled = true;
-  }
-
-  function revealRead() {
-    if (readReached && !readLabel.hidden) return;
-    readReached = true;
-    readLabel.hidden = false;
-    noticeRead.disabled = false;
-    readHint.setAttribute("aria-hidden", "true");
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      readSlot.classList.add("is-ready");
-      return;
-    }
-    requestAnimationFrame(function () {
-      requestAnimationFrame(function () {
-        readSlot.classList.add("is-ready");
-      });
-    });
-  }
-
-  function refreshReadGate() {
-    if (!formNotice.classList.contains("is-open")) return;
-    if (noticeRead.checked) {
-      revealRead();
-      return;
-    }
-    if (readReached) return;
-    if (noticeFits() || noticeAtEnd()) revealRead();
-  }
-
-  function openFormNotice(url, from, mode) {
-    pendingFormUrl = url || "";
-    noticeReturn = from || null;
-    concealRead();
-    setNoticeChrome(mode);
-    if (noticeMode === "picker") {
-      document.getElementById("pickerCity").hidden = true;
-      document.getElementById("pickerApply").hidden = true;
-    }
-    formNotice.hidden = false;
-    formNotice.classList.add("is-open");
-    noticeBody.scrollTop = 0;
-    setLocked(formNotice);
-    formNotice.focus();
-    requestAnimationFrame(refreshReadGate);
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(refreshReadGate);
-  }
-
-  function hideFormNotice() {
-    formNotice.classList.remove("is-open");
-    formNotice.hidden = true;
-  }
-
-  function resetNoticeGate() {
-    concealRead();
-    pendingFormUrl = "";
-    setNoticeChrome("direct");
-  }
-
-  function closeFormNotice() {
-    var wasPicker = noticeMode === "picker";
-    hideFormNotice();
-    resetNoticeGate();
-    if (wasPicker && overlay.classList.contains("is-open")) {
-      showCityStep();
-      setLocked(overlay);
-      document.getElementById("citySelect").focus();
-      return;
-    }
-    setLocked(null);
-    if (noticeReturn && noticeReturn.focus) noticeReturn.focus();
-  }
-
-  function returnToNotice() {
-    setNoticeChrome("picker");
-    formNotice.hidden = false;
-    formNotice.classList.add("is-open");
-    var body = formNotice.querySelector(".form-notice-body");
-    if (body) body.scrollTop = 0;
-    setLocked(formNotice);
-    if (noticeRead.checked) {
-      revealRead();
-      noticeContinue.focus();
-    } else {
-      formNotice.focus();
-      requestAnimationFrame(refreshReadGate);
-    }
-  }
-
-  noticeBody.addEventListener("scroll", refreshReadGate, { passive: true });
-  noticeBody.addEventListener("scrollend", refreshReadGate);
-  noticeBody.addEventListener("touchend", refreshReadGate, { passive: true });
-  window.addEventListener("resize", refreshReadGate);
-  if ("ResizeObserver" in window) {
-    new ResizeObserver(refreshReadGate).observe(noticeBody);
-  }
-
-  noticeRead.addEventListener("change", function () {
-    noticeContinue.disabled = !noticeRead.checked;
-  });
-
-  noticeContinue.addEventListener("click", function () {
-    if (!readReached || !noticeRead.checked) return;
-    if (noticeMode === "picker") {
-      var select = document.getElementById("citySelect");
-      if (!select.value || !cityForms[select.value]) return;
-      hideFormNotice();
-      showApplyStep();
-      setLocked(overlay);
-      document.getElementById("formLink").focus();
-      return;
-    }
-    if (!pendingFormUrl) return;
-    var url = pendingFormUrl;
-    window.open(url, "_blank", "noopener,noreferrer");
-    hideFormNotice();
-    resetNoticeGate();
-    setLocked(null);
-    if (noticeReturn && noticeReturn.focus) noticeReturn.focus();
-  });
-
-  noticeBack.addEventListener("click", closeFormNotice);
-
-  document.getElementById("cityContinue").addEventListener("click", function () {
-    var select = document.getElementById("citySelect");
-    if (!select.value) {
-      select.classList.add("is-invalid");
-      select.focus();
-      return;
-    }
-    select.classList.remove("is-invalid");
-    openFormNotice(cityForms[select.value], select, "picker");
-  });
-
-  document.getElementById("applyBack").addEventListener("click", returnToNotice);
-
-  document.getElementById("formLink").addEventListener("click", function (event) {
-    var href = this.getAttribute("href");
-    if (!href || href === "#") {
-      event.preventDefault();
-      return;
-    }
-    closeOverlay();
-  });
-
-  formNotice.querySelector(".form-notice-close").addEventListener("click", closeFormNotice);
-  formNotice.querySelector(".form-notice-backdrop").addEventListener("click", closeFormNotice);
-
-  document.querySelectorAll(".invite-links a").forEach(function (link) {
-    link.addEventListener("click", function (event) {
-      event.preventDefault();
-      openFormNotice(link.getAttribute("href"), link, "direct");
-    });
-  });
-
-  document.addEventListener("keydown", function (event) {
-    var dialog = formNotice.classList.contains("is-open") ? formNotice : (overlay.classList.contains("is-open") ? overlay : (welcome.classList.contains("is-open") ? welcome : null));
-    if (event.key === "Escape") {
-      if (formNotice.classList.contains("is-open")) closeFormNotice();
-      else if (overlay.classList.contains("is-open")) closeOverlay();
-      else if (welcome.classList.contains("is-open")) closeWelcome(false);
-      return;
-    }
-    if (event.key !== "Tab" || !dialog) return;
-    var items = focusables(dialog);
-    if (!items.length) return;
-    var first = items[0];
-    var last = items[items.length - 1];
-    if (event.shiftKey && document.activeElement === first) {
-      event.preventDefault();
-      last.focus();
-    } else if (!event.shiftKey && document.activeElement === last) {
-      event.preventDefault();
-      first.focus();
-    }
-  });
-
-  document.querySelectorAll("[data-art]").forEach(function (frame) {
-    var img = frame.querySelector("img");
-    if (!img) return;
-    img.addEventListener("error", function () { frame.classList.add("art-missing"); });
-  });
-
-  var params = new URLSearchParams(location.search);
-  if (params.get("invite") === "1") {
-    markSeen();
-    var clean = location.pathname.replace(/index\.html$/, "");
-    if (!clean) clean = "/";
-    history.replaceState(null, "", clean);
-    openOverlay();
-  } else if (!alreadySeen()) {
-    welcomeTimer = setTimeout(openWelcome, reduceMotion ? 1500 : 1500);
-  }
-</script>
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script><script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

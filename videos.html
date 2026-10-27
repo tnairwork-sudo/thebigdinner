@@ -3,287 +3,78 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#187a5e">
+<meta name="theme-color" content="#29000a">
 <meta name="color-scheme" content="light">
-<title>The Big Dinner · Videos</title>
+<title>Films · The Big Dinner</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Outfit:wght@400;500&display=swap" rel="stylesheet">
-<script>document.documentElement.classList.add("js");</script>
+<link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/site.css">
 </head>
-<body class="theme-dark">
+<body>
 <a class="skip" href="#content">Skip to content</a>
 <header class="nav" data-nav>
   <a class="wordmark" href="/">The Big Dinner</a>
-  <a class="invite-btn" href="/?invite=1">Request an Invitation</a>
   <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="nav-menu">Menu</button>
-  <ul class="nav-links" id="nav-menu">
-    <li><a href="/">Home</a></li>
-    <li><a href="/gallery.html">Gallery</a></li>
-    <li><a href="/experiment.html">The Experiment</a></li>
-    <li><a href="/videos.html" aria-current="page">Videos</a></li>
-  </ul>
+  <nav class="nav-links" id="nav-menu">
+    <a href="/">The Room</a>
+    <a href="/gallery.html">Evenings</a>
+    <a href="/experiment.html">Notes</a>
+    <a href="/videos.html" aria-current="page">Films</a>
+  </nav>
+  <a class="invite" href="/#invitation">Request an Invitation for The Big Dinner.</a>
 </header>
-
-<main id="content">
-  <header class="frame page-hero">
-    <picture class="art">
-      <source type="image/webp" srcset="/assets/art/section-doorway-glow-16x9.webp">
-      <img src="/assets/art/section-doorway-glow-16x9.jpg" width="1920" height="1080" alt="" decoding="async">
-    </picture>
-    <div class="frame-scrim"></div>
-    <div class="frame-copy">
-      <p class="label" id="header-eyebrow">The Moving Image</p>
-      <h1 class="display" id="header-title"><span>In</span><span>Motion.</span></h1>
-    </div>
-  </header>
-
-  <div class="filter-bar">
-    <button class="filter-tab active" type="button" data-filter="all">All</button>
-    <button class="filter-tab" type="button" data-filter="Delhi">Delhi</button>
-    <button class="filter-tab" type="button" data-filter="Mumbai">Mumbai</button>
-    <button class="filter-tab" type="button" data-filter="London">London</button>
-    <button class="filter-tab" type="button" data-filter="Dubai">Dubai</button>
+<main id="content" class="films">
+  <h1>Films</h1>
+  <div class="filters" role="group" aria-label="Filter films">
+    <button type="button" data-filter="all" aria-pressed="true">All</button>
+    <button type="button" data-filter="Delhi" aria-pressed="false">Delhi</button>
+    <button type="button" data-filter="London" aria-pressed="false">London</button>
   </div>
-
-  <div class="video-feed" id="video-feed" aria-label="Video reel feed"></div>
-  <div class="load-sentinel" id="load-sentinel" aria-hidden="true">
-    <div class="spinner" id="spinner"></div>
-  </div>
-  <p class="end-note" id="end-note">End of the archives</p>
+  <div id="feed"></div>
 </main>
-
 <footer class="colophon">
-  <p class="wordmark">The Big Dinner</p>
-  <p class="colophon-line">The Big Dinner © 2026</p>
-  <p class="colophon-mail"><a href="mailto:host@thebigdinner.in">host@thebigdinner.in</a></p>
-  <nav class="colophon-nav" aria-label="House notes">
+  <a class="wordmark" href="/">The Big Dinner</a>
+  <p><a href="mailto:host@thebigdinner.in">host@thebigdinner.in</a></p>
+  <nav aria-label="House notes">
     <a href="/contact">Contact</a>
     <a href="/terms">Terms</a>
     <a href="/refunds">Refunds</a>
   </nav>
 </footer>
-
 <script src="/site.js"></script>
 <script>
-  var ALL_VIDEOS = [
-    {
-      id: 1,
-      city: "Delhi",
-      chapter: "Chapter I",
-      date: "October 2025",
-      venue: "Blue Bar",
-      guestCount: 40,
-      description: "The first room. Forty people, no chairs, no agenda, no name tags. A bet on conversation placed inside the oldest bar in New Delhi.",
-      videoUrl: "https://www.instagram.com/reel/DXHoszFk5rh/",
-      thumbnail: "/shangrila.jpeg"
-    },
-    {
-      id: 2,
-      city: "Delhi",
-      chapter: "Chapter II",
-      date: "November 2025",
-      venue: "Megu, The Leela Palace",
-      guestCount: 36,
-      description: "The second chapter deepened the experiment. Familiar faces, unfamiliar territory. The Japanese room at The Leela asked something different of everyone.",
-      videoUrl: "https://www.instagram.com/reel/DWgxUGoE5QY/",
-      thumbnail: "/november3.jpeg"
-    },
-    {
-      id: 3,
-      city: "Delhi",
-      chapter: "Chapter III",
-      date: "December 2025",
-      venue: "Megu, The Leela Palace",
-      guestCount: 42,
-      description: "December brought a different energy. The year ending, the room fuller. The conversations turned inward.",
-      videoUrl: "https://www.instagram.com/reel/DWct-0CTRkX/",
-      thumbnail: "/dec11.jpeg"
-    },
-    {
-      id: 4,
-      city: "Delhi",
-      chapter: "Chapter IV",
-      date: "January 2026",
-      venue: "The Imperial Hotel",
-      guestCount: 38,
-      description: "The Imperial held something classical. New year, new people, but the same idea at the centre of it all.",
-      videoUrl: "https://www.instagram.com/reel/DWV6gUnE2y1/",
-      thumbnail: "/jan1.jpeg"
-    },
-    {
-      id: 5,
-      city: "Delhi",
-      chapter: "Chapter V",
-      date: "February 2026",
-      venue: "Shangri-La Eros",
-      guestCount: 44,
-      description: "The city's most recognisable room. Something about its familiarity made the conversations sharper.",
-      videoUrl: "https://www.instagram.com/reel/DVSmvZnkjGE/",
-      thumbnail: "/sbhangrila.jpeg"
-    },
-    {
-      id: 6,
-      city: "Delhi",
-      chapter: "Chapter VI",
-      date: "March 2026",
-      venue: "Ottimo, ITC Maurya",
-      guestCount: 40,
-      description: "The final Delhi chapter before the expansion. The ITC Maurya asked the room to dress for the occasion.",
-      videoUrl: "https://www.instagram.com/reel/DUKeaZWkjSO/",
-      thumbnail: "/itcmaurya.jpeg"
-    },
-    {
-      id: 7,
-      city: "Mumbai",
-      chapter: "Chapter VII",
-      date: "April 2026",
-      venue: "Harbour Bar",
-      guestCount: 45,
-      description: "The first room outside Delhi. Mumbai asked new questions. The harbour lit the room differently.",
-      videoUrl: "YOUR_VIDEO_URL_HERE",
-      thumbnail: "/bombay1.jpg"
-    },
-    {
-      id: 8,
-      city: "London",
-      chapter: "London I",
-      date: "February 2026",
-      venue: "London",
-      guestCount: 30,
-      description: "Expansion was never about geography. It was about trust. Friends held the room.",
-      videoUrl: "YOUR_VIDEO_URL_HERE",
-      thumbnail: "/lodnon.jpeg"
-    }
+  var films = [
+    { city: "Delhi", title: "October 2025", text: "The first room. Forty people, and a conversation with nowhere to hide.", image: "/shangrila.jpeg", url: "https://www.instagram.com/reel/DXHoszFk5rh/" },
+    { city: "Delhi", title: "November 2025", text: "The second evening. Familiar faces, a different quiet.", image: "/november3.jpeg", url: "https://www.instagram.com/reel/DWgxUGoE5QY/" },
+    { city: "Delhi", title: "December 2025", text: "The year ending. The room a little fuller.", image: "/dec11.jpeg", url: "https://www.instagram.com/reel/DWct-0CTRkX/" },
+    { city: "Delhi", title: "January 2026", text: "A new year, the same idea at the centre.", image: "/jan1.jpeg", url: "https://www.instagram.com/reel/DWV6gUnE2y1/" },
+    { city: "Delhi", title: "February 2026", text: "Sharper conversation, the same closed room.", image: "/sbhangrila.jpeg", url: "https://www.instagram.com/reel/DVSmvZnkjGE/" },
+    { city: "Delhi", title: "March 2026", text: "Delhi, dressed for the evening.", image: "/itcmaurya.jpeg", url: "https://www.instagram.com/reel/DUKeaZWkjSO/" },
+    { city: "London", title: "London", text: "The same room, held by friends.", image: "/lodnon.jpeg", url: "" }
   ];
-
-  var PAGE_SIZE = 3;
-  var currentFilter = "all";
-  var currentPage = 0;
-  var isLoading = false;
-  var allLoaded = false;
-  var feed = document.getElementById("video-feed");
-  var spinner = document.getElementById("spinner");
-  var endNote = document.getElementById("end-note");
-
-  function getFilteredVideos() {
-    return currentFilter === "all"
-      ? ALL_VIDEOS
-      : ALL_VIDEOS.filter(function (video) { return video.city === currentFilter; });
-  }
-
-  function resetFeed() {
-    currentPage = 0;
-    allLoaded = false;
+  var feed = document.getElementById("feed");
+  var current = "all";
+  function render() {
     feed.innerHTML = "";
-    endNote.classList.remove("visible");
-  }
-
-  function buildCard(video) {
-    var article = document.createElement("article");
-    article.className = "video-card";
-    article.dataset.city = video.city;
-    article.innerHTML =
-      '<div class="video-wrapper" role="button" tabindex="0" aria-label="Watch ' + video.chapter + ', ' + video.city + ', ' + video.date + '">' +
-        '<img class="thumb" src="' + video.thumbnail + '" alt="' + video.city + ' room, ' + video.date + '" loading="lazy" decoding="async">' +
-        '<div class="card-meta-overlay">' +
-          '<p class="card-city-tag">' + video.city + ' · ' + video.date + '</p>' +
-          '<h2 class="card-venue">' + video.venue + '</h2>' +
-          '<p class="card-chapter">' + video.chapter + '</p>' +
-        '</div>' +
-        '<div class="play-overlay"><div class="play-btn" aria-hidden="true">' +
-          '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><polygon points="6,3 21,12 6,21"/></svg>' +
-        '</div></div>' +
-      '</div>' +
-      '<p class="card-description">' + video.description + '</p>' +
-      '<div class="card-footer-row">' +
-        '<span class="guest-pill">' + video.guestCount + ' Guests</span>' +
-        '<span class="city-pill">' + video.chapter + '</span>' +
-      '</div>';
-
-    var frame = article.querySelector(".video-wrapper");
-    function play() { handlePlay(video.id); }
-    frame.addEventListener("click", play);
-    frame.addEventListener("keydown", function (event) {
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-        play();
-      }
+    films.filter(function (film) { return current === "all" || film.city === current; }).forEach(function (film) {
+      var article = document.createElement("article");
+      article.className = "film";
+      var link = film.url ? '<a class="play" href="' + film.url + '" target="_blank" rel="noopener noreferrer">Watch</a>' : "";
+      article.innerHTML = '<img src="' + film.image + '" alt="' + film.city + ', ' + film.title + '" loading="lazy" decoding="async"><h2>' + film.title + '</h2><p>' + film.text + '</p>' + link;
+      feed.appendChild(article);
     });
-    return article;
   }
-
-  function loadNextBatch() {
-    if (isLoading || allLoaded) return;
-    isLoading = true;
-    spinner.classList.add("active");
-
-    setTimeout(function () {
-      var filtered = getFilteredVideos();
-      var start = currentPage * PAGE_SIZE;
-      var batch = filtered.slice(start, start + PAGE_SIZE);
-
-      if (batch.length === 0) {
-        allLoaded = true;
-        spinner.classList.remove("active");
-        endNote.classList.add("visible");
-        isLoading = false;
-        return;
-      }
-
-      batch.forEach(function (video, i) {
-        var card = buildCard(video);
-        feed.appendChild(card);
-        setTimeout(function () { entranceObserver.observe(card); }, i * 80);
+  document.querySelectorAll(".filters button").forEach(function (button) {
+    button.addEventListener("click", function () {
+      current = button.getAttribute("data-filter");
+      document.querySelectorAll(".filters button").forEach(function (other) {
+        other.setAttribute("aria-pressed", other === button ? "true" : "false");
       });
-
-      currentPage++;
-      spinner.classList.remove("active");
-      isLoading = false;
-
-      if (currentPage * PAGE_SIZE >= filtered.length) {
-        allLoaded = true;
-        endNote.classList.add("visible");
-      }
-    }, 500);
-  }
-
-  var entranceObserver = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-      if (!entry.isIntersecting) return;
-      entry.target.classList.add("visible");
-      entranceObserver.unobserve(entry.target);
-    });
-  }, { threshold: 0.08 });
-
-  var sentinelObserver = new IntersectionObserver(function (entries) {
-    if (entries[0].isIntersecting && !allLoaded) loadNextBatch();
-  }, { rootMargin: "300px" });
-
-  sentinelObserver.observe(document.getElementById("load-sentinel"));
-
-  document.querySelectorAll(".filter-tab").forEach(function (tab) {
-    tab.addEventListener("click", function () {
-      document.querySelectorAll(".filter-tab").forEach(function (item) {
-        item.classList.remove("active");
-      });
-      tab.classList.add("active");
-      currentFilter = tab.dataset.filter;
-      resetFeed();
-      loadNextBatch();
+      render();
     });
   });
-
-  function handlePlay(id) {
-    var video = ALL_VIDEOS.find(function (item) { return item.id === id; });
-    if (!video) return;
-    if (video.videoUrl && video.videoUrl !== "YOUR_VIDEO_URL_HERE") {
-      window.open(video.videoUrl, "_blank", "noopener,noreferrer");
-    }
-  }
-
-  loadNextBatch();
+  render();
 </script>
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script><script defer src="/_vercel/insights/script.js"></script>
 </body>
