@@ -1317,6 +1317,15 @@ main > .frame:nth-child(17) { background: var(--mustard); }
   object-fit: cover;
   display: block;
 }
+.evening-frame {
+  align-items: stretch;
+  justify-items: stretch;
+  overflow: hidden;
+}
+.evening-frame img {
+  max-height: none;
+  object-position: center 15%;
+}
 .reel-tile {
   appearance: none;
   aspect-ratio: 9 / 16;
