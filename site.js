@@ -3,7 +3,7 @@
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   function dialogOpen() {
-    return document.querySelector(".welcome.is-open, .overlay.is-open, .form-notice.is-open, .reel-lightbox.is-open");
+    return document.querySelector(".overlay.is-open, .form-notice.is-open, .reel-lightbox.is-open");
   }
 
   if (nav) {
@@ -107,7 +107,7 @@
     box.classList.remove("is-open");
     box.hidden = true;
     var menuOpen = document.querySelector("[data-nav].is-open");
-    var other = document.querySelector(".welcome.is-open, .overlay.is-open, .form-notice.is-open");
+    var other = document.querySelector(".overlay.is-open, .form-notice.is-open");
     if (!menuOpen && !other) document.body.classList.remove("is-locked");
     if (lastTile && lastTile.focus) lastTile.focus();
   }
@@ -172,6 +172,8 @@
   });
 
   function toneFor(section) {
+    var named = getComputedStyle(section).getPropertyValue("--sound-tone").trim();
+    if (named) return named;
     var rgb = parseColor(getComputedStyle(section).backgroundColor);
     if (!rgb || !palette.length) return "cream";
     var best = palette[0];
@@ -237,4 +239,42 @@
 
   window.addEventListener("scroll", sync, { passive: true });
   window.addEventListener("resize", sync);
+})();
+
+(function () {
+  var video = document.getElementById("featureFilm");
+  var toggle = document.querySelector(".film-sound");
+  if (!video || !toggle) return;
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function play() {
+    var attempt = video.play();
+    if (attempt && attempt.catch) attempt.catch(function () {});
+  }
+
+  function setSound(on) {
+    video.muted = !on;
+    toggle.setAttribute("aria-pressed", on ? "true" : "false");
+    toggle.textContent = on ? "Sound: On" : "Sound: Off";
+  }
+
+  toggle.addEventListener("click", function () {
+    setSound(video.muted);
+    if (video.paused) play();
+  });
+
+  video.addEventListener("click", function () {
+    video.controls = true;
+  });
+
+  if (reduce || !("IntersectionObserver" in window)) return;
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) play();
+      else video.pause();
+    });
+  }, { threshold: 0.4 });
+
+  observer.observe(video);
 })();

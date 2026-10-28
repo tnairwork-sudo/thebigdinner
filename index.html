@@ -3,45 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#187a5e">
+<meta name="theme-color" content="#ffffff">
 <meta name="color-scheme" content="light">
 <meta name="format-detection" content="telephone=no, email=no, address=no">
 <title>The Big Dinner</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Outfit:wght@400;500&display=swap" rel="stylesheet">
-<link rel="preload" as="image" href="/assets/art/hero-16x9.webp" type="image/webp" media="(min-width: 760px)">
-<link rel="preload" as="image" href="/assets/art/hero-mobile-9x16.webp" type="image/webp" media="(max-width: 759px)">
 <script>document.documentElement.classList.add("js");</script>
 <link rel="stylesheet" href="/site.css">
 </head>
 <body class="theme-dark has-sound">
 <a class="skip" href="#content">Skip to content</a>
 
-<header class="nav" data-nav>
-  <a class="wordmark" href="/">The Big Dinner</a>
-  <button class="invite-btn js-open-invite" type="button">Request an Invitation</button>
-  <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="nav-menu">Menu</button>
-  <ul class="nav-links" id="nav-menu">
-    <li><a href="/#philosophy">About</a></li>
-    <li><a href="/#chronicles">Chronicles</a></li>
-    <li><a href="/experiment.html">The Experiment</a></li>
-    <li><a href="/gallery.html">Gallery</a></li>
-    <li><a href="/videos.html">Videos</a></li>
-  </ul>
-</header>
-
 <button class="sound" id="soundToggle" type="button" aria-pressed="false">Sound: Off</button>
 
 <main id="content">
   <section class="frame hero">
-    <picture class="art">
-      <source media="(min-width: 760px)" type="image/webp" srcset="/assets/art/hero-16x9.webp">
-      <source media="(min-width: 760px)" srcset="/assets/art/hero-16x9.jpg">
-      <source type="image/webp" srcset="/assets/art/hero-mobile-9x16.webp">
-      <img src="/assets/art/hero-mobile-9x16.jpg" width="1080" height="1920" alt="A lamplit room, set for the evening" fetchpriority="high" decoding="async">
-    </picture>
-    <div class="frame-scrim"></div>
     <div class="frame-copy">
       <p class="label">A private room</p>
       <h1 class="display"><span>The Big</span><span>Dinner</span></h1>
@@ -50,12 +28,16 @@
     </div>
   </section>
 
+  <section class="film">
+    <div class="film-frame">
+      <video class="film-video" id="featureFilm" muted loop playsinline preload="metadata" poster="/assets/film/tbd-film-poster.jpg" width="1280" height="720">
+        <source src="/assets/film/tbd-film.mp4" type="video/mp4">
+      </video>
+      <button class="film-sound" type="button" aria-pressed="false" aria-controls="featureFilm">Sound: Off</button>
+    </div>
+  </section>
+
   <section class="paper-frame" id="philosophy">
-    <picture class="art">
-      <source type="image/webp" srcset="/assets/art/section-damask-light-16x9.webp">
-      <img src="/assets/art/section-damask-light-16x9.jpg" width="1920" height="1080" alt="" decoding="async">
-    </picture>
-    <div class="veil"></div>
     <div class="wrap split">
       <div>
         <p class="label reveal">The Philosophy</p>
@@ -82,20 +64,6 @@
         </picture>
       </button>
     </figure>
-  </section>
-
-  <section class="evenings" aria-labelledby="eveningsLabel">
-    <p class="label" id="eveningsLabel">The Evenings</p>
-    <div class="evenings-grid">
-      <figure class="evening-frame"><img src="/assets/evenings/delhi-02.jpg" width="1200" height="1600" alt="A Delhi evening" loading="lazy" decoding="async"></figure>
-      <figure class="evening-frame"><img src="/assets/evenings/delhi-08.jpg" width="1200" height="1600" alt="A Delhi evening" loading="lazy" decoding="async"></figure>
-      <figure class="evening-frame"><img src="/assets/evenings/delhi-04.jpg" width="1200" height="1600" alt="A Delhi evening" loading="lazy" decoding="async"></figure>
-      <figure class="evening-frame"><img src="/assets/evenings/two-guests.jpg" width="1200" height="1600" alt="Two guests" loading="lazy" decoding="async"></figure>
-      <figure class="evening-frame"><img src="/assets/evenings/delhi-09.jpg" width="1200" height="1600" alt="A Delhi evening" loading="lazy" decoding="async"></figure>
-      <figure class="evening-frame"><img src="/assets/evenings/delhi-03.jpg" width="1200" height="1600" alt="A Delhi evening" loading="lazy" decoding="async"></figure>
-      <figure class="evening-frame"><img src="/assets/evenings/delhi-07.jpg" width="1200" height="1600" alt="A Delhi evening" loading="lazy" decoding="async"></figure>
-      <figure class="evening-frame"><img src="/assets/evenings/delhi-10.jpg" width="1200" height="1600" alt="A Delhi evening" loading="lazy" decoding="async"></figure>
-    </div>
   </section>
 
   <section class="reels" aria-labelledby="reelsLabel">
@@ -135,11 +103,6 @@
   </section>
 
   <section class="frame">
-    <picture class="art">
-      <source type="image/webp" srcset="/assets/art/section-doorway-glow-16x9.webp">
-      <img src="/assets/art/section-doorway-glow-16x9.jpg" width="1920" height="1080" alt="" loading="lazy" decoding="async">
-    </picture>
-    <div class="frame-scrim"></div>
     <div class="frame-copy">
       <p class="label reveal">The room</p>
       <h2 class="display reveal">The room.</h2>
@@ -188,11 +151,6 @@
   </section>
 
   <section class="frame">
-    <picture class="art">
-      <source type="image/webp" srcset="/assets/art/section-brass-rail-16x9.webp">
-      <img src="/assets/art/section-brass-rail-16x9.jpg" width="1920" height="1080" alt="" loading="lazy" decoding="async">
-    </picture>
-    <div class="frame-scrim"></div>
     <div class="frame-copy">
       <p class="label reveal">The evening</p>
       <h2 class="headline reveal">The conversation is the hospitality.</h2>
@@ -203,7 +161,7 @@
     <div class="wrap">
       <div class="section-intro">
         <p class="label reveal">The Lineage</p>
-        <h2 class="headline reveal">Eight chapters.<br><em>So far.</em></h2>
+        <h2 class="headline reveal">21 editions held.<br><em>So far.</em></h2>
       </div>
       <ol class="chapters">
         <li class="chapter reveal"><span class="chapter-no">I</span><span class="chapter-date">October 2025</span><span class="chapter-place">Blue Bar, New Delhi</span></li>
@@ -223,7 +181,7 @@
       <div class="archive-head">
         <div>
           <p class="label reveal">Earlier evenings</p>
-          <h2 class="headline reveal">Eight evenings.<br><em>Captured.</em></h2>
+          <h2 class="headline reveal">21 editions held.<br><em>Captured.</em></h2>
         </div>
         <a class="link-quiet reveal" href="/gallery.html">View all</a>
       </div>
@@ -303,7 +261,7 @@
     <div class="frame-scrim"></div>
     <div class="frame-copy">
       <h3 class="display art-title">Delhi</h3>
-      <p class="city-status">Active</p>
+      <p class="city-status">11 editions held. The 12th edition is next.</p>
     </div>
   </section>
 
@@ -315,7 +273,7 @@
     <div class="frame-scrim"></div>
     <div class="frame-copy">
       <h3 class="display art-title">Bombay</h3>
-      <p class="city-status">Active</p>
+      <p class="city-status">6 editions held.</p>
     </div>
   </section>
 
@@ -327,7 +285,7 @@
     <div class="frame-scrim"></div>
     <div class="frame-copy">
       <h3 class="display art-title">London</h3>
-      <p class="city-status">Active</p>
+      <p class="city-status">1 edition held.</p>
     </div>
   </section>
 
@@ -351,7 +309,7 @@
     <div class="frame-scrim"></div>
     <div class="frame-copy">
       <h3 class="display art-title">Hyderabad</h3>
-      <p class="city-status">Active</p>
+      <p class="city-status">3 editions held.</p>
     </div>
   </section>
 
@@ -388,6 +346,11 @@
   <p class="colophon-line">The room fills itself with the people who show up.</p>
   <p class="colophon-mail"><a href="mailto:host@thebigdinner.in">host@thebigdinner.in</a></p>
   <nav class="colophon-nav" aria-label="House notes">
+    <a href="/#philosophy">About</a>
+    <a href="/#chronicles">Chronicles</a>
+    <a href="/experiment.html">The Experiment</a>
+    <a href="/gallery.html">Gallery</a>
+    <a href="/videos.html">Videos</a>
     <a href="/contact">Contact</a>
     <a href="/terms">Terms</a>
     <a href="/refunds">Refunds</a>
@@ -397,23 +360,6 @@
 <audio id="ambientAudio" loop preload="none">
   <source src="/ambient-theme.mp3" type="audio/mpeg">
 </audio>
-
-<div class="welcome" id="welcome" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle" hidden>
-  <picture class="art">
-    <source media="(min-width: 760px)" type="image/webp" srcset="/assets/art/hero-16x9.webp">
-    <source media="(min-width: 760px)" srcset="/assets/art/hero-16x9.jpg">
-    <source type="image/webp" srcset="/assets/art/hero-mobile-9x16.webp">
-    <img src="/assets/art/hero-mobile-9x16.jpg" width="1080" height="1920" alt="">
-  </picture>
-  <div class="frame-scrim welcome-scrim"></div>
-  <button class="scrim-close" type="button" tabindex="-1" aria-hidden="true"></button>
-  <button class="welcome-close" type="button">Close</button>
-  <div class="welcome-copy">
-    <p class="label" id="welcomeLabel">The room</p>
-    <p class="welcome-line" id="welcomeTitle">It is a bet on people.</p>
-    <button class="invite-btn invite-btn-lg js-open-invite" type="button">Request an Invitation</button>
-  </div>
-</div>
 
 <div id="cityOverlay" class="overlay" role="dialog" aria-modal="true" aria-labelledby="overlayTitle">
   <button class="scrim-close" type="button" tabindex="-1" aria-hidden="true"></button>
@@ -557,11 +503,7 @@
   });
 
   var overlay = document.getElementById("cityOverlay");
-  var welcome = document.getElementById("welcome");
-  var welcomeTimer = null;
   var returnFocus = null;
-  var seenKey = "tbd-invite-seen";
-  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   var cityForms = {
     delhi: "https://forms.gle/zVchUBLogxfGeH5g6",
@@ -571,14 +513,6 @@
     hyderabad: "https://forms.gle/maV5MoNA5wGTWkjZ9",
     dubai: "https://forms.gle/59dfvTV3jtLq1ws26"
   };
-
-  function markSeen() {
-    try { sessionStorage.setItem(seenKey, "1"); } catch (err) {}
-  }
-
-  function alreadySeen() {
-    try { return sessionStorage.getItem(seenKey) === "1"; } catch (err) { return false; }
-  }
 
   var formNotice = document.getElementById("formNotice");
   var noticeRead = document.getElementById("noticeRead");
@@ -601,7 +535,6 @@
       document.getElementById("content"),
       document.querySelector(".colophon"),
       document.getElementById("soundToggle"),
-      welcome,
       overlay,
       formNotice
     ].filter(Boolean);
@@ -626,26 +559,6 @@
     );
   }
 
-  function openWelcome() {
-    if (overlay.classList.contains("is-open") || welcome.classList.contains("is-open")) return;
-    markSeen();
-    returnFocus = document.querySelector(".js-open-invite");
-    welcome.hidden = false;
-    welcome.classList.add("is-open");
-    setLocked(welcome);
-    var primary = welcome.querySelector(".js-open-invite");
-    if (primary) primary.focus();
-  }
-
-  function closeWelcome(silent) {
-    welcome.classList.remove("is-open");
-    welcome.hidden = true;
-    if (!silent) {
-      setLocked(null);
-      if (returnFocus && returnFocus.focus) returnFocus.focus();
-    }
-  }
-
   function showCityStep() {
     document.getElementById("pickerCity").hidden = false;
     document.getElementById("pickerApply").hidden = true;
@@ -664,14 +577,7 @@
 
   function openOverlay(event) {
     if (event) event.preventDefault();
-    if (welcomeTimer) {
-      clearTimeout(welcomeTimer);
-      welcomeTimer = null;
-    }
-    markSeen();
-    var from = event && event.currentTarget ? event.currentTarget : document.querySelector(".invite-btn");
-    if (!welcome.classList.contains("is-open")) returnFocus = from;
-    closeWelcome(true);
+    returnFocus = event && event.currentTarget ? event.currentTarget : document.querySelector(".invite-btn");
     hideFormNotice();
     resetNoticeGate();
     showCityStep();
@@ -695,11 +601,9 @@
     el.addEventListener("click", openOverlay);
   });
   document.getElementById("closeOverlay").addEventListener("click", closeOverlay);
-  welcome.querySelector(".welcome-close").addEventListener("click", function () { closeWelcome(false); });
   document.querySelectorAll(".scrim-close").forEach(function (button) {
     button.addEventListener("click", function () {
       if (overlay.classList.contains("is-open")) closeOverlay();
-      else closeWelcome(false);
     });
   });
   function setNoticeChrome(mode) {
@@ -887,11 +791,10 @@
   });
 
   document.addEventListener("keydown", function (event) {
-    var dialog = formNotice.classList.contains("is-open") ? formNotice : (overlay.classList.contains("is-open") ? overlay : (welcome.classList.contains("is-open") ? welcome : null));
+    var dialog = formNotice.classList.contains("is-open") ? formNotice : (overlay.classList.contains("is-open") ? overlay : null);
     if (event.key === "Escape") {
       if (formNotice.classList.contains("is-open")) closeFormNotice();
       else if (overlay.classList.contains("is-open")) closeOverlay();
-      else if (welcome.classList.contains("is-open")) closeWelcome(false);
       return;
     }
     if (event.key !== "Tab" || !dialog) return;
@@ -916,13 +819,10 @@
 
   var params = new URLSearchParams(location.search);
   if (params.get("invite") === "1") {
-    markSeen();
     var clean = location.pathname.replace(/index\.html$/, "");
     if (!clean) clean = "/";
     history.replaceState(null, "", clean);
     openOverlay();
-  } else if (!alreadySeen()) {
-    welcomeTimer = setTimeout(openWelcome, reduceMotion ? 1500 : 1500);
   }
 </script>
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script><script defer src="/_vercel/insights/script.js"></script>
