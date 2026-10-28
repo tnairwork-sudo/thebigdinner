@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#fbf8f1">
+<meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+<title>The Big Dinner Participation Tariff</title>
+<meta property="og:title" content="The Big Dinner Participation Tariff">
+<meta name="twitter:title" content="The Big Dinner Participation Tariff">
+<style>
+  :root {
+    --ivory: #fbf8f1;
+    --pewter: #6c7178;
+    --gold: #a8875a;
+    --green: #1f3d2b;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html {
+    background: var(--ivory);
+    color: var(--pewter);
+    color-scheme: light;
+    accent-color: var(--gold);
+    scrollbar-color: var(--gold) var(--ivory);
+  }
+
+  body {
+    min-height: 100dvh;
+    display: grid;
+    place-items: center;
+    background: var(--ivory);
+    color: var(--pewter);
+    font-family: Palatino, "Palatino Linotype", "Iowan Old Style", "Book Antiqua", Georgia, serif;
+    line-height: 1.4;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    padding: max(28px, env(safe-area-inset-top)) 20px max(36px, env(safe-area-inset-bottom));
+  }
+
+  a,
+  a:link,
+  a:visited,
+  a:hover,
+  a:active {
+    color: var(--gold);
+  }
+
+  button,
+  a {
+    -webkit-tap-highlight-color: rgba(168, 135, 90, 0.28);
+    touch-action: manipulation;
+  }
+
+  ::selection {
+    background: var(--gold);
+    color: var(--ivory);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 3px;
+  }
+
+  main {
+    width: min(100%, 420px);
+    margin: auto;
+    text-align: center;
+  }
+
+  h1 {
+    font-weight: 400;
+    font-size: 1.7rem;
+    letter-spacing: 0.01em;
+    line-height: 1.25;
+    color: var(--pewter);
+  }
+
+  .rule {
+    width: 52px;
+    height: 1px;
+    margin: 18px auto 22px;
+    border: 0;
+    background: var(--gold);
+  }
+
+  .qr {
+    width: min(240px, 68vw);
+    height: auto;
+    display: block;
+    margin: 0 auto 22px;
+    background: #ffffff;
+  }
+
+  .codes {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 16px;
+    margin: 0 auto 8px;
+  }
+
+  .codes figure {
+    width: min(180px, 46%);
+    margin: 0;
+  }
+
+  .codes .qr {
+    width: 100%;
+    margin: 0 auto 10px;
+  }
+
+  .codes .handle {
+    margin-top: 6px;
+    font-size: 0.74rem;
+    line-height: 1.35;
+  }
+
+  .label {
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--pewter);
+  }
+
+  .handle,
+  .handle a,
+  .handle a:link,
+  .handle a:visited,
+  .handle a:hover,
+  .handle a:active {
+    margin-top: 8px;
+    font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    font-size: 0.98rem;
+    letter-spacing: 0.01em;
+    color: var(--pewter) !important;
+    -webkit-text-fill-color: var(--pewter);
+    text-decoration: none !important;
+    word-break: break-all;
+  }
+
+  .copy {
+    appearance: none;
+    -webkit-appearance: none;
+    margin-top: 12px;
+    background: transparent;
+    color: var(--gold);
+    -webkit-text-fill-color: var(--gold);
+    border: 1px solid var(--gold);
+    font-family: inherit;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    padding: 9px 18px;
+    cursor: pointer;
+  }
+
+  .amount-block {
+    margin-top: 26px;
+  }
+
+  .amount {
+    margin-top: 6px;
+    font-size: 1.85rem;
+    letter-spacing: 0.03em;
+    color: var(--pewter);
+  }
+
+  .apps {
+    margin-top: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .apps .label {
+    margin-bottom: 6px;
+  }
+
+  .app {
+    display: block;
+    width: 100%;
+    background: var(--green);
+    border: 1px solid var(--green);
+    padding: 14px 16px;
+    font-family: inherit;
+    font-size: 1rem;
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .app,
+  .app:link,
+  .app:visited,
+  .app:hover,
+  .app:active {
+    color: var(--ivory) !important;
+    -webkit-text-fill-color: var(--ivory);
+    text-decoration: none !important;
+  }
+
+  .app:hover,
+  .app:active {
+    background: var(--gold);
+    border-color: var(--gold);
+  }
+
+  .app-other {
+    background: transparent;
+    border-color: var(--gold);
+  }
+
+  .app-other,
+  .app-other:link,
+  .app-other:visited {
+    color: var(--green) !important;
+    -webkit-text-fill-color: var(--green);
+  }
+
+  .app-other:hover,
+  .app-other:active {
+    background: var(--green);
+    border-color: var(--green);
+    color: var(--ivory) !important;
+    -webkit-text-fill-color: var(--ivory);
+  }
+</style>
+</head>
+<body>
+<main>
+  <h1>The Big Dinner Participation Tariff</h1>
+  <hr class="rule">
+  <div class="codes">
+    <figure>
+      <img class="qr" src="/assets/delhi-upi-kotak-qr.png" width="588" height="588" alt="UPI QR code for 8448445950@kotak">
+      <figcaption>
+        <p class="label">UPI</p>
+        <p class="handle" id="upi-handle">8448445950@kotak</p>
+      </figcaption>
+    </figure>
+    <figure>
+      <img class="qr" src="/assets/delhi-upi-ybl-qr.png" width="588" height="588" alt="UPI QR code for 8448445950@ybl">
+      <figcaption>
+        <p class="label">UPI</p>
+        <p class="handle">8448445950@ybl</p>
+      </figcaption>
+    </figure>
+  </div>
+  <button type="button" class="copy" id="copy-handle">Copy</button>
+  <div class="amount-block">
+    <p class="label">Amount</p>
+    <p class="amount">₹5,000</p>
+  </div>
+  <div class="apps">
+    <p class="label">Pay with</p>
+    <a class="app" id="pay-gpay" href="tez://upi/pay?pa=8448445950@kotak&amp;pn=The%20Big%20Dinner&amp;am=5000&amp;cu=INR&amp;tn=The%20Big%20Dinner%20Delhi">Google Pay</a>
+    <a class="app" id="pay-phonepe" href="phonepe://pay?pa=8448445950@kotak&amp;pn=The%20Big%20Dinner&amp;am=5000&amp;cu=INR&amp;tn=The%20Big%20Dinner%20Delhi">PhonePe</a>
+    <a class="app" id="pay-paytm" href="paytmmp://pay?pa=8448445950@kotak&amp;pn=The%20Big%20Dinner&amp;am=5000&amp;cu=INR&amp;tn=The%20Big%20Dinner%20Delhi">Paytm</a>
+    <a class="app" id="pay-bhim" href="upi://pay?pa=8448445950@kotak&amp;pn=The%20Big%20Dinner&amp;am=5000&amp;cu=INR&amp;tn=The%20Big%20Dinner%20Delhi">BHIM</a>
+    <a class="app app-other" id="pay-other" href="upi://pay?pa=8448445950@kotak&amp;pn=The%20Big%20Dinner&amp;am=5000&amp;cu=INR&amp;tn=The%20Big%20Dinner%20Delhi">Any other UPI app</a>
+  </div>
+</main>
+<script>
+  (function () {
+    var params = 'pa=8448445950@kotak&pn=The%20Big%20Dinner&am=5000&cu=INR&tn=The%20Big%20Dinner%20Delhi';
+    var android = /Android/i.test(navigator.userAgent || '');
+
+    function intent(path, scheme, pkg, fallback) {
+      var url = 'intent://' + path + '#Intent;scheme=' + scheme;
+      if (pkg) url += ';package=' + pkg;
+      if (fallback) url += ';S.browser_fallback_url=' + encodeURIComponent(fallback);
+      return url + ';end';
+    }
+
+    if (android) {
+      document.getElementById('pay-gpay').href = intent(
+        'upi/pay?' + params,
+        'tez',
+        'com.google.android.apps.nbu.paisa.user',
+        'https://play.google.com/store/apps/details?id=com.google.android.apps.nbu.paisa.user'
+      );
+    }
+
+    var button = document.getElementById('copy-handle');
+    var handle = document.getElementById('upi-handle').textContent;
+
+    button.addEventListener('click', function () {
+      var label = 'Copy';
+
+      function showCopied() {
+        button.textContent = 'Copied';
+        window.setTimeout(function () {
+          button.textContent = label;
+        }, 1600);
+      }
+
+      function copyFallback(text) {
+        var field = document.createElement('textarea');
+        field.value = text;
+        field.setAttribute('readonly', '');
+        field.style.position = 'fixed';
+        field.style.left = '-9999px';
+        document.body.appendChild(field);
+        field.select();
+        document.execCommand('copy');
+        document.body.removeChild(field);
+      }
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(handle).then(showCopied, function () {
+          copyFallback(handle);
+          showCopied();
+        });
+      } else {
+        copyFallback(handle);
+        showCopied();
+      }
+    });
+  })();
+</script>
+</body>
+</html>

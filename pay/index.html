@@ -94,30 +94,6 @@
     background: #ffffff;
   }
 
-  .codes {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 16px;
-    margin: 0 auto 8px;
-  }
-
-  .codes figure {
-    width: min(180px, 46%);
-    margin: 0;
-  }
-
-  .codes .qr {
-    width: 100%;
-    margin: 0 auto 10px;
-  }
-
-  .codes .handle {
-    margin-top: 6px;
-    font-size: 0.74rem;
-    line-height: 1.35;
-  }
-
   .label {
     font-size: 0.72rem;
     letter-spacing: 0.22em;
@@ -234,22 +210,9 @@
 <main>
   <h1>The Big Dinner Participation Tariff</h1>
   <hr class="rule">
-  <div class="codes">
-    <figure>
-      <img class="qr" src="/assets/delhi-upi-qr.png" width="588" height="588" alt="UPI QR code for 8448445950@kotak">
-      <figcaption>
-        <p class="label">UPI</p>
-        <p class="handle" id="upi-handle">8448445950@kotak</p>
-      </figcaption>
-    </figure>
-    <figure>
-      <img class="qr" src="/assets/delhi-upi-ybl-qr.png" width="588" height="588" alt="UPI QR code for 8448445950@ybl">
-      <figcaption>
-        <p class="label">UPI</p>
-        <p class="handle">8448445950@ybl</p>
-      </figcaption>
-    </figure>
-  </div>
+  <img class="qr" src="/assets/delhi-upi-qr.png" width="600" height="600" alt="UPI QR code for The Big Dinner, Delhi, 31 October">
+  <p class="label">UPI</p>
+  <p class="handle" id="upi-handle">8595203751@jupiteraxis</p>
   <button type="button" class="copy" id="copy-handle">Copy</button>
   <div class="amount-block">
     <p class="label">Amount</p>
@@ -257,16 +220,16 @@
   </div>
   <div class="apps">
     <p class="label">Pay with</p>
-    <a class="app" id="pay-gpay" href="tez://upi/pay?pa=8448445950@kotak&amp;pn=The%20Big%20Dinner&amp;am=5000&amp;cu=INR&amp;tn=The%20Big%20Dinner%20Delhi">Google Pay</a>
-    <a class="app" id="pay-phonepe" href="phonepe://pay?pa=8448445950@kotak&amp;pn=The%20Big%20Dinner&amp;am=5000&amp;cu=INR&amp;tn=The%20Big%20Dinner%20Delhi">PhonePe</a>
-    <a class="app" id="pay-paytm" href="paytmmp://pay?pa=8448445950@kotak&amp;pn=The%20Big%20Dinner&amp;am=5000&amp;cu=INR&amp;tn=The%20Big%20Dinner%20Delhi">Paytm</a>
-    <a class="app" id="pay-bhim" href="upi://pay?pa=8448445950@kotak&amp;pn=The%20Big%20Dinner&amp;am=5000&amp;cu=INR&amp;tn=The%20Big%20Dinner%20Delhi">BHIM</a>
-    <a class="app app-other" id="pay-other" href="upi://pay?pa=8448445950@kotak&amp;pn=The%20Big%20Dinner&amp;am=5000&amp;cu=INR&amp;tn=The%20Big%20Dinner%20Delhi">Any other UPI app</a>
+    <a class="app" id="pay-gpay" href="tez://upi/pay?pa=8595203751@jupiteraxis&amp;pn=The%20Big%20Dinner&amp;am=5000&amp;cu=INR&amp;tn=Big%20Dinner%20Delhi%2031%20Oct">Google Pay</a>
+    <a class="app" id="pay-phonepe" href="phonepe://pay?pa=8595203751@jupiteraxis&amp;pn=The%20Big%20Dinner&amp;am=5000&amp;cu=INR&amp;tn=Big%20Dinner%20Delhi%2031%20Oct">PhonePe</a>
+    <a class="app" id="pay-paytm" href="paytmmp://pay?pa=8595203751@jupiteraxis&amp;pn=The%20Big%20Dinner&amp;am=5000&amp;cu=INR&amp;tn=Big%20Dinner%20Delhi%2031%20Oct">Paytm</a>
+    <a class="app" id="pay-bhim" href="upi://pay?pa=8595203751@jupiteraxis&amp;pn=The%20Big%20Dinner&amp;am=5000&amp;cu=INR&amp;tn=Big%20Dinner%20Delhi%2031%20Oct">BHIM</a>
+    <a class="app app-other" id="pay-other" href="upi://pay?pa=8595203751@jupiteraxis&amp;pn=The%20Big%20Dinner&amp;am=5000&amp;cu=INR&amp;tn=Big%20Dinner%20Delhi%2031%20Oct">Any other UPI app</a>
   </div>
 </main>
 <script>
   (function () {
-    var params = 'pa=8448445950@kotak&pn=The%20Big%20Dinner&am=5000&cu=INR&tn=The%20Big%20Dinner%20Delhi';
+    var params = 'pa=8595203751@jupiteraxis&pn=The%20Big%20Dinner&am=5000&cu=INR&tn=Big%20Dinner%20Delhi%2031%20Oct';
     var android = /Android/i.test(navigator.userAgent || '');
 
     function intent(path, scheme, pkg, fallback) {
@@ -283,6 +246,13 @@
         'com.google.android.apps.nbu.paisa.user',
         'https://play.google.com/store/apps/details?id=com.google.android.apps.nbu.paisa.user'
       );
+      document.getElementById('pay-bhim').href = intent(
+        'pay?' + params,
+        'upi',
+        'in.org.npci.upiapp',
+        'https://play.google.com/store/apps/details?id=in.org.npci.upiapp'
+      );
+      document.getElementById('pay-other').href = intent('pay?' + params, 'upi');
     }
 
     var button = document.getElementById('copy-handle');
