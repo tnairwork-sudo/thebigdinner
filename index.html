@@ -398,23 +398,6 @@
   <source src="/ambient-theme.mp3" type="audio/mpeg">
 </audio>
 
-<div class="welcome" id="welcome" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle" hidden>
-  <picture class="art">
-    <source media="(min-width: 760px)" type="image/webp" srcset="/assets/art/hero-16x9.webp">
-    <source media="(min-width: 760px)" srcset="/assets/art/hero-16x9.jpg">
-    <source type="image/webp" srcset="/assets/art/hero-mobile-9x16.webp">
-    <img src="/assets/art/hero-mobile-9x16.jpg" width="1080" height="1920" alt="">
-  </picture>
-  <div class="frame-scrim welcome-scrim"></div>
-  <button class="scrim-close" type="button" tabindex="-1" aria-hidden="true"></button>
-  <button class="welcome-close" type="button">Close</button>
-  <div class="welcome-copy">
-    <p class="label" id="welcomeLabel">The room</p>
-    <p class="welcome-line" id="welcomeTitle">It is a bet on people.</p>
-    <button class="invite-btn invite-btn-lg js-open-invite" type="button">Request an Invitation</button>
-  </div>
-</div>
-
 <div id="cityOverlay" class="overlay" role="dialog" aria-modal="true" aria-labelledby="overlayTitle">
   <button class="scrim-close" type="button" tabindex="-1" aria-hidden="true"></button>
   <button id="closeOverlay" class="overlay-close" type="button">Close</button>
@@ -557,11 +540,7 @@
   });
 
   var overlay = document.getElementById("cityOverlay");
-  var welcome = document.getElementById("welcome");
-  var welcomeTimer = null;
   var returnFocus = null;
-  var seenKey = "tbd-invite-seen";
-  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   var cityForms = {
     delhi: "https://forms.gle/zVchUBLogxfGeH5g6",
@@ -571,14 +550,6 @@
     hyderabad: "https://forms.gle/maV5MoNA5wGTWkjZ9",
     dubai: "https://forms.gle/59dfvTV3jtLq1ws26"
   };
-
-  function markSeen() {
-    try { sessionStorage.setItem(seenKey, "1"); } catch (err) {}
-  }
-
-  function alreadySeen() {
-    try { return sessionStorage.getItem(seenKey) === "1"; } catch (err) { return false; }
-  }
 
   var formNotice = document.getElementById("formNotice");
   var noticeRead = document.getElementById("noticeRead");
@@ -601,7 +572,6 @@
       document.getElementById("content"),
       document.querySelector(".colophon"),
       document.getElementById("soundToggle"),
-      welcome,
       overlay,
       formNotice
     ].filter(Boolean);
@@ -626,26 +596,6 @@
     );
   }
 
-  function openWelcome() {
-    if (overlay.classList.contains("is-open") || welcome.classList.contains("is-open")) return;
-    markSeen();
-    returnFocus = document.querySelector(".js-open-invite");
-    welcome.hidden = false;
-    welcome.classList.add("is-open");
-    setLocked(welcome);
-    var primary = welcome.querySelector(".js-open-invite");
-    if (primary) primary.focus();
-  }
-
-  function closeWelcome(silent) {
-    welcome.classList.remove("is-open");
-    welcome.hidden = true;
-    if (!silent) {
-      setLocked(null);
-      if (returnFocus && returnFocus.focus) returnFocus.focus();
-    }
-  }
-
   function showCityStep() {
     document.getElementById("pickerCity").hidden = false;
     document.getElementById("pickerApply").hidden = true;
@@ -664,14 +614,7 @@
 
   function openOverlay(event) {
     if (event) event.preventDefault();
-    if (welcomeTimer) {
-      clearTimeout(welcomeTimer);
-      welcomeTimer = null;
-    }
-    markSeen();
-    var from = event && event.currentTarget ? event.currentTarget : document.querySelector(".invite-btn");
-    if (!welcome.classList.contains("is-open")) returnFocus = from;
-    closeWelcome(true);
+    returnFocus = event && event.currentTarget ? event.currentTarget : document.querySelector(".invite-btn");
     hideFormNotice();
     resetNoticeGate();
     showCityStep();
@@ -695,11 +638,9 @@
     el.addEventListener("click", openOverlay);
   });
   document.getElementById("closeOverlay").addEventListener("click", closeOverlay);
-  welcome.querySelector(".welcome-close").addEventListener("click", function () { closeWelcome(false); });
   document.querySelectorAll(".scrim-close").forEach(function (button) {
     button.addEventListener("click", function () {
       if (overlay.classList.contains("is-open")) closeOverlay();
-      else closeWelcome(false);
     });
   });
   function setNoticeChrome(mode) {
@@ -887,11 +828,10 @@
   });
 
   document.addEventListener("keydown", function (event) {
-    var dialog = formNotice.classList.contains("is-open") ? formNotice : (overlay.classList.contains("is-open") ? overlay : (welcome.classList.contains("is-open") ? welcome : null));
+    var dialog = formNotice.classList.contains("is-open") ? formNotice : (overlay.classList.contains("is-open") ? overlay : null);
     if (event.key === "Escape") {
       if (formNotice.classList.contains("is-open")) closeFormNotice();
       else if (overlay.classList.contains("is-open")) closeOverlay();
-      else if (welcome.classList.contains("is-open")) closeWelcome(false);
       return;
     }
     if (event.key !== "Tab" || !dialog) return;
@@ -916,13 +856,10 @@
 
   var params = new URLSearchParams(location.search);
   if (params.get("invite") === "1") {
-    markSeen();
     var clean = location.pathname.replace(/index\.html$/, "");
     if (!clean) clean = "/";
     history.replaceState(null, "", clean);
     openOverlay();
-  } else if (!alreadySeen()) {
-    welcomeTimer = setTimeout(openWelcome, reduceMotion ? 1500 : 1500);
   }
 </script>
 <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script><script defer src="/_vercel/insights/script.js"></script>

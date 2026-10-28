@@ -3,7 +3,7 @@
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   function dialogOpen() {
-    return document.querySelector(".welcome.is-open, .overlay.is-open, .form-notice.is-open, .reel-lightbox.is-open");
+    return document.querySelector(".overlay.is-open, .form-notice.is-open, .reel-lightbox.is-open");
   }
 
   if (nav) {
@@ -107,7 +107,7 @@
     box.classList.remove("is-open");
     box.hidden = true;
     var menuOpen = document.querySelector("[data-nav].is-open");
-    var other = document.querySelector(".welcome.is-open, .overlay.is-open, .form-notice.is-open");
+    var other = document.querySelector(".overlay.is-open, .form-notice.is-open");
     if (!menuOpen && !other) document.body.classList.remove("is-locked");
     if (lastTile && lastTile.focus) lastTile.focus();
   }
