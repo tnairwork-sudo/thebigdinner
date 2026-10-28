@@ -240,3 +240,41 @@
   window.addEventListener("scroll", sync, { passive: true });
   window.addEventListener("resize", sync);
 })();
+
+(function () {
+  var video = document.getElementById("featureFilm");
+  var toggle = document.querySelector(".film-sound");
+  if (!video || !toggle) return;
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function play() {
+    var attempt = video.play();
+    if (attempt && attempt.catch) attempt.catch(function () {});
+  }
+
+  function setSound(on) {
+    video.muted = !on;
+    toggle.setAttribute("aria-pressed", on ? "true" : "false");
+    toggle.textContent = on ? "Sound: On" : "Sound: Off";
+  }
+
+  toggle.addEventListener("click", function () {
+    setSound(video.muted);
+    if (video.paused) play();
+  });
+
+  video.addEventListener("click", function () {
+    video.controls = true;
+  });
+
+  if (reduce || !("IntersectionObserver" in window)) return;
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) play();
+      else video.pause();
+    });
+  }, { threshold: 0.4 });
+
+  observer.observe(video);
+})();

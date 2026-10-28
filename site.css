@@ -1218,18 +1218,19 @@ html.js .reveal.is-in { opacity: 1; transform: none; }
 .paper-frame { background: #ffffff; --sound-tone: raspberry; }
 .poster-run { background: #ffffff; --sound-tone: cream; }
 .reels { background: #ffffff; --sound-tone: cornflower; }
-main > .frame:nth-child(5) { background: #ffffff; --sound-tone: teal; }
+.film { background: #ffffff; --sound-tone: cream; }
+main > .frame:nth-child(6) { background: #ffffff; --sound-tone: teal; }
 #rules { background: #ffffff; --sound-tone: mustard; }
-main > .frame:nth-child(7) { background: #ffffff; --sound-tone: tangerine; }
+main > .frame:nth-child(8) { background: #ffffff; --sound-tone: tangerine; }
 .lineage { background: #ffffff; --sound-tone: lilac; }
 .archive { background: #ffffff; --sound-tone: pink; }
 #cities { background: #ffffff; --sound-tone: cornflower; }
-main > .frame:nth-child(11) { background: #ffffff; --sound-tone: pistachio; }
-main > .frame:nth-child(12) { background: #ffffff; --sound-tone: tangerine; }
-main > .frame:nth-child(13) { background: #ffffff; --sound-tone: lilac; }
-main > .frame:nth-child(14) { background: #ffffff; --sound-tone: teal; }
-main > .frame:nth-child(15) { background: #ffffff; --sound-tone: raspberry; }
-main > .frame:nth-child(16) { background: #ffffff; --sound-tone: mustard; }
+main > .frame:nth-child(12) { background: #ffffff; --sound-tone: pistachio; }
+main > .frame:nth-child(13) { background: #ffffff; --sound-tone: tangerine; }
+main > .frame:nth-child(14) { background: #ffffff; --sound-tone: lilac; }
+main > .frame:nth-child(15) { background: #ffffff; --sound-tone: teal; }
+main > .frame:nth-child(16) { background: #ffffff; --sound-tone: raspberry; }
+main > .frame:nth-child(17) { background: #ffffff; --sound-tone: mustard; }
 .invite { background: #ffffff; --sound-tone: powder; }
 .colophon { background: #ffffff; color: var(--ink); --sound-tone: raspberry; }
 .masthead { background: #ffffff; --sound-tone: lilac; }
@@ -1700,3 +1701,42 @@ p.label { display: block; }
 .sound.is-tone-mustard { background-color: #e6dcc4; border-color: #9a8b68; }
 .sound.is-tone-tangerine { background-color: #ead8c8; border-color: #a48468; }
 .sound.is-tone-lilac { background-color: #ddd6de; border-color: #8a7e8e; }
+
+.film {
+  margin: 0;
+  padding: clamp(72px, 12vh, 140px) clamp(20px, 5vw, 72px);
+  background: #ffffff;
+  text-align: center;
+}
+.film-frame {
+  position: relative;
+  width: min(1080px, 100%);
+  margin: 0 auto;
+  border: 1px solid rgba(26, 26, 26, 0.16);
+  background: #ffffff;
+  line-height: 0;
+}
+.film-video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  background: #ffffff;
+}
+.film-sound {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+  margin: 0;
+  border: 1px solid rgba(26, 26, 26, 0.55);
+  background: #ffffff;
+  color: #1a1a1a;
+  font-family: var(--serif);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  padding: 6px 10px;
+  cursor: pointer;
+}
