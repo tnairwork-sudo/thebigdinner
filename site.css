@@ -23,7 +23,7 @@
   --ink-soft: #4a453f;
   --line: rgba(58, 46, 40, 0.34);
   --line-soft: rgba(58, 46, 40, 0.16);
-  --nav-h: 140px;
+  --nav-h: 0px;
   --serif: "Cormorant Garamond", "Times New Roman", serif;
   --sans: "Cormorant Garamond", "Times New Roman", serif;
 }
@@ -1154,7 +1154,7 @@ html.js .reveal.is-in { opacity: 1; transform: none; }
   .shot img { height: 240px; }
 }
 @media (max-width: 760px) {
-  :root { --nav-h: 156px; }
+  :root { --nav-h: 0px; }
   .wordmark { font-size: 1.3rem; }
 }
 @media (max-width: 380px) {
@@ -1351,7 +1351,7 @@ html, body { background: #ffffff; }
 
 /* Phones. Wide margins, tall sections, and controls you can actually read. */
 @media (max-width: 759px) {
-  :root { --nav-h: 94px; }
+  :root { --nav-h: 0px; }
   body { font-size: 1.125rem; line-height: 1.7; }
   .label { font-size: 1rem; letter-spacing: 0.12em; line-height: 1.5; }
   .display { font-size: clamp(2.7rem, 12vw, 3.4rem); }
@@ -1588,7 +1588,7 @@ html, body { background: #ffffff; }
 
 /* Laptop header sits on one line. The wordmark keeps its size and tracking. */
 @media (min-width: 760px) {
-  :root { --nav-h: 78px; }
+  :root { --nav-h: 0px; }
   header.nav {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
