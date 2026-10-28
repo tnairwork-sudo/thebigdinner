@@ -73,6 +73,67 @@
     </div>
   </section>
 
+  <section class="poster-run" aria-label="Posters">
+    <figure class="poster-run-item">
+      <button class="poster-open js-open-invite" type="button">
+        <picture>
+          <source media="(min-width: 760px)" srcset="/assets/posters/poster-1-banner.jpg">
+          <img src="/assets/posters/poster-1-4x5.jpg" width="1600" height="2000" alt="Geography. Request an Invitation." decoding="async">
+        </picture>
+      </button>
+    </figure>
+  </section>
+
+  <section class="evenings" aria-labelledby="eveningsLabel">
+    <p class="label" id="eveningsLabel">The Evenings</p>
+    <div class="evenings-grid">
+      <figure class="evening-frame"><img src="/assets/evenings/delhi-02.jpg" width="1200" height="1600" alt="A Delhi evening" loading="lazy" decoding="async"></figure>
+      <figure class="evening-frame"><img src="/assets/evenings/delhi-08.jpg" width="1200" height="1600" alt="A Delhi evening" loading="lazy" decoding="async"></figure>
+      <figure class="evening-frame"><img src="/assets/evenings/delhi-04.jpg" width="1200" height="1600" alt="A Delhi evening" loading="lazy" decoding="async"></figure>
+      <figure class="evening-frame"><img src="/assets/evenings/two-guests.jpg" width="1200" height="1600" alt="Two guests" loading="lazy" decoding="async"></figure>
+      <figure class="evening-frame"><img src="/assets/evenings/delhi-09.jpg" width="1200" height="1600" alt="A Delhi evening" loading="lazy" decoding="async"></figure>
+      <figure class="evening-frame"><img src="/assets/evenings/delhi-03.jpg" width="1200" height="1600" alt="A Delhi evening" loading="lazy" decoding="async"></figure>
+      <figure class="evening-frame"><img src="/assets/evenings/delhi-07.jpg" width="1200" height="1600" alt="A Delhi evening" loading="lazy" decoding="async"></figure>
+      <figure class="evening-frame"><img src="/assets/evenings/delhi-10.jpg" width="1200" height="1600" alt="A Delhi evening" loading="lazy" decoding="async"></figure>
+    </div>
+  </section>
+
+  <section class="reels" aria-labelledby="reelsLabel">
+    <p class="label" id="reelsLabel">The Reels</p>
+    <div class="reel-grid">
+      <button class="reel-tile" type="button" aria-label="Delhi">
+        <video muted loop playsinline preload="metadata" poster="/assets/reels/delhi-poster.jpg" width="720" height="1280">
+          <source src="/assets/reels/delhi.mp4" type="video/mp4">
+        </video>
+      </button>
+      <button class="reel-tile" type="button" aria-label="Hyderabad">
+        <video muted loop playsinline preload="metadata" poster="/assets/reels/hyderabad-poster.jpg" width="720" height="1280">
+          <source src="/assets/reels/hyderabad.mp4" type="video/mp4">
+        </video>
+      </button>
+      <button class="reel-tile" type="button" aria-label="London">
+        <video muted loop playsinline preload="metadata" poster="/assets/reels/london-poster.jpg" width="720" height="1280">
+          <source src="/assets/reels/london.mp4" type="video/mp4">
+        </video>
+      </button>
+      <button class="reel-tile" type="button" aria-label="The door is slightly ajar">
+        <video muted loop playsinline preload="metadata" poster="/assets/reels/the-door-poster.jpg" width="720" height="406">
+          <source src="/assets/reels/the-door.mp4" type="video/mp4">
+        </video>
+      </button>
+      <button class="reel-tile" type="button" aria-label="Request an Invitation">
+        <video muted loop playsinline preload="metadata" poster="/assets/reels/wes-anderson-invitation-poster.jpg" width="720" height="1280">
+          <source src="/assets/reels/wes-anderson-invitation.mp4" type="video/mp4">
+        </video>
+      </button>
+      <button class="reel-tile" type="button" aria-label="Strangers who leave as friends">
+        <video muted loop playsinline preload="metadata" poster="/assets/reels/strangers-to-friends-poster.jpg" width="720" height="406">
+          <source src="/assets/reels/strangers-to-friends.mp4" type="video/mp4">
+        </video>
+      </button>
+    </div>
+  </section>
+
   <section class="frame">
     <picture class="art">
       <source type="image/webp" srcset="/assets/art/section-doorway-glow-16x9.webp">
@@ -460,6 +521,14 @@
       </div>
       <button id="noticeContinue" class="btn" type="button" disabled>Continue</button>
     </div>
+  </div>
+</div>
+
+<div class="reel-lightbox" id="reelLightbox" hidden>
+  <button class="reel-lightbox-scrim" type="button" tabindex="-1" aria-hidden="true"></button>
+  <div class="reel-lightbox-panel" role="dialog" aria-modal="true" aria-label="The Reels">
+    <button class="reel-lightbox-close" type="button">Close</button>
+    <video class="reel-lightbox-video" muted loop playsinline></video>
   </div>
 </div>
 
