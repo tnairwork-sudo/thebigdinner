@@ -172,6 +172,8 @@
   });
 
   function toneFor(section) {
+    var named = getComputedStyle(section).getPropertyValue("--sound-tone").trim();
+    if (named) return named;
     var rgb = parseColor(getComputedStyle(section).backgroundColor);
     if (!rgb || !palette.length) return "cream";
     var best = palette[0];

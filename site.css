@@ -14,8 +14,8 @@
   --raspberry: #e58aa4;
   --pistachio: #8fcb8a;
   --tangerine: #f09a55;
-  --cream: #f6f0e4;
-  --cream-2: #fbf6ec;
+  --cream: #ffffff;
+  --cream-2: #ffffff;
   --mustard: #e3b84a;
   --gold: #a6843e;
   --gold-2: #c6a15a;
@@ -44,7 +44,7 @@ body.is-locked { overflow: hidden; }
 img { max-width: 100%; height: auto; }
 button, input, select { font: inherit; }
 a { color: inherit; }
-::selection { background: var(--powder); color: var(--ink); }
+::selection { background: var(--gold); color: #ffffff; }
 
 .skip {
   position: absolute;
@@ -155,7 +155,7 @@ a { color: inherit; }
   min-height: var(--nav-h);
   padding: 16px 20px 14px;
   color: var(--ink);
-  background: rgba(247, 243, 234, 0.96);
+  background: #ffffff;
   border-bottom: 1px solid var(--line-soft);
   text-align: center;
 }
@@ -163,7 +163,7 @@ a { color: inherit; }
 .nav.is-open,
 .theme-paper .nav,
 .nav-paper {
-  background: rgba(247, 243, 234, 0.98);
+  background: #ffffff;
   color: var(--ink);
 }
 .wordmark,
@@ -227,7 +227,7 @@ a { color: inherit; }
   min-height: 52px;
 }
 .invite-btn:hover,
-.invite-btn:focus-visible { background: #f3e6c8; }
+.invite-btn:focus-visible { background: #ffffff; }
 
 .nav-links {
   position: fixed;
@@ -521,9 +521,9 @@ body.is-locked .sound { opacity: 0; pointer-events: none; }
   color: var(--ink);
 }
 .btn { border-color: var(--gold); }
-.btn:hover, .btn:focus-visible { background: #f3e6c8; border-color: var(--gold); color: var(--ink); }
-.btn-line:hover, .btn-line:focus-visible { background: var(--pink); color: var(--ink); border-color: var(--line); }
-.sheet .btn-line:hover, .lineage .btn-line:hover { background: var(--mint); color: var(--ink); border-color: var(--line); }
+.btn:hover, .btn:focus-visible { background: #ffffff; border-color: var(--gold); color: var(--ink); }
+.btn-line:hover, .btn-line:focus-visible { background: #ffffff; color: var(--ink); border-color: var(--gold); }
+.sheet .btn-line:hover, .lineage .btn-line:hover { background: #ffffff; color: var(--ink); border-color: var(--gold); }
 
 .overlay {
   position: fixed;
@@ -531,7 +531,7 @@ body.is-locked .sound { opacity: 0; pointer-events: none; }
   z-index: 90;
   display: none;
   overflow: auto;
-  background: rgba(58, 46, 40, 0.28);
+  background: #ffffff;
   color: var(--ink);
   padding: 28px 16px;
 }
@@ -613,7 +613,7 @@ body.is-locked .sound { opacity: 0; pointer-events: none; }
   align-items: center;
   justify-content: center;
   padding: 20px;
-  background: rgba(58, 46, 40, 0.28);
+  background: #ffffff;
 }
 .form-notice.is-open { display: flex; }
 .form-notice[hidden] { display: none; }
@@ -794,8 +794,8 @@ body.is-locked .sound { opacity: 0; pointer-events: none; }
 .form-notice-bar .btn { width: min(100%, 420px); }
 .form-notice-bar .btn:disabled,
 .form-notice-bar .btn:disabled:hover {
-  background: var(--pink);
-  border-color: var(--pink-deep);
+  background: #ffffff;
+  border-color: var(--gold);
   color: rgba(58, 46, 40, 0.42);
   cursor: not-allowed;
 }
@@ -1010,7 +1010,7 @@ html.js .journal .entry.visible { opacity: 1; transform: none; }
   cursor: pointer;
   white-space: nowrap;
 }
-.filter-tab.active, .filter-tab:hover { background: var(--ink); color: var(--cream); border-color: var(--ink); }
+.filter-tab.active, .filter-tab:hover { background: #ffffff; color: var(--ink); border-color: var(--gold); }
 .gallery-block:nth-of-type(even) { background: var(--powder); }
 .press { background: var(--mustard); }
 .video-feed {
@@ -1037,8 +1037,8 @@ html.js .journal .entry.visible { opacity: 1; transform: none; }
   right: 8px;
   bottom: 8px;
   padding: 36px 14px 14px;
-  color: var(--cream);
-  background: linear-gradient(180deg, transparent, rgba(58, 46, 40, 0.72));
+  color: #ffffff;
+  background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.55));
   text-align: center;
 }
 .card-city-tag {
@@ -1064,10 +1064,10 @@ html.js .journal .entry.visible { opacity: 1; transform: none; }
   border-radius: 50%;
   display: grid;
   place-items: center;
-  border: 1px solid var(--cream);
-  background: rgba(58, 46, 40, 0.28);
+  border: 1px solid var(--ink);
+  background: #ffffff;
 }
-.play-btn svg { width: 18px; height: 18px; margin-left: 3px; fill: var(--cream); }
+.play-btn svg { width: 18px; height: 18px; margin-left: 3px; fill: var(--ink); }
 .card-description { margin: 14px auto; font-size: 1.05rem; max-width: 32em; }
 .card-footer-row {
   display: flex;
@@ -1212,38 +1212,40 @@ html.js .reveal.is-in { opacity: 1; transform: none; }
 .poster-open:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
 .poster-run-item img { width: 100%; height: auto; display: block; aspect-ratio: auto; object-fit: contain; filter: none; }
 
-/* One confident colour for each block, with a gold edge. */
-.nav { border-bottom: 2px solid var(--gold); }
-.hero { background: var(--powder); }
-.paper-frame { background: var(--raspberry); }
-.poster-run { background: var(--cream); }
-.evenings { background: var(--pistachio); }
-.reels { background: var(--cornflower); }
-main > .frame:nth-child(6) { background: var(--teal); }
-#rules { background: var(--mustard); }
-main > .frame:nth-child(8) { background: var(--tangerine); }
-.lineage { background: var(--lilac); }
-.archive { background: var(--pink); }
-#cities { background: var(--cornflower); }
-main > .frame:nth-child(12) { background: var(--pistachio); }
-main > .frame:nth-child(13) { background: var(--tangerine); }
-main > .frame:nth-child(14) { background: var(--lilac); }
-main > .frame:nth-child(15) { background: var(--teal); }
-main > .frame:nth-child(16) { background: var(--raspberry); }
-main > .frame:nth-child(17) { background: var(--mustard); }
-.invite { background: var(--powder); }
-.colophon { background: var(--raspberry); color: var(--ink); }
-.masthead { background: var(--lilac); }
-.masthead.has-art { background: var(--powder); }
-.page-hero { background: var(--cornflower); }
-.journal { background: var(--cream); }
-.gallery-block { background: var(--pistachio); }
-.gallery-block + .gallery-block { background: var(--lilac); }
-.press { background: var(--tangerine); }
-.press + .gallery-block { background: var(--powder); }
-.video-feed { background: var(--teal); }
-.filter-bar { background: var(--cream); border-bottom: 2px solid var(--gold); }
-.nav-links { background: var(--lilac); }
+/* Crystal white field. Gold stays a thin edge. Sound still reads each section's tone. */
+.nav { border-bottom: 2px solid var(--gold); background: #ffffff; }
+.hero { background: #ffffff; --sound-tone: powder; }
+.paper-frame { background: #ffffff; --sound-tone: raspberry; }
+.poster-run { background: #ffffff; --sound-tone: cream; }
+.evenings { background: #ffffff; --sound-tone: pistachio; }
+.reels { background: #ffffff; --sound-tone: cornflower; }
+main > .frame:nth-child(6) { background: #ffffff; --sound-tone: teal; }
+#rules { background: #ffffff; --sound-tone: mustard; }
+main > .frame:nth-child(8) { background: #ffffff; --sound-tone: tangerine; }
+.lineage { background: #ffffff; --sound-tone: lilac; }
+.archive { background: #ffffff; --sound-tone: pink; }
+#cities { background: #ffffff; --sound-tone: cornflower; }
+main > .frame:nth-child(12) { background: #ffffff; --sound-tone: pistachio; }
+main > .frame:nth-child(13) { background: #ffffff; --sound-tone: tangerine; }
+main > .frame:nth-child(14) { background: #ffffff; --sound-tone: lilac; }
+main > .frame:nth-child(15) { background: #ffffff; --sound-tone: teal; }
+main > .frame:nth-child(16) { background: #ffffff; --sound-tone: raspberry; }
+main > .frame:nth-child(17) { background: #ffffff; --sound-tone: mustard; }
+.invite { background: #ffffff; --sound-tone: powder; }
+.colophon { background: #ffffff; color: var(--ink); --sound-tone: raspberry; }
+.masthead { background: #ffffff; --sound-tone: lilac; }
+.masthead.has-art { background: #ffffff; --sound-tone: powder; }
+.page-hero { background: #ffffff; --sound-tone: cornflower; }
+.journal { background: #ffffff; --sound-tone: cream; }
+.gallery-block { background: #ffffff; --sound-tone: pistachio; }
+.gallery-block + .gallery-block { background: #ffffff; --sound-tone: lilac; }
+.press { background: #ffffff; --sound-tone: tangerine; }
+.press + .gallery-block { background: #ffffff; --sound-tone: powder; }
+.video-feed { background: #ffffff; --sound-tone: teal; }
+.filter-bar { background: #ffffff; border-bottom: 2px solid var(--gold); --sound-tone: cream; }
+.nav-links { background: #ffffff; }
+html, body { background: #ffffff; }
+.gallery-block:nth-of-type(even) { background: #ffffff; }
 .frame, .paper-frame, .sheet, .lineage, .archive, .poster-run, .evenings, .reels, .colophon, .masthead, .journal, .gallery-block, .press {
   box-shadow: inset 0 0 0 2px var(--gold);
 }
@@ -1251,8 +1253,8 @@ main > .frame:nth-child(17) { background: var(--mustard); }
   padding: clamp(64px, 10vh, 112px) clamp(18px, 5vw, 64px);
   text-align: center;
 }
-.evenings { background: var(--pistachio); }
-.reels { background: var(--cornflower); }
+.evenings { background: #ffffff; }
+.reels { background: #ffffff; }
 .evenings .label, .reels .label { display: block; margin-bottom: 28px; }
 .evenings-grid, .reel-grid {
   display: grid;
@@ -1313,7 +1315,7 @@ main > .frame:nth-child(17) { background: var(--mustard); }
   inset: 0;
   border: 0;
   padding: 0;
-  background: rgba(58, 46, 40, 0.38);
+  background: #ffffff;
   cursor: pointer;
 }
 .reel-lightbox-panel {
@@ -1350,7 +1352,7 @@ main > .frame:nth-child(17) { background: var(--mustard); }
   max-height: calc(92svh - 120px);
   height: auto;
   display: block;
-  background: #2a221e;
+  background: #ffffff;
 }
 @media (min-width: 760px) {
   .evenings-grid, .reel-grid {
