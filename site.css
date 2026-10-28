@@ -826,7 +826,7 @@ body.is-locked .sound { opacity: 0; pointer-events: none; }
 
 .page-hero.frame { max-width: none; }
 .masthead {
-  padding: var(--s2) var(--s3) var(--s2);
+  padding: var(--s1) var(--s1) var(--s3);
   max-width: 760px;
   margin: 0 auto;
   text-align: center;
@@ -838,7 +838,7 @@ body.is-locked .sound { opacity: 0; pointer-events: none; }
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: var(--s2) var(--s3) var(--s3);
+  padding: var(--s1) var(--s1) var(--s3);
   overflow: hidden;
   color: var(--ink);
   text-align: center;
@@ -852,7 +852,7 @@ body.is-locked .sound { opacity: 0; pointer-events: none; }
 .lede { margin: var(--s0) auto 0; max-width: 28em; }
 .rule-line { border: 0; border-top: 1px solid var(--line-soft); margin: var(--s2) auto; max-width: 160px; }
 .journal {
-  padding: var(--s0) var(--s3) var(--s3);
+  padding: 0 var(--s1) var(--s3);
   max-width: 720px;
   margin: 0 auto;
   text-align: center;
@@ -962,7 +962,7 @@ html.js .journal .entry.visible { opacity: 1; transform: none; }
   background: var(--cream);
   color: var(--ink);
   text-align: center;
-  padding: var(--s3) var(--s3);
+  padding: 0 var(--s1) var(--s3);
 }
 .gallery-block + .gallery-block,
 .press { border-top: 1px solid var(--line-soft); }
@@ -1133,7 +1133,7 @@ html.js .journal .entry.visible { opacity: 1; transform: none; }
   background: var(--pink);
   color: var(--ink);
   text-align: center;
-  padding: var(--s4) var(--s3) var(--s2);
+  padding: var(--s1) var(--s1) var(--s3);
   display: grid;
   justify-items: center;
   gap: var(--s0);
@@ -1764,22 +1764,27 @@ body,
 
 /* One vertical measure between sections: s3 on a phone, s4 on a laptop.
    Padding lives on the bottom only, so neighbouring sections do not add. */
-main > section,
-main > header.page-hero,
-main > header.masthead,
-main.masthead,
+main > section.frame,
+main > section.paper-frame,
+main > section.sheet,
+main > section.lineage,
+main > section.archive,
+main > section.poster-run,
+main > section.reels,
+main > section.film,
+main > section.journal,
+main > section.gallery-block,
+main > section.press,
 footer.colophon {
   padding: 0 var(--s1) var(--s3);
 }
-main > :first-child,
+main > header.page-hero,
+main > header.masthead,
 main.masthead {
-  padding-top: var(--s1);
+  padding: var(--s1) var(--s1) var(--s3);
 }
 main > section.hero {
   padding: var(--s1) var(--s1) var(--s2);
-}
-main > section.film {
-  padding: 0 var(--s1) var(--s3);
 }
 .hero .frame-copy,
 .frame .frame-copy { padding: 0; }
