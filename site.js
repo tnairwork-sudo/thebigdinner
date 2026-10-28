@@ -246,6 +246,8 @@
   var toggle = document.querySelector(".film-sound");
   if (!video || !toggle) return;
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var globalSound = document.getElementById("soundToggle");
+  var film = video.closest(".film") || video;
 
   function play() {
     var attempt = video.play();
@@ -258,6 +260,18 @@
     toggle.textContent = on ? "Sound: On" : "Sound: Off";
   }
 
+  function setFilmInView(on) {
+    document.body.classList.toggle("film-in-view", on);
+    if (!globalSound) return;
+    if (on) {
+      globalSound.setAttribute("aria-hidden", "true");
+      globalSound.setAttribute("tabindex", "-1");
+    } else {
+      globalSound.setAttribute("aria-hidden", "false");
+      globalSound.removeAttribute("tabindex");
+    }
+  }
+
   toggle.addEventListener("click", function () {
     setSound(video.muted);
     if (video.paused) play();
@@ -267,14 +281,22 @@
     video.controls = true;
   });
 
-  if (reduce || !("IntersectionObserver" in window)) return;
+  if (!("IntersectionObserver" in window)) return;
 
-  var observer = new IntersectionObserver(function (entries) {
+  var viewObserver = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      setFilmInView(entry.isIntersecting);
+    });
+  }, { threshold: 0 });
+  viewObserver.observe(film);
+
+  if (reduce) return;
+
+  var playObserver = new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
       if (entry.isIntersecting) play();
       else video.pause();
     });
   }, { threshold: 0.4 });
-
-  observer.observe(video);
+  playObserver.observe(video);
 })();
