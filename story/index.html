@@ -8,7 +8,7 @@
 <title>The Big Dinner</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; }
   html, body {
@@ -23,6 +23,12 @@
     padding: 24px;
     text-align: center;
     font-family: "Cormorant Garamond", "Times New Roman", serif;
+  }
+  .sheet {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: min(100%, 360px);
   }
   .wordmark {
     margin: 0;
@@ -45,17 +51,49 @@
   .fallback a {
     color: #1a1a1a;
   }
+  .camera {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 21px;
+    min-height: 52px;
+    min-width: min(100%, 280px);
+    padding: 14px 28px;
+    background: #ffffff;
+    color: #1a1a1a;
+    border: 1px solid #8d8274;
+    box-shadow: inset 0 0 0 1px #8d8274, inset 0 0 0 4px #ffffff, inset 0 0 0 5px #8d8274;
+    font-family: inherit;
+    font-size: 1.05rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    line-height: 1.2;
+    text-decoration: none;
+  }
+  .camera:hover,
+  .camera:focus-visible {
+    background: #ffffff;
+    border-color: #1a1a1a;
+    color: #1a1a1a;
+  }
+  .camera:focus-visible {
+    outline: 2px solid #8d8274;
+    outline-offset: 3px;
+  }
   @media (max-width: 760px) {
     .wordmark { font-size: 1.3rem; }
   }
 </style>
 </head>
 <body>
-<p class="wordmark">The Big Dinner</p>
-<p class="status">Opening Instagram…</p>
-<noscript>
-  <p class="fallback"><a href="https://www.instagram.com/thebigdinnerr">https://www.instagram.com/thebigdinnerr</a></p>
-</noscript>
+<div class="sheet">
+  <p class="wordmark">The Big Dinner</p>
+  <p class="status">Opening Instagram…</p>
+  <a class="camera" href="instagram://story-camera">Open Instagram camera</a>
+  <noscript>
+    <p class="fallback"><a href="https://www.instagram.com/thebigdinnerr">https://www.instagram.com/thebigdinnerr</a></p>
+  </noscript>
+</div>
 <script>
   (function () {
     var android = /Android/i.test(navigator.userAgent || "");
