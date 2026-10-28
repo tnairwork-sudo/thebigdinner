@@ -17,10 +17,10 @@
   --cream: #ffffff;
   --cream-2: #ffffff;
   --mustard: #e3b84a;
-  --gold: #a6843e;
-  --gold-2: #c6a15a;
-  --ink: #2a221c;
-  --ink-soft: #3f342c;
+  --gold: #8d8274;
+  --gold-2: #b3a48f;
+  --ink: #1a1a1a;
+  --ink-soft: #4a453f;
   --line: rgba(58, 46, 40, 0.34);
   --line-soft: rgba(58, 46, 40, 0.16);
   --nav-h: 140px;
@@ -1636,83 +1636,67 @@ html, body { background: #ffffff; }
   .reel-tile:hover { transition: none; transform: none; }
 }
 
-/* Paper grain, kept very light so the white stays bright. */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 60;
-  pointer-events: none;
-  opacity: 1;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.035'/></svg>");
-  background-size: 180px 180px;
-  mix-blend-mode: multiply;
-}
-
-/* A narrow blue band under the header, a rose band along the footer. */
+/* Calm gallery field. One hairline, wide space, no ornament. */
+body::before { content: none; }
 header.nav {
-  border-bottom: 1px solid var(--gold);
-  box-shadow: 0 3px 0 #8aa4e0;
+  border-bottom: 1px solid rgba(26, 26, 26, 0.14);
+  box-shadow: none;
 }
-.colophon {
-  border-top: 3px solid #e58aa4;
+.colophon { border-top: 1px solid rgba(26, 26, 26, 0.14); }
+.frame, .paper-frame, .sheet, .lineage, .archive, .poster-run, .reels, .colophon, .masthead, .journal, .gallery-block, .press {
+  box-shadow: none;
 }
-
-/* Corner ticks and a small gold mark between sections. */
-main > section {
-  background-image:
-    linear-gradient(var(--gold), var(--gold)),
-    linear-gradient(var(--gold), var(--gold)),
-    linear-gradient(var(--gold), var(--gold)),
-    linear-gradient(var(--gold), var(--gold)),
-    linear-gradient(var(--gold), var(--gold)),
-    linear-gradient(var(--gold), var(--gold)),
-    linear-gradient(var(--gold), var(--gold)),
-    linear-gradient(var(--gold), var(--gold));
-  background-repeat: no-repeat;
-  background-size: 9px 1px, 1px 9px, 9px 1px, 1px 9px, 9px 1px, 1px 9px, 9px 1px, 1px 9px;
-  background-position:
-    12px 12px, 12px 12px,
-    calc(100% - 12px) 12px, calc(100% - 12px) 12px,
-    12px calc(100% - 12px), 12px calc(100% - 12px),
-    calc(100% - 12px) calc(100% - 12px), calc(100% - 12px) calc(100% - 12px);
+main > section { background-image: none; }
+main > section + section::before { content: none; }
+p.label::before, p.label::after { content: none; }
+p.label { display: block; }
+.label {
+  letter-spacing: 0.28em;
+  font-weight: 400;
+  color: var(--ink-soft);
 }
-main > section + section::before {
-  content: "◆";
-  display: block;
-  margin: -1.4rem auto 1.1rem;
-  color: var(--gold);
-  font-size: 9px;
-  line-height: 1;
-  text-align: center;
+.display, .headline {
+  font-weight: 400;
+  letter-spacing: 0.01em;
 }
-
-/* Hairlines beside the small-caps labels. */
-p.label {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
+.invite-btn, .reel-tile { clip-path: none; }
+.invite-btn, .nav-toggle, .btn {
+  background: #ffffff;
+  border: 1px solid rgba(26, 26, 26, 0.55);
+  box-shadow: none;
 }
-p.label::before,
-p.label::after {
-  content: "";
-  width: 28px;
-  height: 1px;
-  background: var(--gold);
-  flex: none;
+.invite-btn:hover, .invite-btn:focus-visible,
+.btn:hover, .btn:focus-visible {
+  background: #ffffff;
+  border-color: #1a1a1a;
 }
-
-/* Ticket notches on the invitation and the reels. */
-.invite-btn,
-.reel-tile {
-  clip-path: polygon(
-    7px 0, calc(100% - 7px) 0,
-    100% 7px, 100% calc(100% - 7px),
-    calc(100% - 7px) 100%, 7px 100%,
-    0 calc(100% - 7px), 0 7px
-  );
-}
+.poster-run { padding: clamp(96px, 14vh, 160px) clamp(24px, 6vw, 80px); }
 .poster-run-item {
-  box-shadow: inset 0 0 0 1px #8aa4e0;
+  border: 1px solid rgba(26, 26, 26, 0.16);
+  background: #ffffff;
+  box-shadow: none;
+  padding: 0;
 }
+.reels { padding: clamp(96px, 14vh, 168px) clamp(24px, 6vw, 80px); }
+.reel-grid { gap: 28px; }
+.reel-tile {
+  border: 1px solid rgba(26, 26, 26, 0.16);
+  box-shadow: none;
+  background: #ffffff;
+}
+.sheet, .lineage, .archive, .paper-frame, .frame {
+  padding: clamp(96px, 14vh, 168px) clamp(24px, 6vw, 88px);
+}
+.hero, .page-hero, .masthead {
+  padding-top: calc(var(--nav-h) + 56px);
+}
+.sound.is-tone-powder { background-color: #d9d3c6; border-color: #8d8274; }
+.sound.is-tone-raspberry,
+.sound.is-tone-pink { background-color: #e4d2cb; border-color: #a48478; }
+.sound.is-tone-cream { background-color: #e7e1d6; border-color: #8d8274; }
+.sound.is-tone-pistachio { background-color: #d5ddd0; border-color: #7d8a74; }
+.sound.is-tone-cornflower { background-color: #d5d8de; border-color: #7d8494; }
+.sound.is-tone-teal { background-color: #d3e0dc; border-color: #6e8a84; }
+.sound.is-tone-mustard { background-color: #e6dcc4; border-color: #9a8b68; }
+.sound.is-tone-tangerine { background-color: #ead8c8; border-color: #a48468; }
+.sound.is-tone-lilac { background-color: #ddd6de; border-color: #8a7e8e; }
