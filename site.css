@@ -1897,3 +1897,113 @@ body::before {
   background-color: #E9D8C3;
   color: #2A2420;
 }
+
+/* One radius scale, taken from the spacing steps: 13, 21, 34.
+   Buttons are pills. Media is clipped inside the frame. */
+:root {
+  --r-sm: 13px;
+  --r-md: 21px;
+  --r-lg: 34px;
+  --r-pill: 999px;
+  --shadow: 0 12px 32px rgba(42, 36, 32, 0.08);
+}
+.invite-btn,
+.btn,
+.btn-line,
+.nav-toggle,
+.sound,
+.film-sound,
+.filter-tab,
+.overlay-close,
+.form-notice-close,
+.reel-lightbox-close {
+  border-radius: var(--r-pill);
+}
+.play-btn { border-radius: 50%; }
+.field select,
+.read-box,
+.guest-pill,
+.city-pill {
+  border-radius: var(--r-sm);
+}
+.rule,
+.chapter,
+.clauses li,
+.journal .entry,
+.shot,
+.gallery-grid figure,
+.video-wrapper,
+.poster-run-item {
+  border-radius: var(--r-md);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+}
+.art,
+.film-frame,
+.reel-tile,
+.overlay-page,
+.form-notice-panel,
+.reel-lightbox-panel {
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+}
+.art img,
+.shot img,
+.gallery-grid img,
+.poster-run-item img,
+.video-wrapper .thumb,
+.film-video {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+}
+.shot img,
+.gallery-grid img,
+.video-wrapper .thumb { aspect-ratio: 4 / 5; }
+.film-frame,
+.reel-grid,
+.poster-run-item,
+.gallery-grid {
+  width: min(760px, 100%);
+  max-width: 760px;
+  margin-inline: auto;
+}
+.film-video {
+  aspect-ratio: 16 / 9;
+  background: transparent;
+}
+.reel-tile {
+  aspect-ratio: 9 / 16;
+  padding: 0;
+}
+.reel-tile video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.reel-grid,
+.gallery-grid,
+.mosaic,
+.video-feed {
+  gap: var(--s1);
+}
+.reels .label {
+  display: block;
+  width: min(760px, 100%);
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+.reel-tile:hover,
+.reel-tile:focus-visible {
+  transform: none;
+  border-color: var(--line);
+}
+.filter-bar { border-bottom: 1px solid var(--line); }
+.video-card { width: min(420px, 100%); margin-inline: auto; }
+.video-wrapper .thumb { aspect-ratio: 4 / 5; height: auto; }
