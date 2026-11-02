@@ -1,34 +1,38 @@
 /* The Big Dinner
-   Emerald velvet. One jewel field, white type, gold buttons,
-   blush only on small edges. Art lives in /assets/art.
-   #138A5E with white is 4.35:1, short of WCAG AA, so the field
-   is #127654 (5.61:1, still about 2.4× the luminance of #0F4D3A). */
+   Light gold field #E4C56A, deep emerald type #062E24 (8.77:1).
+   Buttons are solid #062E24 with ivory #F4EFE6 (12.88:1).
+   The wordmark stays Cormorant. UI type follows Aadyah:
+   Inter Tight for reading and titles, JetBrains Mono for labels
+   and buttons. Art lives in /assets/art. */
 
 :root {
-  --velvet: #127654;
-  --velvet-deep: #0E5642;
-  --velvet-ink: #062E24;
-  --blush: #E8B4B8;
-  --gold-hover: #E4C56A;
-  --pink: #E8B4B8;
-  --pink-deep: #E8B4B8;
-  --mint: #127654;
-  --powder: #127654;
-  --teal: #0E5642;
-  --cornflower: #127654;
-  --lilac: #0E5642;
-  --raspberry: #E8B4B8;
-  --pistachio: #127654;
-  --tangerine: #D4AF37;
-  --cream: #127654;
-  --cream-2: #0E5642;
-  --mustard: #D4AF37;
-  --gold: #D4AF37;
-  --gold-2: #E4C56A;
-  --ink: #FFFFFF;
-  --ink-soft: #FFFFFF;
-  --line: rgba(232, 180, 184, 0.78);
-  --line-soft: rgba(232, 180, 184, 0.45);
+  --field: #E4C56A;
+  --ivory: #F4EFE6;
+  --emerald: #062E24;
+  --velvet: #E4C56A;
+  --velvet-deep: #E4C56A;
+  --velvet-ink: #F4EFE6;
+  --blush: #062E24;
+  --gold-hover: #F4EFE6;
+  --pink: #E4C56A;
+  --pink-deep: #062E24;
+  --mint: #E4C56A;
+  --powder: #E4C56A;
+  --teal: #E4C56A;
+  --cornflower: #E4C56A;
+  --lilac: #E4C56A;
+  --raspberry: #E4C56A;
+  --pistachio: #E4C56A;
+  --tangerine: #E4C56A;
+  --cream: #E4C56A;
+  --cream-2: #E4C56A;
+  --mustard: #E4C56A;
+  --gold: #062E24;
+  --gold-2: #062E24;
+  --ink: #062E24;
+  --ink-soft: #062E24;
+  --line: rgba(6, 46, 36, 0.38);
+  --line-soft: rgba(6, 46, 36, 0.2);
   --nav-h: 0px;
   /* Modular space. Base 8px, ratio 1.618, rounded to the pixel.
      Each fluid step is its named value at 390px and the next step at 1440px.
@@ -47,18 +51,20 @@
   --lh: 1.618;
   --lh-tight: 1.272;
   --serif: "Cormorant Garamond", "Times New Roman", serif;
-  --sans: "Cormorant Garamond", "Times New Roman", serif;
+  --sans: "Inter Tight", Inter, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, monospace;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; color-scheme: dark; scrollbar-color: var(--gold) var(--velvet); }
+html { scroll-behavior: smooth; color-scheme: light; scrollbar-color: var(--emerald) var(--field); }
 body {
   margin: 0;
-  background: var(--cream);
+  background: var(--field);
   color: var(--ink);
-  font-family: var(--serif);
-  font-size: 1.16rem;
-  line-height: var(--lh);
+  font-family: var(--sans);
+  font-size: 1.0625rem;
+  font-weight: 400;
+  line-height: 1.4;
   text-align: center;
   text-rendering: optimizeLegibility;
 }
@@ -1295,7 +1301,7 @@ html, body { background: var(--velvet); }
   padding: var(--s0);
   border: 1px solid var(--line);
   background: var(--velvet);
-  box-shadow: inset 0 0 0 1px rgba(232, 180, 184, 0.28);
+  box-shadow: inset 0 0 0 1px rgba(6, 46, 36, 0.16);
 }
 .reel-tile video {
   width: 100%;
@@ -1599,16 +1605,16 @@ html, body { background: var(--velvet); }
 .sound.is-tone-mustard,
 .sound.is-tone-tangerine,
 .sound.is-tone-lilac { color: var(--velvet-ink); }
-.sound.is-tone-powder { background-color: var(--mustard); border-color: #E8B4B8; }
+.sound.is-tone-powder { background-color: var(--mustard); border-color: var(--emerald); }
 .sound.is-tone-raspberry,
-.sound.is-tone-pink { background-color: var(--teal); border-color: #E8B4B8; }
-.sound.is-tone-cream { background-color: var(--lilac); border-color: #E8B4B8; }
-.sound.is-tone-pistachio { background-color: var(--raspberry); border-color: #E8B4B8; }
-.sound.is-tone-cornflower { background-color: var(--tangerine); border-color: #E8B4B8; }
-.sound.is-tone-teal { background-color: var(--pink); border-color: #E8B4B8; }
-.sound.is-tone-mustard { background-color: var(--cornflower); border-color: #E8B4B8; }
-.sound.is-tone-tangerine { background-color: var(--powder); border-color: #E8B4B8; }
-.sound.is-tone-lilac { background-color: var(--pistachio); border-color: #E8B4B8; }
+.sound.is-tone-pink { background-color: var(--teal); border-color: var(--emerald); }
+.sound.is-tone-cream { background-color: var(--lilac); border-color: var(--emerald); }
+.sound.is-tone-pistachio { background-color: var(--raspberry); border-color: var(--emerald); }
+.sound.is-tone-cornflower { background-color: var(--tangerine); border-color: var(--emerald); }
+.sound.is-tone-teal { background-color: var(--pink); border-color: var(--emerald); }
+.sound.is-tone-mustard { background-color: var(--cornflower); border-color: var(--emerald); }
+.sound.is-tone-tangerine { background-color: var(--powder); border-color: var(--emerald); }
+.sound.is-tone-lilac { background-color: var(--pistachio); border-color: var(--emerald); }
 
 /* Laptop header sits on one line. The wordmark keeps its size and tracking. */
 @media (min-width: 760px) {
@@ -1664,10 +1670,10 @@ html, body { background: var(--velvet); }
 /* Calm gallery field. One hairline, wide space, no ornament. */
 body::before { content: none; }
 header.nav {
-  border-bottom: 1px solid rgba(232, 180, 184, 0.72);
+  border-bottom: 1px solid rgba(6, 46, 36, 0.28);
   box-shadow: none;
 }
-.colophon { border-top: 1px solid rgba(232, 180, 184, 0.72); }
+.colophon { border-top: 1px solid rgba(6, 46, 36, 0.28); }
 .frame, .paper-frame, .sheet, .lineage, .archive, .poster-run, .reels, .colophon, .masthead, .journal, .gallery-block, .press {
   box-shadow: none;
 }
@@ -1703,7 +1709,7 @@ p.label { display: block; }
 }
 .poster-run { padding: 0 var(--s1) var(--s3); }
 .poster-run-item {
-  border: 1px solid rgba(232, 180, 184, 0.55);
+  border: 1px solid rgba(6, 46, 36, 0.28);
   background: var(--velvet);
   box-shadow: none;
   padding: 0;
@@ -1711,7 +1717,7 @@ p.label { display: block; }
 .reels { padding: 0 var(--s1) var(--s3); }
 .reel-grid { gap: var(--s1); }
 .reel-tile {
-  border: 1px solid rgba(232, 180, 184, 0.55);
+  border: 1px solid rgba(6, 46, 36, 0.28);
   box-shadow: none;
   background: var(--velvet);
 }
@@ -1819,7 +1825,7 @@ body.has-sound > footer.colophon {
   position: relative;
   width: min(1080px, 100%);
   margin: 0 auto;
-  border: 1px solid rgba(232, 180, 184, 0.55);
+  border: 1px solid rgba(6, 46, 36, 0.28);
   background: var(--velvet);
   line-height: 0;
 }
@@ -1846,4 +1852,196 @@ body.has-sound > footer.colophon {
   line-height: 1.2;
   padding: var(--s-1) var(--s0);
   cursor: pointer;
+}
+
+/* Aadyah UI. Inter Tight for titles and reading, JetBrains Mono for
+   labels and buttons, square solid controls, invert on hover in .3s.
+   The wordmark and the hero name stay in Cormorant. Section padding
+   stays on the φ scale already in :root. */
+.display,
+.headline,
+.rule-title,
+.notice-title,
+.entry-title,
+.chapter-place,
+.shot-title,
+.card-venue,
+.lede,
+.hero-dek,
+.prose,
+.journal .entry-quote {
+  font-family: var(--sans);
+  font-weight: 400;
+  font-variant: normal;
+}
+.display,
+.headline,
+.rule-title,
+.notice-title {
+  letter-spacing: -0.04em;
+  line-height: 0.98;
+}
+.wordmark,
+.hero .display,
+.colophon .wordmark {
+  font-family: var(--serif);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: var(--lh-tight);
+  text-transform: none;
+}
+.wordmark,
+.colophon .wordmark { letter-spacing: 0.08em; }
+.colophon .wordmark { letter-spacing: 0.14em; }
+.label,
+.rule-no,
+.chapter-no,
+.chapter-date,
+.city-status,
+.journal .entry-date,
+.journal .entry-chapter,
+.journal .entry-tag,
+.card-city-tag,
+.card-footer-row,
+.colophon-nav a,
+.link-quiet,
+.particulars dt,
+.read-hint,
+.new-entry-hint p,
+.end-note,
+.nav-links a,
+.overlay-close,
+.form-notice-close,
+.reel-lightbox-close {
+  font-family: var(--mono);
+  font-weight: 400;
+  font-style: normal;
+  font-variant: normal;
+  text-transform: uppercase;
+  letter-spacing: 1.26px;
+  line-height: 1.2;
+}
+.label,
+.card-city-tag,
+.colophon-nav a,
+.link-quiet,
+.end-note,
+.read-hint { font-size: 15px; }
+.invite-btn,
+.btn,
+.btn-line,
+.nav-toggle,
+.sound,
+.film-sound,
+.filter-tab,
+.play-btn {
+  font-family: var(--mono);
+  font-weight: 400;
+  font-style: normal;
+  font-variant: normal;
+  font-size: 16px;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+  line-height: 1;
+  border-radius: 0;
+  transition: background-color 0.3s ease, color 0.3s ease, outline-color 0.3s ease;
+}
+.invite-btn,
+.btn,
+.btn-line,
+.nav-toggle,
+.sound,
+.film-sound,
+.filter-tab.active,
+.play-btn {
+  background: var(--emerald);
+  color: var(--ivory);
+  border: 1px solid var(--emerald);
+}
+.play-btn { border-radius: 50%; }
+.play-btn svg { fill: var(--ivory); }
+.invite-btn:hover,
+.invite-btn:focus-visible,
+.btn:hover,
+.btn:focus-visible,
+.btn-line:hover,
+.btn-line:focus-visible,
+.nav-toggle:hover,
+.nav-toggle:focus-visible,
+.sound:hover,
+.sound:focus-visible,
+.film-sound:hover,
+.film-sound:focus-visible,
+.filter-tab:hover,
+.filter-tab.active:hover,
+.sheet .btn-line:hover,
+.lineage .btn-line:hover {
+  background: var(--ivory);
+  color: var(--emerald);
+  border-color: var(--emerald);
+  outline: 1px solid var(--emerald);
+  outline-offset: 3px;
+}
+.filter-tab {
+  background: transparent;
+  color: var(--emerald);
+  border: 1px solid var(--line);
+}
+.filter-tab.active {
+  background: var(--emerald);
+  color: var(--ivory);
+  border-color: var(--emerald);
+}
+.form-notice-bar .btn:disabled,
+.form-notice-bar .btn:disabled:hover {
+  background: transparent;
+  color: var(--emerald);
+  border: 1px solid var(--line);
+  outline: none;
+  cursor: not-allowed;
+}
+#noticeBack,
+#noticeBack:hover {
+  background: transparent;
+  color: var(--emerald);
+  border: 0;
+  box-shadow: none;
+}
+#noticeBack:focus-visible {
+  background: transparent;
+  color: var(--emerald);
+  outline: 2px solid var(--emerald);
+  outline-offset: 3px;
+}
+a { transition: color 0.3s ease; }
+main > section + section,
+.gallery-block + .gallery-block,
+.colophon { border-top: 1px solid var(--line); }
+.sound.is-tone-powder,
+.sound.is-tone-raspberry,
+.sound.is-tone-pink,
+.sound.is-tone-cream,
+.sound.is-tone-pistachio,
+.sound.is-tone-cornflower,
+.sound.is-tone-teal,
+.sound.is-tone-mustard,
+.sound.is-tone-tangerine,
+.sound.is-tone-lilac {
+  background: var(--emerald);
+  color: var(--ivory);
+  border-color: var(--emerald);
+}
+.card-meta-overlay,
+.card-meta-overlay .card-city-tag,
+.card-meta-overlay .card-venue,
+.card-meta-overlay .card-chapter { color: #ffffff; }
+@media (prefers-reduced-motion: reduce) {
+  .invite-btn,
+  .btn,
+  .btn-line,
+  .nav-toggle,
+  .sound,
+  .film-sound,
+  .filter-tab,
+  a { transition: none; }
 }
