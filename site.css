@@ -1,40 +1,40 @@
 /* The Big Dinner
-   Metallic gold leaf. Deep emerald type #062E24 stays at least
-   7.07:1 on the darkest stop (#D9AE3A) and higher on the lights.
-   Buttons are solid #062E24 with ivory #F4EFE6 (12.88:1).
-   The wordmark stays Cormorant. UI type follows Aadyah.
+   A quiet bottle-green room, #0B3B2E. Ivory type #F4EFE6 is 10.92:1.
+   Antique gold #C9A961 is only the metal: hairlines and buttons.
+   Bottle text on that gold is 5.56:1. The wordmark stays Cormorant.
    Art lives in /assets/art. */
 
 :root {
-  --field: #F3D56A;
+  --field: #0B3B2E;
   --ivory: #F4EFE6;
-  --emerald: #062E24;
-  --leaf: linear-gradient(122deg, #F7E08A 0%, #F4D56A 22%, #EFCB5A 48%, #E6B84A 73%, #D9AE3A 100%);
-  --sheen: linear-gradient(108deg, rgba(255, 250, 232, 0) 38%, rgba(255, 250, 232, 0.4) 47%, rgba(255, 255, 255, 0.22) 50%, rgba(255, 250, 232, 0.32) 53%, rgba(255, 250, 232, 0) 62%);
-  --velvet: transparent;
-  --velvet-deep: transparent;
-  --velvet-ink: #F4EFE6;
-  --blush: #062E24;
-  --gold-hover: #F4EFE6;
-  --pink: transparent;
-  --pink-deep: #062E24;
-  --mint: transparent;
-  --powder: transparent;
-  --teal: transparent;
-  --cornflower: transparent;
-  --lilac: transparent;
-  --raspberry: transparent;
-  --pistachio: transparent;
-  --tangerine: transparent;
-  --cream: transparent;
-  --cream-2: transparent;
-  --mustard: transparent;
-  --gold: #062E24;
-  --gold-2: #062E24;
-  --ink: #062E24;
-  --ink-soft: #062E24;
-  --line: rgba(6, 46, 36, 0.38);
-  --line-soft: rgba(6, 46, 36, 0.2);
+  --emerald: #0B3B2E;
+  --metal: #C9A961;
+  --metal-deep: #C4A15A;
+  --metal-soft: #D4BC7D;
+  --velvet: #0B3B2E;
+  --velvet-deep: #082E24;
+  --velvet-ink: #0B3B2E;
+  --blush: #C9A961;
+  --gold-hover: #C4A15A;
+  --pink: #0B3B2E;
+  --pink-deep: #C9A961;
+  --mint: #0B3B2E;
+  --powder: #0B3B2E;
+  --teal: #0B3B2E;
+  --cornflower: #0B3B2E;
+  --lilac: #0B3B2E;
+  --raspberry: #0B3B2E;
+  --pistachio: #0B3B2E;
+  --tangerine: #0B3B2E;
+  --cream: #0B3B2E;
+  --cream-2: #082E24;
+  --mustard: #0B3B2E;
+  --gold: #C9A961;
+  --gold-2: #C4A15A;
+  --ink: #F4EFE6;
+  --ink-soft: #F4EFE6;
+  --line: rgba(201, 169, 97, 0.72);
+  --line-soft: rgba(201, 169, 97, 0.4);
   --nav-h: 0px;
   /* Modular space. Base 8px, ratio 1.618, rounded to the pixel.
      Each fluid step is its named value at 390px and the next step at 1440px.
@@ -58,7 +58,7 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; color-scheme: light; scrollbar-color: var(--emerald) var(--field); }
+html { scroll-behavior: smooth; color-scheme: dark; scrollbar-color: var(--metal) var(--field); }
 body {
   margin: 0;
   background: var(--field);
@@ -1303,7 +1303,7 @@ html, body { background: var(--velvet); }
   padding: var(--s0);
   border: 1px solid var(--line);
   background: var(--velvet);
-  box-shadow: inset 0 0 0 1px rgba(6, 46, 36, 0.16);
+  box-shadow: inset 0 0 0 1px rgba(201, 169, 97, 0.35);
 }
 .reel-tile video {
   width: 100%;
@@ -1672,10 +1672,10 @@ html, body { background: var(--velvet); }
 /* Calm gallery field. One hairline, wide space, no ornament. */
 body::before { content: none; }
 header.nav {
-  border-bottom: 1px solid rgba(6, 46, 36, 0.28);
+  border-bottom: 1px solid rgba(201, 169, 97, 0.55);
   box-shadow: none;
 }
-.colophon { border-top: 1px solid rgba(6, 46, 36, 0.28); }
+.colophon { border-top: 1px solid rgba(201, 169, 97, 0.55); }
 .frame, .paper-frame, .sheet, .lineage, .archive, .poster-run, .reels, .colophon, .masthead, .journal, .gallery-block, .press {
   box-shadow: none;
 }
@@ -1711,7 +1711,7 @@ p.label { display: block; }
 }
 .poster-run { padding: 0 var(--s1) var(--s3); }
 .poster-run-item {
-  border: 1px solid rgba(6, 46, 36, 0.28);
+  border: 1px solid rgba(201, 169, 97, 0.55);
   background: var(--velvet);
   box-shadow: none;
   padding: 0;
@@ -1719,7 +1719,7 @@ p.label { display: block; }
 .reels { padding: 0 var(--s1) var(--s3); }
 .reel-grid { gap: var(--s1); }
 .reel-tile {
-  border: 1px solid rgba(6, 46, 36, 0.28);
+  border: 1px solid rgba(201, 169, 97, 0.55);
   box-shadow: none;
   background: var(--velvet);
 }
@@ -1827,7 +1827,7 @@ body.has-sound > footer.colophon {
   position: relative;
   width: min(1080px, 100%);
   margin: 0 auto;
-  border: 1px solid rgba(6, 46, 36, 0.28);
+  border: 1px solid rgba(201, 169, 97, 0.55);
   background: var(--velvet);
   line-height: 0;
 }
@@ -1860,18 +1860,10 @@ body.has-sound > footer.colophon {
    labels and buttons, square solid controls, invert on hover in .3s.
    The wordmark and the hero name stay in Cormorant. Section padding
    stays on the φ scale already in :root. */
-.display,
-.headline,
-.rule-title,
-.notice-title,
-.entry-title,
-.chapter-place,
+.prose,
 .shot-title,
 .card-venue,
-.lede,
-.hero-dek,
-.prose,
-.journal .entry-quote {
+.chapter-place {
   font-family: var(--sans);
   font-weight: 400;
   font-variant: normal;
@@ -1879,9 +1871,16 @@ body.has-sound > footer.colophon {
 .display,
 .headline,
 .rule-title,
-.notice-title {
-  letter-spacing: -0.04em;
-  line-height: 0.98;
+.notice-title,
+.entry-title,
+.lede,
+.hero-dek,
+.journal .entry-quote {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-variant: normal;
+  letter-spacing: 0.01em;
+  line-height: var(--lh-tight);
 }
 .wordmark,
 .hero .display,
@@ -1956,12 +1955,13 @@ body.has-sound > footer.colophon {
 .film-sound,
 .filter-tab.active,
 .play-btn {
-  background: var(--emerald);
-  color: var(--ivory);
-  border: 1px solid var(--emerald);
+  background-color: var(--metal);
+  background-image: linear-gradient(180deg, #D4BC7D 0%, #C9A961 62%, #C4A15A 100%);
+  color: var(--emerald);
+  border: 1px solid #B8975A;
 }
 .play-btn { border-radius: 50%; }
-.play-btn svg { fill: var(--ivory); }
+.play-btn svg { fill: var(--emerald); }
 .invite-btn:hover,
 .invite-btn:focus-visible,
 .btn:hover,
@@ -1978,41 +1978,47 @@ body.has-sound > footer.colophon {
 .filter-tab.active:hover,
 .sheet .btn-line:hover,
 .lineage .btn-line:hover {
-  background: var(--ivory);
-  color: var(--emerald);
-  border-color: var(--emerald);
-  outline: 1px solid var(--emerald);
+  background-color: transparent;
+  background-image: none;
+  color: var(--ivory);
+  border-color: var(--metal);
+  outline: 1px solid var(--metal);
   outline-offset: 3px;
 }
 .filter-tab {
-  background: transparent;
-  color: var(--emerald);
+  background-color: transparent;
+  background-image: none;
+  color: var(--ivory);
   border: 1px solid var(--line);
 }
 .filter-tab.active {
-  background: var(--emerald);
-  color: var(--ivory);
-  border-color: var(--emerald);
+  background-color: var(--metal);
+  background-image: linear-gradient(180deg, #D4BC7D 0%, #C9A961 62%, #C4A15A 100%);
+  color: var(--emerald);
+  border-color: #B8975A;
 }
 .form-notice-bar .btn:disabled,
 .form-notice-bar .btn:disabled:hover {
-  background: transparent;
-  color: var(--emerald);
+  background-color: transparent;
+  background-image: none;
+  color: var(--ivory);
   border: 1px solid var(--line);
   outline: none;
   cursor: not-allowed;
 }
 #noticeBack,
 #noticeBack:hover {
-  background: transparent;
-  color: var(--emerald);
+  background-color: transparent;
+  background-image: none;
+  color: var(--ivory);
   border: 0;
   box-shadow: none;
 }
 #noticeBack:focus-visible {
-  background: transparent;
-  color: var(--emerald);
-  outline: 2px solid var(--emerald);
+  background-color: transparent;
+  background-image: none;
+  color: var(--ivory);
+  outline: 2px solid var(--metal);
   outline-offset: 3px;
 }
 a { transition: color 0.3s ease; }
@@ -2029,9 +2035,10 @@ main > section + section,
 .sound.is-tone-mustard,
 .sound.is-tone-tangerine,
 .sound.is-tone-lilac {
-  background: var(--emerald);
-  color: var(--ivory);
-  border-color: var(--emerald);
+  background-color: var(--metal);
+  background-image: linear-gradient(180deg, #D4BC7D 0%, #C9A961 62%, #C4A15A 100%);
+  color: var(--emerald);
+  border-color: #B8975A;
 }
 .card-meta-overlay,
 .card-meta-overlay .card-city-tag,
@@ -2048,64 +2055,14 @@ main > section + section,
   a { transition: none; }
 }
 
-/* Polished gold leaf. One fixed sheet, so sections stay transparent
-   and the blend does not restart on every block. */
-html {
-  background-color: #D9AE3A;
-  background-image: none;
-}
-body {
-  background: transparent;
-}
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background-color: #D9AE3A;
-  background-image: var(--sheen), var(--leaf);
-  background-repeat: no-repeat;
-  background-size: 260% 100%, cover;
-  background-position: 20% 0%, center;
-  animation: gold-shimmer 36s ease-in-out infinite alternate;
-}
-@keyframes gold-shimmer {
-  from { background-position: 0% 0%, center; }
-  to { background-position: 100% 0%, center; }
-}
-.nav,
-.nav.is-scrolled,
-.nav.is-open,
-.theme-paper .nav,
-.nav-paper,
-.nav-links,
-.filter-bar,
-.overlay,
-.form-notice,
-.form-notice-panel,
-.overlay-page,
-.reel-lightbox,
-.reel-lightbox-scrim,
-.reel-lightbox-panel {
-  background-color: #EFCB5A;
-  background-image: var(--leaf);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
-}
+body::before { content: none; animation: none; }
 .field select,
 .field select option {
-  background-color: #F7E08A;
-  color: #062E24;
+  background-color: #082E24;
+  color: var(--ivory);
 }
 .skip:focus {
-  background-color: #F7E08A;
-  color: #062E24;
-}
-@media (prefers-reduced-motion: reduce) {
-  body::before {
-    animation: none;
-    background-position: 35% 0%, center;
-  }
+  background-color: var(--field);
+  color: var(--ivory);
+  border-color: var(--metal);
 }

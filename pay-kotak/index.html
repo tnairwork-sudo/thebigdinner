@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<meta name="theme-color" content="#F3D56A">
+<meta name="theme-color" content="#0B3B2E">
 <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
 <title>The Big Dinner Participation Tariff</title>
 <meta property="og:title" content="The Big Dinner Participation Tariff">
@@ -12,36 +12,29 @@
 <style>
   :root {
     --ivory: #F4EFE6;
-    --field: #F3D56A;
-    --leaf: linear-gradient(122deg, #F7E08A 0%, #F4D56A 22%, #EFCB5A 48%, #E6B84A 73%, #D9AE3A 100%);
-    --sheen: linear-gradient(108deg, rgba(255, 250, 232, 0) 38%, rgba(255, 250, 232, 0.4) 47%, rgba(255, 255, 255, 0.22) 50%, rgba(255, 250, 232, 0.32) 53%, rgba(255, 250, 232, 0) 62%);
-    --pewter: #062E24;
-    --gold: #062E24;
-    --gold-hover: #F4EFE6;
-    --green: #F4EFE6;
-    --blush: #062E24;
+    --field: #0B3B2E;
+    --pewter: #F4EFE6;
+    --gold: #C9A961;
+    --gold-hover: #C4A15A;
+    --green: #0B3B2E;
+    --blush: #C9A961;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   html {
-    background-color: #D9AE3A;
-    background-image: var(--sheen), var(--leaf);
-    background-repeat: no-repeat;
-    background-size: 260% 100%, cover;
-    background-position: 35% 0%, center;
-    animation: gold-shimmer 36s ease-in-out infinite alternate;
+    background: var(--field);
     color: var(--pewter);
-    color-scheme: light;
+    color-scheme: dark;
     accent-color: var(--gold);
-    scrollbar-color: var(--gold) #F3D56A;
+    scrollbar-color: var(--gold) var(--field);
   }
 
   body {
     min-height: 100dvh;
     display: grid;
     place-items: center;
-    background: transparent;
+    background: var(--field);
     color: var(--pewter);
     font-family: Palatino, "Palatino Linotype", "Iowan Old Style", "Book Antiqua", Georgia, serif;
     line-height: 1.4;
@@ -239,13 +232,6 @@
     border-color: #062E24;
     color: #062E24 !important;
     -webkit-text-fill-color: #062E24;
-  }
-  @keyframes gold-shimmer {
-    from { background-position: 0% 0%, center; }
-    to { background-position: 100% 0%, center; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    html { animation: none; }
   }
 </style>
 </head>
