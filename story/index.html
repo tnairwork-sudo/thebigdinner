@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<meta name="theme-color" content="#0B3B2E">
+<meta name="theme-color" content="#D8C2A6">
 <title>The Big Dinner</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,8 +13,11 @@
   * { box-sizing: border-box; }
   html, body {
     margin: 0;
-    background: #0B3B2E;
-    color: #F4EFE6;
+    background-color: #C9B196;
+    background-image: linear-gradient(90deg, rgba(255, 252, 247, 0.22) 0%, rgba(255, 252, 247, 0) 42%, rgba(120, 96, 72, 0.05) 100%), linear-gradient(180deg, #E9D8C3 0%, #E3D0B8 34%, #D8C2A6 68%, #C9B196 100%);
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: #2A2420;
   }
   body {
     min-height: 100dvh;
@@ -41,7 +44,7 @@
     margin: 21px 0 0;
     font-size: 1.16rem;
     line-height: 1.618;
-    color: #F4EFE6;
+    color: #2A2420;
   }
   .fallback {
     margin: 13px 0 0;
@@ -49,7 +52,7 @@
     line-height: 1.4;
   }
   .fallback a {
-    color: #F4EFE6;
+    color: #2A2420;
   }
   .camera {
     display: inline-flex;
@@ -59,9 +62,9 @@
     min-height: 52px;
     min-width: min(100%, 280px);
     padding: 14px 28px;
-    background: linear-gradient(180deg, #D4BC7D 0%, #C9A961 62%, #C4A15A 100%);
-    color: #0B3B2E;
-    border: 1px solid #B8975A;
+    background: #2A2420;
+    color: #F4EFE6;
+    border: 1px solid #2A2420;
     box-shadow: none;
     font-family: inherit;
     font-size: 1.05rem;
@@ -72,12 +75,12 @@
   }
   .camera:hover,
   .camera:focus-visible {
-    background: transparent;
-    border-color: #C9A961;
+    background: #1F1B18;
+    border-color: #1F1B18;
     color: #F4EFE6;
   }
   .camera:focus-visible {
-    outline: 2px solid #C9A961;
+    outline: 2px solid #2A2420;
     outline-offset: 3px;
   }
   @media (max-width: 760px) {

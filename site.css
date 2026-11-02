@@ -1,40 +1,38 @@
 /* The Big Dinner
-   A quiet bottle-green room, #0B3B2E. Ivory type #F4EFE6 is 10.92:1.
-   Antique gold #C9A961 is only the metal: hairlines and buttons.
-   Bottle text on that gold is 5.56:1. The wordmark stays Cormorant.
-   Art lives in /assets/art. */
+   Desert Titanium. A static brushed field, lighter at the top.
+   Espresso #2A2420 on #C9B196 is 7.45:1; on #E9D8C3 it is 10.99:1.
+   Buttons are solid #2A2420 with ivory #F4EFE6 (13.37:1).
+   Type metrics stay on the production scale. Art lives in /assets/art. */
 
 :root {
-  --field: #0B3B2E;
+  --field: #D8C2A6;
   --ivory: #F4EFE6;
-  --emerald: #0B3B2E;
-  --metal: #C9A961;
-  --metal-deep: #C4A15A;
-  --metal-soft: #D4BC7D;
-  --velvet: #0B3B2E;
-  --velvet-deep: #082E24;
-  --velvet-ink: #0B3B2E;
-  --blush: #C9A961;
-  --gold-hover: #C4A15A;
-  --pink: #0B3B2E;
-  --pink-deep: #C9A961;
-  --mint: #0B3B2E;
-  --powder: #0B3B2E;
-  --teal: #0B3B2E;
-  --cornflower: #0B3B2E;
-  --lilac: #0B3B2E;
-  --raspberry: #0B3B2E;
-  --pistachio: #0B3B2E;
-  --tangerine: #0B3B2E;
-  --cream: #0B3B2E;
-  --cream-2: #082E24;
-  --mustard: #0B3B2E;
-  --gold: #C9A961;
-  --gold-2: #C4A15A;
-  --ink: #F4EFE6;
-  --ink-soft: #F4EFE6;
-  --line: rgba(201, 169, 97, 0.72);
-  --line-soft: rgba(201, 169, 97, 0.4);
+  --espresso: #2A2420;
+  --titanium: #B5A28C;
+  --velvet: transparent;
+  --velvet-deep: transparent;
+  --velvet-ink: #F4EFE6;
+  --blush: #2A2420;
+  --gold-hover: #1F1B18;
+  --pink: transparent;
+  --pink-deep: #B5A28C;
+  --mint: transparent;
+  --powder: transparent;
+  --teal: transparent;
+  --cornflower: transparent;
+  --lilac: transparent;
+  --raspberry: transparent;
+  --pistachio: transparent;
+  --tangerine: transparent;
+  --cream: transparent;
+  --cream-2: transparent;
+  --mustard: transparent;
+  --gold: #2A2420;
+  --gold-2: #1F1B18;
+  --ink: #2A2420;
+  --ink-soft: #2A2420;
+  --line: rgba(138, 116, 94, 0.45);
+  --line-soft: rgba(138, 116, 94, 0.28);
   --nav-h: 0px;
   /* Modular space. Base 8px, ratio 1.618, rounded to the pixel.
      Each fluid step is its named value at 390px and the next step at 1440px.
@@ -53,20 +51,18 @@
   --lh: 1.618;
   --lh-tight: 1.272;
   --serif: "Cormorant Garamond", "Times New Roman", serif;
-  --sans: "Inter Tight", Inter, sans-serif;
-  --mono: "JetBrains Mono", ui-monospace, monospace;
+  --sans: "Cormorant Garamond", "Times New Roman", serif;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; color-scheme: dark; scrollbar-color: var(--metal) var(--field); }
+html { scroll-behavior: smooth; color-scheme: light; scrollbar-color: var(--espresso) var(--field); }
 body {
   margin: 0;
-  background: var(--field);
+  background: transparent;
   color: var(--ink);
-  font-family: var(--sans);
-  font-size: 1.0625rem;
-  font-weight: 400;
-  line-height: 1.4;
+  font-family: var(--serif);
+  font-size: 1.16rem;
+  line-height: var(--lh);
   text-align: center;
   text-rendering: optimizeLegibility;
 }
@@ -1303,7 +1299,7 @@ html, body { background: var(--velvet); }
   padding: var(--s0);
   border: 1px solid var(--line);
   background: var(--velvet);
-  box-shadow: inset 0 0 0 1px rgba(201, 169, 97, 0.35);
+  box-shadow: inset 0 0 0 1px rgba(138, 116, 94, 0.35);
 }
 .reel-tile video {
   width: 100%;
@@ -1672,10 +1668,10 @@ html, body { background: var(--velvet); }
 /* Calm gallery field. One hairline, wide space, no ornament. */
 body::before { content: none; }
 header.nav {
-  border-bottom: 1px solid rgba(201, 169, 97, 0.55);
+  border-bottom: 1px solid rgba(138, 116, 94, 0.55);
   box-shadow: none;
 }
-.colophon { border-top: 1px solid rgba(201, 169, 97, 0.55); }
+.colophon { border-top: 1px solid rgba(138, 116, 94, 0.55); }
 .frame, .paper-frame, .sheet, .lineage, .archive, .poster-run, .reels, .colophon, .masthead, .journal, .gallery-block, .press {
   box-shadow: none;
 }
@@ -1711,7 +1707,7 @@ p.label { display: block; }
 }
 .poster-run { padding: 0 var(--s1) var(--s3); }
 .poster-run-item {
-  border: 1px solid rgba(201, 169, 97, 0.55);
+  border: 1px solid rgba(138, 116, 94, 0.55);
   background: var(--velvet);
   box-shadow: none;
   padding: 0;
@@ -1719,7 +1715,7 @@ p.label { display: block; }
 .reels { padding: 0 var(--s1) var(--s3); }
 .reel-grid { gap: var(--s1); }
 .reel-tile {
-  border: 1px solid rgba(201, 169, 97, 0.55);
+  border: 1px solid rgba(138, 116, 94, 0.55);
   box-shadow: none;
   background: var(--velvet);
 }
@@ -1827,7 +1823,7 @@ body.has-sound > footer.colophon {
   position: relative;
   width: min(1080px, 100%);
   margin: 0 auto;
-  border: 1px solid rgba(201, 169, 97, 0.55);
+  border: 1px solid rgba(138, 116, 94, 0.55);
   background: var(--velvet);
   line-height: 0;
 }
@@ -1856,213 +1852,48 @@ body.has-sound > footer.colophon {
   cursor: pointer;
 }
 
-/* Aadyah UI. Inter Tight for titles and reading, JetBrains Mono for
-   labels and buttons, square solid controls, invert on hover in .3s.
-   The wordmark and the hero name stay in Cormorant. Section padding
-   stays on the φ scale already in :root. */
-.prose,
-.shot-title,
-.card-venue,
-.chapter-place {
-  font-family: var(--sans);
-  font-weight: 400;
-  font-variant: normal;
-}
-.display,
-.headline,
-.rule-title,
-.notice-title,
-.entry-title,
-.lede,
-.hero-dek,
-.journal .entry-quote {
-  font-family: var(--serif);
-  font-weight: 400;
-  font-variant: normal;
-  letter-spacing: 0.01em;
-  line-height: var(--lh-tight);
-}
-.wordmark,
-.hero .display,
-.colophon .wordmark {
-  font-family: var(--serif);
-  font-weight: 400;
-  letter-spacing: 0.01em;
-  line-height: var(--lh-tight);
-  text-transform: none;
-}
-.wordmark,
-.colophon .wordmark { letter-spacing: 0.08em; }
-.colophon .wordmark { letter-spacing: 0.14em; }
-.label,
-.rule-no,
-.chapter-no,
-.chapter-date,
-.city-status,
-.journal .entry-date,
-.journal .entry-chapter,
-.journal .entry-tag,
-.card-city-tag,
-.card-footer-row,
-.colophon-nav a,
-.link-quiet,
-.particulars dt,
-.read-hint,
-.new-entry-hint p,
-.end-note,
-.nav-links a,
-.overlay-close,
-.form-notice-close,
-.reel-lightbox-close {
-  font-family: var(--mono);
-  font-weight: 400;
-  font-style: normal;
-  font-variant: normal;
-  text-transform: uppercase;
-  letter-spacing: 1.26px;
-  line-height: 1.2;
-}
-.label,
-.card-city-tag,
-.colophon-nav a,
-.link-quiet,
-.end-note,
-.read-hint { font-size: 15px; }
-.invite-btn,
-.btn,
-.btn-line,
-.nav-toggle,
-.sound,
-.film-sound,
-.filter-tab,
-.play-btn {
-  font-family: var(--mono);
-  font-weight: 400;
-  font-style: normal;
-  font-variant: normal;
-  font-size: 16px;
-  letter-spacing: 0.7px;
-  text-transform: uppercase;
-  line-height: 1;
-  border-radius: 0;
-  transition: background-color 0.3s ease, color 0.3s ease, outline-color 0.3s ease;
-}
-.invite-btn,
-.btn,
-.btn-line,
-.nav-toggle,
-.sound,
-.film-sound,
-.filter-tab.active,
-.play-btn {
-  background-color: var(--metal);
-  background-image: linear-gradient(180deg, #D4BC7D 0%, #C9A961 62%, #C4A15A 100%);
-  color: var(--emerald);
-  border: 1px solid #B8975A;
-}
-.play-btn { border-radius: 50%; }
-.play-btn svg { fill: var(--emerald); }
-.invite-btn:hover,
-.invite-btn:focus-visible,
-.btn:hover,
-.btn:focus-visible,
-.btn-line:hover,
-.btn-line:focus-visible,
-.nav-toggle:hover,
-.nav-toggle:focus-visible,
-.sound:hover,
-.sound:focus-visible,
-.film-sound:hover,
-.film-sound:focus-visible,
-.filter-tab:hover,
-.filter-tab.active:hover,
-.sheet .btn-line:hover,
-.lineage .btn-line:hover {
-  background-color: transparent;
-  background-image: none;
-  color: var(--ivory);
-  border-color: var(--metal);
-  outline: 1px solid var(--metal);
-  outline-offset: 3px;
-}
-.filter-tab {
-  background-color: transparent;
-  background-image: none;
-  color: var(--ivory);
-  border: 1px solid var(--line);
-}
-.filter-tab.active {
-  background-color: var(--metal);
-  background-image: linear-gradient(180deg, #D4BC7D 0%, #C9A961 62%, #C4A15A 100%);
-  color: var(--emerald);
-  border-color: #B8975A;
-}
-.form-notice-bar .btn:disabled,
-.form-notice-bar .btn:disabled:hover {
-  background-color: transparent;
-  background-image: none;
-  color: var(--ivory);
-  border: 1px solid var(--line);
-  outline: none;
-  cursor: not-allowed;
-}
-#noticeBack,
-#noticeBack:hover {
-  background-color: transparent;
-  background-image: none;
-  color: var(--ivory);
-  border: 0;
-  box-shadow: none;
-}
-#noticeBack:focus-visible {
-  background-color: transparent;
-  background-image: none;
-  color: var(--ivory);
-  outline: 2px solid var(--metal);
-  outline-offset: 3px;
-}
-a { transition: color 0.3s ease; }
-main > section + section,
-.gallery-block + .gallery-block,
-.colophon { border-top: 1px solid var(--line); }
-.sound.is-tone-powder,
-.sound.is-tone-raspberry,
-.sound.is-tone-pink,
-.sound.is-tone-cream,
-.sound.is-tone-pistachio,
-.sound.is-tone-cornflower,
-.sound.is-tone-teal,
-.sound.is-tone-mustard,
-.sound.is-tone-tangerine,
-.sound.is-tone-lilac {
-  background-color: var(--metal);
-  background-image: linear-gradient(180deg, #D4BC7D 0%, #C9A961 62%, #C4A15A 100%);
-  color: var(--emerald);
-  border-color: #B8975A;
-}
-.card-meta-overlay,
-.card-meta-overlay .card-city-tag,
-.card-meta-overlay .card-venue,
-.card-meta-overlay .card-chapter { color: #ffffff; }
-@media (prefers-reduced-motion: reduce) {
-  .invite-btn,
-  .btn,
-  .btn-line,
-  .nav-toggle,
-  .sound,
-  .film-sound,
-  .filter-tab,
-  a { transition: none; }
-}
 
-body::before { content: none; animation: none; }
+/* Desert Titanium. One static brushed sheet. Sections stay transparent
+   so the blend does not restart, and no motion is applied. */
+html { background-color: #C9B196; }
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-color: #C9B196;
+  background-image:
+    linear-gradient(90deg, rgba(255, 252, 247, 0.22) 0%, rgba(255, 252, 247, 0) 42%, rgba(120, 96, 72, 0.05) 100%),
+    linear-gradient(180deg, #E9D8C3 0%, #E3D0B8 34%, #D8C2A6 68%, #C9B196 100%);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.nav,
+.nav.is-scrolled,
+.nav.is-open,
+.nav-links,
+.filter-bar,
+.overlay,
+.form-notice,
+.form-notice-panel,
+.overlay-page,
+.reel-lightbox,
+.reel-lightbox-scrim,
+.reel-lightbox-panel {
+  background-color: #D8C2A6;
+  background-image:
+    linear-gradient(90deg, rgba(255, 252, 247, 0.22) 0%, rgba(255, 252, 247, 0) 42%, rgba(120, 96, 72, 0.05) 100%),
+    linear-gradient(180deg, #E9D8C3 0%, #E3D0B8 34%, #D8C2A6 68%, #C9B196 100%);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 .field select,
 .field select option {
-  background-color: #082E24;
-  color: var(--ivory);
+  background-color: #E9D8C3;
+  color: #2A2420;
 }
 .skip:focus {
-  background-color: var(--field);
-  color: var(--ivory);
-  border-color: var(--metal);
+  background-color: #E9D8C3;
+  color: #2A2420;
 }
