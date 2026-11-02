@@ -4,34 +4,37 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<meta name="theme-color" content="#fbf8f1">
+<meta name="theme-color" content="#127654">
 <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
 <title>The Big Dinner Participation Tariff</title>
 <meta property="og:title" content="The Big Dinner Participation Tariff">
 <meta name="twitter:title" content="The Big Dinner Participation Tariff">
 <style>
   :root {
-    --ivory: #fbf8f1;
-    --pewter: #6c7178;
-    --gold: #a8875a;
-    --green: #1f3d2b;
+    --ivory: #FFFFFF;
+    --field: #127654;
+    --pewter: #FFFFFF;
+    --gold: #D4AF37;
+    --gold-hover: #E4C56A;
+    --green: #062E24;
+    --blush: #E8B4B8;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   html {
-    background: var(--ivory);
+    background: var(--field);
     color: var(--pewter);
-    color-scheme: light;
+    color-scheme: dark;
     accent-color: var(--gold);
-    scrollbar-color: var(--gold) var(--ivory);
+    scrollbar-color: var(--gold) var(--field);
   }
 
   body {
     min-height: 100dvh;
     display: grid;
     place-items: center;
-    background: var(--ivory);
+    background: var(--field);
     color: var(--pewter);
     font-family: Palatino, "Palatino Linotype", "Iowan Old Style", "Book Antiqua", Georgia, serif;
     line-height: 1.4;
@@ -45,7 +48,7 @@
   a:visited,
   a:hover,
   a:active {
-    color: var(--gold);
+    color: var(--ivory);
   }
 
   button,
@@ -56,11 +59,11 @@
 
   ::selection {
     background: var(--gold);
-    color: var(--ivory);
+    color: var(--green);
   }
 
   :focus-visible {
-    outline: 2px solid var(--gold);
+    outline: 2px solid var(--blush);
     outline-offset: 3px;
   }
 
@@ -83,7 +86,7 @@
     height: 1px;
     margin: 18px auto 22px;
     border: 0;
-    background: var(--gold);
+    background: var(--blush);
   }
 
   .qr {
@@ -145,9 +148,9 @@
     appearance: none;
     -webkit-appearance: none;
     margin-top: 12px;
-    background: transparent;
-    color: var(--gold);
-    -webkit-text-fill-color: var(--gold);
+    background: var(--gold);
+    color: var(--green);
+    -webkit-text-fill-color: var(--green);
     border: 1px solid var(--gold);
     font-family: inherit;
     font-size: 0.78rem;
@@ -182,8 +185,8 @@
   .app {
     display: block;
     width: 100%;
-    background: var(--green);
-    border: 1px solid var(--green);
+    background: var(--gold);
+    border: 1px solid var(--gold);
     padding: 14px 16px;
     font-family: inherit;
     font-size: 1rem;
@@ -198,19 +201,19 @@
   .app:visited,
   .app:hover,
   .app:active {
-    color: var(--ivory) !important;
-    -webkit-text-fill-color: var(--ivory);
+    color: var(--green) !important;
+    -webkit-text-fill-color: var(--green);
     text-decoration: none !important;
   }
 
   .app:hover,
   .app:active {
-    background: var(--gold);
-    border-color: var(--gold);
+    background: var(--gold-hover);
+    border-color: var(--gold-hover);
   }
 
   .app-other {
-    background: transparent;
+    background: var(--gold);
     border-color: var(--gold);
   }
 
@@ -223,10 +226,10 @@
 
   .app-other:hover,
   .app-other:active {
-    background: var(--green);
-    border-color: var(--green);
-    color: var(--ivory) !important;
-    -webkit-text-fill-color: var(--ivory);
+    background: var(--gold-hover);
+    border-color: var(--gold-hover);
+    color: var(--green) !important;
+    -webkit-text-fill-color: var(--green);
   }
 </style>
 </head>
