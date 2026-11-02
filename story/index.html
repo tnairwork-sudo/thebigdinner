@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<meta name="theme-color" content="#E4C56A">
+<meta name="theme-color" content="#F3D56A">
 <title>The Big Dinner</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,8 +13,20 @@
   * { box-sizing: border-box; }
   html, body {
     margin: 0;
-    background: #E4C56A;
+    background-color: #D9AE3A;
+    background-image: linear-gradient(108deg, rgba(255, 250, 232, 0) 38%, rgba(255, 250, 232, 0.4) 47%, rgba(255, 255, 255, 0.22) 50%, rgba(255, 250, 232, 0.32) 53%, rgba(255, 250, 232, 0) 62%), linear-gradient(122deg, #F7E08A 0%, #F4D56A 22%, #EFCB5A 48%, #E6B84A 73%, #D9AE3A 100%);
+    background-repeat: no-repeat;
+    background-size: 260% 100%, cover;
+    background-position: 35% 0%, center;
     color: #062E24;
+    animation: gold-shimmer 36s ease-in-out infinite alternate;
+  }
+  @keyframes gold-shimmer {
+    from { background-position: 0% 0%, center; }
+    to { background-position: 100% 0%, center; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html, body { animation: none; }
   }
   body {
     min-height: 100dvh;

@@ -1,32 +1,34 @@
 /* The Big Dinner
-   Light gold field #E4C56A, deep emerald type #062E24 (8.77:1).
+   Metallic gold leaf. Deep emerald type #062E24 stays at least
+   7.07:1 on the darkest stop (#D9AE3A) and higher on the lights.
    Buttons are solid #062E24 with ivory #F4EFE6 (12.88:1).
-   The wordmark stays Cormorant. UI type follows Aadyah:
-   Inter Tight for reading and titles, JetBrains Mono for labels
-   and buttons. Art lives in /assets/art. */
+   The wordmark stays Cormorant. UI type follows Aadyah.
+   Art lives in /assets/art. */
 
 :root {
-  --field: #E4C56A;
+  --field: #F3D56A;
   --ivory: #F4EFE6;
   --emerald: #062E24;
-  --velvet: #E4C56A;
-  --velvet-deep: #E4C56A;
+  --leaf: linear-gradient(122deg, #F7E08A 0%, #F4D56A 22%, #EFCB5A 48%, #E6B84A 73%, #D9AE3A 100%);
+  --sheen: linear-gradient(108deg, rgba(255, 250, 232, 0) 38%, rgba(255, 250, 232, 0.4) 47%, rgba(255, 255, 255, 0.22) 50%, rgba(255, 250, 232, 0.32) 53%, rgba(255, 250, 232, 0) 62%);
+  --velvet: transparent;
+  --velvet-deep: transparent;
   --velvet-ink: #F4EFE6;
   --blush: #062E24;
   --gold-hover: #F4EFE6;
-  --pink: #E4C56A;
+  --pink: transparent;
   --pink-deep: #062E24;
-  --mint: #E4C56A;
-  --powder: #E4C56A;
-  --teal: #E4C56A;
-  --cornflower: #E4C56A;
-  --lilac: #E4C56A;
-  --raspberry: #E4C56A;
-  --pistachio: #E4C56A;
-  --tangerine: #E4C56A;
-  --cream: #E4C56A;
-  --cream-2: #E4C56A;
-  --mustard: #E4C56A;
+  --mint: transparent;
+  --powder: transparent;
+  --teal: transparent;
+  --cornflower: transparent;
+  --lilac: transparent;
+  --raspberry: transparent;
+  --pistachio: transparent;
+  --tangerine: transparent;
+  --cream: transparent;
+  --cream-2: transparent;
+  --mustard: transparent;
   --gold: #062E24;
   --gold-2: #062E24;
   --ink: #062E24;
@@ -2044,4 +2046,66 @@ main > section + section,
   .film-sound,
   .filter-tab,
   a { transition: none; }
+}
+
+/* Polished gold leaf. One fixed sheet, so sections stay transparent
+   and the blend does not restart on every block. */
+html {
+  background-color: #D9AE3A;
+  background-image: none;
+}
+body {
+  background: transparent;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-color: #D9AE3A;
+  background-image: var(--sheen), var(--leaf);
+  background-repeat: no-repeat;
+  background-size: 260% 100%, cover;
+  background-position: 20% 0%, center;
+  animation: gold-shimmer 36s ease-in-out infinite alternate;
+}
+@keyframes gold-shimmer {
+  from { background-position: 0% 0%, center; }
+  to { background-position: 100% 0%, center; }
+}
+.nav,
+.nav.is-scrolled,
+.nav.is-open,
+.theme-paper .nav,
+.nav-paper,
+.nav-links,
+.filter-bar,
+.overlay,
+.form-notice,
+.form-notice-panel,
+.overlay-page,
+.reel-lightbox,
+.reel-lightbox-scrim,
+.reel-lightbox-panel {
+  background-color: #EFCB5A;
+  background-image: var(--leaf);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+.field select,
+.field select option {
+  background-color: #F7E08A;
+  color: #062E24;
+}
+.skip:focus {
+  background-color: #F7E08A;
+  color: #062E24;
+}
+@media (prefers-reduced-motion: reduce) {
+  body::before {
+    animation: none;
+    background-position: 35% 0%, center;
+  }
 }
