@@ -2184,37 +2184,6 @@ body.has-sound .approach-ticks li.is-lit:last-child {
   background: #B3122E;
   border-color: #B3122E;
 }
-body.has-sound .passport {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 6px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-body.has-sound .passport li {
-  width: 26px;
-  height: 26px;
-  display: grid;
-  place-items: center;
-  border: 1px solid rgba(42, 36, 32, 0.4);
-  border-radius: 50%;
-  background: transparent;
-  color: transparent;
-  transition: background-color 0.35s ease, border-color 0.35s ease, color 0.35s ease;
-}
-body.has-sound .passport li span {
-  font-family: var(--serif);
-  font-size: 0.62rem;
-  letter-spacing: 0.02em;
-  line-height: 1;
-}
-body.has-sound .passport li.is-stamped {
-  background: #C6A36A;
-  border-color: #C6A36A;
-  color: #2A2420;
-}
 
 body.has-sound .frame.city-card { overflow: visible; }
 body.has-sound .city-flip {
@@ -2567,7 +2536,6 @@ body.has-sound .is-pulse-flourish { animation: tbd-flourish 0.96s ease; }
     transform: none;
   }
   body.has-sound .city-back { display: none; }
-  body.has-sound .passport li,
   body.has-sound .rule,
   body.has-sound .chapter,
   body.has-sound .shot,

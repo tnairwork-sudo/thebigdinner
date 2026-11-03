@@ -319,7 +319,6 @@
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var patterns = {
     tap: [10],
-    stamp: [10, 70, 10],
     key: [10, 46, 18, 46, 30],
     land: [16],
     soft: [12],
@@ -328,7 +327,6 @@
   };
   var pulseClass = {
     tap: "is-pulse",
-    stamp: "is-pulse-2",
     key: "is-pulse-3",
     land: "is-pulse",
     soft: "is-pulse",
@@ -434,41 +432,12 @@
     el.hidden = !text;
   });
 
-  var PASSPORT = "tbd-passport";
   var MARK = "tbd-mark";
-  var seen = {};
-  try {
-    var stored = JSON.parse(localStorage.getItem(PASSPORT) || "[]");
-    if (Array.isArray(stored)) stored.forEach(function (city) { seen[city] = true; });
-  } catch (err) {}
-
-  function paintStamp(city) {
-    var badge = document.querySelector('#passport [data-city="' + city + '"]');
-    if (!badge) return;
-    badge.classList.add("is-stamped");
-    var name = (badge.getAttribute("aria-label") || city).replace(/, kept$/, "");
-    badge.setAttribute("aria-label", name + ", kept");
-  }
-  Object.keys(seen).forEach(paintStamp);
-
-  function persistSeen() {
-    try { localStorage.setItem(PASSPORT, JSON.stringify(Object.keys(seen))); } catch (err) {}
-  }
 
   function explore(card, fromTap) {
     if (!card) return;
     card.classList.add("is-open");
-    var city = card.getAttribute("data-city");
-    if (!city) return;
-    if (seen[city]) {
-      if (fromTap) feel("tap", card.querySelector(".art") || card);
-      return;
-    }
-    seen[city] = true;
-    persistSeen();
-    paintStamp(city);
-    var badge = document.querySelector('#passport [data-city="' + city + '"]');
-    feel("stamp", badge || card);
+    if (fromTap) feel("tap", card.querySelector(".art") || card);
   }
 
   if (reduce) {
