@@ -242,28 +242,19 @@
 })();
 
 (function () {
-  var video = document.getElementById("featureFilm");
-  var toggle = document.querySelector(".film-sound");
-  if (!video || !toggle) return;
+  var videos = document.querySelectorAll(".film .film-video");
+  if (!videos.length) return;
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var globalSound = document.getElementById("soundToggle");
-  var film = video.closest(".film") || video;
-
-  function play() {
-    var attempt = video.play();
-    if (attempt && attempt.catch) attempt.catch(function () {});
-  }
-
-  function setSound(on) {
-    video.muted = !on;
-    toggle.setAttribute("aria-pressed", on ? "true" : "false");
-    toggle.textContent = on ? "Sound: On" : "Sound: Off";
-  }
+  var filmsInView = 0;
 
   function setFilmInView(on) {
-    document.body.classList.toggle("film-in-view", on);
+    filmsInView += on ? 1 : -1;
+    if (filmsInView < 0) filmsInView = 0;
+    var active = filmsInView > 0;
+    document.body.classList.toggle("film-in-view", active);
     if (!globalSound) return;
-    if (on) {
+    if (active) {
       globalSound.setAttribute("aria-hidden", "true");
       globalSound.setAttribute("tabindex", "-1");
     } else {
@@ -272,13 +263,42 @@
     }
   }
 
-  toggle.addEventListener("click", function () {
-    setSound(video.muted);
-    if (video.paused) play();
-  });
+  videos.forEach(function (video) {
+    var frame = video.closest(".film-frame") || video.parentElement;
+    var toggle = frame.querySelector(".film-sound");
 
-  video.addEventListener("click", function () {
-    video.controls = true;
+    function play() {
+      var attempt = video.play();
+      if (attempt && attempt.catch) attempt.catch(function () {});
+    }
+
+    function setSound(on) {
+      video.muted = !on;
+      if (!toggle) return;
+      toggle.setAttribute("aria-pressed", on ? "true" : "false");
+      toggle.textContent = on ? "Sound: On" : "Sound: Off";
+    }
+
+    if (toggle) {
+      toggle.addEventListener("click", function () {
+        setSound(video.muted);
+        if (video.paused) play();
+      });
+    }
+
+    video.addEventListener("click", function () {
+      video.controls = true;
+    });
+
+    if (reduce || !("IntersectionObserver" in window)) return;
+
+    var playObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) play();
+        else video.pause();
+      });
+    }, { threshold: 0.4 });
+    playObserver.observe(video);
   });
 
   if (!("IntersectionObserver" in window)) return;
@@ -288,15 +308,7 @@
       setFilmInView(entry.isIntersecting);
     });
   }, { threshold: 0 });
-  viewObserver.observe(film);
-
-  if (reduce) return;
-
-  var playObserver = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-      if (entry.isIntersecting) play();
-      else video.pause();
-    });
-  }, { threshold: 0.4 });
-  playObserver.observe(video);
+  document.querySelectorAll(".film").forEach(function (film) {
+    viewObserver.observe(film);
+  });
 })();

@@ -1832,6 +1832,7 @@ body.has-sound > footer.colophon {
   background: var(--velvet);
   line-height: 0;
 }
+.film-frame + .film-frame { margin-top: var(--s1); }
 .film-video {
   display: block;
   width: 100%;
@@ -1981,6 +1982,9 @@ body::before {
   aspect-ratio: 16 / 9;
   background: transparent;
 }
+/* The speech file is a little taller than 16:9. Sit it on the bottom
+   so the burned-in lines stay inside the frame. */
+#speechFilm { object-position: center bottom; }
 .reel-tile {
   aspect-ratio: 9 / 16;
   padding: 0;
