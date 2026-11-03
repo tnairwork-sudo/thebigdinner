@@ -1,13 +1,18 @@
 /* The Big Dinner
    Desert Titanium. A static brushed field, lighter at the top.
-   Espresso #2A2420 on #C9B196 is 7.45:1; on #E9D8C3 it is 10.99:1.
-   Buttons are solid #2A2420 with ivory #F4EFE6 (13.37:1).
+   Quiet pair: espresso #2A2420 on the champagne field.
+   Espresso on #C9B196 is 7.45:1; on #E9D8C3 it is 10.99:1.
+   Other buttons stay espresso with ivory #F4EFE6 (13.37:1).
+   The one loud accent is lacquer #B3122E. Ivory on it is 6.03:1.
+   Ivory on the hover, #8F0E25, is 8.12:1.
    Type metrics stay on the production scale. Art lives in /assets/art. */
 
 :root {
   --field: #D8C2A6;
   --ivory: #F4EFE6;
   --espresso: #2A2420;
+  --lacquer: #B3122E;
+  --lacquer-deep: #8F0E25;
   --titanium: #B5A28C;
   --velvet: transparent;
   --velvet-deep: transparent;
@@ -1827,6 +1832,7 @@ body.has-sound > footer.colophon {
   background: var(--velvet);
   line-height: 0;
 }
+.film-frame + .film-frame { margin-top: var(--s1); }
 .film-video {
   display: block;
   width: 100%;
@@ -1976,6 +1982,9 @@ body::before {
   aspect-ratio: 16 / 9;
   background: transparent;
 }
+/* The speech file is a little taller than 16:9. Sit it on the bottom
+   so the burned-in lines stay inside the frame. */
+#speechFilm { object-position: center bottom; }
 .reel-tile {
   aspect-ratio: 9 / 16;
   padding: 0;
@@ -2050,4 +2059,61 @@ body::before {
     flex-basis: 100%;
     max-width: 100%;
   }
+}
+
+/* Lacquer is the single loud note.
+   Invitation pills, the current nav mark, the chosen city, and one hairline. */
+
+.invite-btn {
+  background: var(--lacquer);
+  color: var(--ivory);
+  border-color: var(--lacquer);
+}
+.invite-btn:hover,
+.invite-btn:focus-visible {
+  background: var(--lacquer-deep);
+  color: var(--ivory);
+  border-color: var(--lacquer-deep);
+}
+
+.nav-links a[aria-current="page"] {
+  box-shadow: inset 0 -1px 0 var(--lacquer);
+}
+.colophon-nav a[aria-current="page"] {
+  border-bottom-color: var(--lacquer);
+}
+
+#citySelect option:checked:not([value=""]) {
+  background-color: var(--lacquer);
+  color: var(--ivory);
+}
+#citySelect:has(option:checked:not([value=""])) {
+  border-color: var(--lacquer);
+}
+
+.rule-line { border-top-color: var(--lacquer); }
+
+.frame-copy > .label:first-child,
+.section-intro > .label:first-child,
+.paper-frame .split > div:first-child > .label:first-child,
+.reels > .label:first-child,
+.gallery-block > .label:first-child,
+.press > .label:first-child {
+  position: relative;
+}
+.frame-copy > .label:first-child::after,
+.section-intro > .label:first-child::after,
+.paper-frame .split > div:first-child > .label:first-child::after,
+.reels > .label:first-child::after,
+.gallery-block > .label:first-child::after,
+.press > .label:first-child::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 6px);
+  width: 48px;
+  height: 1px;
+  transform: translateX(-50%);
+  background: var(--lacquer);
+  pointer-events: none;
 }
