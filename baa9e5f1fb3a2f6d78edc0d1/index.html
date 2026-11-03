@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta name="robots" content="noindex,nofollow">
+<head>
 <meta charset="UTF-8" />
+<meta name="robots" content="noindex,nofollow" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="theme-color" content="#FAF6EE" />
 <title>THE ROOM | The Big Dinner</title>
@@ -178,6 +179,49 @@
   .theme-dark .warm-wash { background: linear-gradient(180deg, #2A211B 0%, #1D1916 40%, #171412 75%); }
   .clamp2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
   .clamp3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+
+  /* ---- game layer ---- */
+  .gbar { width: 100%; background: var(--line); overflow: hidden; }
+  .gbar i { display: block; height: 100%; transition: width .8s cubic-bezier(.2,.8,.2,1); background-image: linear-gradient(90deg, transparent, rgba(255,255,255,.45), transparent) !important; background-size: 200% 100%; animation: shimmer 2.6s linear infinite; }
+  .gbar i { background-color: var(--gold); }
+  @keyframes shimmer { from { background-position: 200% 0 } to { background-position: -200% 0 } }
+  .hud, .gcard { background: var(--bg2); border: 1px solid var(--gold); padding: 18px; box-shadow: 0 10px 30px rgba(184,147,47,.12); }
+  .lvl-ring { width: 46px; height: 46px; display: inline-flex; align-items: center; justify-content: center; border: 2px solid var(--gold); color: var(--gold-ink); font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 600; }
+  .lvl-ring.big { width: 96px; height: 96px; font-size: 46px; }
+  .flame b { font-weight: 600; color: var(--accent-ink); font-size: 16px; } .flame svg { animation: flick 1.4s ease-in-out infinite alternate; transform-origin: 50% 90%; }
+  @keyframes flick { from { transform: scale(1) rotate(-3deg) } to { transform: scale(1.12) rotate(3deg) } }
+  .hud-tile { border: 1px solid var(--line-strong); padding: 10px 6px; display: flex; flex-direction: column; align-items: center; gap: 2px; background: var(--bg); }
+  .hud-tile b { font-weight: 600; font-size: 14px; } .hud-tile span { font-size: 10.5px; color: var(--faint); letter-spacing: .04em; text-transform: uppercase; }
+  .glow { animation: glow 1.8s ease-in-out infinite; } @keyframes glow { 50% { box-shadow: 0 0 0 1px var(--gold), 0 0 18px rgba(201,168,76,.45); } }
+  .next-hook { border-left: 2px solid var(--accent); padding: 10px 12px; background: var(--bg3); }
+  .gtabs { display: grid; grid-template-columns: repeat(5,1fr); border-bottom: 1px solid var(--line-strong); }
+  .gtabs button { padding: 10px 0; font-size: 12.5px; color: var(--faint); border-bottom: 2px solid transparent; margin-bottom: -1px; } .gtabs button.on { color: var(--ink); border-color: var(--gold); font-weight: 600; }
+  .quest { border: 1px solid var(--line-strong); padding: 14px; background: var(--bg2); transition: all .3s; } .quest.done { border-color: var(--gold); background: var(--bg3); } .quest.done .t-md { color: var(--gold-ink); }
+  .streak-box { display: flex; gap: 14px; align-items: center; border: 1px solid var(--line-strong); padding: 14px; }
+  .sday { flex: 1; height: 4px; display: block; }
+  .chest { border: 1px solid var(--gold); padding: 16px; background: linear-gradient(135deg, var(--bg2), var(--bg3)); }
+  .chest-box { width: 58px; height: 58px; display: flex; align-items: center; justify-content: center; font-size: 28px; color: #FAF6EE; background: linear-gradient(135deg,#C9A84C,#80621A); flex-shrink: 0; }
+  .chest-box.shake { animation: shake .15s linear infinite; } .chest-box.opened { animation: popin .5s cubic-bezier(.2,1.6,.4,1); }
+  @keyframes shake { 0%{transform:rotate(-6deg)} 50%{transform:rotate(6deg)} 100%{transform:rotate(-6deg)} }
+  @keyframes popin { from { transform: scale(.4) } to { transform: scale(1) } }
+  .chest-res { animation: popin .5s cubic-bezier(.2,1.6,.4,1); }
+  .medal.locked svg { opacity: .7; } .medal svg { filter: drop-shadow(0 4px 8px rgba(0,0,0,.12)); }
+  .rank { border: 1px solid var(--line); padding: 14px; opacity: .72; } .rank.open { opacity: 1; border-color: var(--line-strong); } .rank.cur { border-color: var(--gold); background: var(--bg2); }
+  .season-hero { padding: 20px; background: linear-gradient(135deg,#5A1E14,#9F4C2C 55%,#B8932F); position: relative; overflow: hidden; }
+  .season-hero::after { content: '✦ ✦ ✦'; position: absolute; right: 14px; top: 12px; color: #F3D98B; letter-spacing: .4em; opacity: .7; }
+  .tier { display: flex; align-items: center; gap: 12px; padding: 12px; border: 1px solid var(--line); opacity: .6; } .tier.open { opacity: 1; border-color: var(--gold); }
+  .tier-n { width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--gold); font-family: 'Cormorant Garamond', serif; font-size: 16px; color: var(--gold-ink); }
+  .brow { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); } .brow.mine { background: var(--bg3); padding-left: 8px; padding-right: 8px; border: 1px solid var(--gold); }
+  .rank-n { width: 22px; text-align: center; font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--faint); } .rank-n.top { color: var(--gold-strong); font-weight: 600; }
+  .xp-stack { position: absolute; top: 64px; left: 0; right: 0; display: flex; flex-direction: column; align-items: center; gap: 6px; z-index: 70; pointer-events: none; }
+  .xp-toast { background: linear-gradient(135deg,#C9A84C,#80621A); color: #FFFDF8; padding: 8px 16px; display: flex; gap: 10px; align-items: baseline; box-shadow: 0 10px 24px rgba(128,98,26,.35); animation: xpIn 2.3s cubic-bezier(.2,.8,.2,1) both; }
+  .xp-toast b { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; } .xp-toast span { font-size: 11px; letter-spacing: .06em; text-transform: uppercase; opacity: .9; }
+  @keyframes xpIn { 0% { opacity: 0; transform: translateY(14px) scale(.8) } 12% { opacity: 1; transform: translateY(0) scale(1.08) } 20% { transform: scale(1) } 80% { opacity: 1 } 100% { opacity: 0; transform: translateY(-18px) } }
+  .unlock { position: absolute; inset: 0; z-index: 80; background: rgba(23,20,18,.55); display: flex; align-items: center; justify-content: center; padding: 28px; animation: toastIn .25s both; }
+  .unlock-card { position: relative; overflow: hidden; background: var(--bg); border: 1px solid var(--gold); padding: 32px 24px 24px; width: 100%; display: flex; flex-direction: column; align-items: center; text-align: center; animation: popin .55s cubic-bezier(.2,1.5,.4,1) both; }
+  .unlock-card > * { position: relative; }
+  .rays { position: absolute !important; inset: -50%; background: repeating-conic-gradient(rgba(201,168,76,.14) 0 10deg, transparent 10deg 20deg); animation: spin 14s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg) } }
 </style>
 </head>
 <body>
@@ -292,7 +336,7 @@ const MEMBERS = [
   { id: 'm3', name: 'Meher Sethi', role: 'Architect', city: 'Delhi', area: 'Vasant Vihar', tone: 'sand', editions: ['e1', 'e4'], visible: true, listed: true, privacy: allOpen,
     building: 'Low-cost housing that people actually want to live in.', principle: "Measure twice. Then ask the person who'll live there.", proud: 'Rebuilding a village school in Kutch with the children drawing the plans.' },
   { id: 'm4', name: 'Arjun Bhatia', role: 'Chef', city: 'Delhi', area: 'Defence Colony', tone: 'ember', editions: ['e6'], visible: true, listed: true, privacy: allOpen,
-    building: 'A twelve-seat restaurant with no menu and no sign.', principle: 'Feed people before you ask them anything.', proud: 'My father finally ate at my restaurant and asked for seconds.' },
+    building: 'A twelve-cover restaurant with no menu and no sign.', principle: 'Feed people before you ask them anything.', proud: 'My father finally ate at my restaurant and asked for seconds.' },
   { id: 'm5', name: 'Ira Chaudhry', role: 'Publisher', city: 'Delhi', area: 'Mehrauli', tone: 'night', editions: ['e1', 'e3', 'e8'], visible: false, listed: true, privacy: allOpen,
     building: 'A small press for Indian writing in translation.', principle: 'Say the true thing, kindly.', proud: 'Publishing a Malayalam novel that sold out in Paris.' },
   { id: 'm6', name: 'Rohan Mehta', role: 'Documentary producer', city: 'Bombay', area: 'Bandra West', tone: 'brass', editions: ['e2', 'e7'], visible: true, listed: true, privacy: allOpen,
@@ -892,8 +936,9 @@ function Feed() {
   return (
     <div>
       <Masthead kicker={`The Feed, ${MONTHS[TODAY.getMonth()]} ${TODAY.getFullYear()}`} title="What everyone has been up to.">
-        Nothing here expires and nothing gets counted. If something moves you, say so in the comments.
+        Nothing here expires. If something moves you, say so in the comments.
       </Masthead>
+      <GameHUD />
       <div className="px-6 mb-10">
         <button className="btn w-full" onClick={() => setComposer(true)}><Icon name="plus" size={15} stroke={1.5} /> Share something</button>
       </div>
@@ -1324,6 +1369,7 @@ function Profile({ id }) {
         )}
       </div>
 
+      {isMe && <GameCard />}
       <div className="px-6 mt-14">
         <Kicker>{isMe ? 'In your words' : `In ${first(m.name)}'s words`}</Kicker>
         <div className="stagger">
@@ -1397,7 +1443,7 @@ function Profile({ id }) {
 /* ---------- hangouts ---------- */
 function Seats({ n, cap }) {
   return (
-    <div className="flex gap-[4px] items-center" aria-label={`${n} of ${cap} seats taken`}>
+    <div className="flex gap-[4px] items-center" aria-label={`${n} of ${cap} places taken`}>
       {Array.from({ length: cap }).map((_, i) => <span key={i} style={{ width: 8, height: 8, background: i < n ? 'var(--gold)' : 'var(--line-strong)', display: 'inline-block', transition: 'background .3s ease-out' }} />)}
     </div>
   );
@@ -1420,7 +1466,7 @@ function HangoutCard({ h }) {
       <div className="mt-5">{mine ? <div className="label faint">You're hosting, {h.area}</div> : <PersonLine id={h.by} size={36} sub={`Hosting, ${h.area}`} />}</div>
       <div className="flex items-center justify-between mt-5 pt-4 bt">
         <Seats n={h.going.length} cap={h.cap} />
-        <span className="faint t-sm">{h.going.length} of {h.cap} seats</span>
+        <span className="faint t-sm">{h.going.length} of {h.cap} places</span>
       </div>
       <div className="flex gap-1 mt-3">
         {h.going.map((id) => <Avatar key={id} m={who(id)} size={28} onClick={id === 'me' ? undefined : () => openProfile(id)} />)}
@@ -1432,7 +1478,7 @@ function HangoutCard({ h }) {
         </div>
       ) : (
         <div className="mt-5 flex justify-end min-h-[38px] items-center">
-          {going ? <span className="label gold flex items-center gap-1"><Icon name="check" size={13} stroke={1.6} /> You have a seat</span>
+          {going ? <span className="label gold flex items-center gap-1"><Icon name="check" size={13} stroke={1.6} /> You're going</span>
             : myReq && myReq.status === 'pending' ? <span className="label faint">Asked. {first(who(h.by).name)} will let you know</span>
             : myReq && myReq.status === 'declined' ? <span className="label faint">Not this time</span>
             : full ? <span className="label faint">Full</span>
@@ -1458,11 +1504,11 @@ function NewHangout({ onClose }) {
       <Chips className="mt-3 -mx-6 px-6" options={nextDays(21, 1)} value={v.date} onChange={(d) => set('date', d)} />
       <div className="grid grid-cols-2 gap-6 mt-7">
         <Field label="Time"><select className="field" value={v.time} onChange={(e) => set('time', e.target.value)}>{HOURS.map((h) => <option key={h}>{h}</option>)}</select></Field>
-        <Field label="Seats, including you">
+        <Field label="Places, including you">
           <div className="flex items-center justify-between bb h-[45px]">
-            <button className="w-10 h-10 flex items-center justify-center muted" onClick={() => set('cap', Math.max(2, v.cap - 1))} aria-label="Fewer seats"><span className="block w-3 h-[1px]" style={{ background: 'currentColor' }} /></button>
+            <button className="w-10 h-10 flex items-center justify-center muted" onClick={() => set('cap', Math.max(2, v.cap - 1))} aria-label="Fewer places"><span className="block w-3 h-[1px]" style={{ background: 'currentColor' }} /></button>
             <span className="display text-[26px] leading-none">{v.cap}</span>
-            <button className="w-10 h-10 flex items-center justify-center muted" onClick={() => set('cap', Math.min(16, v.cap + 1))} aria-label="More seats"><Icon name="plus" size={14} stroke={1.4} /></button>
+            <button className="w-10 h-10 flex items-center justify-center muted" onClick={() => set('cap', Math.min(16, v.cap + 1))} aria-label="More places"><Icon name="plus" size={14} stroke={1.4} /></button>
           </div>
         </Field>
       </div>
@@ -1480,8 +1526,8 @@ function Hangouts() {
   const others = hangouts.filter((h) => h.by !== 'me' && (city === 'All' || h.city === city));
   return (
     <div>
-      <Masthead kicker="Hangouts" title="Smaller tables.">
-        Not the big night. Smaller, looser, hosted by one of us. Ask for a seat and the host will let you know.
+      <Masthead kicker="Hangouts" title="Smaller evenings.">
+        Not the big night. Smaller, looser, hosted by one of us. Ask to join and the host will let you know.
       </Masthead>
       <div className="px-6"><button className="btn btn-solid w-full" onClick={() => setForm(true)}>Host a hangout</button></div>
       {mine.length > 0 && (
@@ -1822,6 +1868,386 @@ function Notifications() {
   );
 }
 
+/* ---------- the game layer: XP, ranks, quests, streaks, badges, season, boards, chest ---------- */
+const XP = { post: 40, comment: 10, chat: 8, rsvp: 25, attend: 60, spotify: 20, reel: 20, forum: 25, travel: 30, intro: 50, introYes: 20, follow: 5, meet: 15, host: 45, window: 20, quest: 0, chest: 0, login: 10 };
+const XP_LABEL = { post: 'Photo shared', comment: 'Comment', chat: 'Message sent', rsvp: 'RSVP', attend: 'Checked in', spotify: 'Track shared', reel: 'Reel shared', forum: 'Forum post', travel: 'Travel plan', intro: 'Introduction made', introYes: 'Introduction accepted', follow: 'Following', meet: 'Meeting asked', host: 'Hosting', window: 'Window posted', login: 'Daily visit' };
+const RANKS = [
+  { min: 1, name: 'Guest', perk: 'The feed, the circles and your first quests.' },
+  { min: 3, name: 'Regular', perk: 'Unlocks: hosting your own hangouts and a gold name ring.' },
+  { min: 6, name: 'Insider', perk: 'Unlocks: early word on the next edition, 24 hours before everyone else.' },
+  { min: 10, name: 'Patron', perk: 'Unlocks: a plus-one invitation each season and the Patron wax seal.' },
+  { min: 15, name: 'Legend', perk: 'Unlocks: your name in the edition credits and a say in the next city.' },
+];
+const levelXp = (n) => 60 * (n - 1) * (n - 1) + 40 * (n - 1);
+const levelOf = (xp) => { let n = 1; while (xp >= levelXp(n + 1)) n++; return n; };
+const rankOf = (lvl) => [...RANKS].reverse().find((r) => lvl >= r.min);
+const nextRank = (lvl) => RANKS.find((r) => r.min > lvl);
+const dayKey = (d = new Date()) => d.toISOString().slice(0, 10);
+const QUEST_POOL = [
+  { id: 'q-post', a: 'post', n: 1, t: 'Share a photo from your week', xp: 60 },
+  { id: 'q-comment', a: 'comment', n: 3, t: 'Leave three kind comments', xp: 45 },
+  { id: 'q-chat', a: 'chat', n: 2, t: 'Send two messages in a thread', xp: 40 },
+  { id: 'q-rsvp', a: 'rsvp', n: 1, t: 'RSVP to a hangout or a window', xp: 50 },
+  { id: 'q-spotify', a: 'spotify', n: 1, t: 'Share a track with the room', xp: 40 },
+  { id: 'q-reel', a: 'reel', n: 1, t: 'Share a Reel from a night out', xp: 40 },
+  { id: 'q-forum', a: 'forum', n: 1, t: 'Start a forum conversation', xp: 50 },
+  { id: 'q-travel', a: 'travel', n: 1, t: 'Post where you are travelling next', xp: 50 },
+  { id: 'q-intro', a: 'intro', n: 1, t: 'Introduce two members', xp: 80 },
+  { id: 'q-follow', a: 'follow', n: 2, t: 'Follow two new people', xp: 30 },
+];
+const questsFor = (day) => { let h = 0; for (const c of day) h = (h * 31 + c.charCodeAt(0)) >>> 0; const pool = [...QUEST_POOL]; const out = []; while (out.length < 3) { h = (h * 1103515245 + 12345) >>> 0; out.push(pool.splice(h % pool.length, 1)[0]); } return out; };
+const RARITY = { Common: '#8A7A66', Rare: '#3E6A8A', Epic: '#7A3E6E', Legendary: '#B8932F' };
+const BADGES = [
+  { id: 'b-first', t: 'First Light', d: 'Share your first photo', r: 'Common', test: (c) => c.post >= 1, goal: (c) => [c.post, 1] },
+  { id: 'b-voice', t: 'Good Company', d: 'Leave 10 comments', r: 'Common', test: (c) => c.comment >= 10, goal: (c) => [c.comment, 10] },
+  { id: 'b-dj', t: 'Resident DJ', d: 'Share 5 tracks', r: 'Rare', test: (c) => c.spotify >= 5, goal: (c) => [c.spotify, 5] },
+  { id: 'b-match', t: 'Matchmaker', d: 'Make 3 introductions', r: 'Rare', test: (c) => c.intro >= 3, goal: (c) => [c.intro, 3] },
+  { id: 'b-host', t: 'The Host', d: 'Host a hangout', r: 'Rare', test: (c) => c.host >= 1, goal: (c) => [c.host, 1] },
+  { id: 'b-nomad', t: 'Passport', d: 'Share 3 travel plans', r: 'Rare', test: (c) => c.travel >= 3, goal: (c) => [c.travel, 3] },
+  { id: 'b-reel', t: 'Director’s Cut', d: 'Share 3 Reels', r: 'Rare', test: (c) => c.reel >= 3, goal: (c) => [c.reel, 3] },
+  { id: 'b-forum', t: 'Salon Keeper', d: 'Start 5 forum conversations', r: 'Epic', test: (c) => c.forum >= 5, goal: (c) => [c.forum, 5] },
+  { id: 'b-streak7', t: 'Week of Evenings', d: 'Keep a 7-day streak', r: 'Epic', test: (c, g) => g.best >= 7, goal: (c, g) => [g.best, 7] },
+  { id: 'b-attend', t: 'Never Missed One', d: 'Check in at 5 editions', r: 'Epic', test: (c) => c.attend >= 5, goal: (c) => [c.attend, 5] },
+  { id: 'b-quests', t: 'Questing', d: 'Finish 15 daily quests', r: 'Epic', test: (c) => c.quest >= 15, goal: (c) => [c.quest, 15] },
+  { id: 'b-diwali', t: 'Festival of Lights', d: 'Reach tier 5 of Diwali Season', r: 'Legendary', test: (c, g) => g.seasonXp >= 1250, goal: (c, g) => [g.seasonXp, 1250] },
+  { id: 'b-streak30', t: 'Thirty Nights', d: 'Keep a 30-day streak', r: 'Legendary', test: (c, g) => g.best >= 30, goal: (c, g) => [g.best, 30] },
+  { id: 'b-legend', t: 'Legend of the Room', d: 'Reach the Legend rank', r: 'Legendary', test: (c, g) => levelOf(g.xp) >= 15, goal: (c, g) => [levelOf(g.xp), 15] },
+];
+const SEASON = { name: 'Diwali Season', ends: new Date('2026-11-16T23:59:00+05:30'), per: 250,
+  tiers: ['A diya sticker for your profile', 'Gold name ring, festive edition', '+1 streak freeze', 'Early word on the Bombay night', 'The Festival of Lights badge', 'A handwritten note from the hosts', 'First pick of the after-party playlist', 'Rangoli profile frame', 'A plus-one invitation for one hangout', 'Diwali Legend seal, kept for good'] };
+const CHEST = [
+  { t: 'Double XP for the next hour', r: 'Rare', fx: { dbl: 1 } }, { t: '+1 streak freeze', r: 'Rare', fx: { freeze: 1 } }, { t: '+75 bonus XP', r: 'Common', fx: { xp: 75 } },
+  { t: '+40 bonus XP', r: 'Common', fx: { xp: 40 } }, { t: 'Rangoli profile frame', r: 'Epic', fx: { perk: 'Rangoli profile frame' } },
+  { t: 'Early word on the next edition', r: 'Epic', fx: { perk: 'Early word on the next edition' } }, { t: 'A plus-one invitation for one hangout', r: 'Legendary', fx: { perk: 'Plus-one invitation' } },
+];
+const BOARD = [
+  ['m1', 1240, 'Delhi'], ['m4', 1105, 'Delhi'], ['m7', 980, 'Delhi'], ['m14', 1320, 'London'], ['m9', 760, 'Bombay'], ['m2', 690, 'Delhi'], ['m12', 640, 'Delhi'],
+  ['m5', 590, 'Delhi'], ['m17', 1010, 'London'], ['m13', 450, 'Bombay'], ['m3', 870, 'Bombay'], ['m6', 380, 'Delhi'], ['m8', 300, 'Bombay'],
+];
+const G_KEY = 'tbd-game-v1';
+const seedGame = () => {
+  const y = new Date(Date.now() - 864e5);
+  return { xp: 1610, seasonXp: 1080, weekXp: 720, streak: 6, best: 9, lastDay: dayKey(y), freezes: 1, qDay: '', qprog: {}, qdone: [], chestDay: '', perks: ['Gold name ring'], claimed: [0, 1, 2],
+    counts: { post: 7, comment: 9, chat: 31, rsvp: 6, attend: 4, spotify: 4, reel: 2, forum: 4, travel: 2, intro: 2, introYes: 3, follow: 11, meet: 3, host: 0, window: 2, quest: 13 },
+    badges: { 'b-first': 'Sep', 'b-match': 'Oct' }, dblUntil: 0, seen: {} };
+};
+function loadGame() { try { const s = JSON.parse(localStorage.getItem(G_KEY)); if (s && s.counts) return s; } catch (e) {} return seedGame(); }
+
+function useGame(toastCb) {
+  const [g, setG] = useState(loadGame);
+  const [pops, setPops] = useState([]);
+  const [modal, setModal] = useState(null);
+  useEffect(() => { try { localStorage.setItem(G_KEY, JSON.stringify(g)); } catch (e) {} }, [g]);
+  const pop = (text, sub) => { const id = Math.random(); setPops((p) => [...p.slice(-2), { id, text, sub }]); setTimeout(() => setPops((p) => p.filter((x) => x.id !== id)), 2300); };
+  /* daily roll-over: quests refresh, streak counts, freeze protects a missed day */
+  const checkIn = () => setG((s) => {
+    const today = dayKey(); if (s.lastDay === today) return s.qDay === today ? s : { ...s, qDay: today, qprog: {}, qdone: [] };
+    const gap = Math.round((new Date(today) - new Date(s.lastDay)) / 864e5);
+    let streak = s.streak, freezes = s.freezes, note = null;
+    if (gap === 1) streak += 1; else if (gap === 2 && freezes > 0) { freezes -= 1; streak += 1; note = 'A streak freeze kept your flame alive.'; } else streak = 1;
+    if (note) setTimeout(() => toastCb(note), 900);
+    setTimeout(() => pop(`+${XP.login} XP`, `Day ${streak} streak`), 700);
+    return { ...s, lastDay: today, streak, best: Math.max(s.best, streak), freezes, qDay: today, qprog: {}, qdone: [], xp: s.xp + XP.login, seasonXp: s.seasonXp + XP.login, weekXp: s.weekXp + XP.login };
+  });
+  const award = (a, extra = 0) => setG((s) => {
+    const mult = s.dblUntil > Date.now() ? 2 : 1;
+    let gain = ((XP[a] || 0) + extra) * mult;
+    const counts = { ...s.counts, [a]: (s.counts[a] || 0) + 1 };
+    const qprog = { ...s.qprog }; const qdone = [...s.qdone]; const msgs = [];
+    questsFor(s.qDay || dayKey()).forEach((q) => { if (q.a === a && !qdone.includes(q.id)) { qprog[q.id] = (qprog[q.id] || 0) + 1; if (qprog[q.id] >= q.n) { qdone.push(q.id); gain += q.xp; counts.quest = (counts.quest || 0) + 1; msgs.push(`Quest complete: ${q.t}`); } } });
+    let n = { ...s, counts, qprog, qdone, xp: s.xp + gain, seasonXp: s.seasonXp + gain, weekXp: s.weekXp + gain };
+    if (qdone.length === 3 && s.qdone.length < 3) { n.xp += 100; n.seasonXp += 100; n.weekXp += 100; msgs.push('All three quests done. +100 XP bonus.'); }
+    const badges = { ...n.badges }; let fresh = null;
+    BADGES.forEach((b) => { if (!badges[b.id] && b.test(counts, n)) { badges[b.id] = 'Just now'; fresh = b; } });
+    n.badges = badges;
+    const l0 = levelOf(s.xp), l1 = levelOf(n.xp);
+    setTimeout(() => {
+      pop(`+${n.xp - s.xp} XP`, (XP_LABEL[a] || '') + (mult > 1 ? ' · double XP' : ''));
+      msgs.forEach((m, i) => setTimeout(() => toastCb(m), 400 + i * 1600));
+      if (l1 > l0) setModal({ kind: 'level', level: l1, rank: rankOf(l1), newRank: rankOf(l1).name !== rankOf(l0).name });
+      else if (fresh) setModal({ kind: 'badge', b: fresh });
+    }, 0);
+    return n;
+  });
+  const openChest = () => {
+    if (g.chestDay === dayKey()) return null;
+    const roll = Math.random(); const pick = roll < .04 ? CHEST[6] : roll < .16 ? CHEST[4 + Math.floor(Math.random() * 2)] : CHEST[Math.floor(Math.random() * 4)];
+    setG((s) => { const n = { ...s, chestDay: dayKey() }; const fx = pick.fx;
+      if (fx.xp) { n.xp += fx.xp; n.seasonXp += fx.xp; n.weekXp += fx.xp; } if (fx.freeze) n.freezes += 1; if (fx.dbl) n.dblUntil = Date.now() + 36e5; if (fx.perk) n.perks = [...n.perks, fx.perk]; return n; });
+    return pick;
+  };
+  const claimTier = (i) => setG((s) => (s.claimed.includes(i) || s.seasonXp < (i + 1) * SEASON.per ? s : { ...s, claimed: [...s.claimed, i], freezes: s.freezes + (i === 2 ? 1 : 0), perks: [...s.perks, SEASON.tiers[i]] }));
+  const reset = () => setG(seedGame());
+  return { g, award, checkIn, openChest, claimTier, pops, modal, setModal, reset };
+}
+
+const fmtLeft = (ms) => { const d = Math.floor(ms / 864e5), h = Math.floor(ms % 864e5 / 36e5); return d > 0 ? `${d}d ${h}h` : `${h}h ${Math.floor(ms % 36e5 / 6e4)}m`; };
+const nextMonday = () => { const d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() + ((8 - d.getDay()) % 7 || 7)); return d; };
+function useNow(ms = 30000) { const [t, setT] = useState(Date.now()); useEffect(() => { const i = setInterval(() => setT(Date.now()), ms); return () => clearInterval(i); }, []); return t; }
+
+function Bar({ v, max, h = 6, color = 'var(--gold)', testid }) {
+  const p = Math.max(0, Math.min(100, (v / max) * 100));
+  return <div className="gbar" style={{ height: h }} data-testid={testid} aria-valuenow={Math.round(p)} role="progressbar"><i style={{ width: p + '%', background: color }} /></div>;
+}
+function Flame({ n, size = 18 }) {
+  return <span className="flame flex items-center gap-1" aria-label={`${n}-day streak`}><svg width={size} height={size} viewBox="0 0 24 24" fill="var(--accent)"><path d="M12 2c1 4 5 5.5 5 11a5 5 0 0 1-10 0c0-2.5 1.3-4 2.4-5 .2 1.6 1 2.6 2 3C11 8 11.5 5 12 2z" /></svg><b>{n}</b></span>;
+}
+function Medal({ b, got, size = 64 }) {
+  const c = RARITY[b.r];
+  return (
+    <div className={cls('medal', !got && 'locked')} style={{ width: size, height: size, '--rc': c }}>
+      <svg viewBox="0 0 64 64" width={size} height={size}><polygon points="32,3 58,18 58,46 32,61 6,46 6,18" fill={got ? c : 'var(--bg3)'} stroke={got ? 'var(--gold)' : 'var(--line-strong)'} strokeWidth="2" />
+        {got ? <text x="32" y="40" textAnchor="middle" fontFamily="Cormorant Garamond" fontSize="22" fill="#FAF6EE" fontStyle="italic">{b.t.split(' ').map((w) => w[0]).join('').slice(0, 2)}</text> : <path d="M25 30v-4a7 7 0 0 1 14 0v4M23 30h18v12H23z" fill="none" stroke="var(--faint)" strokeWidth="2" />}
+      </svg>
+    </div>
+  );
+}
+
+/* Home HUD: level, XP, streak, the 'what's next' hook */
+function GameHUD() {
+  const { game, push } = useApp(); const g = game.g;
+  const lvl = levelOf(g.xp), r = rankOf(lvl), lo = levelXp(lvl), hi = levelXp(lvl + 1);
+  const quests = questsFor(g.qDay || dayKey()); const open = quests.filter((q) => !g.qdone.includes(q.id));
+  const closest = open.map((q) => ({ q, left: q.n - (g.qprog[q.id] || 0) })).sort((a, b) => a.left - b.left)[0];
+  const chestReady = g.chestDay !== dayKey();
+  const atRisk = g.lastDay !== dayKey();
+  return (
+    <div className="px-6 mb-8">
+      <div className="hud" data-testid="hud">
+        <div className="flex items-center justify-between">
+          <button className="flex items-center gap-3 text-left" onClick={() => push({ s: 'play', id: 'ranks' })} aria-label="Open your rank">
+            <span className="lvl-ring" data-testid="hud-level">{lvl}</span>
+            <span><span className="label gold block">{r.name}</span><span className="t-sm muted">{g.xp.toLocaleString('en-GB')} XP</span></span>
+          </button>
+          <button onClick={() => push({ s: 'play', id: 'quests' })} className="flex items-center gap-3" data-testid="hud-streak"><Flame n={g.streak} />{g.freezes > 0 && <span className="label faint" title="Streak freezes">❄ {g.freezes}</span>}</button>
+        </div>
+        <div className="mt-4"><Bar v={g.xp - lo} max={hi - lo} testid="hud-bar" /></div>
+        <div className="flex justify-between t-xs faint mt-2"><span>Level {lvl}</span><span>{(hi - g.xp).toLocaleString('en-GB')} XP to level {lvl + 1}</span></div>
+        <div className="grid grid-cols-3 gap-2 mt-5">
+          <button className="hud-tile" onClick={() => push({ s: 'play', id: 'quests' })}><b>{g.qdone.length}/3</b><span>Quests</span></button>
+          <button className="hud-tile" onClick={() => push({ s: 'play', id: 'season' })}><b>Tier {Math.min(10, Math.floor(g.seasonXp / SEASON.per))}</b><span>Diwali</span></button>
+          <button className={cls('hud-tile', chestReady && 'glow')} onClick={() => push({ s: 'play', id: 'quests' })} data-testid="hud-chest"><b>{chestReady ? 'Ready' : 'Opened'}</b><span>Daily chest</span></button>
+        </div>
+        <button className="next-hook mt-4 w-full text-left" onClick={() => push({ s: 'play', id: 'quests' })} data-testid="whats-next">
+          <span className="label accent">What’s next</span>
+          <span className="block t-md mt-1">{closest ? <>You’re {closest.left} away from <i>“{closest.q.t.toLowerCase()}”</i>. +{closest.q.xp} XP</> : 'All three quests done today. Come back tomorrow for three more.'}</span>
+          {atRisk && <span className="block t-xs accent mt-1">Your {g.streak}-day flame goes out at midnight. One small thing keeps it lit.</span>}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/* Profile game card */
+function GameCard() {
+  const { game, push } = useApp(); const g = game.g;
+  const lvl = levelOf(g.xp), r = rankOf(lvl), nr = nextRank(lvl); const got = Object.keys(g.badges).length;
+  return (
+    <div className="px-6 mt-10">
+      <div className="gcard" data-testid="game-card">
+        <div className="flex items-center justify-between"><Kicker>Your game</Kicker><Flame n={g.streak} /></div>
+        <div className="display text-[34px] leading-none mt-2">{r.name} <span className="gold">· Level {lvl}</span></div>
+        <div className="mt-3"><Bar v={g.xp - levelXp(lvl)} max={levelXp(lvl + 1) - levelXp(lvl)} /></div>
+        {nr && <p className="t-sm muted mt-2">{nr.name} at level {nr.min}. {nr.perk}</p>}
+        <div className="flex gap-2 mt-4">{BADGES.filter((b) => g.badges[b.id]).slice(0, 5).map((b) => <Medal key={b.id} b={b} got size={40} />)}</div>
+        <div className="grid grid-cols-3 gap-2 mt-4 t-xs faint text-center"><span><b className="block t-lg" style={{ color: 'var(--ink)' }}>{got}/{BADGES.length}</b>badges</span><span><b className="block t-lg" style={{ color: 'var(--ink)' }}>{g.best}</b>best streak</span><span><b className="block t-lg" style={{ color: 'var(--ink)' }}>{g.perks.length}</b>perks</span></div>
+        <button className="btn w-full mt-5" onClick={() => push({ s: 'play', id: 'badges' })}>Open the game</button>
+      </div>
+    </div>
+  );
+}
+
+function ActionSheet({ kind, onClose }) {
+  const { game, toast } = useApp(); const [v, setV] = useState('');
+  const cfg = { reel: ['Share a Reel', 'Paste the Reel link', 'Shared to the room.'], forum: ['Start a forum conversation', 'What would you like to talk about?', 'Posted in the forum.'], travel: ['Where are you going next?', 'City and dates, e.g. Bombay, 5 to 8 Nov', 'Travel plan posted. Members there will see it.'], attend: ['Check in at tonight’s edition', 'Your check-in code from the host', 'Checked in. Have a wonderful evening.'] }[kind];
+  return (
+    <Sheet title={cfg[0]} kicker="Earn XP" onClose={onClose}>
+      <textarea className="w-full bb bg2 p-3 t-md" rows={3} placeholder={cfg[1]} value={v} onChange={(e) => setV(e.target.value)} aria-label={cfg[0]} />
+      <button className="btn btn-solid w-full mt-6" disabled={v.trim().length < 2} onClick={() => { game.award(kind); toast(cfg[2]); onClose(); }}>Done · +{XP[kind]} XP</button>
+    </Sheet>
+  );
+}
+
+function Chest() {
+  const { game } = useApp(); const g = game.g; const [res, setRes] = useState(null); const [shake, setShake] = useState(false);
+  const ready = g.chestDay !== dayKey(); const now = useNow();
+  const tomorrow = new Date(); tomorrow.setHours(24, 0, 0, 0);
+  const open = () => { setShake(true); setTimeout(() => { setShake(false); setRes(game.openChest()); }, 900); };
+  return (
+    <div className={cls('chest mt-8', ready && 'glow')} data-testid="chest">
+      <div className="flex items-center gap-4">
+        <div className={cls('chest-box', shake && 'shake', res && 'opened')}>✦</div>
+        <div className="flex-1">
+          <div className="label gold">The daily chest</div>
+          {res ? <div className="chest-res" data-testid="chest-result"><span className="label" style={{ color: RARITY[res.r] }}>{res.r}</span><div className="display text-[22px] leading-tight">{res.t}</div></div>
+            : ready ? <div className="t-md">Something is waiting. Common, rare, epic or legendary.</div>
+            : <div className="t-md muted">Opened today. The next one unlocks in {fmtLeft(tomorrow - now)}.</div>}
+        </div>
+      </div>
+      {ready && !res && <button className="btn btn-solid w-full mt-5" onClick={open} disabled={shake}>Open today’s chest</button>}
+      <p className="t-xs faint mt-3">Perks only. Never money, never anything you pay for.</p>
+    </div>
+  );
+}
+
+function QuestsPanel() {
+  const { game } = useApp(); const g = game.g; const [sheet, setSheet] = useState(null); const now = useNow();
+  const quests = questsFor(g.qDay || dayKey()); const tomorrow = new Date(); tomorrow.setHours(24, 0, 0, 0);
+  return (
+    <div>
+      <div className="flex items-center justify-between"><Kicker>Today’s three</Kicker><span className="t-xs faint" data-testid="quest-refresh">New quests in {fmtLeft(tomorrow - now)}</span></div>
+      <div className="mt-4 space-y-3">
+        {quests.map((q) => { const p = Math.min(q.n, g.qprog[q.id] || 0); const done = g.qdone.includes(q.id); return (
+          <div key={q.id} className={cls('quest', done && 'done')} data-testid="quest">
+            <div className="flex justify-between gap-3"><span className="t-md">{done ? '✓ ' : ''}{q.t}</span><span className="label gold shrink-0">+{q.xp} XP</span></div>
+            <div className="mt-3 flex items-center gap-3"><div className="flex-1"><Bar v={p} max={q.n} /></div><span className="t-xs faint">{p}/{q.n}</span></div>
+            {!done && q.n - p === 1 && p > 0 && <div className="t-xs accent mt-2">So close. One more.</div>}
+          </div>); })}
+      </div>
+      <div className="mt-3"><Bar v={g.qdone.length} max={3} h={3} color="var(--accent)" /><div className="t-xs faint mt-1">{g.qdone.length}/3 done. Finish all three for a +100 XP bonus.</div></div>
+      <div className="streak-box mt-8" data-testid="streak-box">
+        <Flame n={g.streak} size={30} />
+        <div className="flex-1"><div className="t-md">{g.streak}-day streak. Your best is {g.best}.</div><div className="t-xs faint">❄ {g.freezes} streak freeze{g.freezes === 1 ? '' : 's'}: miss one day and it keeps your flame lit.</div>
+          {g.streak < 7 && <div className="t-xs accent mt-1">{7 - g.streak} more day{7 - g.streak === 1 ? '' : 's'} to the Week of Evenings badge. Don’t let it go out.</div>}</div>
+      </div>
+      <div className="flex gap-[3px] mt-3">{Array.from({ length: 7 }).map((_, i) => <span key={i} className="sday" style={{ background: i < g.streak % 7 || (g.streak >= 7 && g.streak % 7 === 0) ? 'var(--accent)' : 'var(--line-strong)' }} />)}</div>
+      <Chest />
+      <Kicker className="mt-10">More ways to earn</Kicker>
+      <div className="grid grid-cols-2 gap-2 mt-4">
+        {[['reel', 'Share a Reel'], ['forum', 'Forum post'], ['travel', 'Travel plan'], ['attend', 'Check in']].map(([k, t]) => <button key={k} className="hud-tile" onClick={() => setSheet(k)} data-testid={'earn-' + k}><b>{t}</b><span>+{XP[k]} XP</span></button>)}
+      </div>
+      <p className="t-xs faint mt-3">Photos +40, comments +10, messages +8, RSVPs +25, tracks +20, introductions +50. Everything counts.</p>
+      {sheet && <ActionSheet kind={sheet} onClose={() => setSheet(null)} />}
+    </div>
+  );
+}
+
+function BadgesPanel() {
+  const { game } = useApp(); const g = game.g; const [sel, setSel] = useState(null);
+  const got = Object.keys(g.badges).length;
+  return (
+    <div>
+      <div className="flex items-center justify-between"><Kicker>The cabinet</Kicker><span className="label gold" data-testid="badge-count">{got} of {BADGES.length}</span></div>
+      <div className="mt-2"><Bar v={got} max={BADGES.length} h={3} /></div>
+      <div className="flex gap-3 mt-4 t-xs faint">{Object.entries(RARITY).map(([k, c]) => <span key={k} className="flex items-center gap-1"><i style={{ width: 8, height: 8, background: c, display: 'inline-block' }} />{k}</span>)}</div>
+      <div className="grid grid-cols-3 gap-y-6 gap-x-2 mt-6">
+        {BADGES.map((b) => { const have = !!g.badges[b.id]; const [v, n] = b.goal(g.counts, g); return (
+          <button key={b.id} className="flex flex-col items-center text-center" onClick={() => setSel(b)} data-testid={have ? 'badge-got' : 'badge-locked'}>
+            <Medal b={b} got={have} />
+            <span className={cls('t-xs mt-2 leading-tight', !have && 'faint')}>{have ? b.t : '???'}</span>
+            <span className="label mt-1" style={{ color: RARITY[b.r], fontSize: 9 }}>{b.r}</span>
+            {!have && <div className="w-12 mt-1"><Bar v={Math.min(v, n)} max={n} h={2} /></div>}
+          </button>); })}
+      </div>
+      {sel && <Sheet title={g.badges[sel.id] ? sel.t : 'Locked'} kicker={sel.r} onClose={() => setSel(null)}>
+        <div className="flex flex-col items-center"><Medal b={sel} got={!!g.badges[sel.id]} size={96} /><p className="t-md mt-4 text-center">{sel.d}.</p>
+          {(() => { const [v, n] = sel.goal(g.counts, g); return g.badges[sel.id] ? <p className="label gold mt-2">Earned {g.badges[sel.id]}</p> : <><div className="w-full mt-4"><Bar v={Math.min(v, n)} max={n} /></div><p className="t-sm muted mt-2">{Math.min(v, n)} of {n}. {n - v <= 2 ? 'Nearly there.' : 'Keep going.'}</p></>; })()}</div>
+      </Sheet>}
+    </div>
+  );
+}
+
+function RanksPanel() {
+  const { game } = useApp(); const g = game.g; const lvl = levelOf(g.xp);
+  return (
+    <div>
+      <Kicker>Your rank</Kicker>
+      <div className="display text-[40px] leading-none mt-2">{rankOf(lvl).name} <span className="gold">· {lvl}</span></div>
+      <div className="mt-4"><Bar v={g.xp - levelXp(lvl)} max={levelXp(lvl + 1) - levelXp(lvl)} /></div>
+      <div className="mt-8 space-y-3">
+        {RANKS.map((r) => { const open = lvl >= r.min; const cur = rankOf(lvl).name === r.name; return (
+          <div key={r.name} className={cls('rank', open && 'open', cur && 'cur')} data-testid="rank">
+            <div className="flex justify-between"><span className="display text-[24px]">{open ? '' : '🔒 '}{r.name}</span><span className="label faint">Level {r.min}+</span></div>
+            <p className="t-sm muted mt-1">{r.perk}</p>
+            {!open && <div className="mt-2"><Bar v={Math.max(0, g.xp - 0)} max={levelXp(r.min)} h={3} /><span className="t-xs faint">{(levelXp(r.min) - g.xp).toLocaleString('en-GB')} XP to go</span></div>}
+          </div>); })}
+      </div>
+      <Kicker className="mt-10">Perks you hold</Kicker>
+      <ul className="mt-3 space-y-2">{g.perks.map((p, i) => <li key={i} className="t-md bb pb-2">✦ {p}</li>)}</ul>
+    </div>
+  );
+}
+
+function SeasonPanel() {
+  const { game, toast } = useApp(); const g = game.g; const now = useNow(); const tier = Math.floor(g.seasonXp / SEASON.per);
+  return (
+    <div>
+      <div className="season-hero" data-testid="season">
+        <div className="label" style={{ color: '#F3D98B' }}>Season pass</div>
+        <div className="display text-[38px] leading-none mt-2" style={{ color: '#FAF6EE' }}>Diwali Season</div>
+        <div className="t-sm mt-2" style={{ color: '#E8DCC6' }} data-testid="season-countdown">Ends in {fmtLeft(SEASON.ends - now)}. Rewards you don’t claim go with it.</div>
+        <div className="mt-4"><Bar v={g.seasonXp % SEASON.per} max={SEASON.per} color="#F3D98B" /></div>
+        <div className="t-xs mt-2" style={{ color: '#E8DCC6' }}>Tier {Math.min(tier, 10)} of 10 · {SEASON.per - (g.seasonXp % SEASON.per)} XP to the next</div>
+      </div>
+      <div className="mt-6 space-y-2">
+        {SEASON.tiers.map((t, i) => { const open = tier > i; const cl = g.claimed.includes(i); return (
+          <div key={i} className={cls('tier', open && 'open')} data-testid="tier">
+            <span className="tier-n">{i + 1}</span>
+            <span className="flex-1 t-md">{t}</span>
+            {cl ? <span className="label gold">Claimed</span> : open ? <button className="btn btn-sm btn-solid" onClick={() => { game.claimTier(i); toast(`Claimed: ${t}.`); }}>Claim</button> : <span className="label faint">{(i + 1) * SEASON.per - g.seasonXp} XP</span>}
+          </div>); })}
+      </div>
+    </div>
+  );
+}
+
+function BoardPanel() {
+  const { game, who, me, follows } = useApp(); const g = game.g; const [scope, setScope] = useState('city'); const now = useNow();
+  let rows = BOARD.map(([id, xp, city]) => ({ id, xp, city })).filter((r) => who(r.id));
+  rows.push({ id: 'me', xp: g.weekXp, city: me.city });
+  if (scope === 'city') rows = rows.filter((r) => r.city === me.city);
+  if (scope === 'friends') rows = rows.filter((r) => r.id === 'me' || follows.has(r.id) || ['m1', 'm4', 'm7', 'm9'].includes(r.id));
+  rows.sort((a, b) => b.xp - a.xp);
+  const mine = rows.findIndex((r) => r.id === 'me'); const above = rows[mine - 1];
+  return (
+    <div>
+      <div className="flex items-center justify-between"><Kicker>This week</Kicker><span className="t-xs faint" data-testid="board-reset">Resets in {fmtLeft(nextMonday() - now)}</span></div>
+      <Segment className="mt-4" ariaLabel="Leaderboard" value={scope} onChange={setScope} options={[{ value: 'city', label: me.city }, { value: 'all', label: 'All members' }, { value: 'friends', label: 'Friends' }]} />
+      {above && <div className="next-hook mt-5 t-sm">You’re {above.xp - g.weekXp + 1} XP behind {first(who(above.id).name)} for #{mine}. One introduction would do it.</div>}
+      <ol className="mt-5" data-testid="board">
+        {rows.map((r, i) => { const m = who(r.id); return (
+          <li key={r.id} className={cls('brow', r.id === 'me' && 'mine')} data-testid="board-row">
+            <span className={cls('rank-n', i < 3 && 'top')}>{i + 1}</span><Mono m={m} size={34} />
+            <span className="flex-1 min-w-0"><span className="t-md block truncate">{r.id === 'me' ? 'You' : m.name}</span><span className="t-xs faint">{rankOf(levelOf(r.id === 'me' ? g.xp : r.xp * 2)).name} · {r.city}</span></span>
+            <span className="label gold">{r.xp.toLocaleString('en-GB')} XP</span>
+          </li>); })}
+      </ol>
+      <p className="t-xs faint mt-4">Only members see this. Hide yourself any time in Settings.</p>
+    </div>
+  );
+}
+
+function Play({ id }) {
+  const [tab, setTab] = useState(id || 'quests');
+  const panes = { quests: <QuestsPanel />, badges: <BadgesPanel />, ranks: <RanksPanel />, season: <SeasonPanel />, board: <BoardPanel /> };
+  return (
+    <div className="pb-14">
+      <div className="pt-6"><GameHUD /></div>
+      <div className="px-6"><div className="gtabs" role="tablist">{[['quests', 'Quests'], ['badges', 'Badges'], ['season', 'Season'], ['board', 'Board'], ['ranks', 'Ranks']].map(([k, t]) => <button key={k} role="tab" aria-selected={tab === k} className={cls(tab === k && 'on')} onClick={() => setTab(k)} data-gtab={k}>{t}</button>)}</div></div>
+      <div className="px-6 mt-7 screen-fade" key={tab}>{panes[tab]}</div>
+    </div>
+  );
+}
+
+function GameOverlay() {
+  const { game } = useApp(); const m = game.modal;
+  return (
+    <>
+      <div className="xp-stack">{game.pops.map((p) => <div key={p.id} className="xp-toast" data-testid="xp-toast"><b>{p.text}</b>{p.sub && <span>{p.sub}</span>}</div>)}</div>
+      {m && (
+        <div className="unlock" onClick={() => game.setModal(null)} data-testid="unlock">
+          <div className="unlock-card" onClick={(e) => e.stopPropagation()}>
+            <div className="rays" />
+            {m.kind === 'badge' ? <><Medal b={m.b} got size={110} /><div className="label mt-4" style={{ color: RARITY[m.b.r] }}>{m.b.r} badge unlocked</div><div className="display text-[34px] mt-1">{m.b.t}</div><p className="t-sm muted mt-1">{m.b.d}.</p></>
+              : <><span className="lvl-ring big">{m.level}</span><div className="label gold mt-4">Level up</div><div className="display text-[34px] mt-1">{m.newRank ? `You’re a ${m.rank.name} now` : `Level ${m.level}`}</div><p className="t-sm muted mt-1">{m.newRank ? m.rank.perk : 'Keep going. The next rank is closer than it looks.'}</p></>}
+            <button className="btn btn-solid w-full mt-6" onClick={() => game.setModal(null)}>Lovely</button>
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
+
 /* ---------- shell ---------- */
 const TABS = [
   { key: 'feed', label: 'Feed', icon: 'feed' },
@@ -1830,7 +2256,7 @@ const TABS = [
   { key: 'map', label: 'Map', icon: 'map' },
   { key: 'me', label: 'Me', icon: 'me' },
 ];
-const TITLES = { profile: 'Member', hangouts: 'Hangouts', intros: 'Introductions', thread: 'Thread', editions: 'Editions', edition: 'Edition', music: 'Music', notifications: 'Notifications' };
+const TITLES = { play: 'The Game', profile: 'Member', hangouts: 'Hangouts', intros: 'Introductions', thread: 'Thread', editions: 'Editions', edition: 'Edition', music: 'Music', notifications: 'Notifications' };
 
 function Header({ top, onBack, onMenu, onBell, unread, scrolled }) {
   return (
@@ -1867,13 +2293,14 @@ function TabBar({ tab, onTab, stackOpen }) {
 }
 
 function Drawer({ onClose }) {
-  const { push, setTab, theme, setTheme, signOut, me, intros, hangouts } = useApp();
+  const { push, setTab, theme, setTheme, signOut, me, intros, hangouts, game } = useApp();
   const [closing, setClosing] = useState(false);
   const close = (then) => { setClosing(true); setTimeout(() => { onClose(); then && then(); }, 190); };
   const pendingIntros = intros.filter((x) => (x.a === 'me' || x.b === 'me') && x.status.me === 'pending').length;
   const hostReq = hangouts.filter((h) => h.by === 'me').some((h) => h.requests.some((r) => r.status === 'pending'));
   const items = [
-    { n: '01', t: 'Hangouts', s: 'Smaller tables, hosted by members', go: () => push({ s: 'hangouts' }), dot: hostReq },
+    { n: '00', t: 'The Game', s: 'Quests, badges, season pass, leaderboard', go: () => push({ s: 'play' }), dot: game.g.chestDay !== dayKey() },
+    { n: '01', t: 'Hangouts', s: 'Smaller evenings, hosted by members', go: () => push({ s: 'hangouts' }), dot: hostReq },
     { n: '02', t: 'Introductions', s: 'People who should meet', go: () => push({ s: 'intros' }), dot: pendingIntros > 0 },
     { n: '03', t: 'Editions', s: 'Every Big Dinner, written down', go: () => push({ s: 'editions' }) },
     { n: '04', t: 'Music', s: 'What the room is listening to', go: () => push({ s: 'music' }) },
@@ -1940,6 +2367,9 @@ function App() {
   const toast = (t) => { setToastMsg(t); clearTimeout(toastTimer.current); toastTimer.current = setTimeout(() => setToastMsg(null), 3200); };
   const notify = (text, go) => { setNotes((ns) => [{ id: 'n' + Date.now() + Math.random(), text, time: 'Just now', read: false, go }, ...ns]); toast(text); };
   const later = (ms, fn) => setTimeout(fn, ms);
+  const game = useGame((t) => toast(t));
+  const award = game.award;
+  useEffect(() => { if (stage === 'app') game.checkIn(); }, [stage]);
 
   /* navigation */
   const setTab = (tab) => { setNav({ tab, stack: [], dir: 'fade' }); setDrawer(false); };
@@ -1979,7 +2409,7 @@ function App() {
     setNotes([
       { id: 'n1', text: 'Zoya introduced you to Naina Desai. Naina has already said yes.', time: '2 hours ago', read: false, go: { s: 'intros' } },
       { id: 'n2', text: 'Ira and Siddharth asked to join your Sunday coffee.', time: 'This morning', read: false, go: { tab: 'capsule' } },
-      { id: 'n3', text: 'Three people would like a seat at your Sunday long lunch.', time: 'Yesterday', read: false, go: { s: 'hangouts' } },
+      { id: 'n3', text: 'Three people would like to join your Sunday long lunch.', time: 'Yesterday', read: false, go: { s: 'hangouts' } },
       { id: 'n4', text: 'Edition VIII is in the archive now. The Chelsea night, written up properly.', time: 'Last week', read: true, go: { s: 'edition', id: 'e8' } },
     ]);
     setOnboarded(true);
@@ -2027,19 +2457,19 @@ function App() {
   const requestHangout = (hid) => {
     const h = hangouts.find((x) => x.id === hid); const n = first(byId[h.by].name);
     setHangouts((hs) => hs.map((x) => (x.id === hid ? { ...x, requests: [...x.requests, { id: 'me', status: 'pending' }] } : x)));
-    toast(`Asked for a seat. ${n} will let you know.`);
+    toast(`Asked to join. ${n} will let you know.`);
     later(3200, () => {
       setHangouts((hs) => hs.map((x) => (x.id === hid ? { ...x, requests: x.requests.map((r) => (r.id === 'me' ? { ...r, status: 'approved' } : r)), going: x.going.length < x.cap ? [...x.going, 'me'] : x.going } : x)));
-      notify(`${n} saved you a seat at ${h.title.toLowerCase()}. ${h.date}, ${h.time}.`, { s: 'hangouts' });
+      notify(`${n} said yes to you for ${h.title.toLowerCase()}. ${h.date}, ${h.time}.`, { s: 'hangouts' });
     });
   };
   const respondHangout = (hid, mid, status) => {
     const h = hangouts.find((x) => x.id === hid);
     if (status === 'approved' && h.going.length >= h.cap) { toast("It's full. Add a place, or let someone know."); return; }
     setHangouts((hs) => hs.map((x) => (x.id === hid ? { ...x, requests: x.requests.map((r) => (r.id === mid ? { ...r, status } : r)), going: status === 'approved' ? [...x.going, mid] : x.going } : x)));
-    toast(status === 'approved' ? `${first(byId[mid].name)} has a seat.` : 'Declined, quietly.');
+    toast(status === 'approved' ? `${first(byId[mid].name)} is in.` : 'Declined, quietly.');
   };
-  const addHangout = (v) => { setHangouts((hs) => [{ id: 'h' + Date.now(), by: 'me', going: ['me'], requests: [], ...v }, ...hs]); toast(`It's up. Members in ${v.city} can ask for a seat.`); };
+  const addHangout = (v) => { setHangouts((hs) => [{ id: 'h' + Date.now(), by: 'me', going: ['me'], requests: [], ...v }, ...hs]); toast(`It's up. Members in ${v.city} can ask to join.`); };
 
   /* introductions */
   const openThreadFor = (id, msgs) => setIntros((xs) => xs.map((x) => (x.id === id && !x.thread ? { ...x, thread: msgs } : x)));
@@ -2085,9 +2515,10 @@ function App() {
 
   const markRead = () => setNotes((ns) => (ns.some((n) => !n.read) ? ns.map((n) => ({ ...n, read: true })) : ns));
 
-  const ctx = { theme, setTheme, me, setMe, members, who, posts, addPost, addComment, follows, toggleFollow, meetings, requestMeeting,
-    capsule, requestCapsule, respondCapsule, addCapsule, removeCapsule, hangouts, requestHangout, respondHangout, addHangout,
-    intros, makeIntro, respondIntro, sendThread, music, connectSpotify, addPick, notes, markRead, toast,
+  const W = (fn, a, cond) => (...args) => { const r = fn(...args); if (!cond || cond(...args)) award(a); return r; };
+  const ctx = { game, award, theme, setTheme, me, setMe, members, who, posts, addPost: W(addPost, 'post'), addComment: W(addComment, 'comment'), follows, toggleFollow: W(toggleFollow, 'follow', (id) => !follows.has(id)), meetings, requestMeeting: W(requestMeeting, 'meet'),
+    capsule, requestCapsule: W(requestCapsule, 'rsvp'), respondCapsule, addCapsule: W(addCapsule, 'window'), removeCapsule, hangouts, requestHangout: W(requestHangout, 'rsvp'), respondHangout, addHangout: W(addHangout, 'host'),
+    intros, makeIntro: W(makeIntro, 'intro'), respondIntro: W(respondIntro, 'introYes', (id, st) => st !== 'declined'), sendThread: W(sendThread, 'chat'), music, connectSpotify, addPick: W(addPick, 'spotify'), notes, markRead, toast,
     push, pop, setTab, openProfile, go2, signOut };
 
   let body = null;
@@ -2098,7 +2529,7 @@ function App() {
     let screen;
     if (top) {
       screen = {
-        profile: () => <Profile id={top.id} />, hangouts: () => <Hangouts />, intros: () => <Introductions />, thread: () => <Thread id={top.id} />,
+        play: () => <Play id={top.id} />, profile: () => <Profile id={top.id} />, hangouts: () => <Hangouts />, intros: () => <Introductions />, thread: () => <Thread id={top.id} />,
         editions: () => <Editions />, edition: () => <Edition id={top.id} />, music: () => <Music />, notifications: () => <Notifications />,
       }[top.s]();
     } else {
@@ -2112,6 +2543,7 @@ function App() {
         </main>
         <TabBar tab={nav.tab} onTab={setTab} stackOpen={!!top} />
         {drawer && <Drawer onClose={() => setDrawer(false)} />}
+        <GameOverlay />
       </>
     );
   }
