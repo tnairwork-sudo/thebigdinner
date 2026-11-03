@@ -19,7 +19,23 @@
 <button class="sound" id="soundToggle" type="button" aria-pressed="false">Sound: Off</button>
 
 <main id="content">
-  <section class="frame hero">
+  <div class="approach" id="approach">
+    <p class="approach-note" id="approachNote" aria-live="polite">The room</p>
+    <div class="approach-rail" id="approachRail" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Closer to an invitation">
+      <span class="approach-fill" id="approachFill"></span>
+      <ol class="approach-ticks" id="approachTicks" aria-hidden="true">
+        <li data-tick="room"></li>
+        <li data-tick="films"></li>
+        <li data-tick="philosophy"></li>
+        <li data-tick="standard"></li>
+        <li data-tick="lineage"></li>
+        <li data-tick="cities"></li>
+        <li data-tick="invitation"></li>
+      </ol>
+    </div>
+  </div>
+
+  <section class="frame hero" data-mark="room">
     <div class="frame-copy">
       <p class="label">A private room</p>
       <h1 class="display"><span>The Big</span><span>Dinner</span></h1>
@@ -28,7 +44,7 @@
     </div>
   </section>
 
-  <section class="film">
+  <section class="film" data-mark="films">
     <div class="film-frame">
       <video class="film-video" id="featureFilm" muted loop playsinline preload="metadata" poster="/assets/film/tbd-film-poster.jpg" width="1280" height="720">
         <source src="/assets/film/tbd-film.mp4" type="video/mp4">
@@ -43,7 +59,7 @@
     </div>
   </section>
 
-  <section class="paper-frame" id="philosophy">
+  <section class="paper-frame" id="philosophy" data-mark="philosophy">
     <div class="wrap split">
       <div>
         <p class="label reveal">The Philosophy</p>
@@ -51,13 +67,17 @@
         <div class="prose">
           <p class="reveal">The Big Dinner is a closed room. Convened privately, once each month. Every guest is chosen with intention, for the texture of their thinking, the weight of their experience, and the quality of their presence.</p>
           <p class="reveal">No pitches. No elevator lines. No business cards. What happens instead is rarer: conversation that moves, ideas that collide, and friendships that do not require a transaction to begin.</p>
-          <p class="reveal">This is how we used to do it. Before the world taught us to be useful before we were real.</p>
+          <p class="reveal" id="philosophyLine">This is how we used to do it. Before the world taught us to be useful before we were real.</p>
         </div>
       </div>
       <p class="aside reveal">
-        <span class="aside-mark">TBD</span>
+        <span class="aside-mark" id="crest" tabindex="0">TBD</span>
         <span class="label">Estd. 2025</span>
       </p>
+      <button class="keepsake" type="button" id="keepsake" aria-pressed="false">
+        <span class="keepsake-seal" aria-hidden="true"></span>
+        <span class="keepsake-word">A small mark</span>
+      </button>
     </div>
   </section>
 
@@ -130,7 +150,7 @@
     </div>
   </section>
 
-  <section class="sheet" id="rules">
+  <section class="sheet" id="rules" data-mark="standard">
     <div class="wrap">
       <div class="section-intro">
         <p class="label reveal">The Standard</p>
@@ -178,11 +198,20 @@
     </div>
   </section>
 
-  <section class="lineage" id="chronicles">
+  <section class="lineage" id="chronicles" data-mark="lineage">
     <div class="wrap">
       <div class="section-intro">
         <p class="label reveal">The Lineage</p>
         <h2 class="headline reveal">21 editions held.<br><em>So far.</em></h2>
+      </div>
+      <div class="edition-count" id="editionCount">
+        <p class="edition-total"><span data-to="21" data-total>21</span></p>
+        <ul class="edition-cities">
+          <li><span data-to="6">6</span> Bombay</li>
+          <li><span data-to="3">3</span> Hyderabad</li>
+          <li><span data-to="1">1</span> London</li>
+          <li><span data-to="11">11</span> Delhi</li>
+        </ul>
       </div>
       <ol class="chapters">
         <li class="chapter reveal"><span class="chapter-no">I</span><span class="chapter-date">October 2025</span><span class="chapter-place">Blue Bar, New Delhi</span></li>
@@ -262,7 +291,7 @@
     </div>
   </section>
 
-  <section class="frame" id="cities" data-art>
+  <section class="frame" id="cities" data-art data-mark="cities">
     <picture class="art">
       <source type="image/webp" srcset="/assets/art/six-cities-one-room-16x9.webp">
       <img src="/assets/art/six-cities-one-room-16x9.jpg" width="1920" height="1080" alt="" loading="lazy" decoding="async">
@@ -274,11 +303,16 @@
     </div>
   </section>
 
-  <section class="frame" data-art>
-    <picture class="art">
-      <source type="image/webp" srcset="/assets/art/city-delhi-16x9.webp">
-      <img src="/assets/art/city-delhi-16x9.jpg" width="1920" height="1080" alt="" loading="lazy" decoding="async">
-    </picture>
+  <section class="frame city-card" data-art data-city="delhi">
+    <div class="city-flip">
+      <div class="city-flip-inner">
+        <div class="city-back" aria-hidden="true"><span class="city-seal"></span></div>
+        <picture class="art">
+          <source type="image/webp" srcset="/assets/art/city-delhi-16x9.webp">
+          <img src="/assets/art/city-delhi-16x9.jpg" width="1920" height="1080" alt="" loading="lazy" decoding="async">
+        </picture>
+      </div>
+    </div>
     <div class="frame-scrim"></div>
     <div class="frame-copy">
       <h3 class="display art-title">Delhi</h3>
@@ -286,11 +320,16 @@
     </div>
   </section>
 
-  <section class="frame" data-art>
-    <picture class="art">
-      <source type="image/webp" srcset="/assets/art/city-bombay-16x9.webp">
-      <img src="/assets/art/city-bombay-16x9.jpg" width="1920" height="1080" alt="" loading="lazy" decoding="async">
-    </picture>
+  <section class="frame city-card" data-art data-city="bombay">
+    <div class="city-flip">
+      <div class="city-flip-inner">
+        <div class="city-back" aria-hidden="true"><span class="city-seal"></span></div>
+        <picture class="art">
+          <source type="image/webp" srcset="/assets/art/city-bombay-16x9.webp">
+          <img src="/assets/art/city-bombay-16x9.jpg" width="1920" height="1080" alt="" loading="lazy" decoding="async">
+        </picture>
+      </div>
+    </div>
     <div class="frame-scrim"></div>
     <div class="frame-copy">
       <h3 class="display art-title">Bombay</h3>
@@ -298,23 +337,34 @@
     </div>
   </section>
 
-  <section class="frame" data-art>
-    <picture class="art">
-      <source type="image/webp" srcset="/assets/art/city-london-16x9.webp">
-      <img src="/assets/art/city-london-16x9.jpg" width="1920" height="1080" alt="" loading="lazy" decoding="async">
-    </picture>
+  <section class="frame city-card" data-art data-city="london">
+    <div class="city-flip">
+      <div class="city-flip-inner">
+        <div class="city-back" aria-hidden="true"><span class="city-seal"></span></div>
+        <picture class="art">
+          <source type="image/webp" srcset="/assets/art/city-london-16x9.webp">
+          <img src="/assets/art/city-london-16x9.jpg" width="1920" height="1080" alt="" loading="lazy" decoding="async">
+        </picture>
+      </div>
+    </div>
     <div class="frame-scrim"></div>
     <div class="frame-copy">
       <h3 class="display art-title">London</h3>
       <p class="city-status">1 edition held.</p>
+      <p class="city-when" data-date="2026-11-21" hidden></p>
     </div>
   </section>
 
-  <section class="frame" data-art>
-    <picture class="art">
-      <source type="image/webp" srcset="/assets/art/city-bengaluru-16x9.webp">
-      <img src="/assets/art/city-bengaluru-16x9.jpg" width="1920" height="1080" alt="" loading="lazy" decoding="async">
-    </picture>
+  <section class="frame city-card" data-art data-city="bengaluru">
+    <div class="city-flip">
+      <div class="city-flip-inner">
+        <div class="city-back" aria-hidden="true"><span class="city-seal"></span></div>
+        <picture class="art">
+          <source type="image/webp" srcset="/assets/art/city-bengaluru-16x9.webp">
+          <img src="/assets/art/city-bengaluru-16x9.jpg" width="1920" height="1080" alt="" loading="lazy" decoding="async">
+        </picture>
+      </div>
+    </div>
     <div class="frame-scrim"></div>
     <div class="frame-copy">
       <h3 class="display art-title">Bengaluru</h3>
@@ -322,23 +372,34 @@
     </div>
   </section>
 
-  <section class="frame" data-art>
-    <picture class="art">
-      <source type="image/webp" srcset="/assets/art/city-hyderabad-16x9.webp">
-      <img src="/assets/art/city-hyderabad-16x9.jpg" width="1920" height="1080" alt="" loading="lazy" decoding="async">
-    </picture>
+  <section class="frame city-card" data-art data-city="hyderabad">
+    <div class="city-flip">
+      <div class="city-flip-inner">
+        <div class="city-back" aria-hidden="true"><span class="city-seal"></span></div>
+        <picture class="art">
+          <source type="image/webp" srcset="/assets/art/city-hyderabad-16x9.webp">
+          <img src="/assets/art/city-hyderabad-16x9.jpg" width="1920" height="1080" alt="" loading="lazy" decoding="async">
+        </picture>
+      </div>
+    </div>
     <div class="frame-scrim"></div>
     <div class="frame-copy">
       <h3 class="display art-title">Hyderabad</h3>
       <p class="city-status">3 editions held.</p>
+      <p class="city-when" data-date="2026-11-14" hidden></p>
     </div>
   </section>
 
-  <section class="frame" data-art>
-    <picture class="art">
-      <source type="image/webp" srcset="/assets/art/city-dubai-16x9.webp">
-      <img src="/assets/art/city-dubai-16x9.jpg" width="1920" height="1080" alt="" loading="lazy" decoding="async">
-    </picture>
+  <section class="frame city-card" data-art data-city="dubai">
+    <div class="city-flip">
+      <div class="city-flip-inner">
+        <div class="city-back" aria-hidden="true"><span class="city-seal"></span></div>
+        <picture class="art">
+          <source type="image/webp" srcset="/assets/art/city-dubai-16x9.webp">
+          <img src="/assets/art/city-dubai-16x9.jpg" width="1920" height="1080" alt="" loading="lazy" decoding="async">
+        </picture>
+      </div>
+    </div>
     <div class="frame-scrim"></div>
     <div class="frame-copy">
       <h3 class="display art-title">Dubai</h3>
@@ -346,17 +407,45 @@
     </div>
   </section>
 
-  <section class="sheet invite" id="apply">
+  <section class="sheet guest-quiz" id="guestQuiz">
     <div class="wrap-narrow">
+      <p class="label">The guest</p>
+      <h2 class="headline">Which Big Dinner guest<br><em>are you?</em></h2>
+      <div id="guestQuizBody" hidden>
+        <p class="guest-step" id="guestStep"></p>
+        <p class="guest-ask" id="guestAsk"></p>
+        <div class="guest-answers" id="guestAnswers"></div>
+        <button class="btn-line guest-back" type="button" id="guestBack" hidden>Back</button>
+        <article class="guest-card" id="guestCard" hidden tabindex="-1">
+          <p class="guest-kicker">You are</p>
+          <h3 class="guest-name" id="guestName"></h3>
+          <p class="guest-signature" id="guestSignature"></p>
+          <p class="guest-kicker">Strengths</p>
+          <ul class="guest-traits" id="guestStrengths"></ul>
+          <p class="guest-kicker">In the room</p>
+          <p class="guest-room" id="guestRoom"></p>
+          <p class="guest-click">You click with <span id="guestClick"></span>.</p>
+          <button class="btn-line" type="button" id="guestShare">Share this</button>
+          <p class="guest-copied" id="guestCopied" hidden>Copied</p>
+          <button class="btn-line guest-again" type="button" id="guestAgain">Begin again</button>
+          <button class="invite-btn js-open-invite" type="button">Request an Invitation</button>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sheet invite" id="apply" data-mark="invitation">
+    <div class="wrap-narrow">
+      <p class="goal-line" id="goalLine" hidden>The length of the room.</p>
       <h2 class="headline reveal">Request an<br>Invitation</h2>
       <p class="prose reveal">Submitting signals interest only. It does not constitute an invitation. Those selected will be contacted directly.</p>
       <button class="invite-btn invite-btn-lg js-open-invite reveal" type="button">Request an Invitation</button>
       <div class="invite-links reveal">
-        <a class="btn-line" href="https://forms.gle/zVchUBLogxfGeH5g6" target="_blank" rel="noopener noreferrer">Apply for Delhi</a>
-        <a class="btn-line" href="https://forms.gle/Am7Z96A1Ur1ZHF2X6" target="_blank" rel="noopener noreferrer">Apply for Bombay</a>
-        <a class="btn-line" href="https://docs.google.com/forms/d/e/1FAIpQLSdZrsP5Gd6toGWuQ10uEYVDx4f6BnMFgIyjZlvAX9X7suuwQA/viewform" target="_blank" rel="noopener noreferrer">Apply for London</a>
-        <a class="btn-line" href="https://forms.gle/maV5MoNA5wGTWkjZ9" target="_blank" rel="noopener noreferrer">Apply for Hyderabad</a>
-        <a class="btn-line" href="https://forms.gle/crgWDVsHNKjjUZ336" target="_blank" rel="noopener noreferrer">Request an Invitation for Gurgaon</a>
+        <a class="btn-line" data-city="delhi" href="https://forms.gle/zVchUBLogxfGeH5g6" target="_blank" rel="noopener noreferrer">Apply for Delhi</a>
+        <a class="btn-line" data-city="bombay" href="https://forms.gle/Am7Z96A1Ur1ZHF2X6" target="_blank" rel="noopener noreferrer">Apply for Bombay</a>
+        <a class="btn-line" data-city="london" href="https://docs.google.com/forms/d/e/1FAIpQLSdZrsP5Gd6toGWuQ10uEYVDx4f6BnMFgIyjZlvAX9X7suuwQA/viewform" target="_blank" rel="noopener noreferrer">Apply for London</a>
+        <a class="btn-line" data-city="hyderabad" href="https://forms.gle/maV5MoNA5wGTWkjZ9" target="_blank" rel="noopener noreferrer">Apply for Hyderabad</a>
+        <a class="btn-line" data-city="gurgaon" href="https://forms.gle/crgWDVsHNKjjUZ336" target="_blank" rel="noopener noreferrer">Request an Invitation for Gurgaon</a>
       </div>
     </div>
   </section>
