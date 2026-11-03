@@ -222,6 +222,19 @@
   .unlock-card > * { position: relative; }
   .rays { position: absolute !important; inset: -50%; background: repeating-conic-gradient(rgba(201,168,76,.14) 0 10deg, transparent 10deg 20deg); animation: spin 14s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg) } }
+  .vr-av { display: inline-block; transition: box-shadow .12s ease-out; }
+  .vr-av.speaking { animation: vrpulse 1.1s ease-in-out infinite; }
+  @keyframes vrpulse { 50% { transform: scale(1.045); } }
+  .vr-badge { position: absolute; right: -4px; bottom: -4px; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; background: var(--bg2); color: var(--muted); box-shadow: inset 0 0 0 1px var(--line-strong); }
+  .vr-hand { position: absolute; left: -6px; top: -8px; font-size: 18px; }
+  .vr-live { display: inline-block; width: 7px; height: 7px; background: var(--accent); margin-right: 6px; vertical-align: 1px; animation: vrblink 1.6s ease-in-out infinite; }
+  @keyframes vrblink { 50% { opacity: .3; } }
+  .vr-bar { position: sticky; bottom: 0; margin-top: 24px; padding: 12px 16px 14px; background: var(--bg); box-shadow: inset 0 1px 0 var(--line); z-index: 5; }
+  .vr-emo { width: 44px; height: 40px; font-size: 20px; transition: transform .15s ease-out; } .vr-emo:active { transform: scale(1.25); }
+  .vr-floats { position: absolute; left: 0; right: 0; bottom: 120px; height: 0; pointer-events: none; }
+  .vr-float { position: absolute; bottom: 0; font-size: 26px; animation: vrfloat 2.6s ease-out forwards; }
+  @keyframes vrfloat { from { transform: translateY(0); opacity: 1; } to { transform: translateY(-260px); opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) { .vr-av.speaking, .vr-live, .vr-float { animation: none; } }
 </style>
 </head>
 <body>
@@ -506,6 +519,8 @@ const Ctx = createContext(null);
 const useApp = () => useContext(Ctx);
 
 const ICONS = {
+  mic: <><rect x="9" y="3" width="6" height="11" /><path d="M5 11a7 7 0 0 0 14 0M12 18v3" /></>,
+  micoff: <><rect x="9" y="3" width="6" height="11" /><path d="M5 11a7 7 0 0 0 14 0M12 18v3M4 4l16 16" /></>,
   feed: <><path d="M4 6h16M4 12h16M4 18h10" /></>,
   circles: <><circle cx="9" cy="12" r="5.5" /><circle cx="15" cy="12" r="5.5" /></>,
   capsule: <><path d="M8 3h8M8 21h8" /><path d="M9 3c0 5.5 6 5.5 6 9s-6 3.5-6 9" /><path d="M15 3c0 5.5-6 5.5-6 9s6 3.5 6 9" /></>,
@@ -1869,8 +1884,8 @@ function Notifications() {
 }
 
 /* ---------- the game layer: XP, ranks, quests, streaks, badges, season, boards, chest ---------- */
-const XP = { post: 40, comment: 10, chat: 8, rsvp: 25, attend: 60, spotify: 20, reel: 20, forum: 25, travel: 30, intro: 50, introYes: 20, follow: 5, meet: 15, host: 45, window: 20, quest: 0, chest: 0, login: 10 };
-const XP_LABEL = { post: 'Photo shared', comment: 'Comment', chat: 'Message sent', rsvp: 'RSVP', attend: 'Checked in', spotify: 'Track shared', reel: 'Reel shared', forum: 'Forum post', travel: 'Travel plan', intro: 'Introduction made', introYes: 'Introduction accepted', follow: 'Following', meet: 'Meeting asked', host: 'Hosting', window: 'Window posted', login: 'Daily visit' };
+const XP = { post: 40, comment: 10, chat: 8, rsvp: 25, attend: 60, spotify: 20, reel: 20, forum: 25, travel: 30, intro: 50, introYes: 20, follow: 5, meet: 15, host: 45, window: 20, voiceHost: 45, voiceJoin: 15, voiceSpeak: 20, quest: 0, chest: 0, login: 10 };
+const XP_LABEL = { post: 'Photo shared', comment: 'Comment', chat: 'Message sent', rsvp: 'RSVP', attend: 'Checked in', spotify: 'Track shared', reel: 'Reel shared', forum: 'Forum post', travel: 'Travel plan', intro: 'Introduction made', introYes: 'Introduction accepted', follow: 'Following', meet: 'Meeting asked', host: 'Hosting', window: 'Window posted', voiceHost: 'Hosted a voice room', voiceJoin: 'Joined a voice room', voiceSpeak: 'Spoke in a voice room', login: 'Daily visit' };
 const RANKS = [
   { min: 1, name: 'Guest', perk: 'The feed, the circles and your first quests.' },
   { min: 3, name: 'Regular', perk: 'Unlocks: hosting your own hangouts and a gold name ring.' },
@@ -1893,6 +1908,8 @@ const QUEST_POOL = [
   { id: 'q-forum', a: 'forum', n: 1, t: 'Start a forum conversation', xp: 50 },
   { id: 'q-travel', a: 'travel', n: 1, t: 'Post where you are travelling next', xp: 50 },
   { id: 'q-intro', a: 'intro', n: 1, t: 'Introduce two members', xp: 80 },
+  { id: 'q-voice', a: 'voiceJoin', n: 1, t: 'Drop into a Voice Room', xp: 40 },
+  { id: 'q-speak', a: 'voiceSpeak', n: 1, t: 'Say something in a Voice Room', xp: 50 },
   { id: 'q-follow', a: 'follow', n: 2, t: 'Follow two new people', xp: 30 },
 ];
 const questsFor = (day) => { let h = 0; for (const c of day) h = (h * 31 + c.charCodeAt(0)) >>> 0; const pool = [...QUEST_POOL]; const out = []; while (out.length < 3) { h = (h * 1103515245 + 12345) >>> 0; out.push(pool.splice(h % pool.length, 1)[0]); } return out; };
@@ -1903,6 +1920,7 @@ const BADGES = [
   { id: 'b-dj', t: 'Resident DJ', d: 'Share 5 tracks', r: 'Rare', test: (c) => c.spotify >= 5, goal: (c) => [c.spotify, 5] },
   { id: 'b-match', t: 'Matchmaker', d: 'Make 3 introductions', r: 'Rare', test: (c) => c.intro >= 3, goal: (c) => [c.intro, 3] },
   { id: 'b-host', t: 'The Host', d: 'Host a hangout', r: 'Rare', test: (c) => c.host >= 1, goal: (c) => [c.host, 1] },
+  { id: 'b-voiceroom', t: 'Voice of the Room', d: 'Host a room and speak in three', r: 'Epic', test: (c) => (c.voiceHost || 0) >= 1 && (c.voiceSpeak || 0) >= 3, goal: (c) => [Math.min(1, c.voiceHost || 0) + Math.min(3, c.voiceSpeak || 0), 4] },
   { id: 'b-nomad', t: 'Passport', d: 'Share 3 travel plans', r: 'Rare', test: (c) => c.travel >= 3, goal: (c) => [c.travel, 3] },
   { id: 'b-reel', t: 'Director’s Cut', d: 'Share 3 Reels', r: 'Rare', test: (c) => c.reel >= 3, goal: (c) => [c.reel, 3] },
   { id: 'b-forum', t: 'Salon Keeper', d: 'Start 5 forum conversations', r: 'Epic', test: (c) => c.forum >= 5, goal: (c) => [c.forum, 5] },
@@ -2248,6 +2266,228 @@ function GameOverlay() {
   );
 }
 
+/* ---------- Voice Rooms ----------
+   Prototype: your own mic is real (getUserMedia + analyser drives your pulse).
+   Other voices are simulated. Real multi-member audio needs a media backend later (LiveKit or a WebRTC SFU). */
+const VOICE_SEED = [
+  { id: 'vr1', name: 'Hospitality after midnight', host: 'm1', access: 'open', status: 'live', speakers: ['m1', 'm4', 'm7'], listeners: ['m2', 'm5', 'm9', 'm12', 'm13', 'm14', 'm3', 'm6'], count: 48, topic: 'What keeps a room warm at 2 am.' },
+  { id: 'vr2', name: 'What we are reading this Diwali', host: 'm14', access: 'open', status: 'live', speakers: ['m14', 'm17'], listeners: ['m8', 'm2', 'm12', 'm5'], count: 23, topic: 'One book each. No spoilers past chapter three.' },
+  { id: 'vr3', name: 'Small rooms, big ideas', host: 'm9', access: 'invite', status: 'live', speakers: ['m9', 'm3'], listeners: ['m13', 'm6'], count: 12, topic: 'Invite only. You are on the list.' },
+  { id: 'vr4', name: 'Records from the night', host: 'm3', access: 'open', status: 'scheduled', when: 'Sun 8 Nov · 7 pm', speakers: ['m3'], listeners: [], count: 0, interested: 31, topic: 'Bring the song you heard and could not name.' },
+  { id: 'vr5', name: 'Diwali stories, told badly', host: 'm4', access: 'open', status: 'scheduled', when: 'Thu 12 Nov · 9 pm', speakers: ['m4'], listeners: [], count: 0, interested: 19, topic: 'Five minutes each. Embellishment encouraged.' },
+];
+const VR_EMOJI = ['👏', '🔥', '😂', '❤️', '🪔', '🙌'];
+const VR_WHEN = ['Tonight · 9 pm', 'Tomorrow · 7 pm', 'Sat 7 Nov · 6 pm', 'Sun 8 Nov · 11 am'];
+
+function useVoiceRooms(toast, award) {
+  const [rooms, setRooms] = useState(VOICE_SEED);
+  const [reminders, setReminders] = useState(() => new Set());
+  const upd = (id, fn) => setRooms((rs) => rs.map((r) => (r.id === id ? fn(r) : r)));
+  const create = ({ name, access, when }) => {
+    const id = 'vr' + Date.now();
+    const live = !when;
+    setRooms((rs) => [{ id, name, host: 'me', access, status: live ? 'live' : 'scheduled', when, speakers: ['me'], listeners: live ? ['m2', 'm5', 'm12', 'm9'] : [], count: live ? 5 : 0, interested: 0, topic: access === 'invite' ? 'Invite only.' : 'Open to every member.' }, ...rs]);
+    if (live) { award('voiceHost'); } else toast(`Scheduled for ${when}. Members can ask to be reminded.`);
+    return id;
+  };
+  const startScheduled = (id) => { upd(id, (r) => ({ ...r, status: 'live', count: 1, when: null })); award('voiceHost'); };
+  const remind = (id) => setReminders((s) => { const x = new Set(s); if (x.has(id)) { x.delete(id); toast('Reminder off.'); } else { x.add(id); toast('We will nudge you ten minutes before.'); } return x; });
+  const end = (id) => { setRooms((rs) => rs.filter((r) => r.id !== id)); toast('Room ended. Thank you for hosting.'); };
+  return { rooms, setRooms, upd, create, startScheduled, remind, reminders, end };
+}
+
+/* Real local mic level, 0..1. Falls back gracefully when permission is refused or there is no mic. */
+function useMic(enabled) {
+  const [state, setState] = useState('idle'); // idle | asking | on | denied | unsupported
+  const [level, setLevel] = useState(0);
+  const r = useRef({});
+  useEffect(() => {
+    if (!enabled) return;
+    let raf, cancelled = false;
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { setState('unsupported'); return; }
+    setState('asking');
+    navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true } }).then((stream) => {
+      if (cancelled) { stream.getTracks().forEach((t) => t.stop()); return; }
+      const AC = window.AudioContext || window.webkitAudioContext; const ac = new AC();
+      const src = ac.createMediaStreamSource(stream); const an = ac.createAnalyser(); an.fftSize = 512; src.connect(an);
+      const buf = new Uint8Array(an.fftSize); r.current = { stream, ac };
+      setState('on');
+      const tick = () => { an.getByteTimeDomainData(buf); let s = 0; for (let i = 0; i < buf.length; i++) { const v = (buf[i] - 128) / 128; s += v * v; } setLevel(Math.min(1, Math.sqrt(s / buf.length) * 4)); raf = requestAnimationFrame(tick); };
+      tick();
+    }).catch(() => { if (!cancelled) setState('denied'); });
+    return () => { cancelled = true; cancelAnimationFrame(raf); const { stream, ac } = r.current; if (stream) stream.getTracks().forEach((t) => t.stop()); if (ac) ac.close(); r.current = {}; };
+  }, [enabled]);
+  return { state, level };
+}
+
+function VoiceAvatar({ id, speaking, level = 0, muted, hand, host, onClick, size = 64 }) {
+  const { who } = useApp(); const m = who(id); if (!m) return null;
+  const ring = speaking ? 3 + Math.round(level * 10) : 0;
+  return (
+    <button className="vr-person flex flex-col items-center gap-2" onClick={onClick} data-testid={`vr-person-${id}`} data-speaking={speaking ? '1' : '0'} aria-label={`${m.name}${host ? ', host' : ''}${speaking ? ', speaking' : ''}`}>
+      <span className={cls('vr-av relative', speaking && 'speaking')} style={{ boxShadow: speaking ? `0 0 0 ${ring}px rgba(201,168,76,.38), 0 0 0 ${ring + 2}px rgba(201,168,76,.16)` : 'none' }}>
+        <Mono m={m} size={size} />
+        {muted && <span className="vr-badge" aria-label="Muted"><Icon name="micoff" size={12} stroke={1.6} /></span>}
+        {hand && <span className="vr-hand" aria-label="Hand raised">✋</span>}
+      </span>
+      <span className="t-xs text-center leading-tight max-w-[78px] truncate">{host && <span className="gold">★ </span>}{id === 'me' ? 'You' : first(m.name)}</span>
+    </button>
+  );
+}
+
+function VoiceRoomCard({ r }) {
+  const { who, push, voice } = useApp(); const h = who(r.host);
+  const reminded = voice.reminders.has(r.id);
+  return (
+    <div className="panel p-5 mb-3" data-testid="vr-card" data-status={r.status}>
+      <div className="flex items-center justify-between gap-3">
+        <span className={cls('label', r.status === 'live' ? 'accent' : 'gold')}>{r.status === 'live' ? <><span className="vr-live" /> Live now</> : r.when}</span>
+        <span className="label faint">{r.access === 'invite' ? 'Invite only' : 'Open'}</span>
+      </div>
+      <h3 className="display text-[26px] leading-tight mt-2">{r.name}</h3>
+      <p className="muted t-sm mt-1">{r.topic}</p>
+      <div className="flex items-center gap-3 mt-4">
+        <div className="flex -space-x-2">{r.speakers.slice(0, 4).map((s) => <Mono key={s} m={who(s)} size={28} />)}</div>
+        <span className="t-xs faint flex-1">Hosted by {r.host === 'me' ? 'you' : first(h.name)} · {r.status === 'live' ? <b className="ink" data-testid="vr-card-count">{r.count} listening</b> : `${r.interested + (reminded ? 1 : 0)} interested`}</span>
+      </div>
+      <div className="mt-4">
+        {r.status === 'live' ? <button className="btn btn-solid w-full" onClick={() => push({ s: 'voiceroom', id: r.id })}>{r.host === 'me' ? 'Back to your room' : 'Join quietly'}</button>
+          : r.host === 'me' ? <button className="btn btn-solid w-full" onClick={() => { voice.startScheduled(r.id); push({ s: 'voiceroom', id: r.id }); }}>Go live now</button>
+          : <button className={cls('btn w-full', reminded && 'btn-solid')} onClick={() => voice.remind(r.id)} data-testid="vr-remind">{reminded ? '✓ Reminder set' : 'Remind me'}</button>}
+      </div>
+    </div>
+  );
+}
+
+function StartRoomSheet({ onClose }) {
+  const { voice, push } = useApp();
+  const [name, setName] = useState(''); const [access, setAccess] = useState('Open to all members'); const [timing, setTiming] = useState('Start now'); const [when, setWhen] = useState(VR_WHEN[0]);
+  const go = () => {
+    const id = voice.create({ name: name.trim(), access: access.startsWith('Open') ? 'open' : 'invite', when: timing === 'Start now' ? null : when });
+    onClose(); if (timing === 'Start now') setTimeout(() => push({ s: 'voiceroom', id }), 220);
+  };
+  return (
+    <Sheet kicker="Voice Rooms" title="Start a room" onClose={onClose}>
+      <Field label="Room name"><input className="field" maxLength={60} value={name} onChange={(e) => setName(e.target.value)} placeholder="Name it like a dinner, not a webinar" aria-label="Room name" /></Field>
+      <div className="mt-7"><span className="label faint">Who can join</span><Segment className="mt-3" options={['Open to all members', 'Invite only']} value={access} onChange={setAccess} ariaLabel="Who can join" /></div>
+      <div className="mt-7"><span className="label faint">When</span><Segment className="mt-3" options={['Start now', 'Schedule it']} value={timing} onChange={setTiming} ariaLabel="When" /></div>
+      {timing === 'Schedule it' && <div className="mt-4"><Chips options={VR_WHEN} value={when} onChange={setWhen} /></div>}
+      <p className="t-xs faint mt-6">Rooms are not recorded. What is said in the room stays in the room.</p>
+      <button className="btn btn-solid w-full mt-5" disabled={name.trim().length < 3} onClick={go}>{timing === 'Start now' ? 'Go live · +45 XP' : 'Schedule the room'}</button>
+    </Sheet>
+  );
+}
+
+function VoiceRooms() {
+  const { voice } = useApp(); const [sheet, setSheet] = useState(false);
+  const live = voice.rooms.filter((r) => r.status === 'live'); const later = voice.rooms.filter((r) => r.status === 'scheduled');
+  return (
+    <div>
+      <Masthead kicker="Voice Rooms" title="Pull up a chair.">Live conversations with members. Listen in, raise a hand, or start your own.</Masthead>
+      <div className="px-6"><button className="btn btn-solid w-full" onClick={() => setSheet(true)} data-testid="vr-start"><Icon name="plus" size={15} stroke={1.5} /> Start a room</button></div>
+      <div className="px-6 pt-10"><Kicker>Live now · {live.length}</Kicker><div className="mt-4 stagger">{live.map((r) => <VoiceRoomCard key={r.id} r={r} />)}</div></div>
+      <div className="px-6 pt-8 pb-12"><Kicker>Coming up</Kicker><div className="mt-4 stagger">{later.map((r) => <VoiceRoomCard key={r.id} r={r} />)}</div>
+        {later.length === 0 && <Empty title="Nothing scheduled.">Schedule one and members can ask for a reminder.</Empty>}</div>
+      {sheet && <StartRoomSheet onClose={() => setSheet(false)} />}
+    </div>
+  );
+}
+
+function VoiceRoom({ id }) {
+  const { voice, who, award, toast, pop } = useApp();
+  const r = voice.rooms.find((x) => x.id === id);
+  const isHost = r && r.host === 'me';
+  const [muted, setMuted] = useState(true);
+  const [hand, setHand] = useState(false);
+  const [hands, setHands] = useState([]); // listeners with hands up (host view)
+  const [talking, setTalking] = useState(null); // simulated speaker id
+  const [floats, setFloats] = useState([]);
+  const [menu, setMenu] = useState(null);
+  const [confirmEnd, setConfirmEnd] = useState(false);
+  const spoke = useRef(false);
+  const onStage = r && r.speakers.includes('me');
+  const mic = useMic(!!onStage);
+  const myLevel = mic.state === 'on' && !muted ? mic.level : 0;
+  const meSpeaking = onStage && !muted && (mic.state === 'on' ? myLevel > 0.08 : true);
+
+  /* join: add me to listeners, count +1, award once */
+  useEffect(() => {
+    if (!r) return;
+    if (!isHost && !r.listeners.includes('me') && !r.speakers.includes('me')) { voice.upd(id, (x) => ({ ...x, listeners: ['me', ...x.listeners], count: x.count + 1 })); award('voiceJoin'); }
+    if (isHost) setMuted(false);
+  }, []);
+  /* simulation: speakers take turns, listener count drifts, reactions drift up, hands go up for hosts */
+  useEffect(() => {
+    if (!r) return;
+    const t1 = setInterval(() => { const others = (voice.rooms.find((x) => x.id === id) || r).speakers.filter((s) => s !== 'me'); setTalking(others.length && Math.random() > .2 ? others[Math.floor(Math.random() * others.length)] : null); }, 1800);
+    const t2 = setInterval(() => voice.upd(id, (x) => ({ ...x, count: Math.max(x.listeners.length + x.speakers.length, x.count + (Math.random() < .62 ? 1 : -1)) })), 2600);
+    const t3 = setInterval(() => { if (Math.random() < .5) addFloat(VR_EMOJI[Math.floor(Math.random() * VR_EMOJI.length)]); }, 2200);
+    return () => { clearInterval(t1); clearInterval(t2); clearInterval(t3); };
+  }, [id, r && r.speakers.join()]);
+  useEffect(() => { if (!isHost) return; const t = setTimeout(() => setHands((h) => (h.length ? h : ['m2'])), 2500); return () => clearTimeout(t); }, [isHost]);
+  useEffect(() => { if (meSpeaking && !spoke.current) { spoke.current = true; award('voiceSpeak'); } }, [meSpeaking]);
+
+  const addFloat = (e, mine) => { const k = Math.random(); setFloats((f) => [...f.slice(-8), { k, e, x: 10 + Math.random() * 70, mine }]); setTimeout(() => setFloats((f) => f.filter((y) => y.k !== k)), 2600); };
+  if (!r) return <Empty title="This room has ended.">The host closed it. Thank you for listening.</Empty>;
+
+  const raise = () => {
+    if (hand) { setHand(false); toast('Hand lowered.'); return; }
+    setHand(true); toast(`Hand raised. ${first(who(r.host).name)} can see it.`);
+    setTimeout(() => { voice.upd(id, (x) => (x.listeners.includes('me') ? { ...x, listeners: x.listeners.filter((l) => l !== 'me'), speakers: [...x.speakers, 'me'] } : x)); setHand(false); toast(`${first(who(r.host).name)} invited you up. You are muted until you are ready.`); }, 3000);
+  };
+  const inviteUp = (m) => { voice.upd(id, (x) => ({ ...x, listeners: x.listeners.filter((l) => l !== m), speakers: [...x.speakers, m] })); setHands((h) => h.filter((y) => y !== m)); setMenu(null); toast(`${first(who(m).name)} is up with the speakers.`); };
+  const moveDown = (m) => { voice.upd(id, (x) => ({ ...x, speakers: x.speakers.filter((s) => s !== m), listeners: [m, ...x.listeners] })); setMenu(null); toast(m === 'me' ? 'You are back in the audience.' : `${first(who(m).name)} is back in the audience.`); if (m === 'me') setMuted(true); };
+  const leave = () => { voice.upd(id, (x) => ({ ...x, listeners: x.listeners.filter((l) => l !== 'me'), speakers: x.host === 'me' ? x.speakers : x.speakers.filter((s) => s !== 'me'), count: Math.max(0, x.count - 1) })); toast('You slipped out. Nobody was told.'); pop(); };
+  const end = () => { setConfirmEnd(false); pop(); setTimeout(() => voice.end(id), 50); };
+
+  const tap = (m) => { if (isHost && m !== 'me') setMenu(m); };
+  return (
+    <div className="relative">
+      <div className="px-6 pt-7">
+        <div className="flex items-center justify-between"><span className="label accent"><span className="vr-live" /> Live</span><span className="label faint" data-testid="vr-count">{r.count} listening</span></div>
+        <h1 className="display text-[34px] leading-[1.05] mt-2" data-testid="vr-title">{r.name}</h1>
+        <p className="muted t-sm mt-1">{r.access === 'invite' ? 'Invite only' : 'Open to all members'} · Not recorded</p>
+      </div>
+      {onStage && mic.state !== 'on' && mic.state !== 'idle' && (
+        <div className="mx-6 mt-5 panel p-4 t-sm" data-testid="vr-mic-note">{mic.state === 'asking' ? 'Asking for your microphone…' : 'No microphone access. You can still listen and react; allow the mic in your browser settings to speak.'}</div>
+      )}
+      <div className="px-6 pt-7"><Kicker>Speakers</Kicker>
+        <div className="grid grid-cols-3 gap-y-6 mt-5" data-testid="vr-stage">
+          {r.speakers.map((s) => <VoiceAvatar key={s} id={s} host={s === r.host} speaking={s === 'me' ? meSpeaking : talking === s} level={s === 'me' ? myLevel : .45} muted={s === 'me' ? muted : false} onClick={() => tap(s)} />)}
+        </div>
+      </div>
+      <div className="px-6 pt-9"><Kicker>Listening</Kicker>
+        <div className="grid grid-cols-4 gap-y-5 mt-5" data-testid="vr-audience">
+          {r.listeners.map((l) => <VoiceAvatar key={l} id={l} size={48} hand={(l === 'me' && hand) || hands.includes(l)} onClick={() => tap(l)} />)}
+        </div>
+        {r.count > r.listeners.length + r.speakers.length && <p className="t-xs faint mt-4">and {r.count - r.listeners.length - r.speakers.length} others listening</p>}
+      </div>
+      {isHost && hands.length > 0 && (
+        <div className="mx-6 mt-6 panel p-4 flex items-center gap-3" data-testid="vr-hands"><span>✋</span><span className="flex-1 t-sm">{first(who(hands[0]).name)} would like to speak.</span><button className="btn h-9 px-3" onClick={() => inviteUp(hands[0])}>Invite up</button></div>
+      )}
+      <div className="vr-floats" aria-hidden="true">{floats.map((f) => <span key={f.k} className="vr-float" style={{ left: f.x + '%' }}>{f.e}</span>)}</div>
+
+      <div className="vr-bar">
+        <div className="flex gap-1 justify-center pb-3">{VR_EMOJI.map((e) => <button key={e} className="vr-emo" onClick={() => addFloat(e, true)} aria-label={`React ${e}`}>{e}</button>)}</div>
+        <div className="flex items-center gap-2">
+          <button className="btn btn-quiet" onClick={leave} data-testid="vr-leave">Leave quietly</button>
+          <span className="flex-1" />
+          {onStage ? <button className={cls('btn', !muted && 'btn-solid')} onClick={() => setMuted(!muted)} data-testid="vr-mute" aria-pressed={!muted}><Icon name={muted ? 'micoff' : 'mic'} size={16} stroke={1.5} />{muted ? 'Unmute' : 'Mute'}</button>
+            : <button className={cls('btn', hand && 'btn-solid')} onClick={raise} data-testid="vr-hand">✋ {hand ? 'Lower hand' : 'Raise hand'}</button>}
+          {isHost && <button className="btn" onClick={() => setConfirmEnd(true)} data-testid="vr-end">End</button>}
+        </div>
+      </div>
+      {menu && <Sheet kicker={r.speakers.includes(menu) ? 'Speaker' : 'Listener'} title={who(menu).name} onClose={() => setMenu(null)}>
+        {r.speakers.includes(menu) ? <button className="btn w-full" onClick={() => moveDown(menu)}>Move to the audience</button> : <button className="btn btn-solid w-full" onClick={() => inviteUp(menu)}>Invite up to speak</button>}
+      </Sheet>}
+      {confirmEnd && <Sheet kicker="Host" title="End the room for everyone?" onClose={() => setConfirmEnd(false)}>
+        <p className="muted t-sm">Everyone will be let out gently. Nothing was recorded.</p>
+        <button className="btn btn-solid w-full mt-5" onClick={end} data-testid="vr-end-confirm">End the room</button>
+      </Sheet>}
+    </div>
+  );
+}
+
 /* ---------- shell ---------- */
 const TABS = [
   { key: 'feed', label: 'Feed', icon: 'feed' },
@@ -2256,7 +2496,7 @@ const TABS = [
   { key: 'map', label: 'Map', icon: 'map' },
   { key: 'me', label: 'Me', icon: 'me' },
 ];
-const TITLES = { play: 'The Game', profile: 'Member', hangouts: 'Hangouts', intros: 'Introductions', thread: 'Thread', editions: 'Editions', edition: 'Edition', music: 'Music', notifications: 'Notifications' };
+const TITLES = { play: 'The Game', profile: 'Member', hangouts: 'Hangouts', intros: 'Introductions', thread: 'Thread', editions: 'Editions', edition: 'Edition', music: 'Music', notifications: 'Notifications', voice: 'Voice Rooms', voiceroom: 'Voice Room' };
 
 function Header({ top, onBack, onMenu, onBell, unread, scrolled }) {
   return (
@@ -2293,13 +2533,14 @@ function TabBar({ tab, onTab, stackOpen }) {
 }
 
 function Drawer({ onClose }) {
-  const { push, setTab, theme, setTheme, signOut, me, intros, hangouts, game } = useApp();
+  const { push, setTab, theme, setTheme, signOut, me, intros, hangouts, game, voice } = useApp();
   const [closing, setClosing] = useState(false);
   const close = (then) => { setClosing(true); setTimeout(() => { onClose(); then && then(); }, 190); };
   const pendingIntros = intros.filter((x) => (x.a === 'me' || x.b === 'me') && x.status.me === 'pending').length;
   const hostReq = hangouts.filter((h) => h.by === 'me').some((h) => h.requests.some((r) => r.status === 'pending'));
   const items = [
     { n: '00', t: 'The Game', s: 'Quests, badges, season pass, leaderboard', go: () => push({ s: 'play' }), dot: game.g.chestDay !== dayKey() },
+    { n: '★', t: 'Voice Rooms', s: `${voice.rooms.filter((r) => r.status === 'live').length} live now · talk, listen, raise a hand`, go: () => push({ s: 'voice' }), dot: true },
     { n: '01', t: 'Hangouts', s: 'Smaller evenings, hosted by members', go: () => push({ s: 'hangouts' }), dot: hostReq },
     { n: '02', t: 'Introductions', s: 'People who should meet', go: () => push({ s: 'intros' }), dot: pendingIntros > 0 },
     { n: '03', t: 'Editions', s: 'Every Big Dinner, written down', go: () => push({ s: 'editions' }) },
@@ -2369,6 +2610,7 @@ function App() {
   const later = (ms, fn) => setTimeout(fn, ms);
   const game = useGame((t) => toast(t));
   const award = game.award;
+  const voice = useVoiceRooms((t) => toast(t), award);
   useEffect(() => { if (stage === 'app') game.checkIn(); }, [stage]);
 
   /* navigation */
@@ -2516,7 +2758,7 @@ function App() {
   const markRead = () => setNotes((ns) => (ns.some((n) => !n.read) ? ns.map((n) => ({ ...n, read: true })) : ns));
 
   const W = (fn, a, cond) => (...args) => { const r = fn(...args); if (!cond || cond(...args)) award(a); return r; };
-  const ctx = { game, award, theme, setTheme, me, setMe, members, who, posts, addPost: W(addPost, 'post'), addComment: W(addComment, 'comment'), follows, toggleFollow: W(toggleFollow, 'follow', (id) => !follows.has(id)), meetings, requestMeeting: W(requestMeeting, 'meet'),
+  const ctx = { voice, game, award, theme, setTheme, me, setMe, members, who, posts, addPost: W(addPost, 'post'), addComment: W(addComment, 'comment'), follows, toggleFollow: W(toggleFollow, 'follow', (id) => !follows.has(id)), meetings, requestMeeting: W(requestMeeting, 'meet'),
     capsule, requestCapsule: W(requestCapsule, 'rsvp'), respondCapsule, addCapsule: W(addCapsule, 'window'), removeCapsule, hangouts, requestHangout: W(requestHangout, 'rsvp'), respondHangout, addHangout: W(addHangout, 'host'),
     intros, makeIntro: W(makeIntro, 'intro'), respondIntro: W(respondIntro, 'introYes', (id, st) => st !== 'declined'), sendThread: W(sendThread, 'chat'), music, connectSpotify, addPick: W(addPick, 'spotify'), notes, markRead, toast,
     push, pop, setTab, openProfile, go2, signOut };
@@ -2530,7 +2772,7 @@ function App() {
     if (top) {
       screen = {
         play: () => <Play id={top.id} />, profile: () => <Profile id={top.id} />, hangouts: () => <Hangouts />, intros: () => <Introductions />, thread: () => <Thread id={top.id} />,
-        editions: () => <Editions />, edition: () => <Edition id={top.id} />, music: () => <Music />, notifications: () => <Notifications />,
+        editions: () => <Editions />, edition: () => <Edition id={top.id} />, music: () => <Music />, notifications: () => <Notifications />, voice: () => <VoiceRooms />, voiceroom: () => <VoiceRoom id={top.id} />,
       }[top.s]();
     } else {
       screen = { feed: <Feed />, circles: <Circles />, capsule: <Capsule />, map: <MapScreen />, me: <Profile id="me" /> }[nav.tab];
