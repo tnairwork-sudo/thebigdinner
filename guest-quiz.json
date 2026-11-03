@@ -1,0 +1,166 @@
+{
+  "types": [
+    {
+      "id": "compass",
+      "name": "The Steady Compass",
+      "signature": "You keep the room oriented when the talk turns.",
+      "strengths": ["Direction", "Calm", "A long view"],
+      "room": "You steady a conversation without taking it over.",
+      "clicksWith": "thread"
+    },
+    {
+      "id": "thread",
+      "name": "The Silk Thread Connector",
+      "signature": "You draw a fine line between people who belong in the same sentence.",
+      "strengths": ["Memory for people", "Tact", "Timing"],
+      "room": "You make the introduction that still matters a year later.",
+      "clicksWith": "compass"
+    },
+    {
+      "id": "empire",
+      "name": "The Empire Architect",
+      "signature": "You see the structure long before the room does.",
+      "strengths": ["Structure", "Ambition", "Patience for scale"],
+      "room": "You turn a scattered hour into a shape people can feel.",
+      "clicksWith": "polymath"
+    },
+    {
+      "id": "spark",
+      "name": "The Champagne Spark",
+      "signature": "You arrive, and the hour lifts.",
+      "strengths": ["Warmth", "Wit", "A quick light"],
+      "room": "You raise the temperature of a quiet corner.",
+      "clicksWith": "raconteur"
+    },
+    {
+      "id": "polymath",
+      "name": "The Restless Polymath",
+      "signature": "You follow a thought across every border it tries.",
+      "strengths": ["Range", "Curiosity", "Speed"],
+      "room": "You join a practical point to a poem and make both clearer.",
+      "clicksWith": "empire"
+    },
+    {
+      "id": "connoisseur",
+      "name": "The Quiet Connoisseur",
+      "signature": "You notice the detail everyone else talks over.",
+      "strengths": ["Taste", "Restraint", "Attention"],
+      "room": "You let quality speak, and you do not rush it.",
+      "clicksWith": "philosopher"
+    },
+    {
+      "id": "raconteur",
+      "name": "The Gilded Raconteur",
+      "signature": "You give a story its proper light.",
+      "strengths": ["Narrative", "Charm", "Timing"],
+      "room": "You hold a story until the room is ready for the ending.",
+      "clicksWith": "spark"
+    },
+    {
+      "id": "provocateur",
+      "name": "The Velvet Provocateur",
+      "signature": "You ask the question that makes the evening braver.",
+      "strengths": ["Nerve", "Precision", "Grace"],
+      "room": "You disagree beautifully, and the room is better for it.",
+      "clicksWith": "philosopher"
+    },
+    {
+      "id": "philosopher",
+      "name": "The Midnight Philosopher",
+      "signature": "You stay for the thought that only arrives late.",
+      "strengths": ["Depth", "Night hours", "A clean doubt"],
+      "room": "You wait until the noise drops, then say the lasting thing.",
+      "clicksWith": "connoisseur"
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "The room has just gone quiet.",
+      "answers": [
+        { "text": "You let the silence finish its work.", "scores": { "compass": 3, "philosopher": 1 } },
+        { "text": "You ask the thing everyone was circling.", "scores": { "provocateur": 3, "spark": 1 } },
+        { "text": "You offer a story that belongs in the quiet.", "scores": { "raconteur": 3, "thread": 1 } }
+      ]
+    },
+    {
+      "prompt": "A new guest is standing just outside the talk.",
+      "answers": [
+        { "text": "You draw them into the right conversation.", "scores": { "thread": 3, "compass": 1 } },
+        { "text": "You make the first minute feel easy.", "scores": { "spark": 3, "raconteur": 1 } },
+        { "text": "You wait until you know where they will be happiest.", "scores": { "connoisseur": 3, "philosopher": 1 } }
+      ]
+    },
+    {
+      "prompt": "Someone describes a plan that is almost beautiful.",
+      "answers": [
+        { "text": "You can see the structure it still needs.", "scores": { "empire": 3, "compass": 1 } },
+        { "text": "You name the other field it belongs to.", "scores": { "polymath": 3, "provocateur": 1 } },
+        { "text": "You point to the one detail that would make it true.", "scores": { "connoisseur": 3, "philosopher": 1 } }
+      ]
+    },
+    {
+      "prompt": "The hour is getting late, and the talk is getting better.",
+      "answers": [
+        { "text": "You stay. The good thought is still on its way.", "scores": { "philosopher": 3, "connoisseur": 1 } },
+        { "text": "You keep the lift in the room.", "scores": { "spark": 3, "raconteur": 1 } },
+        { "text": "You make sure no one is lost on the way there.", "scores": { "compass": 3, "empire": 1 } }
+      ]
+    },
+    {
+      "prompt": "Two people should know each other, and do not.",
+      "answers": [
+        { "text": "You introduce them with the reason already in the sentence.", "scores": { "thread": 3, "spark": 1 } },
+        { "text": "You see what they could build together.", "scores": { "empire": 3, "polymath": 1 } },
+        { "text": "You introduce the disagreement they will enjoy.", "scores": { "provocateur": 3, "philosopher": 1 } }
+      ]
+    },
+    {
+      "prompt": "A subject you love comes up, and you know a great deal.",
+      "answers": [
+        { "text": "You open a second door into it.", "scores": { "polymath": 3, "empire": 1 } },
+        { "text": "You tell it so the room can feel it.", "scores": { "raconteur": 3, "spark": 1 } },
+        { "text": "You follow it down to the question underneath.", "scores": { "philosopher": 3, "connoisseur": 1 } }
+      ]
+    },
+    {
+      "prompt": "The conversation has become too agreeable.",
+      "answers": [
+        { "text": "You offer the braver objection.", "scores": { "provocateur": 3, "philosopher": 1 } },
+        { "text": "You bring it back to what people actually meant.", "scores": { "compass": 3, "thread": 1 } },
+        { "text": "You change the air without scolding it.", "scores": { "spark": 3, "raconteur": 1 } }
+      ]
+    },
+    {
+      "prompt": "You are asked what you pay attention to.",
+      "answers": [
+        { "text": "Quality, and the patience it asks for.", "scores": { "connoisseur": 3, "compass": 1 } },
+        { "text": "Almost everything, until it connects.", "scores": { "polymath": 3, "provocateur": 1 } },
+        { "text": "How separate efforts become one thing.", "scores": { "empire": 3, "thread": 1 } }
+      ]
+    },
+    {
+      "prompt": "A story in the room needs a teller.",
+      "answers": [
+        { "text": "You give it shape, and an ending.", "scores": { "raconteur": 3, "philosopher": 1 } },
+        { "text": "You tell it lightly, and leave people warmer.", "scores": { "spark": 3, "thread": 1 } },
+        { "text": "You tell only the part that is exact.", "scores": { "connoisseur": 3, "compass": 1 } }
+      ]
+    },
+    {
+      "prompt": "Someone is building something large.",
+      "answers": [
+        { "text": "You ask about the structure, not the noise.", "scores": { "empire": 3, "polymath": 1 } },
+        { "text": "You ask who it is for, and whether they are with it.", "scores": { "compass": 3, "thread": 1 } },
+        { "text": "You ask what it refuses to be.", "scores": { "provocateur": 3, "philosopher": 1 } }
+      ]
+    },
+    {
+      "prompt": "The evening ends. What stays with you.",
+      "answers": [
+        { "text": "The sentence that arrived last.", "scores": { "philosopher": 3, "connoisseur": 1 } },
+        { "text": "The people who should meet again.", "scores": { "thread": 3, "raconteur": 1 } },
+        { "text": "The sudden brightness of the hour.", "scores": { "spark": 3, "polymath": 1 } }
+      ]
+    }
+  ]
+}
