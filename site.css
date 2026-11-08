@@ -1,5 +1,5 @@
 /* The Big Dinner
-   Desert Titanium. A static brushed field, lighter at the top.
+   Champagne titanium paper. Fine film grain over a soft multi-stop light.
    Quiet pair: espresso #2A2420 on the champagne field.
    Espresso on #C9B196 is 7.45:1; on #E9D8C3 it is 10.99:1.
    Other buttons stay espresso with ivory #F4EFE6 (13.37:1).
@@ -1859,41 +1859,8 @@ body.has-sound > footer.colophon {
 }
 
 
-/* Desert Titanium. One static brushed sheet. Sections stay transparent
-   so the blend does not restart, and no motion is applied. */
-html { background-color: #C9B196; }
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background-color: #C9B196;
-  background-image:
-    linear-gradient(90deg, rgba(255, 252, 247, 0.22) 0%, rgba(255, 252, 247, 0) 42%, rgba(120, 96, 72, 0.05) 100%),
-    linear-gradient(180deg, #E9D8C3 0%, #E3D0B8 34%, #D8C2A6 68%, #C9B196 100%);
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-.nav,
-.nav.is-scrolled,
-.nav.is-open,
-.nav-links,
-.filter-bar,
-.overlay,
-.form-notice,
-.form-notice-panel,
-.overlay-page,
-.reel-lightbox,
-.reel-lightbox-scrim,
-.reel-lightbox-panel {
-  background-color: #D8C2A6;
-  background-image:
-    linear-gradient(90deg, rgba(255, 252, 247, 0.22) 0%, rgba(255, 252, 247, 0) 42%, rgba(120, 96, 72, 0.05) 100%),
-    linear-gradient(180deg, #E9D8C3 0%, #E3D0B8 34%, #D8C2A6 68%, #C9B196 100%);
-  background-repeat: no-repeat;
-  background-size: cover;
-}
+/* Paper field. The grain and the light live in the closing atmosphere block. */
+html { background-color: #CDB89E; }
 .field select,
 .field select option {
   background-color: #E9D8C3;
@@ -2554,4 +2521,216 @@ body.has-sound .is-pulse-flourish { animation: tbd-flourish 0.96s ease; }
     color: #2A2420;
   }
   .spark { display: none; }
+}
+
+/* Grainy paper. One fine tile of film grain, multiplied over a warm light.
+   Sections keep their own fall of light. Type and photographs sit above it.
+   Lacquer stays on the invitation, the hairline, and the current mark. */
+:root {
+  --grain: url("/assets/paper-grain.svg");
+  --sheet: #E4D0B8;
+  --glow: radial-gradient(48% 42% at 50% 40%, rgba(255, 246, 232, 0.5), rgba(255, 246, 232, 0) 70%);
+  --sheen: linear-gradient(100deg, rgba(255, 252, 247, 0.22) 0%, rgba(255, 252, 247, 0) 48%, rgba(88, 66, 48, 0.045) 100%);
+  --fall: linear-gradient(180deg, #E0CDB6 0%, #E8D5BD 48%, #E0CDB6 100%);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-color: var(--sheet);
+  background-image: var(--grain), var(--glow), var(--sheen), var(--fall);
+  background-repeat: repeat, no-repeat, no-repeat, no-repeat;
+  background-size: 220px 220px, cover, cover, cover;
+  background-blend-mode: multiply, normal, normal, normal;
+}
+
+.hero,
+.page-hero {
+  --sheet: #E8D5BD;
+  --glow: radial-gradient(46% 40% at 50% 32%, rgba(255, 248, 236, 0.78), rgba(255, 248, 236, 0) 68%);
+  --fall: linear-gradient(180deg, #F2E6D2 0%, #E8D5BD 46%, #E0CDB6 100%);
+}
+.film,
+.video-feed,
+.load-sentinel,
+.end-note,
+.poster-run,
+.reels {
+  --sheet: #E4D0B8;
+  --glow: radial-gradient(58% 48% at 50% 42%, rgba(255, 246, 232, 0.28), rgba(255, 246, 232, 0) 72%);
+  --fall: linear-gradient(180deg, #E0CDB6 0%, #E7D4BC 50%, #E0CDB6 100%);
+}
+.paper-frame,
+#philosophy {
+  --sheet: #E6D3BB;
+  --glow: radial-gradient(50% 44% at 50% 40%, rgba(255, 246, 230, 0.66), rgba(255, 246, 230, 0) 70%);
+  --fall: linear-gradient(180deg, #E0CDB6 0%, #F0E2CC 36%, #E6D3BB 72%, #E0CDB6 100%);
+}
+.frame {
+  --sheet: #E5D2BA;
+  --glow: radial-gradient(46% 40% at 50% 42%, rgba(255, 248, 236, 0.42), rgba(255, 248, 236, 0) 70%);
+  --fall: linear-gradient(180deg, #E0CDB6 0%, #EAD9C2 50%, #E0CDB6 100%);
+}
+.frame.city-card,
+#cities {
+  --sheet: #E2CDB4;
+  --glow: radial-gradient(48% 38% at 50% 30%, rgba(255, 248, 236, 0.36), rgba(255, 248, 236, 0) 72%);
+  --fall: linear-gradient(180deg, #D9C6AC 0%, #E7D4BC 46%, #D9C6AC 100%);
+}
+.sheet,
+#rules,
+#guestQuiz {
+  --sheet: #E4D0B8;
+  --glow: radial-gradient(56% 42% at 50% 22%, rgba(255, 246, 232, 0.4), rgba(255, 246, 232, 0) 70%);
+  --fall: linear-gradient(180deg, #E0CDB6 0%, #E9D6C0 28%, #E4D0B8 100%);
+}
+.lineage,
+#chronicles {
+  --sheet: #DCC8B0;
+  --glow: radial-gradient(42% 28% at 50% 18%, rgba(255, 246, 230, 0.62), rgba(255, 246, 230, 0) 72%);
+  --fall: linear-gradient(180deg, #E4D0B8 0%, #E8D6BE 24%, #DCC8B0 78%, #D9C6AC 100%);
+}
+.archive {
+  --sheet: #DCC8B0;
+  --glow: radial-gradient(60% 42% at 50% 28%, rgba(255, 248, 236, 0.34), rgba(255, 248, 236, 0) 72%);
+  --fall: linear-gradient(180deg, #D9C6AC 0%, #E6D3BB 40%, #D9C6AC 100%);
+}
+.invite,
+#apply {
+  --sheet: #E8D6BE;
+  --glow: radial-gradient(42% 36% at 50% 46%, rgba(255, 247, 234, 0.88), rgba(255, 247, 234, 0) 70%);
+  --fall: linear-gradient(180deg, #D9C6AC 0%, #F3E7D4 46%, #D9C6AC 100%);
+}
+.colophon {
+  --sheet: #D2BDA4;
+  --glow: radial-gradient(70% 50% at 50% 0%, rgba(255, 246, 232, 0.16), rgba(255, 246, 232, 0) 64%);
+  --fall: linear-gradient(180deg, #D9C6AC 0%, #D0BBA2 58%, #C9B196 100%);
+}
+.masthead {
+  --sheet: #E7D4BC;
+  --glow: radial-gradient(48% 44% at 50% 32%, rgba(255, 248, 236, 0.7), rgba(255, 248, 236, 0) 70%);
+  --fall: linear-gradient(180deg, #F2E6D2 0%, #E8D5BD 55%, #E0CDB6 100%);
+}
+.journal {
+  --sheet: #E3CFB6;
+  --glow: radial-gradient(54% 36% at 50% 16%, rgba(255, 246, 232, 0.32), rgba(255, 246, 232, 0) 72%);
+  --fall: linear-gradient(180deg, #E0CDB6 0%, #E7D4BC 42%, #DCC8B0 100%);
+}
+.gallery-block {
+  --sheet: #E5D2BA;
+  --glow: radial-gradient(52% 40% at 50% 24%, rgba(255, 248, 236, 0.4), rgba(255, 248, 236, 0) 72%);
+  --fall: linear-gradient(180deg, #E0CDB6 0%, #EAD9C2 42%, #E0CDB6 100%);
+}
+.gallery-block:nth-of-type(even) {
+  --glow: radial-gradient(46% 38% at 50% 58%, rgba(255, 244, 226, 0.26), rgba(255, 244, 226, 0) 72%);
+  --fall: linear-gradient(180deg, #E0CDB6 0%, #E5D1B8 50%, #E0CDB6 100%);
+}
+.press {
+  --sheet: #E7D4BC;
+  --glow: radial-gradient(42% 36% at 50% 40%, rgba(255, 246, 230, 0.62), rgba(255, 246, 230, 0) 72%);
+  --fall: linear-gradient(180deg, #E0CDB6 0%, #F0E2CC 44%, #E0CDB6 100%);
+}
+.approach,
+.nav,
+.nav.is-scrolled,
+.nav.is-open,
+.nav-links,
+.filter-bar {
+  --sheet: #E6D3BB;
+  --glow: none;
+  --sheen: linear-gradient(100deg, rgba(255, 252, 247, 0.28) 0%, rgba(255, 252, 247, 0) 50%, rgba(88, 66, 48, 0.04) 100%);
+  --fall: linear-gradient(180deg, #E9D8C2 0%, #E4D0B8 100%);
+}
+.overlay,
+.form-notice,
+.reel-lightbox,
+.reel-lightbox-scrim {
+  --sheet: #E0CDB6;
+  --glow: radial-gradient(80% 70% at 50% 45%, rgba(42, 36, 32, 0.04), rgba(42, 36, 32, 0.08) 70%);
+  --sheen: none;
+  --fall: linear-gradient(180deg, #E7D4BC 0%, #D5C0A6 100%);
+}
+.overlay-page,
+.form-notice-panel,
+.reel-lightbox-panel,
+.rule,
+.chapter,
+.clauses li,
+.journal .entry,
+.shot,
+.gallery-grid figure {
+  --sheet: #F4E8D6;
+  --glow: radial-gradient(120% 80% at 50% 0%, rgba(255, 250, 244, 0.8), rgba(255, 250, 244, 0) 70%);
+  --sheen: linear-gradient(100deg, rgba(255, 252, 247, 0.45), rgba(255, 252, 247, 0) 58%);
+  --fall: linear-gradient(180deg, #F8F1E6 0%, #F0E2CE 62%, #E5D2BA 100%);
+}
+body.has-sound .city-back,
+body.has-sound .guest-card {
+  --sheet: #E7D3BB;
+  --glow: radial-gradient(62% 52% at 50% 40%, rgba(255, 246, 232, 0.72), rgba(255, 246, 232, 0) 72%);
+  --sheen: linear-gradient(100deg, rgba(255, 252, 247, 0.28), rgba(255, 252, 247, 0) 55%);
+  --fall: linear-gradient(180deg, #F3E6D2 0%, #DCC6AA 100%);
+}
+
+body :is(
+  #rules,
+  #philosophy,
+  #cities,
+  #apply,
+  #chronicles,
+  #guestQuiz,
+  .hero,
+  .page-hero,
+  .film,
+  .paper-frame,
+  .poster-run,
+  .reels,
+  .frame,
+  .sheet,
+  .lineage,
+  .archive,
+  .invite,
+  .colophon,
+  .masthead,
+  .journal,
+  .gallery-block,
+  .press,
+  .video-feed,
+  .filter-bar,
+  .approach,
+  .nav,
+  .nav-links,
+  .overlay,
+  .form-notice,
+  .form-notice-panel,
+  .overlay-page,
+  .reel-lightbox,
+  .reel-lightbox-scrim,
+  .reel-lightbox-panel,
+  .load-sentinel,
+  .end-note,
+  .rule,
+  .chapter,
+  .clauses li,
+  .entry,
+  .guest-card,
+  .city-back,
+  .shot,
+  .gallery-grid figure
+) {
+  background-color: var(--sheet);
+  background-image: var(--grain), var(--glow), var(--sheen), var(--fall);
+  background-repeat: repeat, no-repeat, no-repeat, no-repeat;
+  background-size: 220px 220px, cover, cover, cover;
+  background-blend-mode: multiply, normal, normal, normal;
+}
+
+/* Masthead and journal are narrow columns. A fill there would paint a stripe.
+   The page field shows through. Cards inside the journal keep their own paper. */
+body :is(#content.masthead, header.masthead, .journal) {
+  background-color: transparent;
+  background-image: none;
 }
