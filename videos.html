@@ -142,8 +142,8 @@
       venue: "London",
       guestCount: 30,
       description: "Expansion was never about geography. It was about trust. Friends held the room.",
-      videoUrl: "YOUR_VIDEO_URL_HERE",
-      thumbnail: "/lodnon.jpeg"
+      videoUrl: "/assets/reels/london.mp4",
+      thumbnail: "/assets/reels/london-poster.jpg"
     }
   ];
 
@@ -173,9 +173,12 @@
     var article = document.createElement("article");
     article.className = "video-card";
     article.dataset.city = video.city;
+    var localFilm = /\.mp4($|\?)/.test(video.videoUrl || "");
     article.innerHTML =
       '<div class="video-wrapper" role="button" tabindex="0" aria-label="Watch ' + video.chapter + ', ' + video.city + ', ' + video.date + '">' +
-        '<img class="thumb" src="' + video.thumbnail + '" alt="' + video.city + ' room, ' + video.date + '" loading="lazy" decoding="async">' +
+        (localFilm
+          ? '<video class="thumb" muted loop playsinline autoplay preload="metadata" poster="' + video.thumbnail + '"><source src="' + video.videoUrl + '" type="video/mp4"></video>'
+          : '<img class="thumb" src="' + video.thumbnail + '" alt="' + video.city + ' room, ' + video.date + '" loading="lazy" decoding="async">') +
         '<div class="card-meta-overlay">' +
           '<p class="card-city-tag">' + video.city + ' · ' + video.date + '</p>' +
           '<h2 class="card-venue">' + video.venue + '</h2>' +
@@ -267,9 +270,17 @@
   function handlePlay(id) {
     var video = ALL_VIDEOS.find(function (item) { return item.id === id; });
     if (!video) return;
-    if (video.videoUrl && video.videoUrl !== "YOUR_VIDEO_URL_HERE") {
-      window.open(video.videoUrl, "_blank", "noopener,noreferrer");
+    if (!video.videoUrl || video.videoUrl === "YOUR_VIDEO_URL_HERE") return;
+    if (/\.mp4($|\?)/.test(video.videoUrl)) {
+      var inline = feed.querySelector('[data-city="' + video.city + '"] video');
+      if (inline) {
+        inline.muted = !inline.muted;
+        var attempt = inline.play();
+        if (attempt && attempt.catch) attempt.catch(function () {});
+      }
+      return;
     }
+    window.open(video.videoUrl, "_blank", "noopener,noreferrer");
   }
 
   loadNextBatch();

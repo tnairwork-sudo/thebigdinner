@@ -2957,3 +2957,95 @@ body.has-sound .approach-fill {
     transition: none;
   }
 }
+
+/* One reel of film. The homepage reels run across the empty margin and
+   keep playing. The two features cut over each other. The rest of the
+   page drifts with the scroll, like a camera, not a stack of cards. */
+@keyframes tbd-marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+@keyframes tbd-push {
+  from { transform: scale(1); }
+  to { transform: scale(1.06); }
+}
+
+html.js main > section:not(.reels):not(.film):not(.city-card) {
+  --near: 1;
+  transform: translate3d(0, calc(var(--cam, 0) * -6vh), 0) scale(calc(0.94 + (var(--near) * 0.06)));
+  transform-origin: center top;
+}
+
+html.js .film .film-frame {
+  position: sticky;
+  top: 8vh;
+  z-index: 1;
+  width: min(1080px, 94vw);
+  max-width: none;
+  opacity: 1;
+  transform: none;
+}
+html.js .film .film-frame + .film-frame {
+  z-index: 2;
+  margin-top: 16vh;
+}
+
+html.js .reels {
+  overflow: hidden;
+  padding-left: 0;
+  padding-right: 0;
+}
+html.js .reels .reel-grid {
+  display: block;
+  width: 100%;
+  max-width: none;
+  overflow: hidden;
+}
+html.js .reel-track {
+  display: flex;
+  gap: var(--s1);
+  width: max-content;
+  animation: tbd-marquee 64s linear infinite;
+}
+html.js .reel-track .reel-tile {
+  width: min(280px, 68vw);
+  flex: 0 0 auto;
+  opacity: 1;
+  transform: none;
+}
+html.js .reels:hover .reel-track,
+body.is-locked .reel-track { animation-play-state: paused; }
+html.js .reel-tile.is-echo { pointer-events: none; }
+
+html.js .video-feed video.thumb {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+html.js .video-feed img.thumb {
+  animation: tbd-push 18s ease-in-out infinite alternate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.js main > section:not(.reels):not(.film):not(.city-card),
+  html.js .film .film-frame,
+  html.js .reel-track,
+  html.js .reel-track .reel-tile,
+  html.js .video-feed img.thumb {
+    animation: none;
+    transform: none;
+    position: static;
+  }
+  html.js .reel-track {
+    flex-wrap: wrap;
+    justify-content: center;
+    width: min(1080px, 100%);
+    margin-inline: auto;
+  }
+  html.js .reel-tile.is-echo { display: none; }
+  html.js .film .film-frame,
+  html.js .film .film-frame + .film-frame {
+    width: min(760px, 100%);
+    margin-top: var(--s1);
+  }
+}

@@ -68,6 +68,22 @@
   var closer = box.querySelector(".reel-lightbox-close");
   var lastTile = null;
   var finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var grid = document.querySelector(".reels .reel-grid");
+
+  if (grid && !reduceMotion) {
+    var track = document.createElement("div");
+    track.className = "reel-track";
+    while (grid.firstChild) track.appendChild(grid.firstChild);
+    Array.prototype.slice.call(track.children).forEach(function (node) {
+      var copy = node.cloneNode(true);
+      copy.setAttribute("aria-hidden", "true");
+      copy.setAttribute("tabindex", "-1");
+      copy.classList.add("is-echo");
+      track.appendChild(copy);
+    });
+    grid.appendChild(track);
+  }
 
   function preview(video) {
     var attempt = video.play();
@@ -116,22 +132,27 @@
     var video = tile.querySelector("video");
     if (finePointer) {
       tile.addEventListener("pointerenter", function () { preview(video); });
-      tile.addEventListener("pointerleave", function () { rest(video); });
     }
     tile.addEventListener("click", function () {
-      if (!finePointer && video.paused) {
-        preview(video);
-        return;
-      }
       open(tile, video);
     });
   });
 
-  if (!finePointer) {
-    document.addEventListener("pointerdown", function (event) {
-      tiles.forEach(function (tile) {
-        if (!tile.contains(event.target)) rest(tile.querySelector("video"));
+  if (!reduceMotion && "IntersectionObserver" in window) {
+    var seen = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        var video = entry.target;
+        if (entry.isIntersecting) {
+          video.muted = true;
+          var attempt = video.play();
+          if (attempt && attempt.catch) attempt.catch(function () {});
+        } else if (!video.paused) {
+          video.pause();
+        }
       });
+    }, { threshold: 0.4 });
+    document.querySelectorAll(".reel-tile video, .video-feed video").forEach(function (video) {
+      seen.observe(video);
     });
   }
 
@@ -960,4 +981,37 @@
     });
   }, { threshold: 0.05, rootMargin: "0px 0px -24px 0px" });
   nodes.forEach(function (el) { observer.observe(el); });
+})();
+
+(function () {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  var sections = Array.prototype.filter.call(
+    document.querySelectorAll("main > section"),
+    function (section) {
+      return !section.classList.contains("reels") && !section.classList.contains("film") && !section.classList.contains("city-card");
+    }
+  );
+  if (!sections.length) return;
+  var ticking = false;
+  function frame() {
+    ticking = false;
+    var vh = window.innerHeight || 1;
+    sections.forEach(function (section) {
+      var rect = section.getBoundingClientRect();
+      var mid = rect.top + rect.height * 0.5;
+      var dist = (mid - vh * 0.5) / vh;
+      var cam = Math.max(-1, Math.min(1, dist));
+      var near = 1 - Math.min(1, Math.abs(cam));
+      section.style.setProperty("--cam", cam.toFixed(3));
+      section.style.setProperty("--near", near.toFixed(3));
+    });
+  }
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(frame);
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll);
+  frame();
 })();
