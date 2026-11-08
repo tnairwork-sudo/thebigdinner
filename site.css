@@ -2734,3 +2734,226 @@ body :is(#content.masthead, header.masthead, .journal) {
   background-color: transparent;
   background-image: none;
 }
+
+/* Editorial motion. The paper light drifts. Sections, pictures, and the
+   lacquer hairline arrive. Buttons lift a little. Reduced motion keeps
+   the still paper. */
+@keyframes tbd-light {
+  from { background-position: 0 0, 44% 34%, center, center; }
+  to { background-position: 0 0, 56% 48%, center, center; }
+}
+@keyframes tbd-arrive {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes tbd-rule {
+  from { transform: translateX(-50%) scaleX(0); }
+  to { transform: translateX(-50%) scaleX(1); }
+}
+@keyframes tbd-veil {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+body::before,
+main > section,
+footer.colophon {
+  animation: tbd-light 36s ease-in-out infinite alternate;
+}
+
+html.js .hero .frame-copy > *,
+html.js .page-hero .frame-copy > *,
+html.js main.masthead > :is(.label, .headline, .lede, .rule-line, .note, .particulars),
+html.js header.masthead > * {
+  animation: tbd-arrive 1.05s cubic-bezier(0.22, 0.7, 0.2, 1) backwards;
+}
+html.js .hero .frame-copy > :nth-child(2),
+html.js .page-hero .frame-copy > :nth-child(2),
+html.js main.masthead > :nth-child(2),
+html.js header.masthead > :nth-child(2) { animation-delay: 0.12s; }
+html.js .hero .frame-copy > :nth-child(3),
+html.js .page-hero .frame-copy > :nth-child(3),
+html.js main.masthead > :nth-child(3),
+html.js header.masthead > :nth-child(3) { animation-delay: 0.24s; }
+html.js .hero .frame-copy > :nth-child(4),
+html.js .page-hero .frame-copy > :nth-child(4),
+html.js main.masthead > :nth-child(4),
+html.js header.masthead > :nth-child(4) { animation-delay: 0.38s; }
+html.js main.masthead > :nth-child(5),
+html.js header.masthead > :nth-child(5) { animation-delay: 0.5s; }
+html.js main.masthead > :nth-child(6) { animation-delay: 0.62s; }
+
+html.js .rules > .rule.reveal,
+html.js .chapters > .chapter.reveal,
+html.js .gallery-grid > figure.reveal {
+  transition-delay: calc(sibling-index() * 70ms);
+}
+
+html.js .film .film-frame,
+html.js .poster-run .poster-run-item,
+html.js .reels .reel-tile,
+html.js .archive .shot,
+html.js footer.colophon > * {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 1s cubic-bezier(0.22, 0.7, 0.2, 1), transform 1s cubic-bezier(0.22, 0.7, 0.2, 1), border-color 0.35s ease;
+}
+html.js .film.is-seen .film-frame,
+html.js .poster-run.is-seen .poster-run-item,
+html.js .reels.is-seen .reel-tile,
+html.js .archive.is-seen .shot,
+html.js footer.colophon.is-seen > * {
+  opacity: 1;
+  transform: none;
+}
+html.js .film.is-seen .film-frame,
+html.js .reels.is-seen .reel-tile,
+html.js .archive.is-seen .shot,
+html.js footer.colophon.is-seen > * {
+  transition-delay: calc(sibling-index() * 70ms);
+}
+
+html.js .gallery-grid figure.reveal img,
+html.js .archive .shot img {
+  transform: scale(1.035);
+  transition: transform 1.5s cubic-bezier(0.22, 0.7, 0.2, 1);
+}
+html.js .gallery-grid figure.reveal.is-in img,
+html.js .archive.is-seen .shot img {
+  transform: scale(1);
+}
+
+html.js :is(
+  .frame-copy > .label:first-child,
+  .section-intro > .label:first-child,
+  .paper-frame .split > div:first-child > .label:first-child,
+  .reels > .label:first-child,
+  .gallery-block > .label:first-child,
+  .press > .label:first-child
+)::after {
+  transform: translateX(-50%) scaleX(0);
+  transform-origin: center;
+  transition: transform 0.9s cubic-bezier(0.22, 0.7, 0.2, 1);
+}
+html.js .reveal.is-in:is(
+  .frame-copy > .label:first-child,
+  .section-intro > .label:first-child,
+  .paper-frame .split > div:first-child > .label:first-child,
+  .reels > .label:first-child,
+  .gallery-block > .label:first-child,
+  .press > .label:first-child
+)::after,
+html.js .is-seen :is(
+  .reels > .label:first-child,
+  .gallery-block > .label:first-child,
+  .press > .label:first-child
+)::after {
+  transform: translateX(-50%) scaleX(1);
+}
+html.js .hero .frame-copy > .label:first-child::after,
+html.js .page-hero .frame-copy > .label:first-child::after {
+  animation: tbd-rule 0.9s cubic-bezier(0.22, 0.7, 0.2, 1) 0.28s both;
+}
+
+.invite-btn,
+.btn,
+.btn-line,
+.nav-toggle,
+.sound,
+.film-sound,
+.filter-tab {
+  transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease, transform 0.5s cubic-bezier(0.22, 0.7, 0.2, 1), box-shadow 0.5s ease;
+}
+html.js .rule.reveal,
+html.js .chapter.reveal,
+html.js .archive .shot,
+html.js .journal .entry {
+  transition: opacity 1.05s ease, transform 1.05s cubic-bezier(0.22, 0.7, 0.2, 1), border-color 0.4s ease, box-shadow 0.5s ease, background-color 0.4s ease;
+}
+body.has-sound .approach-fill {
+  transition: transform 0.45s cubic-bezier(0.22, 0.7, 0.2, 1);
+}
+.overlay.is-open,
+.form-notice.is-open,
+.reel-lightbox.is-open {
+  animation: tbd-veil 0.45s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .invite-btn:hover,
+  .btn:hover,
+  .btn-line:hover,
+  .nav-toggle:hover,
+  .sound:hover,
+  .film-sound:hover {
+    transform: translateY(-2px);
+  }
+  html.js .reels.is-seen .reel-tile:hover,
+  html.js .poster-run.is-seen .poster-run-item:hover,
+  .poster-run-item:hover {
+    transform: translateY(-4px);
+  }
+  html.js .rule.reveal.is-in:hover,
+  html.js .chapter.reveal.is-in:hover,
+  html.js .archive.is-seen .shot:hover,
+  html.js .journal .entry.visible:hover {
+    transform: translateY(-3px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before,
+  main > section,
+  footer.colophon,
+  html.js .hero .frame-copy > *,
+  html.js .page-hero .frame-copy > *,
+  html.js main.masthead > :is(.label, .headline, .lede, .rule-line, .note, .particulars),
+  html.js header.masthead > *,
+  html.js .hero .frame-copy > .label:first-child::after,
+  html.js .page-hero .frame-copy > .label:first-child::after,
+  .overlay.is-open,
+  .form-notice.is-open,
+  .reel-lightbox.is-open {
+    animation: none;
+  }
+  html.js .film .film-frame,
+  html.js .poster-run .poster-run-item,
+  html.js .reels .reel-tile,
+  html.js .archive .shot,
+  html.js footer.colophon > *,
+  html.js .gallery-grid figure.reveal img,
+  html.js .archive .shot img,
+  .invite-btn:hover,
+  .btn:hover,
+  .btn-line:hover,
+  .nav-toggle:hover,
+  .sound:hover,
+  .film-sound:hover,
+  html.js .reels.is-seen .reel-tile:hover,
+  html.js .poster-run.is-seen .poster-run-item:hover,
+  .poster-run-item:hover,
+  body.has-sound .rule:hover,
+  body.has-sound .chapter:hover,
+  body.has-sound .shot:hover,
+  .journal .entry:hover,
+  html.js .rule.reveal.is-in:hover,
+  html.js .chapter.reveal.is-in:hover,
+  html.js .archive.is-seen .shot:hover,
+  html.js .journal .entry.visible:hover {
+    transition: none;
+    transform: none;
+    opacity: 1;
+  }
+  body.has-sound .approach-fill { transition: none; }
+  html.js :is(
+    .frame-copy > .label:first-child,
+    .section-intro > .label:first-child,
+    .paper-frame .split > div:first-child > .label:first-child,
+    .reels > .label:first-child,
+    .gallery-block > .label:first-child,
+    .press > .label:first-child
+  )::after {
+    transform: translateX(-50%) scaleX(1);
+    transition: none;
+  }
+}
