@@ -730,14 +730,15 @@ const ROOM_ERRORS = {
   invalid_login: 'Choose a login ID of at least 3 letters or numbers.',
   invalid_password: 'Use 8 or more characters.',
   password_mismatch: "Those passwords don't match.",
-  need_email_or_phone: 'Enter the email we have for you, or the phone from the dinner list.',
-  invalid_phone: 'Enter a phone number with a country code, or a 10-digit Indian mobile.',
+  invalid_phone: 'Enter the phone from the dinner list, with a country code or a 10-digit Indian mobile.',
   login_taken: 'That login ID is already taken. Choose another.',
-  email_taken: 'An account already uses this email. Sign in with your login ID.',
   phone_taken: 'An account already uses this phone. Sign in with your login ID.',
+  not_listed: 'This number is not on the dinner list. A password cannot be set.',
+  claim_required: 'Check the phone again, then choose a password.',
   mismatch: "That login ID and password don't match.",
-  pending: 'This login ID is waiting to be accepted. You can sign in after that.',
+  inactive: 'This login ID cannot be used. Request a new one with the phone from the dinner list.',
   store_unconfigured: 'The room cannot take accounts just now. Write to room@thebigdinner.club.',
+  members_unconfigured: 'The room cannot check the dinner list just now. Write to room@thebigdinner.club.',
   generic: 'Something went wrong. Try again in a moment.',
 };
 
@@ -760,12 +761,12 @@ function Login({ onLogin, toast }) {
   const [email, setEmail] = useState('');
   const [password2, setPassword2] = useState('');
   const [phone, setPhone] = useState('');
-  const [pendingId, setPendingId] = useState('');
+  const [claim, setClaim] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
 
   const shellTop = (
-    <div className="relative h-[260px] shrink-0 overflow-hidden" style={{ background: '#2A0F10' }}>
+    <div className="relative h-[220px] shrink-0 overflow-hidden" style={{ background: '#2A0F10' }}>
       <Art k="cvRoom" alt="A brass plaque on a dark wood door: Maximum occupancy, 80 strangers" pos="50% 40%" />
     </div>
   );
@@ -787,6 +788,7 @@ function Login({ onLogin, toast }) {
     setMode('signin');
     setPassword('');
     setPassword2('');
+    setClaim('');
     setError('');
     setBusy(false);
   };
@@ -796,6 +798,7 @@ function Login({ onLogin, toast }) {
     setLoginId('');
     setPassword('');
     setPassword2('');
+    setClaim('');
     setError('');
     setBusy(false);
   };
@@ -832,30 +835,30 @@ function Login({ onLogin, toast }) {
     if (person.length < 2) { setError(ROOM_ERRORS.invalid_name); return; }
     const id = (loginId || '').trim();
     if (id.length < 3) { setError(ROOM_ERRORS.invalid_login); return; }
-    if ((password || '').length < 8) { setError(ROOM_ERRORS.invalid_password); return; }
-    if (password !== password2) { setError(ROOM_ERRORS.password_mismatch); return; }
-    const em = (email || '').trim();
     const ph = (phone || '').trim();
-    if (!em && !ph) { setError(ROOM_ERRORS.need_email_or_phone); return; }
+    if (!ph) { setError(ROOM_ERRORS.invalid_phone); return; }
     setBusy(true);
     try {
-      const result = await roomApi('/api/room/register', {
+      const result = await roomApi('/api/room/check', {
         method: 'POST',
-        body: JSON.stringify({ name: person, email: em, loginId: id, password, password2, phone: ph }),
+        body: JSON.stringify({ name: person, email: (email || '').trim(), loginId: id, phone: ph }),
       });
-      if (!result.ok || !result.data || !result.data.ok) {
+      if (result.data && result.data.error === 'not_listed') {
+        setClaim('');
+        setMode('refused');
+        setBusy(false);
+        return;
+      }
+      if (!result.ok || !result.data || !result.data.claim) {
         showError(result.data);
         setBusy(false);
         return;
       }
+      setClaim(result.data.claim);
       setPassword('');
       setPassword2('');
-      if (result.data.status === 'accepted' && result.data.account) {
-        onLogin(result.data.account);
-        return;
-      }
-      setPendingId((result.data.loginId || id).trim());
-      setMode('pending');
+      setError('');
+      setMode('password');
       setBusy(false);
     } catch (err) {
       setError(ROOM_ERRORS.generic);
@@ -863,18 +866,70 @@ function Login({ onLogin, toast }) {
     }
   };
 
-  if (mode === 'pending') {
+  const submitPassword = async (e) => {
+    e.preventDefault();
+    setError('');
+    if (!claim) { setError(ROOM_ERRORS.claim_required); return; }
+    if ((password || '').length < 8) { setError(ROOM_ERRORS.invalid_password); return; }
+    if (password !== password2) { setError(ROOM_ERRORS.password_mismatch); return; }
+    setBusy(true);
+    try {
+      const result = await roomApi('/api/room/register', {
+        method: 'POST',
+        body: JSON.stringify({ claim, password, password2 }),
+      });
+      if (!result.ok || !result.data || !result.data.account) {
+        showError(result.data);
+        setBusy(false);
+        return;
+      }
+      setPassword('');
+      setPassword2('');
+      onLogin(result.data.account);
+    } catch (err) {
+      setError(ROOM_ERRORS.generic);
+      setBusy(false);
+    }
+  };
+
+  if (mode === 'refused') {
     return (
       <div className="scroll screen-fade">
         <div className="min-h-full flex flex-col">
           {shellTop}
-          <div className="flex-1 flex flex-col px-6 pb-10" data-testid="pending-screen">
+          <div className="flex-1 flex flex-col px-6 pb-10" data-testid="refused-screen">
             <div className="label gold mt-7">The Big Dinner</div>
-            <h1 className="display text-[42px] leading-[1.02] mt-3">We've kept your request.</h1>
-            <p className="t-lg mt-6 max-w-[34ch]">Your login ID is <span className="text-[var(--ink)]">{pendingId}</span>. It stays quiet until it is accepted.</p>
-            <p className="muted t-lg mt-4 max-w-[34ch]">Only people who have been to The Big Dinner can come in. After you are accepted, sign in with this login ID and the password you chose.</p>
-            <button type="button" className="btn btn-solid w-full mt-10" onClick={goSignIn} data-testid="pending-signin">Back to sign in</button>
+            <h1 className="display text-[42px] leading-[1.02] mt-3">This number is not on the list.</h1>
+            <p className="t-lg mt-6 max-w-[34ch]">Only people who have been to The Big Dinner can come in. We could not match that phone, so a password cannot be set.</p>
+            <button type="button" className="btn btn-solid w-full mt-10" onClick={() => { setMode('request'); setError(''); }} data-testid="refused-back">Try another number</button>
             <button type="button" className="link block mt-5" onClick={() => toast("Write to room@thebigdinner.club and we'll look you up.")}>Write to us</button>
+            {credit}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (mode === 'password') {
+    return (
+      <div className="scroll screen-fade">
+        <div className="min-h-full flex flex-col">
+          {shellTop}
+          <div className="flex-1 flex flex-col px-6 pb-10">
+            <div className="label gold mt-7">The Big Dinner</div>
+            <h1 className="display text-[42px] leading-[1.02] mt-3">Choose your password.</h1>
+            <p className="display italic text-[21px] muted mt-3 max-w-[28ch]">This login ID stays linked to the phone you entered.</p>
+            <form onSubmit={submitPassword} className="mt-9" data-testid="password-form">
+              <Field label="Password">
+                <input className="field" type="password" value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="new-password" data-testid="request-password" autoFocus />
+              </Field>
+              <Field label="Confirm password" className="mt-7">
+                <input className="field" type="password" value={password2} onChange={(e) => setPassword2(e.target.value)} autoComplete="new-password" data-testid="request-password-confirm" />
+              </Field>
+              {error && <p className="t-sm mt-3" style={{ color: 'var(--accent)' }} role="alert">{error}</p>}
+              <button type="submit" className="btn btn-solid w-full mt-10" disabled={busy} data-testid="password-submit">{busy ? 'Saving' : 'Create the login'}</button>
+              <button type="button" className="link block mt-5" onClick={goRequest}>Use a different number</button>
+            </form>
             {credit}
           </div>
         </div>
@@ -890,7 +945,7 @@ function Login({ onLogin, toast }) {
           <div className="flex-1 flex flex-col px-6 pb-10">
             <div className="label gold mt-7">The Big Dinner</div>
             <h1 className="display text-[42px] leading-[1.02] mt-3">Request a login ID.</h1>
-            <p className="display italic text-[21px] muted mt-3 max-w-[28ch]">A password of your own, for people who have been to The Big Dinner.</p>
+            <p className="display italic text-[21px] muted mt-3 max-w-[28ch]">The phone from a dinner you have been to. Then you choose a password.</p>
             <form onSubmit={submitRequest} className="mt-9" data-testid="request-form">
               <Field label="Your name">
                 <input className="field" value={name} onChange={(e) => setName(e.target.value)} placeholder="As your friends say it" autoComplete="name" data-testid="request-name" autoFocus />
@@ -901,18 +956,12 @@ function Login({ onLogin, toast }) {
               <Field label="Login ID" className="mt-7">
                 <input className="field" value={loginId} onChange={(e) => setLoginId(e.target.value)} placeholder="A name you will remember" autoComplete="username" autoCapitalize="none" autoCorrect="off" spellCheck={false} data-testid="request-login-id" />
               </Field>
-              <Field label="Password" className="mt-7">
-                <input className="field" type="password" value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="new-password" data-testid="request-password" />
-              </Field>
-              <Field label="Confirm password" className="mt-7">
-                <input className="field" type="password" value={password2} onChange={(e) => setPassword2(e.target.value)} autoComplete="new-password" data-testid="request-password-confirm" />
-              </Field>
               <Field label="Phone on the dinner list" className="mt-7">
-                <input className="field" type="tel" inputMode="tel" autoComplete="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+91 98xxx xxxxx" data-testid="request-phone" />
+                <input className="field" type="tel" inputMode="tel" autoComplete="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+91 98xxx xxxxx" data-testid="request-phone" required />
               </Field>
-              <p className="faint t-sm mt-2 max-w-[36ch]">Optional. If we have no email for you, type the phone from the dinner list. We match it and send nothing.</p>
+              <p className="faint t-sm mt-2 max-w-[36ch]">Every login ID is linked to this number. Spaces and dashes are fine. Nothing is sent.</p>
               {error && <p className="t-sm mt-3" style={{ color: 'var(--accent)' }} role="alert">{error}</p>}
-              <button type="submit" className="btn btn-solid w-full mt-10" disabled={busy} data-testid="request-submit">{busy ? 'Requesting' : 'Request a login ID'}</button>
+              <button type="submit" className="btn btn-solid w-full mt-10" disabled={busy} data-testid="request-submit">{busy ? 'Checking' : 'Check this number'}</button>
               <button type="button" className="link block mt-5" onClick={goSignIn}>Already have a login ID? Sign in</button>
             </form>
             {credit}
@@ -943,7 +992,7 @@ function Login({ onLogin, toast }) {
           </form>
           <div className="mt-auto pt-10">
             <div className="w-full h-[1px]" style={{ background: 'var(--line)' }} />
-            <p className="faint t-sm leading-relaxed mt-6 max-w-[36ch]">Only people who have been to The Big Dinner can come in. Request a login ID, choose a password, and use those two from then on.</p>
+            <p className="faint t-sm leading-relaxed mt-6 max-w-[36ch]">Only people who have been to The Big Dinner can come in. Request a login ID with the phone from the dinner list, then choose a password.</p>
             <div className="label faint mt-6">Delhi &nbsp; Bombay &nbsp; Hyderabad &nbsp; London &nbsp; Dubai</div>
             <p className="display italic faint text-center mt-8" style={{ fontSize: 13, letterSpacing: '.04em' }} data-testid="credit-login">Architected by <span style={{ color: 'var(--gold)' }}>Nair &amp; Sahani</span></p>
           </div>

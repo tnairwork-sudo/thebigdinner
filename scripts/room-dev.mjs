@@ -1,33 +1,30 @@
 /**
  * Local Room server: static site plus /api/room/*.
- * Sets a dev-only accept secret when ROOM_ACCEPT_SECRET is unset.
  * Production never uses this file; Vercel runs api/room directly.
  */
 import fs from 'node:fs';
 import http from 'node:http';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { LOCAL_DEV_SECRET } from '../lib/room/secret.js';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 process.chdir(root);
 if (!process.env.ROOM_DATA_DIR) process.env.ROOM_DATA_DIR = path.join(root, '.data', 'room');
-if (!process.env.ROOM_ACCEPT_SECRET) process.env.ROOM_ACCEPT_SECRET = LOCAL_DEV_SECRET;
 
+const { default: check } = await import('../api/room/check.js');
 const { default: register } = await import('../api/room/register.js');
 const { default: login } = await import('../api/room/login.js');
 const { default: logout } = await import('../api/room/logout.js');
 const { default: session } = await import('../api/room/session.js');
 const { default: profile } = await import('../api/room/profile.js');
-const { default: accept } = await import('../api/room/accept.js');
 
 const routes = {
+  '/api/room/check': check,
   '/api/room/register': register,
   '/api/room/login': login,
   '/api/room/logout': logout,
   '/api/room/session': session,
   '/api/room/profile': profile,
-  '/api/room/accept': accept,
 };
 
 const types = {
