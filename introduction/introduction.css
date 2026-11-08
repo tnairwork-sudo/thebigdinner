@@ -1,0 +1,301 @@
+/* The Introduction. Its own page, on the same grainy paper.
+   No custom cursor. */
+
+.page-introduction {
+  min-height: 100svh;
+}
+
+.introduction {
+  padding-top: var(--s3);
+  padding-bottom: var(--s4);
+}
+
+.intro-kicker {
+  position: relative;
+  display: block;
+  margin-bottom: var(--s1);
+}
+
+.intro-kicker::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 8px);
+  width: 48px;
+  height: 1px;
+  transform: translateX(-50%);
+  background: var(--lacquer);
+  pointer-events: none;
+}
+
+.introduction .display {
+  margin-bottom: var(--s0);
+}
+
+.intro-sample,
+.intro-hint,
+.intro-note,
+.intro-error,
+.intro-wait-line,
+.intro-reason,
+.intro-meta {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 34em;
+}
+
+.intro-sample {
+  margin-top: var(--s1);
+  font-style: italic;
+  color: var(--espresso);
+}
+
+.intro-form {
+  margin-top: var(--s2);
+}
+
+.intro-field {
+  display: grid;
+  gap: 4px;
+  max-width: 420px;
+  margin: 0 auto var(--s0);
+  text-align: center;
+}
+
+.intro-field span {
+  font-family: var(--serif);
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  font-variant: small-caps;
+  font-variant-caps: all-small-caps;
+  text-transform: lowercase;
+  color: var(--espresso);
+}
+
+.intro-field i {
+  font-style: italic;
+  letter-spacing: 0.08em;
+  text-transform: none;
+  font-variant: normal;
+}
+
+.intro-field input {
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid rgba(138, 116, 94, 0.55);
+  border-radius: 0;
+  background: transparent;
+  color: var(--espresso);
+  font: inherit;
+  font-size: 1.35rem;
+  line-height: 1.4;
+  text-align: center;
+  padding: 8px 0 10px;
+}
+
+.intro-field input:focus {
+  outline: none;
+  border-bottom-color: var(--espresso);
+}
+
+.intro-hint,
+.intro-note {
+  font-style: italic;
+  font-size: 1.05rem;
+}
+
+.intro-hint {
+  margin-top: 0;
+  margin-bottom: var(--s1);
+}
+
+.intro-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--s0);
+  margin-top: var(--s1);
+}
+
+.page-introduction .intro-ask {
+  background: var(--espresso);
+  color: var(--ivory);
+  border-color: var(--espresso);
+}
+
+.page-introduction .intro-ask:hover,
+.page-introduction .intro-ask:focus-visible {
+  background: var(--gold-hover);
+  color: var(--ivory);
+  border-color: var(--gold-hover);
+}
+
+.intro-error {
+  margin-top: var(--s1);
+  color: var(--lacquer);
+}
+
+.intro-wait {
+  margin-top: var(--s3);
+}
+
+.intro-wait-line {
+  margin-top: var(--s0);
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(1.45rem, 3vw, 2rem);
+  line-height: 1.3;
+}
+
+.intro-meter {
+  display: block;
+  width: min(180px, 46vw);
+  height: 1px;
+  margin: var(--s1) auto 0;
+  background: rgba(42, 36, 32, 0.2);
+  overflow: hidden;
+}
+
+.intro-meter::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--lacquer);
+  transform-origin: left center;
+  transform: scaleX(1);
+}
+
+.intro-card {
+  --sheet: #F4E8D6;
+  --glow: radial-gradient(120% 80% at 50% 0%, rgba(255, 250, 244, 0.85), rgba(255, 250, 244, 0) 70%);
+  --sheen: linear-gradient(100deg, rgba(255, 252, 247, 0.5), rgba(255, 252, 247, 0) 58%);
+  --fall: linear-gradient(180deg, #F8F1E6 0%, #F0E2CE 62%, #E5D2BA 100%);
+  width: min(100%, 560px);
+  margin: var(--s3) auto 0;
+  padding: var(--s2) var(--s1) var(--s1);
+  border: 1px solid rgba(138, 116, 94, 0.55);
+  border-radius: 34px;
+  background-color: var(--sheet);
+  background-image: var(--grain), var(--glow), var(--sheen), var(--fall);
+  background-repeat: repeat, no-repeat, no-repeat, no-repeat;
+  background-size: 220px 220px, cover, cover, cover;
+  background-blend-mode: multiply, normal, normal, normal;
+  box-shadow: 0 12px 32px rgba(42, 36, 32, 0.08);
+}
+
+.intro-card .label {
+  position: relative;
+  display: block;
+  margin-bottom: var(--s1);
+}
+
+.intro-card .label::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 8px);
+  width: 48px;
+  height: 1px;
+  transform: translateX(-50%);
+  background: var(--lacquer);
+}
+
+.intro-card h2 {
+  margin: var(--s0) 0 0;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(2.4rem, 6vw, 3.6rem);
+  line-height: 1.15;
+  color: var(--espresso);
+}
+
+.intro-meta {
+  margin-top: var(--s0);
+  font-size: 1.15rem;
+}
+
+.intro-reason {
+  margin-top: var(--s1);
+  font-style: italic;
+  font-size: clamp(1.2rem, 2vw, 1.45rem);
+  line-height: 1.45;
+}
+
+.intro-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.4em 1em;
+  margin: var(--s1) 0 0;
+}
+
+.intro-links a {
+  font-variant: small-caps;
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.16em;
+  text-transform: lowercase;
+  text-underline-offset: 0.22em;
+}
+
+.intro-note {
+  margin-top: var(--s1);
+}
+
+.intro-card .btn-line {
+  margin-top: var(--s1);
+}
+
+.intro-return {
+  margin-top: var(--s3);
+}
+
+.intro-return a {
+  font-variant: small-caps;
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.18em;
+  text-transform: lowercase;
+  text-decoration: none;
+  border-bottom: 1px solid var(--lacquer);
+}
+
+.introduction [hidden] {
+  display: none !important;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .intro-card.is-in {
+    animation: intro-rise 0.9s ease;
+  }
+  .intro-meter::after {
+    animation: intro-fill 1.6s ease forwards;
+  }
+}
+
+@keyframes intro-rise {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes intro-fill {
+  from { transform: scaleX(0.08); }
+  to { transform: scaleX(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-card.is-in,
+  .intro-meter::after {
+    animation: none;
+  }
+}
+
+@media (max-width: 759px) {
+  .page-introduction .intro-ask {
+    background: var(--espresso);
+    color: var(--ivory);
+    border-color: var(--espresso);
+  }
+  .intro-field input {
+    font-size: 16px;
+  }
+}
