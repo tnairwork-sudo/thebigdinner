@@ -3049,3 +3049,123 @@ html.js .video-feed img.thumb {
     margin-top: var(--s1);
   }
 }
+
+/* The evening, scrolled as a film. Arrival, a door, candlelight,
+   city chapters, one moment at a time, then the last line.
+   Reduced motion never receives the cine class. */
+html.cine { scroll-behavior: auto; }
+
+html.cine.js main > section:not(.reels):not(.film):not(.city-card) {
+  transform: none;
+}
+
+html.cine .cine-arrive {
+  position: relative;
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+  padding: 0 var(--s1) var(--s1);
+}
+html.cine .cine-arrive::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: rgba(42, 36, 32, 0.22);
+  opacity: var(--night, 0);
+}
+html.cine body :is(#content) .cine-arrive .hero {
+  min-height: 0;
+  height: auto;
+  padding: 0;
+  flex: 0 0 auto;
+  background: transparent;
+  background-image: none;
+}
+html.cine .cine-arrive .film-frame {
+  position: relative;
+  width: min(920px, 100%);
+  max-width: none;
+  height: min(50svh, 520px);
+  margin: 0 auto;
+  flex: 0 0 auto;
+  overflow: hidden;
+  z-index: 1;
+}
+html.cine .cine-arrive .film-video {
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  aspect-ratio: auto;
+  object-fit: cover;
+}
+html.cine .cine-arrive .display span {
+  will-change: transform;
+}
+
+html.cine .film .film-frame {
+  position: relative;
+  top: auto;
+  margin-top: 0;
+}
+html.cine #speechFrame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(42% 62% at var(--flame-x, 18%) 52%, rgba(255, 220, 170, 0.62), rgba(255, 220, 170, 0) 68%);
+  mix-blend-mode: soft-light;
+}
+
+html.cine .city-flip {
+  position: relative;
+}
+html.cine .city-flip::before,
+html.cine .city-flip::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: var(--gate, 0%);
+  background: #E4D0B8;
+  z-index: 4;
+  pointer-events: none;
+}
+html.cine .city-flip::before { left: 0; }
+html.cine .city-flip::after { right: 0; }
+
+html.cine .reels {
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+html.cine .reels .reel-grid {
+  display: block;
+  width: 100%;
+  max-width: none;
+  overflow: hidden;
+}
+html.cine .reel-track {
+  animation: none;
+  display: flex;
+  align-items: center;
+  gap: 5vw;
+  width: max-content;
+  padding-inline: 14vw;
+}
+html.cine.js .reels.is-seen .reel-track .reel-tile,
+html.cine.js .reels .reel-track .reel-tile,
+html.cine.js .reels .reel-track .reel-tile:hover {
+  width: min(62vw, 380px);
+  flex: 0 0 auto;
+  opacity: calc(0.28 + (var(--focus, 0) * 0.72));
+  transform: scale(calc(0.74 + (var(--focus, 0) * 0.26)));
+}
+html.cine .colophon-line {
+  transform-origin: center center;
+  display: inline-block;
+}

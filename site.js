@@ -71,7 +71,7 @@
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var grid = document.querySelector(".reels .reel-grid");
 
-  if (grid && !reduceMotion) {
+  if (grid && !reduceMotion && !document.querySelector(".cine-arrive")) {
     var track = document.createElement("div");
     track.className = "reel-track";
     while (grid.firstChild) track.appendChild(grid.firstChild);
@@ -985,6 +985,7 @@
 
 (function () {
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  if (document.querySelector(".cine-arrive")) return;
   var sections = Array.prototype.filter.call(
     document.querySelectorAll("main > section"),
     function (section) {
