@@ -1,9 +1,9 @@
 /* The Big Dinner
    Royal green field. Fine film grain over a deep multi-stop light.
    Ivory #F7F2E8 on #102C1F is 13.42:1. On the lifted panel #1E4E38 it stays above 8:1.
-   The accent is lacquer red #F8384C. Deep green #081610 on it is 5.00:1.
-   Ivory #F7F2E8 on that red is 3.32:1, so button type is deep green.
-   The red on the field #102C1F is 4.04:1: large display words only. Small type stays ivory. */
+   The accent is lacquer red #F8384C for marks. Button fill is #B80E2C.
+   Ivory #F7F2E8 on #B80E2C is 6.00:1. On the hover #C20E2A it is 5.55:1.
+   The bright red on the field #102C1F is 4.04:1, for large words and rules only. */
 
 :root {
   --field: #102C1F;
@@ -11,7 +11,11 @@
   --espresso: #F8384C;
   --lacquer: #F8384C;
   --lacquer-deep: #FE4458;
-  --on-accent: #081610;
+  --btn: #B80E2C;
+  --btn-hover: #C20E2A;
+  --btn-disabled: #8E0C22;
+  --on-btn: #F7F2E8;
+  --on-accent: #F7F2E8;
   --titanium: #8FB39A;
   --velvet: transparent;
   --velvet-deep: transparent;
@@ -3185,4 +3189,108 @@ html.cine.js .reels .reel-track .reel-tile:hover {
 html.cine .colophon-line {
   transform-origin: center center;
   display: inline-block;
+}
+
+/* Filled buttons. Deep lacquer, ivory label. Marks stay the brighter red. */
+.invite-btn,
+.btn,
+.btn-line,
+.nav-toggle,
+.sound,
+.film-sound,
+.play-btn,
+.filter-tab.active,
+.filter-tab:hover {
+  background: var(--btn);
+  color: var(--on-btn);
+  border-color: var(--btn);
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: 0.16em;
+}
+.invite-btn-lg {
+  font-size: 1.12rem;
+  letter-spacing: 0.18em;
+}
+.play-btn {
+  font-size: 0;
+  letter-spacing: 0;
+}
+.play-btn svg { fill: var(--on-btn); }
+.sound[class*="is-tone-"],
+.film-sound[class*="is-tone-"] {
+  background: var(--btn);
+  color: var(--on-btn);
+  border-color: var(--btn);
+}
+.sound[class*="is-tone-"]:hover,
+.sound[class*="is-tone-"]:focus-visible,
+.film-sound[class*="is-tone-"]:hover,
+.film-sound[class*="is-tone-"]:focus-visible {
+  background: var(--btn-hover);
+  color: var(--on-btn);
+  border-color: var(--btn-hover);
+}
+.invite-btn:hover,
+.btn:hover,
+.btn-line:hover,
+.nav-toggle:hover,
+.sound:hover,
+.film-sound:hover,
+.play-btn:hover,
+.filter-tab.active:hover,
+.filter-tab:hover {
+  background: var(--btn-hover);
+  color: var(--on-btn);
+  border-color: var(--btn-hover);
+}
+.invite-btn:focus-visible,
+.btn:focus-visible,
+.btn-line:focus-visible,
+.nav-toggle:focus-visible,
+.sound:focus-visible,
+.film-sound:focus-visible,
+.play-btn:focus-visible,
+.filter-tab:focus-visible {
+  background: var(--btn-hover);
+  color: var(--on-btn);
+  border-color: var(--btn-hover);
+  outline: 2px solid var(--lacquer);
+  outline-offset: 3px;
+}
+.btn:disabled,
+.btn:disabled:hover,
+.btn:disabled:focus-visible,
+.form-notice-bar .btn:disabled,
+.form-notice-bar .btn:disabled:hover {
+  background: var(--btn-disabled);
+  color: var(--on-btn);
+  border-color: var(--btn-disabled);
+  opacity: 1;
+  outline: none;
+  cursor: not-allowed;
+}
+@media (max-width: 760px) {
+  .invite-btn,
+  .hero .invite-btn,
+  .nav .invite-btn,
+  .btn,
+  .btn-line,
+  .nav-toggle,
+  .sound,
+  .film-sound {
+    background: var(--btn);
+    color: var(--on-btn);
+    border-color: var(--btn);
+    font-weight: 700;
+    font-size: 17px;
+    letter-spacing: 0.1em;
+  }
+}
+@media (max-width: 380px) {
+  .invite-btn,
+  .hero .invite-btn {
+    font-size: 16px;
+    letter-spacing: 0.08em;
+  }
 }
