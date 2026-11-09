@@ -4,34 +4,36 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<meta name="theme-color" content="#D8C2A6">
+<meta name="theme-color" content="#102C1F">
 <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
 <title>The Big Dinner Participation Tariff</title>
 <meta property="og:title" content="The Big Dinner Participation Tariff">
 <meta name="twitter:title" content="The Big Dinner Participation Tariff">
 <style>
   :root {
-    --ivory: #F4EFE6;
-    --field: #D8C2A6;
-    --pewter: #2A2420;
-    --gold: #2A2420;
-    --gold-hover: #1F1B18;
-    --green: #F4EFE6;
-    --blush: #A89078;
+    --ivory: #F7F2E8;
+    --field: #102C1F;
+    --pewter: #F7F2E8;
+    --gold: #F8384C;
+    --gold-hover: #FE4458;
+    --btn: #B80E2C;
+    --btn-hover: #C20E2A;
+    --green: #F7F2E8;
+    --blush: #F8384C;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   html {
-    background-color: #E6D3BB;
-    background-image: url("/assets/paper-grain.svg"), radial-gradient(70% 55% at 50% 32%, rgba(255, 246, 232, 0.85), rgba(255, 246, 232, 0) 70%), linear-gradient(180deg, #F4E7D4 0%, #E7D3B9 46%, #D5C0A6 100%);
+    background-color: #102C1F;
+    background-image: url("/assets/paper-grain.svg"), radial-gradient(70% 55% at 50% 32%, rgba(92, 176, 120, 0.36), rgba(92, 176, 120, 0) 70%), linear-gradient(180deg, #1A4630 0%, #123226 46%, #0C2419 100%);
     background-repeat: repeat, no-repeat, no-repeat;
     background-size: 220px 220px, cover, cover;
     background-blend-mode: multiply, normal, normal;
     color: var(--pewter);
-    color-scheme: light;
-    accent-color: var(--espresso, #2A2420);
-    scrollbar-color: #2A2420 var(--field);
+    color-scheme: dark;
+    accent-color: #F8384C;
+    scrollbar-color: #F8384C var(--field);
   }
 
   body {
@@ -133,8 +135,9 @@
     -webkit-text-fill-color: var(--green);
     border: 1px solid var(--gold);
     font-family: inherit;
-    font-size: 0.78rem;
-    letter-spacing: 0.08em;
+    font-size: 0.92rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
     padding: 9px 18px;
     cursor: pointer;
   }
@@ -165,12 +168,13 @@
   .app {
     display: block;
     width: 100%;
-    background: var(--gold);
-    border: 1px solid var(--gold);
+    background: var(--btn);
+    border: 1px solid var(--btn);
     padding: 14px 16px;
     font-family: inherit;
-    font-size: 1rem;
-    letter-spacing: 0.04em;
+    font-size: 1.08rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
     line-height: 1.2;
     text-decoration: none;
     cursor: pointer;
@@ -188,10 +192,10 @@
 
   .app:hover,
   .app:active {
-    background: var(--gold-hover);
-    border-color: #1F1B18;
-    color: #F4EFE6 !important;
-    -webkit-text-fill-color: #F4EFE6;
+    background: var(--btn-hover);
+    border-color: var(--btn-hover);
+    color: #F7F2E8 !important;
+    -webkit-text-fill-color: #F7F2E8;
   }
 
   .app-other {
@@ -208,10 +212,10 @@
 
   .app-other:hover,
   .app-other:active {
-    background: var(--gold-hover);
-    border-color: #1F1B18;
-    color: #F4EFE6 !important;
-    -webkit-text-fill-color: #F4EFE6;
+    background: var(--btn-hover);
+    border-color: var(--btn-hover);
+    color: #F7F2E8 !important;
+    -webkit-text-fill-color: #F7F2E8;
   }
 </style>
 </head>
