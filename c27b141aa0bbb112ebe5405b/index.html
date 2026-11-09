@@ -2848,6 +2848,7 @@ function App() {
   const [scrolled, setScrolled] = useState(false);
   const [toastMsg, setToastMsg] = useState(null);
   const [drawer, setDrawer] = useState(false);
+  const [preview, setPreview] = useState(false);
   const scrollRef = useRef(null);
   const toastTimer = useRef(null);
 
@@ -2901,6 +2902,7 @@ function App() {
         const res = await fetch('/api/room/session', { credentials: 'include' });
         const data = await res.json().catch(() => null);
         if (gone) return;
+        if (data && data.preview) setPreview(true);
         if (res.ok && data && data.account && data.account.status === 'accepted') {
           enterAccount(data.account);
           return;
@@ -3087,6 +3089,7 @@ function App() {
   return (
     <Ctx.Provider value={ctx}>
       <div className={cls('phone', theme === 'dark' ? 'theme-dark' : 'theme-light')} data-theme={theme}>
+        {preview ? <div className="label faint" data-testid="preview-flag" style={{ position: 'absolute', top: 10, right: 14, zIndex: 70, pointerEvents: 'none' }}>Preview</div> : null}
         {body}
         <div id="sheet-root" />
         {toastMsg && <div className="toast" key={toastMsg} role="status" onClick={() => setToastMsg(null)}>{toastMsg}</div>}
