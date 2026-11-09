@@ -2734,3 +2734,439 @@ body :is(#content.masthead, header.masthead, .journal) {
   background-color: transparent;
   background-image: none;
 }
+
+/* Editorial motion. The paper light drifts. Sections, pictures, and the
+   lacquer hairline arrive. Buttons lift a little. Reduced motion keeps
+   the still paper. */
+@keyframes tbd-light {
+  from { background-position: 0 0, 44% 34%, center, center; }
+  to { background-position: 0 0, 56% 48%, center, center; }
+}
+@keyframes tbd-arrive {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes tbd-rule {
+  from { transform: translateX(-50%) scaleX(0); }
+  to { transform: translateX(-50%) scaleX(1); }
+}
+@keyframes tbd-veil {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+body::before,
+main > section,
+footer.colophon {
+  animation: tbd-light 36s ease-in-out infinite alternate;
+}
+
+html.js .hero .frame-copy > *,
+html.js .page-hero .frame-copy > *,
+html.js main.masthead > :is(.label, .headline, .lede, .rule-line, .note, .particulars),
+html.js header.masthead > * {
+  animation: tbd-arrive 1.05s cubic-bezier(0.22, 0.7, 0.2, 1) backwards;
+}
+html.js .hero .frame-copy > :nth-child(2),
+html.js .page-hero .frame-copy > :nth-child(2),
+html.js main.masthead > :nth-child(2),
+html.js header.masthead > :nth-child(2) { animation-delay: 0.12s; }
+html.js .hero .frame-copy > :nth-child(3),
+html.js .page-hero .frame-copy > :nth-child(3),
+html.js main.masthead > :nth-child(3),
+html.js header.masthead > :nth-child(3) { animation-delay: 0.24s; }
+html.js .hero .frame-copy > :nth-child(4),
+html.js .page-hero .frame-copy > :nth-child(4),
+html.js main.masthead > :nth-child(4),
+html.js header.masthead > :nth-child(4) { animation-delay: 0.38s; }
+html.js main.masthead > :nth-child(5),
+html.js header.masthead > :nth-child(5) { animation-delay: 0.5s; }
+html.js main.masthead > :nth-child(6) { animation-delay: 0.62s; }
+
+html.js .rules > .rule.reveal,
+html.js .chapters > .chapter.reveal,
+html.js .gallery-grid > figure.reveal {
+  transition-delay: calc(sibling-index() * 70ms);
+}
+
+html.js .film .film-frame,
+html.js .poster-run .poster-run-item,
+html.js .reels .reel-tile,
+html.js .archive .shot,
+html.js footer.colophon > * {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 1s cubic-bezier(0.22, 0.7, 0.2, 1), transform 1s cubic-bezier(0.22, 0.7, 0.2, 1), border-color 0.35s ease;
+}
+html.js .film.is-seen .film-frame,
+html.js .poster-run.is-seen .poster-run-item,
+html.js .reels.is-seen .reel-tile,
+html.js .archive.is-seen .shot,
+html.js footer.colophon.is-seen > * {
+  opacity: 1;
+  transform: none;
+}
+html.js .film.is-seen .film-frame,
+html.js .reels.is-seen .reel-tile,
+html.js .archive.is-seen .shot,
+html.js footer.colophon.is-seen > * {
+  transition-delay: calc(sibling-index() * 70ms);
+}
+
+html.js .gallery-grid figure.reveal img,
+html.js .archive .shot img {
+  transform: scale(1.035);
+  transition: transform 1.5s cubic-bezier(0.22, 0.7, 0.2, 1);
+}
+html.js .gallery-grid figure.reveal.is-in img,
+html.js .archive.is-seen .shot img {
+  transform: scale(1);
+}
+
+html.js :is(
+  .frame-copy > .label:first-child,
+  .section-intro > .label:first-child,
+  .paper-frame .split > div:first-child > .label:first-child,
+  .reels > .label:first-child,
+  .gallery-block > .label:first-child,
+  .press > .label:first-child
+)::after {
+  transform: translateX(-50%) scaleX(0);
+  transform-origin: center;
+  transition: transform 0.9s cubic-bezier(0.22, 0.7, 0.2, 1);
+}
+html.js .reveal.is-in:is(
+  .frame-copy > .label:first-child,
+  .section-intro > .label:first-child,
+  .paper-frame .split > div:first-child > .label:first-child,
+  .reels > .label:first-child,
+  .gallery-block > .label:first-child,
+  .press > .label:first-child
+)::after,
+html.js .is-seen :is(
+  .reels > .label:first-child,
+  .gallery-block > .label:first-child,
+  .press > .label:first-child
+)::after {
+  transform: translateX(-50%) scaleX(1);
+}
+html.js .hero .frame-copy > .label:first-child::after,
+html.js .page-hero .frame-copy > .label:first-child::after {
+  animation: tbd-rule 0.9s cubic-bezier(0.22, 0.7, 0.2, 1) 0.28s both;
+}
+
+.invite-btn,
+.btn,
+.btn-line,
+.nav-toggle,
+.sound,
+.film-sound,
+.filter-tab {
+  transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease, transform 0.5s cubic-bezier(0.22, 0.7, 0.2, 1), box-shadow 0.5s ease;
+}
+html.js .rule.reveal,
+html.js .chapter.reveal,
+html.js .archive .shot,
+html.js .journal .entry {
+  transition: opacity 1.05s ease, transform 1.05s cubic-bezier(0.22, 0.7, 0.2, 1), border-color 0.4s ease, box-shadow 0.5s ease, background-color 0.4s ease;
+}
+body.has-sound .approach-fill {
+  transition: transform 0.45s cubic-bezier(0.22, 0.7, 0.2, 1);
+}
+.overlay.is-open,
+.form-notice.is-open,
+.reel-lightbox.is-open {
+  animation: tbd-veil 0.45s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .invite-btn:hover,
+  .btn:hover,
+  .btn-line:hover,
+  .nav-toggle:hover,
+  .sound:hover,
+  .film-sound:hover {
+    transform: translateY(-2px);
+  }
+  html.js .reels.is-seen .reel-tile:hover,
+  html.js .poster-run.is-seen .poster-run-item:hover,
+  .poster-run-item:hover {
+    transform: translateY(-4px);
+  }
+  html.js .rule.reveal.is-in:hover,
+  html.js .chapter.reveal.is-in:hover,
+  html.js .archive.is-seen .shot:hover,
+  html.js .journal .entry.visible:hover {
+    transform: translateY(-3px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before,
+  main > section,
+  footer.colophon,
+  html.js .hero .frame-copy > *,
+  html.js .page-hero .frame-copy > *,
+  html.js main.masthead > :is(.label, .headline, .lede, .rule-line, .note, .particulars),
+  html.js header.masthead > *,
+  html.js .hero .frame-copy > .label:first-child::after,
+  html.js .page-hero .frame-copy > .label:first-child::after,
+  .overlay.is-open,
+  .form-notice.is-open,
+  .reel-lightbox.is-open {
+    animation: none;
+  }
+  html.js .film .film-frame,
+  html.js .poster-run .poster-run-item,
+  html.js .reels .reel-tile,
+  html.js .archive .shot,
+  html.js footer.colophon > *,
+  html.js .gallery-grid figure.reveal img,
+  html.js .archive .shot img,
+  .invite-btn:hover,
+  .btn:hover,
+  .btn-line:hover,
+  .nav-toggle:hover,
+  .sound:hover,
+  .film-sound:hover,
+  html.js .reels.is-seen .reel-tile:hover,
+  html.js .poster-run.is-seen .poster-run-item:hover,
+  .poster-run-item:hover,
+  body.has-sound .rule:hover,
+  body.has-sound .chapter:hover,
+  body.has-sound .shot:hover,
+  .journal .entry:hover,
+  html.js .rule.reveal.is-in:hover,
+  html.js .chapter.reveal.is-in:hover,
+  html.js .archive.is-seen .shot:hover,
+  html.js .journal .entry.visible:hover {
+    transition: none;
+    transform: none;
+    opacity: 1;
+  }
+  body.has-sound .approach-fill { transition: none; }
+  html.js :is(
+    .frame-copy > .label:first-child,
+    .section-intro > .label:first-child,
+    .paper-frame .split > div:first-child > .label:first-child,
+    .reels > .label:first-child,
+    .gallery-block > .label:first-child,
+    .press > .label:first-child
+  )::after {
+    transform: translateX(-50%) scaleX(1);
+    transition: none;
+  }
+}
+
+/* One reel of film. The homepage reels run across the empty margin and
+   keep playing. The two features cut over each other. The rest of the
+   page drifts with the scroll, like a camera, not a stack of cards. */
+@keyframes tbd-marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+@keyframes tbd-push {
+  from { transform: scale(1); }
+  to { transform: scale(1.06); }
+}
+
+html.js main > section:not(.reels):not(.film):not(.city-card) {
+  --near: 1;
+  transform: translate3d(0, calc(var(--cam, 0) * -6vh), 0) scale(calc(0.94 + (var(--near) * 0.06)));
+  transform-origin: center top;
+}
+
+html.js .film .film-frame {
+  position: sticky;
+  top: 8vh;
+  z-index: 1;
+  width: min(1080px, 94vw);
+  max-width: none;
+  opacity: 1;
+  transform: none;
+}
+html.js .film .film-frame + .film-frame {
+  z-index: 2;
+  margin-top: 16vh;
+}
+
+html.js .reels {
+  overflow: hidden;
+  padding-left: 0;
+  padding-right: 0;
+}
+html.js .reels .reel-grid {
+  display: block;
+  width: 100%;
+  max-width: none;
+  overflow: hidden;
+}
+html.js .reel-track {
+  display: flex;
+  gap: var(--s1);
+  width: max-content;
+  animation: tbd-marquee 64s linear infinite;
+}
+html.js .reel-track .reel-tile {
+  width: min(280px, 68vw);
+  flex: 0 0 auto;
+  opacity: 1;
+  transform: none;
+}
+html.js .reels:hover .reel-track,
+body.is-locked .reel-track { animation-play-state: paused; }
+html.js .reel-tile.is-echo { pointer-events: none; }
+
+html.js .video-feed video.thumb {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+html.js .video-feed img.thumb {
+  animation: tbd-push 18s ease-in-out infinite alternate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.js main > section:not(.reels):not(.film):not(.city-card),
+  html.js .film .film-frame,
+  html.js .reel-track,
+  html.js .reel-track .reel-tile,
+  html.js .video-feed img.thumb {
+    animation: none;
+    transform: none;
+    position: static;
+  }
+  html.js .reel-track {
+    flex-wrap: wrap;
+    justify-content: center;
+    width: min(1080px, 100%);
+    margin-inline: auto;
+  }
+  html.js .reel-tile.is-echo { display: none; }
+  html.js .film .film-frame,
+  html.js .film .film-frame + .film-frame {
+    width: min(760px, 100%);
+    margin-top: var(--s1);
+  }
+}
+
+/* The evening, scrolled as a film. Arrival, a door, candlelight,
+   city chapters, one moment at a time, then the last line.
+   Reduced motion never receives the cine class. */
+html.cine { scroll-behavior: auto; }
+
+html.cine.js main > section:not(.reels):not(.film):not(.city-card) {
+  transform: none;
+}
+
+html.cine .cine-arrive {
+  position: relative;
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+  padding: 4.75rem var(--s1) var(--s1);
+  box-sizing: border-box;
+}
+html.cine .cine-arrive::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: rgba(42, 36, 32, 0.22);
+  opacity: var(--night, 0);
+}
+html.cine body :is(#content) .cine-arrive .hero {
+  min-height: 0;
+  height: auto;
+  padding: 0;
+  flex: 0 0 auto;
+  background: transparent;
+  background-image: none;
+}
+html.cine .cine-arrive .film-frame {
+  position: relative;
+  width: min(920px, 92vw);
+  max-width: none;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  margin: 0 auto;
+  flex: 0 0 auto;
+  overflow: hidden;
+  z-index: 1;
+  transform-origin: center center;
+  clip-path: none;
+}
+html.cine .cine-arrive .film-video {
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  aspect-ratio: auto;
+  object-fit: contain;
+  object-position: center center;
+  background: #2A2420;
+}
+html.cine .cine-arrive .display span {
+  will-change: transform;
+}
+
+html.cine .film .film-frame {
+  position: relative;
+  top: auto;
+  margin-top: 0;
+}
+html.cine #speechFrame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(42% 62% at var(--flame-x, 18%) 52%, rgba(255, 220, 170, 0.62), rgba(255, 220, 170, 0) 68%);
+  mix-blend-mode: soft-light;
+}
+
+html.cine .city-flip {
+  position: relative;
+}
+html.cine .city-card .art img,
+html.cine .reel-tile video {
+  object-position: center center;
+}
+html.cine .reel-tile video {
+  object-fit: contain;
+  background: #2A2420;
+}
+
+html.cine .reels {
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+html.cine .reels .reel-grid {
+  display: block;
+  width: 100%;
+  max-width: none;
+  overflow: hidden;
+}
+html.cine .reel-track {
+  animation: none;
+  display: flex;
+  align-items: center;
+  gap: 5vw;
+  width: max-content;
+  padding-inline: 14vw;
+}
+html.cine.js .reels.is-seen .reel-track .reel-tile,
+html.cine.js .reels .reel-track .reel-tile,
+html.cine.js .reels .reel-track .reel-tile:hover {
+  width: min(62vw, 380px);
+  flex: 0 0 auto;
+  opacity: calc(0.28 + (var(--focus, 0) * 0.72));
+  transform: scale(calc(0.74 + (var(--focus, 0) * 0.26)));
+}
+html.cine .colophon-line {
+  transform-origin: center center;
+  display: inline-block;
+}
