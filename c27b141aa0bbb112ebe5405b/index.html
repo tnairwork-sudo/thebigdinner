@@ -14,7 +14,7 @@
   tailwind.config = {
     corePlugins: { borderRadius: false },
     theme: { extend: {
-      colors: { burnt: '#C6A36A', gold: '#C6A36A', ivory: '#F7F2E8', espresso: '#0C2419' },
+      colors: { burnt: '#FF5A3C', gold: '#FF5A3C', ivory: '#F7F2E8', espresso: '#081610' },
       fontFamily: { display: ['"Cormorant Garamond"', 'serif'], sans: ['"Inter Tight"', 'system-ui', 'sans-serif'] }
     } }
   };
@@ -36,19 +36,19 @@
   .theme-light {
     --bg: #102C1F; --bg2: #163828; --bg3: #1C4632; --surface: #214E38; --ink: #F7F2E8;
     --muted: #E6DCCB; --faint: #D4CBBA;
-    --line: rgba(247,242,232,.16); --line-strong: rgba(198,163,106,.5); --card-edge: rgba(198,163,106,.22);
-    --gold: #C6A36A; --gold-strong: #D4B57A; --gold-ink: #E0C48A;
-    --accent: #C6A36A; --accent-press: #D4B57A; --accent-ink: #E0C48A; --on-accent: #0C2419;
-    --map-land: #1C4632; --map-water: #0C2419; --map-dot: #C6A36A; --veil: rgba(8,22,16,.55);
+    --line: rgba(247,242,232,.16); --line-strong: rgba(255,90,60,.55); --card-edge: rgba(255,90,60,.28);
+    --gold: #FF5A3C; --gold-strong: #FF7A62; --gold-ink: #FF5A3C;
+    --accent: #FF5A3C; --accent-press: #FF7A62; --accent-ink: #FF5A3C; --on-accent: #081610;
+    --map-land: #1C4632; --map-water: #0C2419; --map-dot: #FF5A3C; --veil: rgba(8,22,16,.55);
     --shade: 8,22,16;
   }
   .theme-dark {
     --bg: #081610; --bg2: #0C2419; --bg3: #102C1F; --surface: #163828; --ink: #F7F2E8;
     --muted: #E6DCCB; --faint: #D4CBBA;
-    --line: rgba(247,242,232,.12); --line-strong: rgba(198,163,106,.42); --card-edge: rgba(198,163,106,.16);
-    --gold: #C6A36A; --gold-strong: #D4B57A; --gold-ink: #E0C48A;
-    --accent: #C6A36A; --accent-press: #D4B57A; --accent-ink: #E0C48A; --on-accent: #0C2419;
-    --map-land: #143528; --map-water: #081610; --map-dot: #C6A36A; --veil: rgba(0,0,0,.62);
+    --line: rgba(247,242,232,.12); --line-strong: rgba(255,90,60,.45); --card-edge: rgba(255,90,60,.22);
+    --gold: #FF5A3C; --gold-strong: #FF7A62; --gold-ink: #FF5A3C;
+    --accent: #FF5A3C; --accent-press: #FF7A62; --accent-ink: #FF5A3C; --on-accent: #081610;
+    --map-land: #143528; --map-water: #081610; --map-dot: #FF5A3C; --veil: rgba(0,0,0,.62);
     --shade: 4,12,8;
   }
 
@@ -110,7 +110,7 @@
   .tgl { width: 44px; height: 24px; border: 1px solid var(--line-strong); position: relative; flex-shrink: 0; transition: background .2s ease-out, border-color .2s ease-out; }
   .tgl span { position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; background: var(--faint); transition: transform .22s cubic-bezier(.2,.8,.2,1), background .2s ease-out; }
   .tgl.on { background: var(--gold-strong); border-color: var(--gold-strong); }
-  .tgl.on span { transform: translateX(20px); background: #0C2419; }
+  .tgl.on span { transform: translateX(20px); background: #081610; }
 
   /* tab bar */
   .tabbar { position: relative; }
@@ -128,8 +128,8 @@
   .wordmark span { display: block; transform: scaleX(.8); letter-spacing: .01em; }
   .wordmark i { display: block; font-weight: 500; font-size: .62em; line-height: .78; }
   .type-cover { background: radial-gradient(120% 90% at 50% 40%, #1A4630 0%, #123226 60%, #0C2419 100%); }
-  .type-frame { position: absolute; inset: 14px; border: 1px solid rgba(184,147,47,.6); pointer-events: none; }
-  .type-frame::after { content: ''; position: absolute; inset: 4px; border: 1px solid rgba(184,147,47,.28); }
+  .type-frame { position: absolute; inset: 14px; border: 1px solid rgba(255,90,60,.7); pointer-events: none; }
+  .type-frame::after { content: ''; position: absolute; inset: 4px; border: 1px solid rgba(255,90,60,.35); }
   .poster-well { background: var(--bg3); }
 
   /* overlays */
@@ -174,7 +174,7 @@
     *, *::before, *::after { animation-duration: .01ms !important; animation-delay: 0ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
     .pulse { display: none; }
   }
-  .boot { color: #E0C48A; font-family: 'Cormorant Garamond', Georgia, serif; letter-spacing: .4em; font-size: 15px; }
+  .boot { color: #FF5A3C; font-family: 'Cormorant Garamond', Georgia, serif; letter-spacing: .4em; font-size: 15px; }
   .warm-wash { background: linear-gradient(180deg, #1A4630 0%, #123226 38%, #102C1F 72%); }
   .theme-dark .warm-wash { background: linear-gradient(180deg, #102C1F 0%, #0C2419 40%, #081610 75%); }
   .clamp2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
@@ -196,11 +196,11 @@
   .next-hook { border-left: 2px solid var(--accent); padding: 10px 12px; background: var(--bg3); }
   .gtabs { display: grid; grid-template-columns: repeat(5,1fr); border-bottom: 1px solid var(--line-strong); }
   .gtabs button { padding: 10px 0; font-size: 12.5px; color: var(--faint); border-bottom: 2px solid transparent; margin-bottom: -1px; } .gtabs button.on { color: var(--ink); border-color: var(--gold); font-weight: 600; }
-  .quest { border: 1px solid var(--line-strong); padding: 14px; background: var(--bg2); transition: all .3s; } .quest.done { border-color: var(--gold); background: var(--bg3); } .quest.done .t-md { color: var(--gold-ink); }
+  .quest { border: 1px solid var(--line-strong); padding: 14px; background: var(--bg2); transition: all .3s; } .quest.done { border-color: var(--gold); background: var(--bg3); } .quest.done .t-md { color: var(--ink); }
   .streak-box { display: flex; gap: 14px; align-items: center; border: 1px solid var(--line-strong); padding: 14px; }
   .sday { flex: 1; height: 4px; display: block; }
   .chest { border: 1px solid var(--gold); padding: 16px; background: linear-gradient(135deg, var(--bg2), var(--bg3)); }
-  .chest-box { width: 58px; height: 58px; display: flex; align-items: center; justify-content: center; font-size: 28px; color: #0C2419; background: #C6A36A; flex-shrink: 0; }
+  .chest-box { width: 58px; height: 58px; display: flex; align-items: center; justify-content: center; font-size: 28px; color: #081610; background: #FF5A3C; flex-shrink: 0; }
   .chest-box.shake { animation: shake .15s linear infinite; } .chest-box.opened { animation: popin .5s cubic-bezier(.2,1.6,.4,1); }
   @keyframes shake { 0%{transform:rotate(-6deg)} 50%{transform:rotate(6deg)} 100%{transform:rotate(-6deg)} }
   @keyframes popin { from { transform: scale(.4) } to { transform: scale(1) } }
@@ -208,13 +208,13 @@
   .medal.locked svg { opacity: .7; } .medal svg { filter: drop-shadow(0 4px 8px rgba(0,0,0,.12)); }
   .rank { border: 1px solid var(--line); padding: 14px; opacity: .72; } .rank.open { opacity: 1; border-color: var(--line-strong); } .rank.cur { border-color: var(--gold); background: var(--bg2); }
   .season-hero { padding: 20px; background: linear-gradient(135deg,#081610,#143528 60%,#1C4632); position: relative; overflow: hidden; }
-  .season-hero::after { content: '✦ ✦ ✦'; position: absolute; right: 14px; top: 12px; color: #F3D98B; letter-spacing: .4em; opacity: .7; }
+  .season-hero::after { content: '✦ ✦ ✦'; position: absolute; right: 14px; top: 12px; color: #FF5A3C; letter-spacing: .4em; opacity: .7; }
   .tier { display: flex; align-items: center; gap: 12px; padding: 12px; border: 1px solid var(--line); opacity: .6; } .tier.open { opacity: 1; border-color: var(--gold); }
   .tier-n { width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--gold); font-family: 'Cormorant Garamond', serif; font-size: 16px; color: var(--gold-ink); }
   .brow { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); } .brow.mine { background: var(--bg3); padding-left: 8px; padding-right: 8px; border: 1px solid var(--gold); }
   .rank-n { width: 22px; text-align: center; font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--faint); } .rank-n.top { color: var(--gold-strong); font-weight: 600; }
   .xp-stack { position: absolute; top: 64px; left: 0; right: 0; display: flex; flex-direction: column; align-items: center; gap: 6px; z-index: 70; pointer-events: none; }
-  .xp-toast { background: #C6A36A; color: #0C2419; padding: 8px 16px; display: flex; gap: 10px; align-items: baseline; box-shadow: 0 10px 24px rgba(8,22,16,.35); animation: xpIn 2.3s cubic-bezier(.2,.8,.2,1) both; }
+  .xp-toast { background: #FF5A3C; color: #081610; padding: 8px 16px; display: flex; gap: 10px; align-items: baseline; box-shadow: 0 10px 24px rgba(8,22,16,.35); animation: xpIn 2.3s cubic-bezier(.2,.8,.2,1) both; }
   .xp-toast b { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; } .xp-toast span { font-size: 11px; letter-spacing: .06em; text-transform: uppercase; opacity: .9; }
   @keyframes xpIn { 0% { opacity: 0; transform: translateY(14px) scale(.8) } 12% { opacity: 1; transform: translateY(0) scale(1.08) } 20% { transform: scale(1) } 80% { opacity: 1 } 100% { opacity: 0; transform: translateY(-18px) } }
   .unlock { position: absolute; inset: 0; z-index: 80; background: rgba(23,20,18,.55); display: flex; align-items: center; justify-content: center; padding: 28px; animation: toastIn .25s both; }
@@ -661,7 +661,7 @@ function EditionCover({ e, className = '' }) {
       <span className="type-frame" />
       <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-8">
         <Wordmark size={30} />
-        <span className="block w-16 h-[1px] mt-4" style={{ background: '#B8932F' }} />
+        <span className="block w-16 h-[1px] mt-4" style={{ background: '#FF5A3C' }} />
         <div className="display italic text-[26px] mt-3" style={{ color: '#6E1F23' }}>{e.city}</div>
         <div className="label mt-2" style={{ color: '#6E5A2A' }}>Edition {e.no} &middot; {e.date}</div>
       </div>
@@ -2431,10 +2431,10 @@ function SeasonPanel() {
   return (
     <div>
       <div className="season-hero" data-testid="season">
-        <div className="label" style={{ color: '#F3D98B' }}>Season pass</div>
+        <div className="label" style={{ color: '#FF5A3C' }}>Season pass</div>
         <div className="display text-[38px] leading-none mt-2" style={{ color: '#FAF6EE' }}>Diwali Season</div>
         <div className="t-sm mt-2" style={{ color: '#E8DCC6' }} data-testid="season-countdown">Ends in {fmtLeft(SEASON.ends - now)}. Rewards you don’t claim go with it.</div>
-        <div className="mt-4"><Bar v={g.seasonXp % SEASON.per} max={SEASON.per} color="#F3D98B" /></div>
+        <div className="mt-4"><Bar v={g.seasonXp % SEASON.per} max={SEASON.per} color="#FF5A3C" /></div>
         <div className="t-xs mt-2" style={{ color: '#E8DCC6' }}>Tier {Math.min(tier, 10)} of 10 · {SEASON.per - (g.seasonXp % SEASON.per)} XP to the next</div>
       </div>
       <div className="mt-6 space-y-2">

@@ -1,22 +1,22 @@
 /* The Big Dinner
    Royal green field. Fine film grain over a deep multi-stop light.
    Ivory #F7F2E8 on #102C1F is 13.42:1. On the lifted panel #1E4E38 it stays above 8:1.
-   Antique gold #C6A36A is the accent. Deep green #0C2419 on that gold is 6.90:1.
-   Gold text #E0C48A on #102C1F is 8.87:1. Type metrics stay on the production scale. */
+   The accent is coral vermilion #FF5A3C. Deep green #081610 on it is 5.99:1.
+   The same coral on the field #102C1F is 4.84:1. Ivory on the coral is 2.78:1, so it is not used for type. */
 
 :root {
   --field: #102C1F;
   --ivory: #F7F2E8;
-  --espresso: #C6A36A;
-  --lacquer: #C6A36A;
-  --lacquer-deep: #D4B57A;
-  --on-accent: #0C2419;
+  --espresso: #FF5A3C;
+  --lacquer: #FF5A3C;
+  --lacquer-deep: #FF7A62;
+  --on-accent: #081610;
   --titanium: #8FB39A;
   --velvet: transparent;
   --velvet-deep: transparent;
-  --velvet-ink: #0C2419;
-  --blush: #E0C48A;
-  --gold-hover: #D4B57A;
+  --velvet-ink: #081610;
+  --blush: #FF5A3C;
+  --gold-hover: #FF7A62;
   --pink: transparent;
   --pink-deep: #8FB39A;
   --mint: transparent;
@@ -30,8 +30,8 @@
   --cream: transparent;
   --cream-2: transparent;
   --mustard: transparent;
-  --gold: #C6A36A;
-  --gold-2: #A8884C;
+  --gold: #FF5A3C;
+  --gold-2: #E14B32;
   --ink: #F7F2E8;
   --ink-soft: #E6DCCB;
   --line: rgba(247, 242, 232, 0.28);
@@ -1302,7 +1302,7 @@ html, body { background: var(--velvet); }
   padding: var(--s0);
   border: 1px solid var(--line);
   background: var(--velvet);
-  box-shadow: inset 0 0 0 1px rgba(198, 163, 106, 0.35);
+  box-shadow: inset 0 0 0 1px rgba(255, 90, 60, 0.35);
 }
 .reel-tile video {
   width: 100%;
@@ -1671,10 +1671,10 @@ html, body { background: var(--velvet); }
 /* Calm gallery field. One hairline, wide space, no ornament. */
 body::before { content: none; }
 header.nav {
-  border-bottom: 1px solid rgba(198, 163, 106, 0.45);
+  border-bottom: 1px solid rgba(255, 90, 60, 0.45);
   box-shadow: none;
 }
-.colophon { border-top: 1px solid rgba(198, 163, 106, 0.45); }
+.colophon { border-top: 1px solid rgba(255, 90, 60, 0.45); }
 .frame, .paper-frame, .sheet, .lineage, .archive, .poster-run, .reels, .colophon, .masthead, .journal, .gallery-block, .press {
   box-shadow: none;
 }
@@ -1710,7 +1710,7 @@ p.label { display: block; }
 }
 .poster-run { padding: 0 var(--s1) var(--s3); }
 .poster-run-item {
-  border: 1px solid rgba(198, 163, 106, 0.45);
+  border: 1px solid rgba(255, 90, 60, 0.45);
   background: var(--velvet);
   box-shadow: none;
   padding: 0;
@@ -1718,7 +1718,7 @@ p.label { display: block; }
 .reels { padding: 0 var(--s1) var(--s3); }
 .reel-grid { gap: var(--s1); }
 .reel-tile {
-  border: 1px solid rgba(198, 163, 106, 0.45);
+  border: 1px solid rgba(255, 90, 60, 0.45);
   box-shadow: none;
   background: var(--velvet);
 }
@@ -1826,7 +1826,7 @@ body.has-sound > footer.colophon {
   position: relative;
   width: min(1080px, 100%);
   margin: 0 auto;
-  border: 1px solid rgba(198, 163, 106, 0.45);
+  border: 1px solid rgba(255, 90, 60, 0.45);
   background: var(--velvet);
   line-height: 0;
 }
@@ -2083,7 +2083,7 @@ html { background-color: #081610; }
   pointer-events: none;
 }
 
-/* Homepage gestures. Royal green field, ivory ink, antique gold used sparingly.
+/* Homepage gestures. Royal green field, ivory ink, coral vermilion used sparingly.
    No custom cursor. */
 
 body.has-sound .approach {
@@ -2118,7 +2118,7 @@ body.has-sound .approach-fill {
   display: block;
   width: 100%;
   height: 100%;
-  background: #C6A36A;
+  background: #FF5A3C;
   transform: scaleX(var(--p, 0));
   transform-origin: left center;
 }
@@ -2137,7 +2137,7 @@ body.has-sound .approach-ticks li {
   width: 7px;
   height: 7px;
   box-sizing: border-box;
-  border: 1px solid rgba(198, 163, 106, 0.72);
+  border: 1px solid rgba(255, 90, 60, 0.72);
   border-radius: 50%;
   background: #163828;
 }
@@ -2146,8 +2146,8 @@ body.has-sound .approach-ticks li.is-lit {
   border-color: #F7F2E8;
 }
 body.has-sound .approach-ticks li.is-lit:last-child {
-  background: #C6A36A;
-  border-color: #C6A36A;
+  background: #FF5A3C;
+  border-color: #FF5A3C;
 }
 
 body.has-sound .frame.city-card { overflow: visible; }
@@ -2171,7 +2171,7 @@ body.has-sound .city-back {
   display: grid;
   place-items: center;
   border-radius: var(--r-lg);
-  border: 1px solid rgba(198, 163, 106, 0.45);
+  border: 1px solid rgba(255, 90, 60, 0.45);
   background-image: linear-gradient(180deg, #163828 0%, #102C1F 100%);
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
@@ -2181,8 +2181,8 @@ body.has-sound .city-seal {
   width: 54px;
   height: 54px;
   border-radius: 50%;
-  border: 1px solid #C6A36A;
-  box-shadow: inset 0 0 0 7px rgba(198, 163, 106, 0.28);
+  border: 1px solid #FF5A3C;
+  box-shadow: inset 0 0 0 7px rgba(255, 90, 60, 0.28);
 }
 body.has-sound .city-flip .art {
   width: 100%;
@@ -2251,13 +2251,13 @@ body.has-sound .keepsake-seal {
   width: 46px;
   height: 46px;
   border-radius: 50%;
-  border: 1px solid rgba(198, 163, 106, 0.72);
-  box-shadow: inset 0 0 0 6px rgba(198, 163, 106, 0.35);
+  border: 1px solid rgba(255, 90, 60, 0.72);
+  box-shadow: inset 0 0 0 6px rgba(255, 90, 60, 0.35);
   background: transparent;
 }
 body.has-sound .keepsake.is-kept .keepsake-seal {
-  background: #C6A36A;
-  border-color: #C6A36A;
+  background: #FF5A3C;
+  border-color: #FF5A3C;
 }
 body.has-sound .keepsake-word {
   font-family: var(--serif);
@@ -2279,14 +2279,14 @@ body.has-sound #crest {
 body.has-sound #crest.is-holding,
 body.has-sound .wordmark.is-holding,
 body.has-sound .hero .display.is-holding {
-  box-shadow: 0 0 0 1px #C6A36A;
+  box-shadow: 0 0 0 1px #FF5A3C;
 }
 #philosophyLine.is-shimmer {
   animation: tbd-shimmer 1.7s ease;
 }
 #philosophyLine.is-kept-line {
   text-decoration: underline;
-  text-decoration-color: #C6A36A;
+  text-decoration-color: #FF5A3C;
   text-underline-offset: 0.18em;
 }
 
@@ -2305,7 +2305,7 @@ body.has-sound .guest-quiz > .wrap-narrow > .label::after {
   width: 48px;
   height: 1px;
   transform: translateX(-50%);
-  background: #C6A36A;
+  background: #FF5A3C;
   pointer-events: none;
 }
 body.has-sound .guest-step,
@@ -2359,7 +2359,7 @@ body.has-sound .guest-card {
   width: min(100%, 560px);
   margin: var(--s1) auto 0;
   padding: var(--s1);
-  border: 1px solid rgba(198, 163, 106, 0.45);
+  border: 1px solid rgba(255, 90, 60, 0.45);
   border-radius: var(--r-lg);
   background-image: linear-gradient(180deg, #163828 0%, #102C1F 100%);
   color: #F7F2E8;
@@ -2422,36 +2422,36 @@ body.has-sound .is-pulse-flourish { animation: tbd-flourish 0.96s ease; }
   height: 4px;
   margin: -2px 0 0 -2px;
   border-radius: 50%;
-  background: #C6A36A;
+  background: #FF5A3C;
   opacity: 0;
   animation: tbd-mote 1.05s ease forwards;
 }
 
 @keyframes tbd-shimmer {
-  0% { text-shadow: 0 0 0 rgba(198, 163, 106, 0); color: #F7F2E8; }
-  35% { text-shadow: 0 0 16px rgba(198, 163, 106, 0.9); color: #E0C48A; }
-  100% { text-shadow: 0 0 0 rgba(198, 163, 106, 0); color: #F7F2E8; }
+  0% { text-shadow: 0 0 0 rgba(255, 90, 60, 0); color: #F7F2E8; }
+  35% { text-shadow: 0 0 16px rgba(255, 90, 60, 0.9); color: #FF5A3C; }
+  100% { text-shadow: 0 0 0 rgba(255, 90, 60, 0); color: #F7F2E8; }
 }
 @keyframes tbd-pulse {
-  0% { box-shadow: 0 0 0 0 rgba(198, 163, 106, 0); }
-  40% { box-shadow: 0 0 0 6px rgba(198, 163, 106, 0.45); }
-  100% { box-shadow: 0 0 0 0 rgba(198, 163, 106, 0); }
+  0% { box-shadow: 0 0 0 0 rgba(255, 90, 60, 0); }
+  40% { box-shadow: 0 0 0 6px rgba(255, 90, 60, 0.45); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 90, 60, 0); }
 }
 @keyframes tbd-pulse-2 {
-  0% { box-shadow: 0 0 0 0 rgba(198, 163, 106, 0); }
-  16% { box-shadow: 0 0 0 5px rgba(198, 163, 106, 0.5); }
-  34% { box-shadow: 0 0 0 0 rgba(198, 163, 106, 0); }
-  56% { box-shadow: 0 0 0 7px rgba(198, 163, 106, 0.4); }
-  100% { box-shadow: 0 0 0 0 rgba(198, 163, 106, 0); }
+  0% { box-shadow: 0 0 0 0 rgba(255, 90, 60, 0); }
+  16% { box-shadow: 0 0 0 5px rgba(255, 90, 60, 0.5); }
+  34% { box-shadow: 0 0 0 0 rgba(255, 90, 60, 0); }
+  56% { box-shadow: 0 0 0 7px rgba(255, 90, 60, 0.4); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 90, 60, 0); }
 }
 @keyframes tbd-pulse-3 {
-  0% { box-shadow: 0 0 0 0 rgba(198, 163, 106, 0); }
-  12% { box-shadow: 0 0 0 3px rgba(198, 163, 106, 0.4); }
-  28% { box-shadow: 0 0 0 0 rgba(198, 163, 106, 0); }
-  44% { box-shadow: 0 0 0 6px rgba(198, 163, 106, 0.5); }
-  62% { box-shadow: 0 0 0 0 rgba(198, 163, 106, 0); }
-  78% { box-shadow: 0 0 0 9px rgba(198, 163, 106, 0.35); }
-  100% { box-shadow: 0 0 0 0 rgba(198, 163, 106, 0); }
+  0% { box-shadow: 0 0 0 0 rgba(255, 90, 60, 0); }
+  12% { box-shadow: 0 0 0 3px rgba(255, 90, 60, 0.4); }
+  28% { box-shadow: 0 0 0 0 rgba(255, 90, 60, 0); }
+  44% { box-shadow: 0 0 0 6px rgba(255, 90, 60, 0.5); }
+  62% { box-shadow: 0 0 0 0 rgba(255, 90, 60, 0); }
+  78% { box-shadow: 0 0 0 9px rgba(255, 90, 60, 0.35); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 90, 60, 0); }
 }
 @keyframes tbd-firm {
   0% { box-shadow: 0 0 0 0 rgba(247, 242, 232, 0); }
@@ -2459,13 +2459,13 @@ body.has-sound .is-pulse-flourish { animation: tbd-flourish 0.96s ease; }
   100% { box-shadow: 0 0 0 0 rgba(247, 242, 232, 0); }
 }
 @keyframes tbd-flourish {
-  0% { box-shadow: 0 0 0 0 rgba(198, 163, 106, 0); }
-  18% { box-shadow: 0 0 0 4px rgba(198, 163, 106, 0.45); }
-  36% { box-shadow: 0 0 0 0 rgba(198, 163, 106, 0); }
-  55% { box-shadow: 0 0 0 8px rgba(198, 163, 106, 0.4); }
-  74% { box-shadow: 0 0 0 0 rgba(198, 163, 106, 0); }
-  88% { box-shadow: 0 0 0 12px rgba(198, 163, 106, 0.28); }
-  100% { box-shadow: 0 0 0 0 rgba(198, 163, 106, 0); }
+  0% { box-shadow: 0 0 0 0 rgba(255, 90, 60, 0); }
+  18% { box-shadow: 0 0 0 4px rgba(255, 90, 60, 0.45); }
+  36% { box-shadow: 0 0 0 0 rgba(255, 90, 60, 0); }
+  55% { box-shadow: 0 0 0 8px rgba(255, 90, 60, 0.4); }
+  74% { box-shadow: 0 0 0 0 rgba(255, 90, 60, 0); }
+  88% { box-shadow: 0 0 0 12px rgba(255, 90, 60, 0.28); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 90, 60, 0); }
 }
 @keyframes tbd-mote {
   0% { opacity: 0; transform: translate(0, 6px) scale(0.5); }
@@ -2523,7 +2523,7 @@ body.has-sound .is-pulse-flourish { animation: tbd-flourish 0.96s ease; }
 
 /* Grainy radiance. Fine film grain over a deep royal green.
    Sections keep their own fall of light. Ivory type and photographs sit above it.
-   Antique gold stays on the invitation, the hairline, and the current mark. */
+   Coral vermilion stays on the invitation, the hairline, and the current mark. */
 :root {
   --grain: url("/assets/paper-grain.svg");
   --sheet: #102C1F;
