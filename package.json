@@ -1,0 +1,12 @@
+{
+  "name": "thebigdinner",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test --test-concurrency=1 lib/room/accounts.test.js",
+    "dev:room": "node scripts/room-dev.mjs"
+  },
+  "dependencies": {
+    "@vercel/blob": "^2.3.1"
+  }
+}
