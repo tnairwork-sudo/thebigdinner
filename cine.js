@@ -9,7 +9,7 @@
   document.documentElement.classList.add("cine");
 
   var lenis = new window.Lenis({
-    duration: 1.05,
+    duration: 1.2,
     smoothWheel: true,
     syncTouch: false
   });
@@ -44,24 +44,26 @@
 
   var mobile = window.matchMedia("(max-width: 759px)").matches;
 
+  gsap.set(door, { clipPath: "none" });
   gsap.timeline({
+    defaults: { ease: "power1.out" },
     scrollTrigger: {
       trigger: arrive,
       start: "top top",
-      end: mobile ? "+=90%" : "+=120%",
+      end: mobile ? "+=85%" : "+=110%",
       pin: true,
-      scrub: 0.45,
+      scrub: 0.75,
       anticipatePin: 1,
       invalidateOnRefresh: true,
       onUpdate: function (self) {
-        playFeature(self.progress > 0.58);
+        playFeature(self.progress > 0.98);
         arrive.style.setProperty("--night", self.progress.toFixed(3));
       }
     }
   })
-    .fromTo(door, { clipPath: "inset(0% 40% 0% 40%)" }, { clipPath: "inset(0% 0% 0% 0%)", ease: "none" }, 0)
-    .to(lineA, { y: mobile ? -10 : -16, ease: "none" }, 0)
-    .to(lineB, { y: mobile ? 12 : 22, ease: "none" }, 0);
+    .fromTo(door, { autoAlpha: 0, scale: 0.96 }, { autoAlpha: 1, scale: 1 }, 0)
+    .to(lineA, { y: mobile ? 6 : 8 }, 0)
+    .to(lineB, { y: mobile ? 16 : 22 }, 0);
 
   var speech = document.getElementById("speechFrame");
   if (speech) {
@@ -91,18 +93,14 @@
   }
 
   gsap.utils.toArray(".city-card .city-flip").forEach(function (flip) {
-    var state = { gate: 42 };
-    gsap.to(state, {
-      gate: 0,
-      ease: "none",
+    gsap.fromTo(flip, { autoAlpha: 0 }, {
+      autoAlpha: 1,
+      ease: "power1.out",
       scrollTrigger: {
         trigger: flip.closest(".city-card"),
-        start: "top 88%",
-        end: "top 46%",
-        scrub: true
-      },
-      onUpdate: function () {
-        flip.style.setProperty("--gate", state.gate.toFixed(1) + "%");
+        start: "top 92%",
+        end: "top 58%",
+        scrub: 0.6
       }
     });
   });
@@ -161,7 +159,7 @@
           return "+=" + Math.max(window.innerHeight * 0.8, track.scrollWidth - window.innerWidth);
         },
         pin: true,
-        scrub: 0.4,
+        scrub: 0.65,
         anticipatePin: 1,
         invalidateOnRefresh: true,
         onUpdate: focusMoments,
