@@ -14,7 +14,7 @@
   tailwind.config = {
     corePlugins: { borderRadius: false },
     theme: { extend: {
-      colors: { burnt: '#FF5A3C', gold: '#FF5A3C', ivory: '#F7F2E8', espresso: '#081610' },
+      colors: { burnt: '#F8384C', gold: '#F8384C', ivory: '#F7F2E8', espresso: '#081610' },
       fontFamily: { display: ['"Cormorant Garamond"', 'serif'], sans: ['"Inter Tight"', 'system-ui', 'sans-serif'] }
     } }
   };
@@ -36,19 +36,19 @@
   .theme-light {
     --bg: #102C1F; --bg2: #163828; --bg3: #1C4632; --surface: #214E38; --ink: #F7F2E8;
     --muted: #E6DCCB; --faint: #D4CBBA;
-    --line: rgba(247,242,232,.16); --line-strong: rgba(255,90,60,.55); --card-edge: rgba(255,90,60,.28);
-    --gold: #FF5A3C; --gold-strong: #FF7A62; --gold-ink: #FF5A3C;
-    --accent: #FF5A3C; --accent-press: #FF7A62; --accent-ink: #FF5A3C; --on-accent: #081610;
-    --map-land: #1C4632; --map-water: #0C2419; --map-dot: #FF5A3C; --veil: rgba(8,22,16,.55);
+    --line: rgba(247,242,232,.16); --line-strong: rgba(248,56,76,.55); --card-edge: rgba(248,56,76,.28);
+    --gold: #F8384C; --gold-strong: #FE4458; --gold-ink: #F7F2E8;
+    --accent: #F8384C; --accent-press: #FE4458; --accent-ink: #F7F2E8; --on-accent: #081610;
+    --map-land: #1C4632; --map-water: #0C2419; --map-dot: #F8384C; --veil: rgba(8,22,16,.55);
     --shade: 8,22,16;
   }
   .theme-dark {
     --bg: #081610; --bg2: #0C2419; --bg3: #102C1F; --surface: #163828; --ink: #F7F2E8;
     --muted: #E6DCCB; --faint: #D4CBBA;
-    --line: rgba(247,242,232,.12); --line-strong: rgba(255,90,60,.45); --card-edge: rgba(255,90,60,.22);
-    --gold: #FF5A3C; --gold-strong: #FF7A62; --gold-ink: #FF5A3C;
-    --accent: #FF5A3C; --accent-press: #FF7A62; --accent-ink: #FF5A3C; --on-accent: #081610;
-    --map-land: #143528; --map-water: #081610; --map-dot: #FF5A3C; --veil: rgba(0,0,0,.62);
+    --line: rgba(247,242,232,.12); --line-strong: rgba(248,56,76,.45); --card-edge: rgba(248,56,76,.22);
+    --gold: #F8384C; --gold-strong: #FE4458; --gold-ink: #F7F2E8;
+    --accent: #F8384C; --accent-press: #FE4458; --accent-ink: #F7F2E8; --on-accent: #081610;
+    --map-land: #143528; --map-water: #081610; --map-dot: #F8384C; --veil: rgba(0,0,0,.62);
     --shade: 4,12,8;
   }
 
@@ -128,8 +128,8 @@
   .wordmark span { display: block; transform: scaleX(.8); letter-spacing: .01em; }
   .wordmark i { display: block; font-weight: 500; font-size: .62em; line-height: .78; }
   .type-cover { background: radial-gradient(120% 90% at 50% 40%, #1A4630 0%, #123226 60%, #0C2419 100%); }
-  .type-frame { position: absolute; inset: 14px; border: 1px solid rgba(255,90,60,.7); pointer-events: none; }
-  .type-frame::after { content: ''; position: absolute; inset: 4px; border: 1px solid rgba(255,90,60,.35); }
+  .type-frame { position: absolute; inset: 14px; border: 1px solid rgba(248,56,76,.7); pointer-events: none; }
+  .type-frame::after { content: ''; position: absolute; inset: 4px; border: 1px solid rgba(248,56,76,.35); }
   .poster-well { background: var(--bg3); }
 
   /* overlays */
@@ -174,7 +174,7 @@
     *, *::before, *::after { animation-duration: .01ms !important; animation-delay: 0ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
     .pulse { display: none; }
   }
-  .boot { color: #FF5A3C; font-family: 'Cormorant Garamond', Georgia, serif; letter-spacing: .4em; font-size: 15px; }
+  .boot { color: #F7F2E8; font-family: 'Cormorant Garamond', Georgia, serif; letter-spacing: .4em; font-size: 15px; }
   .warm-wash { background: linear-gradient(180deg, #1A4630 0%, #123226 38%, #102C1F 72%); }
   .theme-dark .warm-wash { background: linear-gradient(180deg, #102C1F 0%, #0C2419 40%, #081610 75%); }
   .clamp2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
@@ -186,7 +186,7 @@
   .gbar i { background-color: var(--gold); }
   @keyframes shimmer { from { background-position: 200% 0 } to { background-position: -200% 0 } }
   .hud, .gcard { background: var(--bg2); border: 1px solid var(--gold); padding: 18px; box-shadow: 0 10px 30px rgba(184,147,47,.12); }
-  .lvl-ring { width: 46px; height: 46px; display: inline-flex; align-items: center; justify-content: center; border: 2px solid var(--gold); color: var(--gold-ink); font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 600; }
+  .lvl-ring { width: 46px; height: 46px; display: inline-flex; align-items: center; justify-content: center; border: 2px solid var(--gold); color: var(--gold); font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 600; }
   .lvl-ring.big { width: 96px; height: 96px; font-size: 46px; }
   .flame b { font-weight: 600; color: var(--accent-ink); font-size: 16px; } .flame svg { animation: flick 1.4s ease-in-out infinite alternate; transform-origin: 50% 90%; }
   @keyframes flick { from { transform: scale(1) rotate(-3deg) } to { transform: scale(1.12) rotate(3deg) } }
@@ -200,7 +200,7 @@
   .streak-box { display: flex; gap: 14px; align-items: center; border: 1px solid var(--line-strong); padding: 14px; }
   .sday { flex: 1; height: 4px; display: block; }
   .chest { border: 1px solid var(--gold); padding: 16px; background: linear-gradient(135deg, var(--bg2), var(--bg3)); }
-  .chest-box { width: 58px; height: 58px; display: flex; align-items: center; justify-content: center; font-size: 28px; color: #081610; background: #FF5A3C; flex-shrink: 0; }
+  .chest-box { width: 58px; height: 58px; display: flex; align-items: center; justify-content: center; font-size: 28px; color: #081610; background: #F8384C; flex-shrink: 0; }
   .chest-box.shake { animation: shake .15s linear infinite; } .chest-box.opened { animation: popin .5s cubic-bezier(.2,1.6,.4,1); }
   @keyframes shake { 0%{transform:rotate(-6deg)} 50%{transform:rotate(6deg)} 100%{transform:rotate(-6deg)} }
   @keyframes popin { from { transform: scale(.4) } to { transform: scale(1) } }
@@ -208,13 +208,13 @@
   .medal.locked svg { opacity: .7; } .medal svg { filter: drop-shadow(0 4px 8px rgba(0,0,0,.12)); }
   .rank { border: 1px solid var(--line); padding: 14px; opacity: .72; } .rank.open { opacity: 1; border-color: var(--line-strong); } .rank.cur { border-color: var(--gold); background: var(--bg2); }
   .season-hero { padding: 20px; background: linear-gradient(135deg,#081610,#143528 60%,#1C4632); position: relative; overflow: hidden; }
-  .season-hero::after { content: '✦ ✦ ✦'; position: absolute; right: 14px; top: 12px; color: #FF5A3C; letter-spacing: .4em; opacity: .7; }
+  .season-hero::after { content: '✦ ✦ ✦'; position: absolute; right: 14px; top: 12px; color: #F8384C; letter-spacing: .4em; opacity: .7; }
   .tier { display: flex; align-items: center; gap: 12px; padding: 12px; border: 1px solid var(--line); opacity: .6; } .tier.open { opacity: 1; border-color: var(--gold); }
   .tier-n { width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--gold); font-family: 'Cormorant Garamond', serif; font-size: 16px; color: var(--gold-ink); }
   .brow { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); } .brow.mine { background: var(--bg3); padding-left: 8px; padding-right: 8px; border: 1px solid var(--gold); }
   .rank-n { width: 22px; text-align: center; font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--faint); } .rank-n.top { color: var(--gold-strong); font-weight: 600; }
   .xp-stack { position: absolute; top: 64px; left: 0; right: 0; display: flex; flex-direction: column; align-items: center; gap: 6px; z-index: 70; pointer-events: none; }
-  .xp-toast { background: #FF5A3C; color: #081610; padding: 8px 16px; display: flex; gap: 10px; align-items: baseline; box-shadow: 0 10px 24px rgba(8,22,16,.35); animation: xpIn 2.3s cubic-bezier(.2,.8,.2,1) both; }
+  .xp-toast { background: #F8384C; color: #081610; padding: 8px 16px; display: flex; gap: 10px; align-items: baseline; box-shadow: 0 10px 24px rgba(8,22,16,.35); animation: xpIn 2.3s cubic-bezier(.2,.8,.2,1) both; }
   .xp-toast b { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; } .xp-toast span { font-size: 11px; letter-spacing: .06em; text-transform: uppercase; opacity: .9; }
   @keyframes xpIn { 0% { opacity: 0; transform: translateY(14px) scale(.8) } 12% { opacity: 1; transform: translateY(0) scale(1.08) } 20% { transform: scale(1) } 80% { opacity: 1 } 100% { opacity: 0; transform: translateY(-18px) } }
   .unlock { position: absolute; inset: 0; z-index: 80; background: rgba(23,20,18,.55); display: flex; align-items: center; justify-content: center; padding: 28px; animation: toastIn .25s both; }
@@ -661,7 +661,7 @@ function EditionCover({ e, className = '' }) {
       <span className="type-frame" />
       <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-8">
         <Wordmark size={30} />
-        <span className="block w-16 h-[1px] mt-4" style={{ background: '#FF5A3C' }} />
+        <span className="block w-16 h-[1px] mt-4" style={{ background: '#F8384C' }} />
         <div className="display italic text-[26px] mt-3" style={{ color: '#6E1F23' }}>{e.city}</div>
         <div className="label mt-2" style={{ color: '#6E5A2A' }}>Edition {e.no} &middot; {e.date}</div>
       </div>
@@ -902,7 +902,7 @@ function Login({ onLogin, toast }) {
                   autoFocus
                 />
               </Field>
-              {error && <p className="t-sm mt-3" style={{ color: 'var(--accent)' }} role="alert">{error}</p>}
+              {error && <p className="t-sm mt-3" style={{ color: 'var(--ink)' }} role="alert">{error}</p>}
               <button type="submit" className="btn btn-solid w-full mt-10" data-testid="email-submit">Send the code</button>
               <button type="button" className="link block mt-5" onClick={backToPhone}>Use a different number</button>
             </form>
@@ -941,7 +941,7 @@ function Login({ onLogin, toast }) {
                   autoFocus
                 />
               </Field>
-              {error && <p className="t-sm mt-3" style={{ color: 'var(--accent)' }} role="alert">{error}</p>}
+              {error && <p className="t-sm mt-3" style={{ color: 'var(--ink)' }} role="alert">{error}</p>}
               <button type="submit" className="btn btn-solid w-full mt-10" disabled={busy} data-testid="otp-submit">{busy ? 'Checking' : 'Come in'}</button>
               <button type="button" className="link block mt-5" onClick={() => { setStep('email'); setOtp(''); setError(''); }}>Use a different email</button>
             </form>
@@ -977,7 +977,7 @@ function Login({ onLogin, toast }) {
               data-testid="phone-input"
             />
           </Field>
-          {error && <p className="t-sm mt-3" style={{ color: 'var(--accent)' }} role="alert">{error}</p>}
+          {error && <p className="t-sm mt-3" style={{ color: 'var(--ink)' }} role="alert">{error}</p>}
           <button type="submit" className="btn btn-solid w-full mt-10" disabled={busy} data-testid="phone-submit">{busy ? 'Checking the list' : 'Come in'}</button>
           <button type="button" className="link block mt-5" onClick={() => toast("Write to us at room@thebigdinner.club and we'll sort it out tonight.")}>Number changed?</button>
         </form>
@@ -2431,10 +2431,10 @@ function SeasonPanel() {
   return (
     <div>
       <div className="season-hero" data-testid="season">
-        <div className="label" style={{ color: '#FF5A3C' }}>Season pass</div>
+        <div className="label" style={{ color: '#F7F2E8' }}>Season pass</div>
         <div className="display text-[38px] leading-none mt-2" style={{ color: '#FAF6EE' }}>Diwali Season</div>
         <div className="t-sm mt-2" style={{ color: '#E8DCC6' }} data-testid="season-countdown">Ends in {fmtLeft(SEASON.ends - now)}. Rewards you don’t claim go with it.</div>
-        <div className="mt-4"><Bar v={g.seasonXp % SEASON.per} max={SEASON.per} color="#FF5A3C" /></div>
+        <div className="mt-4"><Bar v={g.seasonXp % SEASON.per} max={SEASON.per} color="#F8384C" /></div>
         <div className="t-xs mt-2" style={{ color: '#E8DCC6' }}>Tier {Math.min(tier, 10)} of 10 · {SEASON.per - (g.seasonXp % SEASON.per)} XP to the next</div>
       </div>
       <div className="mt-6 space-y-2">
