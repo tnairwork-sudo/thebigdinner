@@ -11,17 +11,58 @@
   var lenis = new window.Lenis({
     duration: 1.2,
     smoothWheel: true,
-    syncTouch: false
+    syncTouch: false,
+    autoRaf: false
   });
-  lenis.on("scroll", ScrollTrigger.update);
+  lenis.on("scroll", function () {
+    if (document.body.classList.contains("is-locked")) return;
+    ScrollTrigger.update();
+  });
   gsap.ticker.add(function (time) {
     lenis.raf(time * 1000);
   });
   gsap.ticker.lagSmoothing(0);
 
+  function setTriggers(on) {
+    ScrollTrigger.getAll().forEach(function (st) {
+      if (on) st.enable();
+      else st.disable(false);
+    });
+  }
+
+  function pauseVideos() {
+    document.querySelectorAll("video").forEach(function (video) {
+      if (video.paused) return;
+      video.pause();
+      video.dataset.wasPlaying = "1";
+    });
+  }
+
+  function resumeVideos() {
+    document.querySelectorAll("video").forEach(function (video) {
+      if (video.dataset.wasPlaying !== "1") return;
+      delete video.dataset.wasPlaying;
+      var box = video.getBoundingClientRect();
+      if (box.bottom <= 0 || box.top >= window.innerHeight) return;
+      video.muted = true;
+      var attempt = video.play();
+      if (attempt && attempt.catch) attempt.catch(function () {});
+    });
+  }
+
   var lockWatch = new MutationObserver(function () {
-    if (document.body.classList.contains("is-locked")) lenis.stop();
-    else lenis.start();
+    var locked = document.body.classList.contains("is-locked");
+    document.documentElement.classList.toggle("is-modal", locked);
+    if (locked) {
+      lenis.stop();
+      setTriggers(false);
+      pauseVideos();
+    } else {
+      setTriggers(true);
+      lenis.start();
+      ScrollTrigger.update();
+      resumeVideos();
+    }
   });
   lockWatch.observe(document.body, { attributes: true, attributeFilter: ["class"] });
 
