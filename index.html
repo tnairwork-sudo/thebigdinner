@@ -45,7 +45,7 @@
     </div>
   </section>
     <div class="film-frame">
-      <video class="film-video" id="featureFilm" muted loop playsinline autoplay preload="metadata" poster="/assets/film/tbd-film-poster.jpg" width="1280" height="720">
+      <video class="film-video" id="featureFilm" muted loop playsinline preload="metadata" poster="/assets/film/tbd-film-poster.jpg" width="1280" height="720">
         <source src="/assets/film/tbd-film.mp4" type="video/mp4">
       </video>
       <button class="film-sound" type="button" aria-pressed="false" aria-controls="featureFilm">Sound: Off</button>
@@ -54,7 +54,7 @@
 
   <section class="film" data-mark="films">
     <div class="film-frame" id="speechFrame">
-      <video class="film-video" id="speechFilm" muted loop playsinline autoplay preload="metadata" poster="/assets/film/speech-film-v2-poster-port.jpg" width="1280" height="914">
+      <video class="film-video" id="speechFilm" muted loop playsinline preload="metadata" poster="/assets/film/speech-film-v2-poster-port.jpg" width="1280" height="914">
         <source src="/assets/film/speech-film-v2.mp4" type="video/mp4">
       </video>
       <button class="film-sound" type="button" aria-pressed="false" aria-controls="speechFilm">Sound: Off</button>
@@ -98,47 +98,47 @@
     <p class="label" id="reelsLabel">The Reels</p>
     <div class="reel-grid">
       <button class="reel-tile" type="button" aria-label="Delhi, first anniversary">
-        <video muted loop playsinline autoplay preload="metadata" poster="/assets/reels/delhi-first-anniversary-poster.jpg" width="720" height="1280">
+        <video muted loop playsinline preload="metadata" poster="/assets/reels/delhi-first-anniversary-poster.jpg" width="720" height="1280">
           <source src="/assets/reels/delhi-first-anniversary.mp4" type="video/mp4">
         </video>
       </button>
       <button class="reel-tile" type="button" aria-label="Delhi, arrival">
-        <video muted loop playsinline autoplay preload="metadata" poster="/assets/reels/delhi-arrival-one-year-poster.jpg" width="720" height="1280">
+        <video muted loop playsinline preload="metadata" poster="/assets/reels/delhi-arrival-one-year-poster.jpg" width="720" height="1280">
           <source src="/assets/reels/delhi-arrival-one-year.mp4" type="video/mp4">
         </video>
       </button>
       <button class="reel-tile" type="button" aria-label="Delhi, the first year">
-        <video muted loop playsinline autoplay preload="metadata" poster="/assets/reels/delhi-guests-first-year-poster.jpg" width="720" height="1280">
+        <video muted loop playsinline preload="metadata" poster="/assets/reels/delhi-guests-first-year-poster.jpg" width="720" height="1280">
           <source src="/assets/reels/delhi-guests-first-year.mp4" type="video/mp4">
         </video>
       </button>
       <button class="reel-tile" type="button" aria-label="Delhi">
-        <video muted loop playsinline autoplay preload="metadata" poster="/assets/reels/delhi-poster.jpg" width="720" height="1280">
+        <video muted loop playsinline preload="metadata" poster="/assets/reels/delhi-poster.jpg" width="720" height="1280">
           <source src="/assets/reels/delhi.mp4" type="video/mp4">
         </video>
       </button>
       <button class="reel-tile" type="button" aria-label="Hyderabad">
-        <video muted loop playsinline autoplay preload="metadata" poster="/assets/reels/hyderabad-poster.jpg" width="720" height="1280">
+        <video muted loop playsinline preload="metadata" poster="/assets/reels/hyderabad-poster.jpg" width="720" height="1280">
           <source src="/assets/reels/hyderabad.mp4" type="video/mp4">
         </video>
       </button>
       <button class="reel-tile" type="button" aria-label="London">
-        <video muted loop playsinline autoplay preload="metadata" poster="/assets/reels/london-poster.jpg" width="720" height="1280">
+        <video muted loop playsinline preload="metadata" poster="/assets/reels/london-poster.jpg" width="720" height="1280">
           <source src="/assets/reels/london.mp4" type="video/mp4">
         </video>
       </button>
       <button class="reel-tile" type="button" aria-label="The door is slightly ajar">
-        <video muted loop playsinline autoplay preload="metadata" poster="/assets/reels/the-door-poster.jpg" width="720" height="406">
+        <video muted loop playsinline preload="metadata" poster="/assets/reels/the-door-poster.jpg" width="720" height="406">
           <source src="/assets/reels/the-door.mp4" type="video/mp4">
         </video>
       </button>
       <button class="reel-tile" type="button" aria-label="Request an Invitation">
-        <video muted loop playsinline autoplay preload="metadata" poster="/assets/reels/wes-anderson-invitation-poster.jpg" width="720" height="1280">
+        <video muted loop playsinline preload="metadata" poster="/assets/reels/wes-anderson-invitation-poster.jpg" width="720" height="1280">
           <source src="/assets/reels/wes-anderson-invitation.mp4" type="video/mp4">
         </video>
       </button>
       <button class="reel-tile" type="button" aria-label="Strangers who leave as friends">
-        <video muted loop playsinline autoplay preload="metadata" poster="/assets/reels/strangers-to-friends-poster.jpg" width="720" height="406">
+        <video muted loop playsinline preload="metadata" poster="/assets/reels/strangers-to-friends-poster.jpg" width="720" height="406">
           <source src="/assets/reels/strangers-to-friends.mp4" type="video/mp4">
         </video>
       </button>
@@ -476,7 +476,7 @@
   <source src="/ambient-theme.mp3" type="audio/mpeg">
 </audio>
 
-<div id="cityOverlay" class="overlay" role="dialog" aria-modal="true" aria-labelledby="overlayTitle">
+<div id="cityOverlay" class="overlay" data-lenis-prevent role="dialog" aria-modal="true" aria-labelledby="overlayTitle">
   <button class="scrim-close" type="button" tabindex="-1" aria-hidden="true"></button>
   <button id="closeOverlay" class="overlay-close" type="button">Close</button>
   <div class="overlay-page" id="pickerCity">
@@ -523,11 +523,11 @@
   </div>
 </div>
 
-<div id="formNotice" class="form-notice" role="dialog" aria-modal="true" aria-labelledby="noticeTitle" hidden tabindex="-1">
+<div id="formNotice" class="form-notice" data-lenis-prevent role="dialog" aria-modal="true" aria-labelledby="noticeTitle" hidden tabindex="-1">
   <button class="form-notice-backdrop" type="button" tabindex="-1" aria-hidden="true"></button>
   <div class="form-notice-panel">
     <button class="form-notice-close" type="button">Close</button>
-    <div class="form-notice-body">
+    <div class="form-notice-body" data-lenis-prevent data-lenis-prevent-touch>
       <div class="notice-step" id="noticeStep" hidden>
         <div class="step-progress" data-step-dots aria-hidden="true">
           <span class="dot" data-dot="1"></span>
@@ -586,7 +586,7 @@
   </div>
 </div>
 
-<div class="reel-lightbox" id="reelLightbox" hidden>
+<div class="reel-lightbox" id="reelLightbox" data-lenis-prevent hidden>
   <button class="reel-lightbox-scrim" type="button" tabindex="-1" aria-hidden="true"></button>
   <div class="reel-lightbox-panel" role="dialog" aria-modal="true" aria-label="The Reels">
     <button class="reel-lightbox-close" type="button">Close</button>
@@ -667,7 +667,9 @@
       else el.removeAttribute("inert");
     });
     var menuOpen = document.querySelector("[data-nav].is-open");
-    document.body.classList.toggle("is-locked", !!(active || menuOpen));
+    var shouldLock = !!(active || menuOpen);
+    document.documentElement.classList.toggle("is-modal", shouldLock);
+    document.body.classList.toggle("is-locked", shouldLock);
   }
 
   function focusables(root) {
@@ -776,14 +778,19 @@
     });
   }
 
+  var gateFrame = 0;
   function refreshReadGate() {
-    if (!formNotice.classList.contains("is-open")) return;
-    if (noticeRead.checked) {
-      revealRead();
-      return;
-    }
-    if (readReached) return;
-    if (noticeFits() || noticeAtEnd()) revealRead();
+    if (gateFrame) return;
+    gateFrame = requestAnimationFrame(function () {
+      gateFrame = 0;
+      if (!formNotice.classList.contains("is-open")) return;
+      if (noticeRead.checked) {
+        revealRead();
+        return;
+      }
+      if (readReached) return;
+      if (noticeFits() || noticeAtEnd()) revealRead();
+    });
   }
 
   function openFormNotice(url, from, mode) {

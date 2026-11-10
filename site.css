@@ -74,7 +74,10 @@ body {
   text-align: center;
   text-rendering: optimizeLegibility;
 }
-body.is-locked { overflow: hidden; }
+body.is-locked {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
 img { max-width: 100%; height: auto; }
 button, input, select { font: inherit; }
 a { color: inherit; }
@@ -706,10 +709,13 @@ body.is-locked .sound { opacity: 0; pointer-events: none; }
   padding: var(--s-1);
 }
 .form-notice-body {
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
   min-height: 0;
   padding: var(--s3) var(--s2) var(--s1);
-  overscroll-behavior: contain;
 }
 .notice-end { display: block; height: 1px; }
 .notice-title {
@@ -2547,7 +2553,7 @@ body.has-sound .is-pulse-flourish { animation: tbd-flourish 0.96s ease; }
    Sections keep their own fall of light. Ivory type and photographs sit above it.
    Coral vermilion stays on the invitation, the hairline, and the current mark. */
 :root {
-  --grain: url("/assets/paper-grain.svg");
+  --grain: url("/assets/paper-grain.png");
   --sheet: #102C1F;
   --glow: radial-gradient(48% 42% at 50% 38%, rgba(72, 150, 104, 0.42), rgba(72, 150, 104, 0) 68%);
   --sheen: linear-gradient(108deg, rgba(198, 163, 106, 0.16) 0%, rgba(198, 163, 106, 0) 42%, rgba(6, 18, 12, 0.32) 100%);
@@ -2778,7 +2784,7 @@ body :is(#content.masthead, header.masthead, .journal) {
 body::before,
 main > section,
 footer.colophon {
-  animation: tbd-light 36s ease-in-out infinite alternate;
+  animation: none;
 }
 
 html.js .hero .frame-copy > *,
@@ -3189,6 +3195,46 @@ html.cine.js .reels .reel-track .reel-tile:hover {
 html.cine .colophon-line {
   transform-origin: center center;
   display: inline-block;
+}
+
+/* While a dialog is open, the note scrolls natively. No animated grain,
+   blend, blur, or shadow on the panel. */
+html.is-modal body::before,
+html.is-modal main > section,
+html.is-modal footer.colophon,
+html.is-modal .form-notice,
+html.is-modal .form-notice-panel,
+html.is-modal .form-notice-bar,
+html.is-modal .overlay,
+html.is-modal .overlay-page {
+  animation: none;
+}
+html.is-modal body .form-notice,
+html.is-modal body .form-notice-panel,
+html.is-modal body .form-notice-bar,
+html.is-modal body .overlay,
+html.is-modal body .overlay-page {
+  background-image: url("/assets/paper-grain.png") !important;
+  background-repeat: repeat !important;
+  background-size: 128px 128px !important;
+  background-blend-mode: normal !important;
+  filter: none !important;
+  backdrop-filter: none !important;
+  box-shadow: none !important;
+}
+@media (max-width: 759px) {
+  body::before,
+  main > section,
+  footer.colophon {
+    animation: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  body::before,
+  main > section,
+  footer.colophon {
+    animation: none;
+  }
 }
 
 /* Filled buttons. Deep lacquer, ivory label. Marks stay the brighter red. */
