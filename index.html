@@ -528,6 +528,7 @@
   <div class="form-notice-panel">
     <button class="form-notice-close" type="button">Close</button>
     <div class="form-notice-body" data-lenis-prevent data-lenis-prevent-touch>
+      <p class="notice-read-first">Please do not proceed to fill the form unless you have read these terms in full.</p>
       <div class="notice-step" id="noticeStep" hidden>
         <div class="step-progress" data-step-dots aria-hidden="true">
           <span class="dot" data-dot="1"></span>
@@ -567,7 +568,7 @@
         </svg>
       </div>
       <p>Gentlemen arrive in a well-cut suit, tie optional, shoes polished. Ladies arrive in cocktail attire, the kind of dress you'd choose for a grand evening at the bar. Come as you would want to be remembered.</p>
-      <p>If accepted, there is a tariff of ₹5,000. It secures the venue and is an intended filter.</p>
+      <p>If accepted, there is a tariff of <span id="noticeTariffAmount">₹5,000</span>. It secures the venue and is an intended filter.</p>
       <p>Every invitation carries an RSVP deadline. Those who do not reply, yes or no, in time are not invited again, in any city.</p>
       <span id="noticeEnd" class="notice-end" aria-hidden="true"></span>
     </div>
@@ -796,6 +797,13 @@
   function openFormNotice(url, from, mode) {
     pendingFormUrl = url || "";
     noticeReturn = from || null;
+    var tariff = document.getElementById("noticeTariffAmount");
+    if (tariff) {
+      var city = "";
+      if (from && from.getAttribute) city = from.getAttribute("data-city") || "";
+      if (!city && from && from.value) city = from.value;
+      tariff.textContent = city === "dubai" ? "AED 550" : "\u20B95,000";
+    }
     concealRead();
     setNoticeChrome(mode);
     if (noticeMode === "picker") {
