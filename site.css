@@ -731,6 +731,22 @@ body.is-locked .sound { opacity: 0; pointer-events: none; }
   font-size: 1.08rem;
   line-height: 1.65;
 }
+.form-notice-body .notice-read-first {
+  margin-bottom: var(--s1);
+  max-width: 22em;
+  font-weight: 700;
+  font-size: 1.2rem;
+  line-height: 1.35;
+  color: var(--ivory);
+}
+.form-notice-body .notice-read-first::after {
+  content: "";
+  display: block;
+  width: 48px;
+  height: 2px;
+  margin: 0.7rem auto 0;
+  background: #F8384C;
+}
 .form-notice-body p + p,
 .form-notice-body .notice-dress + .notice-figures + p { margin-top: var(--s1); }
 .form-notice .label { color: var(--ink-soft); }
