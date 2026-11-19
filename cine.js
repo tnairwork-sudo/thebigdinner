@@ -97,10 +97,10 @@
     scrollTrigger: {
       trigger: arrive,
       start: "top top",
-      end: mobile ? "+=70%" : "+=120%",
+      end: mobile ? "+=28%" : "+=40%",
       pin: true,
-      scrub: 0.65,
-      anticipatePin: 1,
+      scrub: 0.35,
+      anticipatePin: 0,
       invalidateOnRefresh: true,
       onUpdate: function (self) {
         var p = self.progress;
@@ -140,7 +140,7 @@
 
   if (window.matchMedia("(min-width: 900px)").matches) {
     gsap.utils.toArray(".scatter .shot").forEach(function (shot) {
-      var depth = parseFloat(shot.getAttribute("data-depth")) || 40;
+      var depth = (parseFloat(shot.getAttribute("data-depth")) || 40) * 0.4;
       gsap.fromTo(shot, { y: depth }, {
         y: -depth,
         ease: "none",
@@ -181,69 +181,22 @@
       if (video) video.pause();
     });
 
-    function focusMoments() {
-      var mid = window.innerWidth / 2;
-      var best = null;
-      var bestFocus = 0;
-      tiles.forEach(function (tile) {
-        var rect = tile.getBoundingClientRect();
-        var center = rect.left + rect.width / 2;
-        var dist = Math.abs(center - mid) / Math.max(rect.width, 1);
-        var focus = Math.max(0, 1 - dist);
-        tile.style.setProperty("--focus", focus.toFixed(3));
-        if (focus > bestFocus) {
-          bestFocus = focus;
-          best = tile;
-        }
-      });
-      tiles.forEach(function (tile) {
-        var video = tile.querySelector("video");
-        if (!video) return;
-        if (tile === best && bestFocus > 0.62) {
-          video.muted = true;
-          var attempt = video.play();
-          if (attempt && attempt.catch) attempt.catch(function () {});
-        } else if (!video.paused) {
-          video.pause();
-        }
-      });
+    if ("IntersectionObserver" in window) {
+      var playObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          var video = entry.target.querySelector("video");
+          if (!video) return;
+          if (entry.isIntersecting && entry.intersectionRatio > 0.6) {
+            video.muted = true;
+            var attempt = video.play();
+            if (attempt && attempt.catch) attempt.catch(function () {});
+          } else if (!video.paused) {
+            video.pause();
+          }
+        });
+      }, { threshold: [0, 0.6] });
+      tiles.forEach(function (tile) { playObserver.observe(tile); });
     }
-
-    gsap.to(track, {
-      x: function () {
-        return -Math.max(0, track.scrollWidth - window.innerWidth);
-      },
-      ease: "none",
-      scrollTrigger: {
-        trigger: ".reels",
-        start: "top top",
-        end: function () {
-          return "+=" + Math.max(window.innerHeight * 0.8, track.scrollWidth - window.innerWidth);
-        },
-        pin: true,
-        scrub: 0.65,
-        anticipatePin: 1,
-        invalidateOnRefresh: true,
-        onUpdate: focusMoments,
-        onRefresh: focusMoments
-      }
-    });
-  }
-
-  var foot = document.querySelector(".colophon");
-  var lastLine = document.querySelector(".colophon-line");
-  if (lastLine && foot) {
-    gsap.fromTo(lastLine, { y: 28, scale: 0.94 }, {
-      y: 0,
-      scale: 1.28,
-      ease: "none",
-      scrollTrigger: {
-        trigger: foot,
-        start: "top 90%",
-        end: "top 35%",
-        scrub: true
-      }
-    });
   }
 
   window.addEventListener("load", function () {
