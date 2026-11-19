@@ -263,8 +263,8 @@
 })();
 
 (function () {
-  var videos = document.querySelectorAll(".film .film-video");
-  if (!videos.length) return;
+  var videos = document.querySelectorAll(".film .film-video:not(.hero-film)");
+  if (!videos.length && !document.querySelector(".film")) return;
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var globalSound = document.getElementById("soundToggle");
   var filmsInView = 0;
@@ -331,6 +331,69 @@
   }, { threshold: 0 });
   document.querySelectorAll(".film").forEach(function (film) {
     viewObserver.observe(film);
+  });
+})();
+
+(function () {
+  var stage = document.querySelector(".hero-stage");
+  if (!stage) return;
+  var base = document.getElementById("featureFilm");
+  var next = document.getElementById("speechFilm");
+  var toggle = stage.querySelector(".film-sound");
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function visibleFilm() {
+    if (!next || reduce) return base;
+    var opacity = parseFloat(window.getComputedStyle(next).opacity);
+    return opacity > 0.45 ? next : base;
+  }
+
+  if (toggle) {
+    toggle.addEventListener("click", function () {
+      var turningOn = base ? base.muted : true;
+      [base, next].forEach(function (video) {
+        if (video) video.muted = !turningOn;
+      });
+      toggle.setAttribute("aria-pressed", turningOn ? "true" : "false");
+      toggle.textContent = turningOn ? "Sound: On" : "Sound: Off";
+      var film = visibleFilm();
+      if (film && film.paused) {
+        var attempt = film.play();
+        if (attempt && attempt.catch) attempt.catch(function () {});
+      }
+    });
+  }
+
+  [base, next].forEach(function (video) {
+    if (!video) return;
+    video.addEventListener("click", function () {
+      video.controls = true;
+    });
+  });
+
+  if (!reduce || !base || !("IntersectionObserver" in window)) return;
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        var attempt = base.play();
+        if (attempt && attempt.catch) attempt.catch(function () {});
+      } else if (!base.paused) {
+        base.pause();
+      }
+    });
+  }, { threshold: 0.35 });
+  observer.observe(stage);
+})();
+
+(function () {
+  var fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  if (!fine) return;
+  document.querySelectorAll(".shot-swap").forEach(function (img) {
+    var shot = img.closest(".shot");
+    if (!shot) return;
+    shot.addEventListener("pointerenter", function () {
+      if (!img.getAttribute("src") && img.dataset.src) img.src = img.dataset.src;
+    }, { once: true });
   });
 })();
 

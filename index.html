@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#102C1F">
+<meta name="theme-color" content="#34C759">
 <meta name="color-scheme" content="dark">
 <meta name="format-detection" content="telephone=no, email=no, address=no">
 <title>The Big Dinner</title>
@@ -13,7 +13,7 @@
 <script>document.documentElement.classList.add("js");</script>
 <link rel="stylesheet" href="/site.css">
 </head>
-<body class="theme-dark has-sound">
+<body class="theme-dark has-sound lux">
 <a class="skip" href="#content">Skip to content</a>
 
 <button class="sound" id="soundToggle" type="button" aria-pressed="false">Sound: Off</button>
@@ -37,29 +37,23 @@
 
   <div class="cine-arrive">
   <section class="frame hero" data-mark="room">
-    <div class="frame-copy">
+    <div class="hero-stage film">
+      <video class="film-video hero-film is-base" id="featureFilm" muted loop playsinline preload="metadata" poster="/assets/film/tbd-film-poster.jpg" width="1280" height="720">
+        <source src="/assets/film/tbd-film.mp4" type="video/mp4">
+      </video>
+      <video class="film-video hero-film is-next" id="speechFilm" muted loop playsinline preload="none" poster="/assets/film/speech-film-v2-poster.jpg" width="1280" height="914">
+        <source src="/assets/film/speech-film-v2.mp4" type="video/mp4">
+      </video>
+      <button class="film-sound" type="button" aria-pressed="false" aria-controls="featureFilm">Sound: Off</button>
+    </div>
+    <div class="glass-card frame-copy">
       <p class="label">A private room</p>
-      <h1 class="display"><span>The Big</span><span>Dinner</span></h1>
+      <h1 class="display"><span class="line-mask"><span class="line-rise">The Big</span></span><span class="line-mask"><span class="line-rise">Dinner</span></span></h1>
       <p class="hero-dek">It is a bet on people.</p>
       <button class="invite-btn invite-btn-lg js-open-invite" type="button">Request an Invitation</button>
     </div>
   </section>
-    <div class="film-frame">
-      <video class="film-video" id="featureFilm" muted loop playsinline preload="metadata" poster="/assets/film/tbd-film-poster.jpg" width="1280" height="720">
-        <source src="/assets/film/tbd-film.mp4" type="video/mp4">
-      </video>
-      <button class="film-sound" type="button" aria-pressed="false" aria-controls="featureFilm">Sound: Off</button>
-    </div>
   </div>
-
-  <section class="film" data-mark="films">
-    <div class="film-frame" id="speechFrame">
-      <video class="film-video" id="speechFilm" muted loop playsinline preload="metadata" poster="/assets/film/speech-film-v2-poster-port.jpg" width="1280" height="914">
-        <source src="/assets/film/speech-film-v2.mp4" type="video/mp4">
-      </video>
-      <button class="film-sound" type="button" aria-pressed="false" aria-controls="speechFilm">Sound: Off</button>
-    </div>
-  </section>
 
   <section class="paper-frame" id="philosophy" data-mark="philosophy">
     <div class="wrap split">
@@ -94,7 +88,7 @@
     </figure>
   </section>
 
-  <section class="reels" aria-labelledby="reelsLabel">
+  <section class="reels" aria-labelledby="reelsLabel" data-mark="films">
     <p class="label" id="reelsLabel">The Reels</p>
     <div class="reel-grid">
       <button class="reel-tile" type="button" aria-label="Delhi, first anniversary">
@@ -229,62 +223,77 @@
   </section>
 
   <section class="archive">
-    <div class="wrap">
-      <div class="archive-head">
-        <div>
-          <p class="label reveal">Earlier evenings</p>
-          <h2 class="headline reveal">21 editions held.<br><em>Captured.</em></h2>
-        </div>
+    <div class="scatter">
+      <div class="scatter-copy">
+        <p class="label reveal">Earlier evenings</p>
+        <h2 class="headline reveal">21 editions held.<br><em>Captured.</em></h2>
         <a class="link-quiet reveal" href="/gallery.html">View all</a>
       </div>
-    </div>
-    <div class="mosaic mosaic-a">
-      <figure class="shot">
-        <img src="/shangrila.jpeg" alt="The Big Dinner at Shangri-La Eros, New Delhi" loading="lazy" decoding="async">
+      <figure class="shot" data-depth="70">
+        <span class="shot-frame">
+          <img src="/shangrila.jpeg" alt="The Big Dinner at Shangri-La Eros, New Delhi" loading="lazy" decoding="async">
+          <img class="shot-swap" alt="" data-src="/jan2.jpeg" decoding="async">
+        </span>
         <figcaption>
           <span class="label">Chapter V · Feb 2026</span>
           <span class="shot-title">Shangri-La Eros, New Delhi</span>
         </figcaption>
       </figure>
-      <figure class="shot">
-        <img src="/Grazia.jpeg" alt="The Big Dinner, as seen in Grazia" loading="lazy" decoding="async">
+      <figure class="shot" data-depth="28">
+        <span class="shot-frame">
+          <img src="/Grazia.jpeg" alt="The Big Dinner, as seen in Grazia" loading="lazy" decoding="async">
+          <img class="shot-swap" alt="" data-src="/elle.jpeg" decoding="async">
+        </span>
         <figcaption>
           <span class="label">As seen in Grazia</span>
           <span class="shot-title">The Room.</span>
         </figcaption>
       </figure>
-      <figure class="shot">
-        <img src="/innecircle3.jpeg" alt="The Big Dinner" loading="lazy" decoding="async">
+      <figure class="shot" data-depth="110">
+        <span class="shot-frame">
+          <img src="/innecircle3.jpeg" alt="The Big Dinner" loading="lazy" decoding="async">
+          <img class="shot-swap" alt="" data-src="/decembe3.jpeg" decoding="async">
+        </span>
         <figcaption>
           <span class="label">Chapter III · Dec 2025</span>
           <span class="shot-title">The Experiment.</span>
         </figcaption>
       </figure>
-    </div>
-    <div class="mosaic mosaic-b">
-      <figure class="shot">
-        <img src="/itcmaurya.jpeg" alt="The Big Dinner at ITC Maurya, Delhi" loading="lazy" decoding="async">
+      <figure class="shot" data-depth="46">
+        <span class="shot-frame">
+          <img src="/itcmaurya.jpeg" alt="The Big Dinner at ITC Maurya, Delhi" loading="lazy" decoding="async">
+          <img class="shot-swap" alt="" data-src="/itc.jpeg" decoding="async">
+        </span>
         <figcaption>
           <span class="label">Chapter VI · Mar 2026</span>
           <span class="shot-title">ITC Maurya, Delhi</span>
         </figcaption>
       </figure>
-      <figure class="shot">
-        <img src="/jan1.jpeg" alt="The Big Dinner at The Imperial, Delhi" loading="lazy" decoding="async">
+      <figure class="shot" data-depth="88">
+        <span class="shot-frame">
+          <img src="/jan1.jpeg" alt="The Big Dinner at The Imperial, Delhi" loading="lazy" decoding="async">
+          <img class="shot-swap" alt="" data-src="/janaryan.jpeg" decoding="async">
+        </span>
         <figcaption>
           <span class="label">Chapter IV · Jan 2026</span>
           <span class="shot-title">The Imperial, Delhi</span>
         </figcaption>
       </figure>
-      <figure class="shot">
-        <img src="/dec11.jpeg" alt="The Big Dinner at The Leela Palace, Delhi" loading="lazy" decoding="async">
+      <figure class="shot" data-depth="36">
+        <span class="shot-frame">
+          <img src="/dec11.jpeg" alt="The Big Dinner at The Leela Palace, Delhi" loading="lazy" decoding="async">
+          <img class="shot-swap" alt="" data-src="/dec112.jpeg" decoding="async">
+        </span>
         <figcaption>
           <span class="label">Chapter III · Dec 2025</span>
           <span class="shot-title">The Leela Palace, Delhi</span>
         </figcaption>
       </figure>
-      <figure class="shot">
-        <img src="/bombay1.jpg" alt="The Big Dinner at Harbour Bar, Bombay" loading="lazy" decoding="async">
+      <figure class="shot" data-depth="96">
+        <span class="shot-frame">
+          <img src="/bombay1.jpg" alt="The Big Dinner at Harbour Bar, Bombay" loading="lazy" decoding="async">
+          <img class="shot-swap" alt="" data-src="/bombay2.jpg" decoding="async">
+        </span>
         <figcaption>
           <span class="label">Chapter VII · Apr 2026</span>
           <span class="shot-title">Harbour Bar, Bombay</span>
@@ -293,16 +302,25 @@
     </div>
   </section>
 
-  <section class="frame" id="cities" data-art data-mark="cities">
-    <picture class="art">
-      <source type="image/webp" srcset="/assets/art/six-cities-one-room-16x9.webp">
-      <img src="/assets/art/six-cities-one-room-16x9.jpg" width="1920" height="1080" alt="" loading="lazy" decoding="async">
-    </picture>
-    <div class="frame-scrim"></div>
-    <div class="frame-copy">
-      <p class="label">Where we gather</p>
-      <h2 class="display art-title"><span>Seven cities.</span> <span>One room.</span></h2>
+  <section class="pair" id="cities" data-mark="cities">
+    <div class="pair-pane" tabindex="0">
+      <picture>
+        <source type="image/webp" srcset="/assets/art/city-london-16x9.webp">
+        <img src="/assets/art/city-london-16x9.jpg" width="1920" height="1080" alt="" loading="lazy" decoding="async">
+      </picture>
+      <span class="pair-veil" aria-hidden="true"></span>
+      <span class="pair-line">
+        <span class="label">Where we gather</span>
+        <span class="display"><span>Seven cities.</span> <span>One room.</span></span>
+      </span>
     </div>
+    <button class="pair-pane js-open-invite" type="button">
+      <img src="/shangrila.jpeg" alt="" width="1200" height="1500" loading="lazy" decoding="async">
+      <span class="pair-veil" aria-hidden="true"></span>
+      <span class="pair-line">
+        <span class="invite-btn invite-btn-lg">Request an Invitation</span>
+      </span>
+    </button>
   </section>
 
   <section class="frame city-card" data-art data-city="delhi">
@@ -450,6 +468,27 @@
         <a class="btn-line" data-city="hyderabad" href="https://forms.gle/maV5MoNA5wGTWkjZ9" target="_blank" rel="noopener noreferrer">Apply for Hyderabad</a>
         <a class="btn-line" data-city="gurgaon" href="https://forms.gle/crgWDVsHNKjjUZ336" target="_blank" rel="noopener noreferrer">Request an Invitation for Gurgaon</a>
       </div>
+    </div>
+  </section>
+
+  <section class="photo-marquee" aria-hidden="true">
+    <div class="photo-marquee-track">
+      <img src="/assets/art/city-delhi-16x9.webp" alt="" width="640" height="360" loading="lazy" decoding="async">
+      <img src="/shangrila.jpeg" alt="" width="640" height="800" loading="lazy" decoding="async">
+      <img src="/assets/art/city-london-16x9.webp" alt="" width="640" height="360" loading="lazy" decoding="async">
+      <img src="/jan2.jpeg" alt="" width="640" height="800" loading="lazy" decoding="async">
+      <img src="/assets/art/city-hyderabad-16x9.webp" alt="" width="640" height="360" loading="lazy" decoding="async">
+      <img src="/innecircle3.jpeg" alt="" width="640" height="800" loading="lazy" decoding="async">
+      <img src="/assets/art/city-bengaluru-16x9.webp" alt="" width="640" height="360" loading="lazy" decoding="async">
+      <img src="/assets/bombay-staircase.jpg" alt="" width="640" height="800" loading="lazy" decoding="async">
+      <img src="/assets/art/city-delhi-16x9.webp" alt="" width="640" height="360" loading="lazy" decoding="async">
+      <img src="/shangrila.jpeg" alt="" width="640" height="800" loading="lazy" decoding="async">
+      <img src="/assets/art/city-london-16x9.webp" alt="" width="640" height="360" loading="lazy" decoding="async">
+      <img src="/jan2.jpeg" alt="" width="640" height="800" loading="lazy" decoding="async">
+      <img src="/assets/art/city-hyderabad-16x9.webp" alt="" width="640" height="360" loading="lazy" decoding="async">
+      <img src="/innecircle3.jpeg" alt="" width="640" height="800" loading="lazy" decoding="async">
+      <img src="/assets/art/city-bengaluru-16x9.webp" alt="" width="640" height="360" loading="lazy" decoding="async">
+      <img src="/assets/bombay-staircase.jpg" alt="" width="640" height="800" loading="lazy" decoding="async">
     </div>
   </section>
 </main>

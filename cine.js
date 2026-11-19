@@ -68,68 +68,89 @@
 
   var arrive = document.querySelector(".cine-arrive");
   var feature = document.getElementById("featureFilm");
-  var door = arrive.querySelector(".film-frame");
-  var lineA = arrive.querySelector(".display span:nth-child(1)");
-  var lineB = arrive.querySelector(".display span:nth-child(2)");
+  var speech = document.getElementById("speechFilm");
 
-  function playFeature(on) {
-    if (!feature) return;
+  function playVideo(video, on) {
+    if (!video) return;
     if (on) {
-      var attempt = feature.play();
+      var attempt = video.play();
       if (attempt && attempt.catch) attempt.catch(function () {});
-    } else if (!feature.paused) {
-      feature.pause();
+    } else if (!video.paused) {
+      video.pause();
     }
   }
-  playFeature(false);
+
+  gsap.fromTo(".glass-card .line-rise", { yPercent: 110 }, {
+    yPercent: 0,
+    duration: 1.15,
+    stagger: 0.14,
+    ease: "power3.out",
+    delay: 0.08
+  });
 
   var mobile = window.matchMedia("(max-width: 759px)").matches;
+  if (speech) gsap.set(speech, { autoAlpha: 0 });
+  playVideo(feature, true);
 
-  gsap.set(door, { clipPath: "none" });
   gsap.timeline({
-    defaults: { ease: "power1.out" },
+    defaults: { ease: "none" },
     scrollTrigger: {
       trigger: arrive,
       start: "top top",
-      end: mobile ? "+=85%" : "+=110%",
+      end: mobile ? "+=28%" : "+=40%",
       pin: true,
-      scrub: 0.75,
-      anticipatePin: 1,
+      scrub: 0.35,
+      anticipatePin: 0,
       invalidateOnRefresh: true,
       onUpdate: function (self) {
-        playFeature(self.progress > 0.98);
-        arrive.style.setProperty("--night", self.progress.toFixed(3));
+        var p = self.progress;
+        playVideo(feature, p < 0.92);
+        if (speech && p > 0.04) {
+          if (speech.getAttribute("preload") === "none") speech.setAttribute("preload", "auto");
+          playVideo(speech, true);
+        } else {
+          playVideo(speech, false);
+        }
       }
     }
   })
-    .fromTo(door, { autoAlpha: 0, scale: 0.96 }, { autoAlpha: 1, scale: 1 }, 0)
-    .to(lineA, { y: mobile ? 6 : 8 }, 0)
-    .to(lineB, { y: mobile ? 16 : 22 }, 0);
+    .to(feature, { autoAlpha: 0 }, 0.18)
+    .to(speech, { autoAlpha: 1 }, 0.18);
 
-  var speech = document.getElementById("speechFrame");
-  if (speech) {
-    ScrollTrigger.create({
-      trigger: speech,
-      start: "top bottom",
-      end: "bottom top",
-      scrub: true,
-      onUpdate: function (self) {
-        speech.style.setProperty("--flame-x", (10 + self.progress * 80).toFixed(1) + "%");
+  document.querySelectorAll("main h1.display, main h2.headline, main h2.display, main h3.display").forEach(function (heading) {
+    if (heading.closest(".glass-card, .pair, .art-title") || heading.classList.contains("art-title")) return;
+    if (heading.querySelector(".line-mask")) return;
+    var parts = heading.innerHTML.split(/<br\s*\/?>/i);
+    heading.innerHTML = parts.map(function (part) {
+      return '<span class="line-mask"><span class="line-rise">' + part.trim() + "</span></span>";
+    }).join("");
+    var lines = heading.querySelectorAll(".line-rise");
+    gsap.fromTo(lines, { yPercent: 110 }, {
+      yPercent: 0,
+      stagger: 0.08,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: heading,
+        start: "top 88%",
+        end: "top 60%",
+        scrub: 0.45
       }
     });
-  }
+  });
 
-  var phil = document.querySelector("#philosophy .headline");
-  if (phil) {
-    gsap.fromTo(phil, { y: 22 }, {
-      y: -18,
-      ease: "none",
-      scrollTrigger: {
-        trigger: "#philosophy",
-        start: "top bottom",
-        end: "bottom top",
-        scrub: true
-      }
+  if (window.matchMedia("(min-width: 900px)").matches) {
+    gsap.utils.toArray(".scatter .shot").forEach(function (shot) {
+      var depth = (parseFloat(shot.getAttribute("data-depth")) || 40) * 0.4;
+      gsap.fromTo(shot, { y: depth }, {
+        y: -depth,
+        ease: "none",
+        scrollTrigger: {
+          trigger: ".scatter",
+          start: "top bottom",
+          end: "bottom top",
+          scrub: true
+        }
+      });
     });
   }
 
@@ -160,83 +181,22 @@
       if (video) video.pause();
     });
 
-    function focusMoments() {
-      var mid = window.innerWidth / 2;
-      var best = null;
-      var bestFocus = 0;
-      tiles.forEach(function (tile) {
-        var rect = tile.getBoundingClientRect();
-        var center = rect.left + rect.width / 2;
-        var dist = Math.abs(center - mid) / Math.max(rect.width, 1);
-        var focus = Math.max(0, 1 - dist);
-        tile.style.setProperty("--focus", focus.toFixed(3));
-        if (focus > bestFocus) {
-          bestFocus = focus;
-          best = tile;
-        }
-      });
-      tiles.forEach(function (tile) {
-        var video = tile.querySelector("video");
-        if (!video) return;
-        if (tile === best && bestFocus > 0.62) {
-          video.muted = true;
-          var attempt = video.play();
-          if (attempt && attempt.catch) attempt.catch(function () {});
-        } else if (!video.paused) {
-          video.pause();
-        }
-      });
+    if ("IntersectionObserver" in window) {
+      var playObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          var video = entry.target.querySelector("video");
+          if (!video) return;
+          if (entry.isIntersecting && entry.intersectionRatio > 0.6) {
+            video.muted = true;
+            var attempt = video.play();
+            if (attempt && attempt.catch) attempt.catch(function () {});
+          } else if (!video.paused) {
+            video.pause();
+          }
+        });
+      }, { threshold: [0, 0.6] });
+      tiles.forEach(function (tile) { playObserver.observe(tile); });
     }
-
-    gsap.to(track, {
-      x: function () {
-        return -Math.max(0, track.scrollWidth - window.innerWidth);
-      },
-      ease: "none",
-      scrollTrigger: {
-        trigger: ".reels",
-        start: "top top",
-        end: function () {
-          return "+=" + Math.max(window.innerHeight * 0.8, track.scrollWidth - window.innerWidth);
-        },
-        pin: true,
-        scrub: 0.65,
-        anticipatePin: 1,
-        invalidateOnRefresh: true,
-        onUpdate: focusMoments,
-        onRefresh: focusMoments
-      }
-    });
-  }
-
-  var inviteHead = document.querySelector("#apply .headline");
-  if (inviteHead) {
-    gsap.fromTo(inviteHead, { y: 24 }, {
-      y: 0,
-      ease: "none",
-      scrollTrigger: {
-        trigger: "#apply",
-        start: "top 80%",
-        end: "center 55%",
-        scrub: true
-      }
-    });
-  }
-
-  var foot = document.querySelector(".colophon");
-  var lastLine = document.querySelector(".colophon-line");
-  if (lastLine && foot) {
-    gsap.fromTo(lastLine, { y: 28, scale: 0.94 }, {
-      y: 0,
-      scale: 1.28,
-      ease: "none",
-      scrollTrigger: {
-        trigger: foot,
-        start: "top 90%",
-        end: "top 35%",
-        scrub: true
-      }
-    });
   }
 
   window.addEventListener("load", function () {
