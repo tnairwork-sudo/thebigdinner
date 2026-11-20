@@ -3356,3 +3356,103 @@ html.is-modal body .overlay-page {
     letter-spacing: 0.08em;
   }
 }
+
+/* Secondary invitation action. Ivory outline on the green, same width and type as the lacquer button above it. */
+.invite-stack {
+  display: inline-grid;
+  grid-template-columns: minmax(0, max-content);
+  justify-items: stretch;
+  gap: 10px;
+  max-width: 100%;
+  vertical-align: top;
+}
+.invite-stack > .invite-btn,
+.invite-stack > .community-btn {
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  white-space: normal;
+}
+.hero .invite-stack { margin: 0; }
+.invite .invite-stack { margin: var(--s1) 0 var(--s2); }
+body.has-sound .guest-card .invite-stack { margin-top: var(--s0); }
+body.has-sound .guest-card .invite-stack > .invite-btn { margin-top: 0; }
+
+.community-btn {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--ivory);
+  border-radius: var(--r-pill);
+  background: transparent;
+  color: var(--ivory);
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  font-weight: 700;
+  font-variant: small-caps;
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.16em;
+  text-transform: lowercase;
+  text-decoration: none;
+  text-align: center;
+  line-height: 1.2;
+  padding: var(--s0) var(--s1);
+  min-height: 48px;
+  cursor: pointer;
+  transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease, transform 0.5s cubic-bezier(0.22, 0.7, 0.2, 1);
+}
+.community-btn.invite-btn-lg {
+  padding: var(--s0) var(--s2);
+  font-size: 1.12rem;
+  letter-spacing: 0.18em;
+  min-height: 52px;
+}
+.community-btn:hover,
+.community-btn:focus-visible {
+  background: var(--ivory);
+  color: var(--field);
+  border-color: var(--ivory);
+}
+.community-btn:focus-visible {
+  outline: 2px solid var(--lacquer);
+  outline-offset: 3px;
+}
+@media (hover: hover) and (pointer: fine) {
+  .community-btn:hover { transform: translateY(-2px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .community-btn,
+  .community-btn:hover { transform: none; }
+}
+@media (max-width: 760px) {
+  .community-btn,
+  .hero .community-btn,
+  .community-btn.invite-btn-lg {
+    background: transparent;
+    color: var(--ivory);
+    border-color: var(--ivory);
+    font-weight: 700;
+    font-size: 17px;
+    letter-spacing: 0.1em;
+    line-height: 1.2;
+    min-height: 52px;
+    padding: var(--s0) var(--s1);
+  }
+  .community-btn:hover,
+  .community-btn:focus-visible {
+    background: var(--ivory);
+    color: var(--field);
+    border-color: var(--ivory);
+  }
+}
+@media (max-width: 380px) {
+  .community-btn,
+  .hero .community-btn,
+  .community-btn.invite-btn-lg {
+    font-size: 16px;
+    letter-spacing: 0.08em;
+    padding-left: var(--s0);
+    padding-right: var(--s0);
+  }
+}
