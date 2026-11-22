@@ -405,11 +405,12 @@
           <img src="/assets/art/city-dubai-16x9.jpg" width="1920" height="1080" alt="" loading="lazy" decoding="async">
         </picture>
       </div>
+      <a class="invite-btn city-card-invite" href="https://forms.gle/59dfvTV3jtLq1ws26" target="_blank" rel="noopener noreferrer">Request an Invitation for The Big Dinner</a>
     </div>
     <div class="frame-scrim"></div>
     <div class="frame-copy">
       <h3 class="display art-title">Dubai</h3>
-      <p class="city-status">Coming Soon</p>
+      <p class="city-status">Dubai, Saturday 5 December.</p>
     </div>
   </section>
 
@@ -457,6 +458,7 @@
         <a class="btn-line" data-city="bombay" href="https://forms.gle/Am7Z96A1Ur1ZHF2X6" target="_blank" rel="noopener noreferrer">Apply for Bombay</a>
         <a class="btn-line" data-city="london" href="https://docs.google.com/forms/d/e/1FAIpQLSdZrsP5Gd6toGWuQ10uEYVDx4f6BnMFgIyjZlvAX9X7suuwQA/viewform" target="_blank" rel="noopener noreferrer">Apply for London</a>
         <a class="btn-line" data-city="hyderabad" href="https://forms.gle/maV5MoNA5wGTWkjZ9" target="_blank" rel="noopener noreferrer">Apply for Hyderabad</a>
+        <a class="btn-line" data-city="dubai" href="https://forms.gle/59dfvTV3jtLq1ws26" target="_blank" rel="noopener noreferrer">Request an Invitation for The Big Dinner</a>
         <a class="btn-line" data-city="gurgaon" href="https://forms.gle/crgWDVsHNKjjUZ336" target="_blank" rel="noopener noreferrer">Request an Invitation for Gurgaon</a>
       </div>
     </div>
@@ -811,7 +813,7 @@
       var city = "";
       if (from && from.getAttribute) city = from.getAttribute("data-city") || "";
       if (!city && from && from.value) city = from.value;
-      tariff.textContent = city === "dubai" ? "AED 550" : "\u20B95,000";
+      tariff.textContent = city === "dubai" ? "AED 500" : "\u20B95,000";
     }
     concealRead();
     setNoticeChrome(mode);
