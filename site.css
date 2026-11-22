@@ -3456,3 +3456,26 @@ body.has-sound .guest-card .invite-stack > .invite-btn { margin-top: 0; }
     padding-right: var(--s0);
   }
 }
+
+/* Dubai is the only city card with an invitation. The pill sits on the photograph, in the same type as the other invitation buttons, and stays readable against the picture. */
+.city-card[data-city="dubai"] .city-flip {
+  position: relative;
+}
+.city-card[data-city="dubai"] .city-card-invite {
+  position: absolute;
+  z-index: 4;
+  left: 50%;
+  bottom: calc(var(--s-1) + 22px);
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: calc(100% - 36px);
+  margin: 0;
+  white-space: normal;
+  text-wrap: balance;
+  line-height: 1.25;
+  text-align: center;
+}
+.city-card[data-city="dubai"] .city-card-invite:hover,
+.city-card[data-city="dubai"] .city-card-invite:focus-visible {
+  transform: translateX(-50%);
+}
