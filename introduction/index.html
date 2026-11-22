@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="A members page. Say who you are. The room offers one person.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#E0CDB6">
+<meta name="color-scheme" content="light">
+<meta name="format-detection" content="telephone=no, email=no, address=no">
+<title>The Introduction · The Big Dinner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/site.css">
+<link rel="stylesheet" href="/introduction/introduction.css">
+</head>
+<body class="theme-paper page-introduction">
+<a class="skip" href="#content">Skip to content</a>
+<main id="content" class="masthead introduction">
+  <p class="label intro-kicker">For members</p>
+  <h1 class="display"><span>The</span><span>Introduction</span></h1>
+  <p class="lede">Say who you are. The room will offer one person ordinary life would not have introduced.</p>
+  <p class="intro-sample" id="sampleNote" hidden>This preview keeps a fictional room. The real list is not on the public page.</p>
+
+  <form id="ask" class="intro-form">
+    <label class="intro-field">
+      <span>Name</span>
+      <input id="name" name="name" type="text" autocomplete="name" maxlength="80" required>
+    </label>
+    <label class="intro-field">
+      <span>Email</span>
+      <input id="email" name="email" type="email" autocomplete="email" inputmode="email" maxlength="120">
+    </label>
+    <label class="intro-field">
+      <span>Phone</span>
+      <input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="40">
+    </label>
+    <p class="intro-hint" id="hint">A name, and an email or a phone. Enough for the room to know you have been here.</p>
+    <label class="intro-field">
+      <span>What you do <i>optional</i></span>
+      <input id="focus" name="focus" type="text" maxlength="280" autocomplete="organization-title">
+    </label>
+    <label class="intro-field">
+      <span>What you care about <i>optional</i></span>
+      <input id="care" name="care" type="text" maxlength="280">
+    </label>
+    <div class="intro-actions">
+      <button class="btn intro-ask" type="submit">Ask the room</button>
+      <button class="btn-line" id="trial" type="button" hidden>Try a fictional guest</button>
+    </div>
+    <p class="intro-error" id="error" role="alert" hidden></p>
+  </form>
+
+  <section id="wait" class="intro-wait" hidden aria-live="polite">
+    <p class="label">One moment</p>
+    <p class="intro-wait-line" id="waitLine">The room is choosing.</p>
+    <span class="intro-meter" aria-hidden="true"></span>
+  </section>
+
+  <section id="result" class="intro-card" hidden aria-live="polite">
+    <p class="label">One person</p>
+    <h2 id="resultName" tabindex="-1"></h2>
+    <p class="intro-meta" id="resultMeta"></p>
+    <p class="intro-reason" id="resultReason"></p>
+    <p class="intro-links" id="resultLinks"></p>
+    <p class="intro-note">Write to them yourself. A phone and an email are not shown here.</p>
+    <button class="btn-line" id="again" type="button">Start again</button>
+  </section>
+
+  <p class="intro-return"><a href="/">The Big Dinner</a></p>
+  <noscript><p class="intro-hint">This page asks the room from the server. Nothing about other guests is kept in the page.</p></noscript>
+</main>
+<script src="/introduction/introduction.js"></script>
+<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+# Real guest files for The Introduction.
+# lib/introduction/engine.js can read CSVs from this folder at runtime.
+# Never commit them. Phones, emails, and form essays stay out of git.
+/data/private/

@@ -1,0 +1,7 @@
+{
+  "rewrites": [
+    { "source": "/lib/(.*)", "destination": "/introduction/index.html" },
+    { "source": "/data/(.*)", "destination": "/introduction/index.html" },
+    { "source": "/scripts/(.*)", "destination": "/introduction/index.html" }
+  ]
+}
