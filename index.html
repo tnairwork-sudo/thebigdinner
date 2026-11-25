@@ -633,6 +633,7 @@
   var readHint = document.getElementById("readHint");
   var readLabel = formNotice.querySelector(".read-check");
   var pendingFormUrl = "";
+  var pendingCity = "";
   var noticeReturn = null;
   var noticeMode = "direct";
   var readReached = false;
@@ -783,11 +784,12 @@
   function openFormNotice(url, from, mode) {
     pendingFormUrl = url || "";
     noticeReturn = from || null;
+    var city = "";
+    if (from && from.getAttribute) city = from.getAttribute("data-city") || "";
+    if (!city && from && from.value) city = from.value;
+    pendingCity = city;
     var tariff = document.getElementById("noticeTariffAmount");
     if (tariff) {
-      var city = "";
-      if (from && from.getAttribute) city = from.getAttribute("data-city") || "";
-      if (!city && from && from.value) city = from.value;
       tariff.textContent = city === "dubai" ? "AED 500" : "\u20B95,000";
     }
     concealRead();
@@ -813,7 +815,31 @@
   function resetNoticeGate() {
     concealRead();
     pendingFormUrl = "";
+    pendingCity = "";
     setNoticeChrome("direct");
+  }
+
+  function trackFormContinue(city) {
+    try {
+      var set = window.tbdReadUtms ? window.tbdReadUtms() : null;
+      function tag(key) {
+        var value = set && set[key] ? String(set[key]).trim() : "";
+        return value || "none";
+      }
+      var cityName = (city || "").trim() || "none";
+      window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+      window.va("event", {
+        name: "FormContinue",
+        data: {
+          utm_content: tag("utm_content"),
+          utm_term: tag("utm_term"),
+          city: cityName.slice(0, 255),
+          utm_source: tag("utm_source"),
+          utm_medium: tag("utm_medium"),
+          utm_campaign: tag("utm_campaign")
+        }
+      });
+    } catch (err) {}
   }
 
   function closeFormNotice() {
@@ -871,6 +897,7 @@
     }
     if (!pendingFormUrl) return;
     var url = pendingFormUrl;
+    trackFormContinue(pendingCity);
     window.open(url, "_blank", "noopener,noreferrer");
     hideFormNotice();
     resetNoticeGate();
@@ -899,6 +926,7 @@
       event.preventDefault();
       return;
     }
+    trackFormContinue(document.getElementById("citySelect").value);
     closeOverlay();
   });
 

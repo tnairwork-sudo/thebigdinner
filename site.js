@@ -1,4 +1,89 @@
 (function () {
+  var keys = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"];
+  var store = "tbd_utm";
+
+  function sharedHost() {
+    var host = location.hostname;
+    return host === "thebigdinner.in" || host === "www.thebigdinner.in";
+  }
+
+  function cleanSet(data) {
+    if (!data || typeof data !== "object" || Array.isArray(data)) return null;
+    var next = {};
+    var any = false;
+    keys.forEach(function (key) {
+      var value = data[key];
+      if (typeof value !== "string") return;
+      value = value.trim();
+      if (!value) return;
+      next[key] = value.slice(0, 255);
+      any = true;
+    });
+    return any ? next : null;
+  }
+
+  function readSession() {
+    try {
+      return cleanSet(JSON.parse(sessionStorage.getItem(store) || "null"));
+    } catch (err) {
+      return null;
+    }
+  }
+
+  function readCookie() {
+    if (!sharedHost() || !document.cookie) return null;
+    var prefix = store + "=";
+    var parts = document.cookie.split("; ");
+    for (var i = 0; i < parts.length; i++) {
+      if (parts[i].indexOf(prefix) !== 0) continue;
+      try {
+        return cleanSet(JSON.parse(decodeURIComponent(parts[i].slice(prefix.length))));
+      } catch (err) {
+        return null;
+      }
+    }
+    return null;
+  }
+
+  function writeSession(data) {
+    try {
+      sessionStorage.setItem(store, JSON.stringify(data));
+    } catch (err) {}
+  }
+
+  function writeCookie(data) {
+    if (!sharedHost()) return;
+    document.cookie = store + "=" + encodeURIComponent(JSON.stringify(data)) + "; Path=/; Domain=.thebigdinner.in; SameSite=Lax; Secure";
+  }
+
+  function readStored() {
+    var saved = readSession();
+    if (saved) return saved;
+    var bridged = readCookie();
+    if (!bridged) return null;
+    writeSession(bridged);
+    return bridged;
+  }
+
+  function capture() {
+    if (readStored()) return;
+    var params = new URLSearchParams(location.search);
+    var incoming = {};
+    keys.forEach(function (key) {
+      var value = params.get(key);
+      if (value) incoming[key] = value;
+    });
+    var set = cleanSet(incoming);
+    if (!set) return;
+    writeSession(set);
+    writeCookie(set);
+  }
+
+  window.tbdReadUtms = readStored;
+  try { capture(); } catch (err) {}
+})();
+
+(function () {
   var nav = document.querySelector("[data-nav]");
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
