@@ -758,6 +758,7 @@ body.is-locked .sound { opacity: 0; pointer-events: none; }
   font-size: 1.45rem;
   line-height: 1;
 }
+.form-notice-body .notice-step + .notice-dress { margin-top: 0; }
 .notice-figures {
   display: flex;
   justify-content: center;
