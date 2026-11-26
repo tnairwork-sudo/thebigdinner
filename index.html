@@ -842,6 +842,42 @@
     } catch (err) {}
   }
 
+  function isGoogleFormUrl(url) {
+    if (!url || url === "#") return false;
+    var parsed;
+    try { parsed = new URL(url, location.href); } catch (err) { return false; }
+    var host = parsed.hostname;
+    if (host === "forms.gle" || host === "www.forms.gle") return true;
+    if (host === "docs.google.com" || host === "forms.google.com") {
+      return parsed.pathname.indexOf("/forms/") === 0;
+    }
+    return false;
+  }
+
+  function cityFromFormLink(link) {
+    var city = link.getAttribute("data-city") || "";
+    if (!city && link.closest) {
+      var card = link.closest("[data-city]");
+      if (card) city = card.getAttribute("data-city") || "";
+    }
+    if (!city && link.id === "formLink") {
+      var select = document.getElementById("citySelect");
+      if (select) city = select.value || "";
+    }
+    return city;
+  }
+
+  function trackDirectFormOpen(event) {
+    if (event.defaultPrevented) return;
+    if (event.type === "click" && event.button !== 0) return;
+    var node = event.target;
+    if (!node || !node.closest) return;
+    var link = node.closest("a[href]");
+    if (!link || !isGoogleFormUrl(link.getAttribute("href"))) return;
+    if (event.type === "click" && link.closest(".invite-links")) return;
+    trackFormContinue(cityFromFormLink(link));
+  }
+
   function closeFormNotice() {
     var wasPicker = noticeMode === "picker";
     hideFormNotice();
@@ -926,7 +962,6 @@
       event.preventDefault();
       return;
     }
-    trackFormContinue(document.getElementById("citySelect").value);
     closeOverlay();
   });
 
@@ -939,6 +974,9 @@
       openFormNotice(link.getAttribute("href"), link, "direct");
     });
   });
+
+  document.addEventListener("click", trackDirectFormOpen);
+  document.addEventListener("auxclick", trackDirectFormOpen);
 
   document.addEventListener("keydown", function (event) {
     var dialog = formNotice.classList.contains("is-open") ? formNotice : (overlay.classList.contains("is-open") ? overlay : null);
