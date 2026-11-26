@@ -633,6 +633,7 @@
   var readHint = document.getElementById("readHint");
   var readLabel = formNotice.querySelector(".read-check");
   var pendingFormUrl = "";
+  var pendingCity = "";
   var noticeReturn = null;
   var noticeMode = "direct";
   var readReached = false;
@@ -783,11 +784,12 @@
   function openFormNotice(url, from, mode) {
     pendingFormUrl = url || "";
     noticeReturn = from || null;
+    var city = "";
+    if (from && from.getAttribute) city = from.getAttribute("data-city") || "";
+    if (!city && from && from.value) city = from.value;
+    pendingCity = city;
     var tariff = document.getElementById("noticeTariffAmount");
     if (tariff) {
-      var city = "";
-      if (from && from.getAttribute) city = from.getAttribute("data-city") || "";
-      if (!city && from && from.value) city = from.value;
       tariff.textContent = city === "dubai" ? "AED 500" : "\u20B95,000";
     }
     concealRead();
@@ -813,7 +815,67 @@
   function resetNoticeGate() {
     concealRead();
     pendingFormUrl = "";
+    pendingCity = "";
     setNoticeChrome("direct");
+  }
+
+  function trackFormContinue(city) {
+    try {
+      var set = window.tbdReadUtms ? window.tbdReadUtms() : null;
+      function tag(key) {
+        var value = set && set[key] ? String(set[key]).trim() : "";
+        return value || "none";
+      }
+      var cityName = (city || "").trim() || "none";
+      window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+      window.va("event", {
+        name: "FormContinue",
+        data: {
+          utm_content: tag("utm_content"),
+          utm_term: tag("utm_term"),
+          city: cityName.slice(0, 255),
+          utm_source: tag("utm_source"),
+          utm_medium: tag("utm_medium"),
+          utm_campaign: tag("utm_campaign")
+        }
+      });
+    } catch (err) {}
+  }
+
+  function isGoogleFormUrl(url) {
+    if (!url || url === "#") return false;
+    var parsed;
+    try { parsed = new URL(url, location.href); } catch (err) { return false; }
+    var host = parsed.hostname;
+    if (host === "forms.gle" || host === "www.forms.gle") return true;
+    if (host === "docs.google.com" || host === "forms.google.com") {
+      return parsed.pathname.indexOf("/forms/") === 0;
+    }
+    return false;
+  }
+
+  function cityFromFormLink(link) {
+    var city = link.getAttribute("data-city") || "";
+    if (!city && link.closest) {
+      var card = link.closest("[data-city]");
+      if (card) city = card.getAttribute("data-city") || "";
+    }
+    if (!city && link.id === "formLink") {
+      var select = document.getElementById("citySelect");
+      if (select) city = select.value || "";
+    }
+    return city;
+  }
+
+  function trackDirectFormOpen(event) {
+    if (event.defaultPrevented) return;
+    if (event.type === "click" && event.button !== 0) return;
+    var node = event.target;
+    if (!node || !node.closest) return;
+    var link = node.closest("a[href]");
+    if (!link || !isGoogleFormUrl(link.getAttribute("href"))) return;
+    if (event.type === "click" && link.closest(".invite-links")) return;
+    trackFormContinue(cityFromFormLink(link));
   }
 
   function closeFormNotice() {
@@ -871,6 +933,7 @@
     }
     if (!pendingFormUrl) return;
     var url = pendingFormUrl;
+    trackFormContinue(pendingCity);
     window.open(url, "_blank", "noopener,noreferrer");
     hideFormNotice();
     resetNoticeGate();
@@ -911,6 +974,9 @@
       openFormNotice(link.getAttribute("href"), link, "direct");
     });
   });
+
+  document.addEventListener("click", trackDirectFormOpen);
+  document.addEventListener("auxclick", trackDirectFormOpen);
 
   document.addEventListener("keydown", function (event) {
     var dialog = formNotice.classList.contains("is-open") ? formNotice : (overlay.classList.contains("is-open") ? overlay : null);
